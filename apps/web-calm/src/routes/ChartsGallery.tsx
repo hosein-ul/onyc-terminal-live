@@ -41,57 +41,9 @@ import {
   useSolvency,
   useYieldComposition,
 } from "@onyc/sdk/react";
-import { useMemo, type ReactNode } from "react";
+import type { ReactNode } from "react";
 import { useSearchParams } from "react-router-dom";
-import { Chart, ChartFrame, RANGES, type RangeKey } from "../charts";
-
-interface QueryLike<D> {
-  data: D | undefined;
-  isLoading: boolean;
-  isError: boolean;
-  error: unknown;
-}
-
-interface PanelProps<D> {
-  q: QueryLike<D>;
-  build: (d: D) => ChartSpec | null;
-  title: string;
-  span?: 4 | 5 | 6 | 7 | 8 | 12;
-  height?: number;
-  range?: RangeKey;
-  onRange?: (r: RangeKey) => void;
-}
-
-function Panel<D>({
-  q,
-  build,
-  title,
-  span = 12,
-  height,
-  range,
-  onRange,
-}: PanelProps<D>): ReactNode {
-  const spec = useMemo(() => (q.data === undefined ? null : build(q.data)), [q.data, build]);
-  const status = q.isError ? "error" : q.isLoading ? "loading" : "ready";
-  return (
-    <div className={`span-${span}`}>
-      <ChartFrame
-        spec={spec}
-        status={status}
-        loadingTitle={title}
-        error={
-          q.isError
-            ? `${title}: ${q.error instanceof Error ? q.error.message : "request failed"}.`
-            : undefined
-        }
-        {...(height !== undefined ? { height } : {})}
-        {...(range !== undefined && onRange !== undefined ? { range, onRange } : {})}
-      >
-        {spec !== null && <Chart spec={spec} {...(height !== undefined ? { height } : {})} />}
-      </ChartFrame>
-    </div>
-  );
-}
+import { Panel, RANGES, type RangeKey } from "../charts";
 
 // Builders are module-level so their identity is stable between renders.
 const navCalm = (d: EndpointResponse<"nav">): ChartSpec => navSpec(d);

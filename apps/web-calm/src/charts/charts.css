@@ -302,3 +302,12 @@
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
 }
+
+.ch-plain {
+  background: none;
+  padding: 0;
+  border-radius: 0;
+}
+.ch-plain .ch-head {
+  margin-bottom: 6px;
+}

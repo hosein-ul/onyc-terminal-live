@@ -39,6 +39,7 @@ export function buildKpi(
   return {
     value: current,
     change,
+    changeMode: mode === "fraction" ? "relative" : "absolute",
     period,
     sparkline: points.map((p) => p.value),
     historySince: short ? firstDate : null,

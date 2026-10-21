@@ -37,7 +37,10 @@ const pct = (from: number, to: number): number => (from === 0 ? 0 : to / from - 
 // NAV and market
 // ---------------------------------------------------------------------------------------------
 
-export function navSpec(res: EndpointResponse<"nav">): TimeSeriesSpec {
+export function navSpec(
+  res: EndpointResponse<"nav">,
+  options: { log?: boolean } = {},
+): TimeSeriesSpec {
   const { series, events } = res.data;
   // Only dates inside the drawn range are worth a note.
   const missingDates = res.data.missingDates.filter(
@@ -90,6 +93,7 @@ export function navSpec(res: EndpointResponse<"nav">): TimeSeriesSpec {
     annotations,
     smooth: false,
     zeroBased: false,
+    ...(options.log === true ? { logScale: true } : {}),
   };
 }
 
@@ -208,7 +212,7 @@ export function waterfallSpec(res: EndpointResponse<"flows">): WaterfallSpec {
     kind: "waterfall",
     id: "aum-change",
     title: "What moved AUM",
-    subtitle: `Range ${res.data.range}: NAV effect + flow effect + residual`,
+    subtitle: `Over ${res.data.range}, AUM ${total >= 0 ? "rose" : "fell"} by ${formatUsdCompact(Math.abs(total))}: NAV ${t.navEffect >= 0 ? "added" : "removed"} ${formatUsdCompact(Math.abs(t.navEffect))} and net flows ${t.flowEffect >= 0 ? "added" : "removed"} ${formatUsdCompact(Math.abs(t.flowEffect))}.`,
     provenance: provenanceFrom(res.meta, "totals"),
     summary: `AUM changed by ${formatUsdCompact(total)}: ${formatUsdCompact(t.navEffect)} from NAV, ${formatUsdCompact(t.flowEffect)} from net flows, ${formatUsdCompact(t.residual)} unexplained.`,
     unit: "usd",

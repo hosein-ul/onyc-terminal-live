@@ -63,6 +63,8 @@ export interface TimeSeriesSpec extends ChartBase {
   zeroBased: boolean;
   /** Draw without axes, for KPI strips. */
   compact?: boolean;
+  /** Logarithmic y axis. */
+  logScale?: boolean;
 }
 
 export interface StackedSpec extends ChartBase {

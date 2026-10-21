@@ -45,8 +45,12 @@ export type EventItem = z.infer<typeof eventSchema>;
 
 export const kpiSchema = z.object({
   value: nn,
-  /** Change over `period`, same unit as value (a fraction for ratios, absolute otherwise). */
+  /**
+   * Change over `period`. `changeMode` says what it is: "relative" is a fraction of the starting value (0.0595 means
+   * +5.95%), "absolute" is the difference in the value's own unit.
+   */
   change: nn,
+  changeMode: z.enum(["relative", "absolute"]),
   period: z.string(),
   /** Up to 30 daily values, oldest first. Empty when no history exists yet. */
   sparkline: z.array(nn),

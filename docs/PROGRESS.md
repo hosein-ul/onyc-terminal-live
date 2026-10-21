@@ -39,3 +39,21 @@ placeholder packages and five placeholder apps. Docs contradictions resolved and
   CSV and PNG export, URL-synced range, no console errors, reduced motion. Phone width has no horizontal overflow.
 - Open: Tremor charts have no keyboard crosshair (table view is the path) and Platinum's bundle is about 423 KB gzip; the three other apps get
   their adapters in Phase 5; design-studio slop-check reports "no visual asset" until Phase 4 adds the real pages and the Calm hero.
+
+## Phase 4: web-calm, all 11 pages (done)
+
+- `apps/web-calm`: a Vite and React app with the Calm tokens, a sidebar and phone menu, a footer disclaimer on every page, and the eleven pages of
+  SPEC.md: Overview, NAV & Yield (range, log scale, decoded price vector and forward path, returns, calendar, yield composition, benchmarks, projection
+  calculator), Peg & Liquidity (market vs NAV, premium bars, pools, redemption offers, capacity limits, flow, public log, exit-cost estimator),
+  Reinsurance Book (sortable, searchable layers; Gantt; concentration; risk and return; renewal calendar; history), Capital & DeFi (stack,
+  protocol shares over time, reconciliation, looping share, opportunities explorer, tranching), Points (growth, emission, leaderboard with
+  search and venue breakdown, Lorenz, venue mix, multipliers), Wallet Lab (address lookup, points, rank, referrals, share card as PNG),
+  Risk & Transparency (12 independent signals, reserves tree), Data Health (sources and live conflicts), Activity & Alerts, Developers
+  (OpenAPI-driven reference with copyable curl).
+- Every number carries its source and age (`Provenance`), stale data is marked, empty history says "collecting since", errors name the source.
+- Contract change: `Kpi.changeMode` ("relative" or "absolute") makes the unit of a KPI change explicit; `@onyc/sdk` exports `ALERT_RULES`, the single
+  list the Telegram bot (Phase 6) and the Activity page both use. Tests found and fixed two usage lines in it.
+- Verified in a real browser: all 12 routes on desktop and phone with no console errors and no horizontal overflow; phone menu behaviour; keyboard
+  skip link. See `.design/critique.md` for what was and was not run.
+- Open: the Helius-backed on-chain balance shows "not configured"; the MCP section of Developers waits for Phase 6; the 15-line rubric and blind
+  critic were not run.
