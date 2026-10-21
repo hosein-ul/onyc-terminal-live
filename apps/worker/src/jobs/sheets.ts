@@ -316,6 +316,11 @@ async function syncNavSheet(ctx: Ctx): Promise<void> {
         },
       }),
   );
+  // The sheet is the only source of the reported APY per day; copy it to nav_daily where a row exists.
+  await ctx.handle.db.execute(sql`
+    update nav_daily d set apy_reported = s.apy
+    from nav_sheet_daily s
+    where d.date = s.date and s.apy is not null and d.apy_reported is distinct from s.apy`);
 }
 
 async function syncCollateral(ctx: Ctx): Promise<void> {

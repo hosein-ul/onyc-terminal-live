@@ -13,6 +13,19 @@ jobs:
   verify:
     runs-on: ubuntu-latest
     timeout-minutes: 20
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: onyc
+          POSTGRES_PASSWORD: onyc_dev_only
+          POSTGRES_DB: onyc
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U onyc" --health-interval 5s --health-timeout 3s --health-retries 10
+    env:
+      DATABASE_URL: postgres://onyc:onyc_dev_only@localhost:5432/onyc
     steps:
       - uses: actions/checkout@v4
 

@@ -8,6 +8,10 @@
   "exports": {
     ".": {
       "default": "./dist/main.js"
+    },
+    "./testing": {
+      "types": "./dist/testing/seed.d.ts",
+      "default": "./dist/testing/seed.js"
     }
   },
   "files": [
