@@ -1,6 +1,6 @@
 import { endpoints, type EndpointName } from "@onyc/sdk";
 import { SourceError } from "@onyc/sources";
-import { Hono, type Context } from "hono";
+import { Hono } from "hono";
 import { cors } from "hono/cors";
 import { secureHeaders } from "hono/secure-headers";
 import { streamSSE } from "hono/streaming";
@@ -64,7 +64,7 @@ const handlers: { [K in EndpointName]: Handler<K> } = {
 
 const honoPath = (openApiPath: string): string => openApiPath.replace(/\{(\w+)\}/g, ":$1");
 
-function clientIp(c: Context): string {
+function clientIp(c: { req: { header: (name: string) => string | undefined } }): string {
   const forwarded = c.req.header("x-forwarded-for")?.split(",")[0]?.trim();
   return forwarded !== undefined && forwarded !== ""
     ? forwarded
@@ -148,8 +148,8 @@ export function createApp(deps: Deps, options: { limiter?: RateLimiter } = {}): 
       const { value, hit } = await cache.getOrLoad(key, def.ttl * 1000, async () => {
         const handler = handlers[name] as Handler<typeof name>;
         const out = await handler(deps, {
-          query: query.data as never,
-          params: params.data as never,
+          query: query.data,
+          params: params.data,
         });
         const health = await loadHealth(deps);
         const body = { data: out.data, meta: buildMeta(health, out.fields, deps.now()) };

@@ -117,7 +117,7 @@ describe("OpenAPI document", () => {
   const doc = buildOpenApi("https://api.example.test");
 
   it("is a valid OpenAPI 3.1 document", async () => {
-    const result = await new Validator().validate(doc as never);
+    const result = await new Validator().validate(doc);
     expect(result.valid).toBe(true);
   });
 
