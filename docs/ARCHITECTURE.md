@@ -135,3 +135,17 @@ features show a clear "not configured" state.
 - A contract test per source that hits the live endpoint (separate, opt-in `pnpm test:live`).
 - Lighthouse ≥ 90 performance/accessibility on each web app's home page.
 - No `any`. No unhandled promise. No silent catch.
+
+## Phase 1 implementation notes
+
+Decisions made while building the worker, where the sections above left room:
+
+- **Local Postgres without Docker:** `pnpm db:local` starts an embedded Postgres 16 (data in `.pgdata/`) with the same credentials as `docker-compose.yml`, so `.env.example` works for both.
+- **`source_health` is keyed by (source, endpoint)**, so one failing endpoint degrades its source without hiding the others. A source's status is the worst of its endpoints.
+- **Circuit breaker per source:** five consecutive transport failures (network, timeout, 5xx, 429) skip that source for 1 minute, doubling up to 10. Schema and parse errors degrade an endpoint but never open the breaker.
+- **`raw_snapshots`:** an identical consecutive payload is folded into the previous row (`seen_count`, `last_seen_at`). Raw payloads are not kept for the 60 s live tick, GeckoTerminal pools or leaderboard pages (their values are in typed tables). Retention: 30 days for everything except `onre-sheets` and `accountable`, which are kept.
+- **Derived snapshot tables** (`settings_snap`, `redemption_*_snap`, `solvency_snap`, `collateral_*`) are written when the content changes; time series (`live_ticks`, `market_pools_snap`, `llama_pools_snap`) are written every run.
+- **Leaderboard storage:** every wallet gets (date, rank, total points) daily; the full venue breakdown is kept for the top 1,000 (`LEADERBOARD_BREAKDOWN_TOP`). Per-venue totals over all wallets go to `leaderboard_venue_daily`, so the venue mix needs no per-wallet breakdown. An extra job refreshes the top 500 hourly into `leaderboard_top_snap` (30-day retention). At about 24,750 wallets a day the totals alone grow roughly 1 GB a year; revisit before running on a small Neon plan.
+- **`redemption_requests` is keyed by the request PDA**, because the log's own `id` repeats.
+- **Events are idempotent** through `events.dedup_key`. Historical facts carry their own timestamp (for example a price vector's start time).
+- **Our thresholds** (discount 50 bps, solvency stale 24 h, opportunity APY event 50 bps) are environment settings, not data, and live in `apps/worker/src/config.ts`.

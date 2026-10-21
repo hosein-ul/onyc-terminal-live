@@ -117,3 +117,27 @@ Yield distributed since inception $17.74M · Reinsurance APY 14.07%.
 8. **Layer status vs renewal date.** Layer 0002 (Contingency, 1st Event Per Occ) has renewal "Jul-2026" but is still `Bound` on 2026-10-21; the app has an "Expired" tab. Compute `monthsToRenewal` and flag bound layers past renewal as "renewal date passed, status not updated" instead of silently trusting the status.
 9. Layer numbers in the app skip 0029 and 0030 (0000–0028 and 0031 are listed): 30 layers, not 32. Do not assume contiguous IDs.
 10. Global points multiplier 0.0001 (since 2026-10-03) vs the "6x / 8x points" boosts in the DeFi sheet: the relationship is not explained by OnRe. Show both, label as "not reconciled".
+
+## 8. Phase 1 re-verification (2026-10-21, build day)
+
+Every source above was called again and saved under `packages/sources/fixtures/`. Where reality differs from the
+sections above, reality wins; the differences are:
+
+- **`/data/nav`:** 511 rows from 2025-05-28 to 2026-10-21, not 512: **2025-07-05 is missing**. Early rows have `assets_under_management: null` and `circulating_supply: null`. The sheet mirror (gid `362705568`) has 510 rows and stops at 2026-10-20 (it lags by about a day); its dates are ISO `YYYY-MM-DD`, not `MM/DD/YYYY`.
+- **NAV is not monotonic.** The history has four down-ticks: 2025-07-06 (−2,439 ppm, across the missing 07-05), 2025-07-15 (−443 ppm), 2025-07-29 (−1,166 ppm) and 2025-08-01 (−746 ppm). SPEC's "max drawdown should be about 0" holds only since August 2025. The worker records each as a `nav_downtick` event.
+- **Leaderboard:** 24,754 users (not 24,750). `size=250` answered in about 1.7 s today (the 20 s per 500-row page seen earlier was not reproduced). The full crawl at `size=250`, one request in flight and a 0.5 s pause took **3 minutes for 100 pages**, 24,754 wallets. The crawl is still sequential and backs off when a page takes over 8 s.
+- **`/redemption/requests`:** the row `id` is **not unique** (it is a per-offer counter: 50 rows, 42 distinct ids). `redemptionRequestPda` is unique and is the key we store.
+- **Sheets:**
+  - Reinsurance: 30 layers, **all `Bound`** (including layer 0002, renewal Jul-2026). Their capital sums to **152,722,725**, exactly the Transparency page's "Bound" figure.
+  - Opportunities: 28 real rows plus 2 subtotal rows (empty classification), which are dropped. There is no id column; the key is classification, protocol, strategy and assets.
+  - Collateral: the `Snapshot date` cell is **DD/MM/YYYY** (`20/10/2026`); APY and Allocation are percent units (3.656 = 3.656%). The sheet's own `Total` row (289,827,019.67, equal to the sum of its asset rows) differs from its `AUM` row (283,623,613.83) by about 6.2M. Both are kept; treat as conflict 11 below.
+- **Core API values drift through the day** (live TVL 282,827,380 in the morning, 282,829,656 later); fixtures hold the later values. Reconciliation `*Raw` fields exceed 2^53 and are only approximate in JSON.
+- **Referral code 404 body:** `{"message":["Referral code not found"],"code":"600101","params":{}}`.
+- **`/offers`:** both mint offers carry the same three vectors; `price` equals `/data/live-nav`.
+- **Accountable:** `data.ts` is epoch milliseconds (2026-10-15T05:43:01Z, six days old on 2026-10-21); `merkle_root.ts` is a string.
+- **DefiLlama yields:** the full payload is 11 MB and took about 47 s; the worker keeps only the 10 ONyc pools. Protocol TVL on DefiLlama was 294.2M (another AUM view, conflict 1).
+- **Jupiter `lite-api.jup.ag/price/v3`** still works without a key. GeckoTerminal returned 20 pools on page 1.
+- **Google Sheets** answered in 2–13 s and **failed once with a network error** (three attempts) during the build; later runs were fine. Treat as intermittent.
+- **Helius** was not verified: no key was available. The client in `packages/sources/src/helius.ts` is untested against the live service.
+
+11. **Collateral sheet Total vs AUM** (289.83M vs 283.62M, same sheet, same date) is a new known conflict, in addition to §7.

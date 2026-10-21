@@ -4,12 +4,10 @@
   "private": true,
   "description": "Ingestion scheduler, backfills and alert evaluator (Phase 1).",
   "type": "module",
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "main": "./dist/main.js",
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
-      "default": "./dist/index.js"
+      "default": "./dist/main.js"
     }
   },
   "files": [
@@ -19,6 +17,21 @@
     "build": "tsc -p tsconfig.build.json",
     "typecheck": "tsc --noEmit",
     "lint": "eslint .",
-    "test": "vitest run --passWithNoTests"
+    "test": "vitest run --passWithNoTests",
+    "start": "node --env-file-if-exists=../../.env dist/main.js",
+    "dev": "pnpm build && pnpm start",
+    "demo:diff": "pnpm build && node --env-file-if-exists=../../.env dist/demo/sheet-diff.js"
+  },
+  "dependencies": {
+    "@onyc/db": "workspace:*",
+    "@onyc/format": "workspace:*",
+    "@onyc/sources": "workspace:*",
+    "croner": "^10.0.1",
+    "pino": "^10.4.0",
+    "zod": "^4.6.7",
+    "postgres": "^3.4.9"
+  },
+  "devDependencies": {
+    "pino-pretty": "^13.2.0"
   }
 }
