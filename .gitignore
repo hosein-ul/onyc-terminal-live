@@ -1,0 +1,17 @@
+node_modules/
+dist/
+.next/
+.turbo/
+coverage/
+*.tsbuildinfo
+
+# secrets and local config
+.env
+.env.*
+!.env.example
+
+# local data
+pgdata/
+*.log
+.DS_Store
+Thumbs.db

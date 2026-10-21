@@ -1,0 +1,12 @@
+node_modules
+dist
+.next
+.turbo
+coverage
+pnpm-lock.yaml
+design/refs
+packages/sources/fixtures
+docs
+CLAUDE.md
+PROMPT.md
+design
