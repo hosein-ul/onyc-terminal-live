@@ -75,3 +75,39 @@ Not recommended: Chart.js (looks dated), unless a specific chart type needs it.
 - Responsive: charts reflow to phone width; complex charts (Gantt, Sankey) scroll horizontally inside their frame.
 - Performance: memoize scales; virtualize long tables; canvas for > 5k marks.
 - Source footer is mandatory: "Source: OnRe core API · updated 42 s ago".
+
+---
+
+## Phase 3 spike result (2026-10-21)
+
+**Method.** A throwaway playground (`spike/`, deleted after this decision) drew the NAV hero chart (511 daily points, four
+down-tick markers, end dot and value label) and the capital stacked area (7 protocols, 90 days) in four libraries, from the
+live `/v1/nav` and `/v1/capital/distribution` responses, in the Calm and Platinum skins. Screenshots:
+`docs/spike/calm.png`, `docs/spike/platinum.png`.
+
+| Library | Skinning | Annotations | Keyboard | Bundle (gzip, these two charts) | Verdict |
+|---|---|---|---|---|---|
+| shadcn/ui pattern over Recharts 3 | Full: reads CSS variables directly, so one set of tokens skins it | Reference dots and labels worked | Built in: the SVG is focusable and arrow keys move the tooltip | 126 KB | **Use** for ordinary time series, bars and sparklines |
+| Tremor 3 | Weak. Needs Tailwind 3 and colour names mapped through a safelist; forces a gradient fill on every stacked layer; y labels clipped at 4 digits; line weight fixed thin | None: no reference points, no end label, so no event markers | None | 256 KB | **Drop** |
+| ApexCharts 5 | Good, but colours must be literal values, so tokens are resolved in JS | Worked; the end label clipped at the right edge | Focusable | 185 KB | **Drop**: heavier than Recharts, no advantage in any chart, a second library next to ECharts |
+| ECharts 6 | Full, through `makeTheme(tokens)` | Mark points, mark lines and areas worked | None built in; we add arrow keys through `dispatchAction` | 203 KB (line only, SVG + canvas renderers; grows about 10 KB per extra chart type) | **Use** for everything the catalogue marks as complex |
+
+Other findings:
+- Tremor 3 pins React 18 and Tailwind 3. Dropping it frees the apps to use current React and plain CSS with token variables.
+- Apex and ECharts cannot read `var(--token)`, so `charts-echarts` resolves tokens to literals in `makeTheme(tokens)`.
+- Smooth curves hide the day-step nature of NAV; the NAV chart uses straight segments, not smoothing.
+- NAV down-ticks are visible as markers in every library that supports annotations.
+
+### Decision per app
+
+| App | Ordinary charts | Complex charts | Notes |
+|---|---|---|---|
+| web-calm | Recharts (shadcn pattern) | ECharts | white tooltip cards, 3 px line, 10% area |
+| web-cobalt | ECharts | ECharts | one library; white lines on cobalt, mono axis text |
+| web-matrix | ECharts | ECharts | SVG pattern fills, step lines, square markers |
+| web-platinum | Recharts (shadcn pattern) | ECharts | silver line, faint grid; rings are plain SVG, single ratios only |
+| web-pastel | Recharts (shadcn pattern) | ECharts | rounded-top bars, direct labels |
+
+Two libraries at most per app, two in the whole repo. ApexCharts and Tremor are not used anywhere. Cobalt and Matrix were not
+rendered in the spike; the decision rests on ECharts being fully skinnable (shown in two skins), and Phase 5 revisits it
+if a Cobalt or Matrix chart needs something ECharts cannot do.

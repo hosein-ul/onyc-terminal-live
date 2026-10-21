@@ -1,0 +1,9 @@
+/* Spike tokens: Platinum Rail, from docs/DESIGN.md §4. */
+[data-skin="platinum"] {
+  --ground: #12151b; --surface: #1a1f27; --ink: #f1f4f8; --muted: #8c97a8;
+  --line: #232933; --grid: #232933; --accent: #8fb4ff; --accent-ink: #c9d1db;
+  --area-alpha: 0.1; --stroke: 2.5; --radius: 22px; --tip-bg: #0d1015; --tip-ink: #f1f4f8;
+  --font-ui: "Outfit", system-ui, sans-serif; --font-mono: "Geist Mono", ui-monospace, monospace;
+  --s1: #8fb4ff; --s2: #c9d1db; --s3: #5f8fe0; --s4: #6e7a8e; --s5: #a7c4ff; --s6: #3e4a5e; --s7: #e3e8ef;
+  --bad: #ff8fa3; --line-series: #c9d1db;
+}
