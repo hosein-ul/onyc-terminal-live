@@ -1,6 +1,9 @@
 packages:
   - "apps/*"
   - "packages/*"
+allowBuilds:
+  "@embedded-postgres/windows-x64": true
+  esbuild: true
 minimumReleaseAgeExclude:
   - "@turbo/darwin-64@2.11.10"
   - "@turbo/darwin-arm64@2.11.10"

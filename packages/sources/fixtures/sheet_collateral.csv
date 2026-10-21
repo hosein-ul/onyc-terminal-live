@@ -1,0 +1,16 @@
+Asset,Amount (USD),Allocation,APY,Liquidity Layer,Proof of Assets,,,Snapshot date,20/10/2026
+Short-Term US T-Bills,161379341.65,55.68126182,3.656,,"""T-Bills Collateral""",,,Serve,TRUE
+Short-Term U.S. T-Bills,6151628.12,2.122517123,3.656,,"""T-Bills Collateral""",,,On-chain refreshed,20/10/2026
+USDC (Lending),7020657.08,2.422361134,6.560,,USDC (Jupiter) (Kamino),,,,
+USDG (Lending),3782247.44,1.305001668,7.820,,USDG (Jupiter) (Kamino),,,,
+USDG,67238318.52,23.19946518,3.656,Y,USDG (Solscan),USDG (Solscan),USDG (Solscan),Statement date,20/10/2026
+sUSDS,18289053.60,6.31033422,3.600,,sUSDS (Etherscan),,,,
+syrupUSDC,11215075.81,3.86957566,3.910,,syrupUSDC (Solscan),,,,
+sUSDe,5888223.84,2.031633851,4.810,,sUSDe (Solscan),,,,
+USCC,5068221.46,1.748705647,8.760,,USCC (Solscan),,,,
+USDv,1001946.55,0.3457050178,4.250,,USDv (Solscan),,,,
+USYC,435581.99,0.150290332,3.390,,USYC (Etherscan),,,,
+USDC,2242818.19,0.7738471701,0.000,,USDC (Solscan),,,,
+USD,113905.42,0.03930117355,0.000,,"""T-Bills Collateral""",,,,
+Total,289827019.67,100,,,,,,,
+AUM,283623613.83,,,,,,,,
