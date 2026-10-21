@@ -141,3 +141,11 @@ sections above, reality wins; the differences are:
 - **Helius** was not verified: no key was available. The client in `packages/sources/src/helius.ts` is untested against the live service.
 
 11. **Collateral sheet Total vs AUM** (289.83M vs 283.62M, same sheet, same date) is a new known conflict, in addition to §7.
+
+## 9. Phase 2 findings (2026-10-21)
+
+- **Price vectors decoded.** The active vector is the one with the latest start time; price compounds daily and snaps to the end of the day window (SPEC, metric definitions). The decoded schedule equals `/data/live-nav` to the last digit.
+- **NAV-implied APY matches the reported APY.** Compounded from the 7-day and 30-day NAV change it is 11.02%, the same as `/data/live-apy`. Return since 2025-05-28 is 14.75% (the "14.7%" in the Calm reference is that number).
+- **"Liquidity layer (15%)" is a policy share, not a balance.** 15% of AUM equals the Transparency page's liquidity layer exactly (42,424,107 on 282,827,380). The collateral sheet rows flagged as the liquidity layer sum to a different, measured figure (about 67.2M, 23.8% of AUM). The API shows both: the capital stack uses the policy share, coverage and the risk signal use the measured balance against the 15% target.
+- **Conflict 7 reproduces from our data**: bound capital divided by 0.85 is 179,673,794, the figure the official page showed.
+- **The capacity curve for redemptions is not in the program source either.** Only the parameters are shown.
