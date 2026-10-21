@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Dot Matrix</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Doto:wght@700;900&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#4B525C;text-decoration:none}a:hover{color:#0C0D10}
+</style>
+</helmet>
+<div style="background:#E6E9EE;background-image:radial-gradient(#B9BFC9 1px, transparent 1.2px);background-size:16px 16px;color:#0C0D10;font-family:'Geist',Arial,sans-serif;min-height:1060px;box-sizing:border-box;padding:0 40px 56px">
+<div style="max-width:1280px;margin:0 auto">
+
+<div style="display:flex;flex-wrap:wrap;gap:12px 32px;align-items:center;justify-content:space-between;padding:24px 0">
+<div style="font-family:'Doto','Geist Mono',monospace;font-weight:900;font-size:26px;letter-spacing:.02em">ONYC.TERMINAL</div>
+<nav style="display:flex;flex-wrap:wrap;gap:6px 6px;font-family:'Geist Mono',monospace;font-size:13px">
+<a href="#" style="background:#0C0D10;color:#E6E9EE;padding:7px 14px">Market</a><a href="#" style="padding:7px 14px;border:1px solid #0C0D10">Peg</a><a href="#" style="padding:7px 14px;border:1px solid #0C0D10">DeFi</a><a href="#" style="padding:7px 14px;border:1px solid #0C0D10">Wallets</a><a href="#" style="padding:7px 14px;border:1px solid #0C0D10">Points</a><a href="#" style="padding:7px 14px;border:1px solid #0C0D10">Risk</a>
+</nav>
+</div>
+
+<div style="display:flex;flex-wrap:wrap;gap:20px">
+<div style="flex:2 1 640px;min-width:0;background:#0C0D10;color:#E6E9EE;padding:28px 32px">
+<div style="font-family:'Geist Mono',monospace;font-size:12px;color:#9AA2AF;letter-spacing:.08em">NAV / ONYC · USDC · 20.10.2026</div>
+<div style="font-family:'Doto','Geist Mono',monospace;font-weight:900;font-size:168px;line-height:1;margin-top:10px;color:#3DDCC4;font-variant-numeric:tabular-nums">1.1575</div>
+<div style="font-family:'Geist Mono',monospace;font-size:13px;margin-top:6px;color:#9AA2AF">+14.72% SINCE 28.05.2025</div>
+</div>
+<div style="flex:1 1 320px;min-width:0;display:flex;flex-direction:column;gap:20px">
+<div style="background:#F7F8FA;border:1px solid #0C0D10;padding:20px 24px;flex:1"><div style="font-family:'Geist Mono',monospace;font-size:12px;color:#4B525C;letter-spacing:.08em">LIVE APY</div><div style="font-family:'Doto','Geist Mono',monospace;font-weight:900;font-size:64px;line-height:1.1;font-variant-numeric:tabular-nums">11.02%</div></div>
+<div style="background:#F7F8FA;border:1px solid #0C0D10;padding:20px 24px;flex:1"><div style="font-family:'Geist Mono',monospace;font-size:12px;color:#4B525C;letter-spacing:.08em">AUM</div><div style="font-family:'Doto','Geist Mono',monospace;font-weight:900;font-size:64px;line-height:1.1;font-variant-numeric:tabular-nums">$282.5M</div></div>
+</div>
+</div>
+
+<div style="display:flex;flex-wrap:wrap;gap:20px;margin-top:20px">
+<div style="flex:2 1 620px;min-width:0;background:#F7F8FA;border:1px solid #0C0D10;padding:22px 24px">
+<div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;font-family:'Geist Mono',monospace;font-size:12px;letter-spacing:.08em;margin-bottom:14px"><span>NAV HISTORY</span><span style="color:#4B525C">1.0090 → 1.1575</span></div>
+<svg viewBox="0 0 800 250" preserveAspectRatio="none" role="img" aria-label="NAV per ONyc rising from 1.009 to 1.157" style="width:100%;height:250px;display:block">
+<defs><pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse"><circle cx="3" cy="3" r="1" fill="#0C0D10" fill-opacity=".35"/></pattern></defs>
+<path d="{{navArea}}" fill="url(#hatch)"/>
+<path d="{{navLine}}" fill="none" stroke="#0C0D10" stroke-width="2.5" vector-effect="non-scaling-stroke"/>
+</svg>
+<div style="display:flex;justify-content:space-between;font-family:'Geist Mono',monospace;font-size:12px;color:#4B525C;margin-top:10px"><span>28.05.25</span><span>20.10.26</span></div>
+</div>
+<div style="flex:1 1 340px;min-width:0;background:#F7F8FA;border:1px solid #0C0D10;padding:22px 24px">
+<div style="font-family:'Geist Mono',monospace;font-size:12px;letter-spacing:.08em;margin-bottom:14px">SOURCE CHECK</div>
+<div style="display:flex;justify-content:space-between;padding:10px 0;border-top:1px dashed #0C0D10;font-family:'Geist Mono',monospace;font-size:14px"><span>NAV API</span><span>282.47</span></div>
+<div style="display:flex;justify-content:space-between;padding:10px 0;border-top:1px dashed #0C0D10;font-family:'Geist Mono',monospace;font-size:14px"><span>live-tvl</span><span>283.78</span></div>
+<div style="display:flex;justify-content:space-between;padding:10px 0;border-top:1px dashed #0C0D10;font-family:'Geist Mono',monospace;font-size:14px"><span>DefiLlama</span><span>293.84</span></div>
+<div style="display:flex;justify-content:space-between;padding:10px 0;border-top:1px solid #0C0D10;font-family:'Geist Mono',monospace;font-size:14px;font-weight:500"><span>SPREAD</span><span>11.37 / 4.0%</span></div>
+<div style="font-family:'Geist Mono',monospace;font-size:12px;letter-spacing:.08em;margin:22px 0 10px">TVL $M · MONTH-END</div>
+<svg viewBox="0 0 800 110" preserveAspectRatio="none" role="img" aria-label="TVL growth from 19 to 294 million dollars" style="width:100%;height:110px;display:block">
+<path d="{{tvlLine}}" fill="none" stroke="#0C0D10" stroke-width="2" vector-effect="non-scaling-stroke"/>
+</svg>
+</div>
+</div>
+
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1360,"height":1060}}'>
+class Component extends DCLogic {
+renderVals() {
+const mk = (pts, W, H, lo, hi) => {
+const p = pts.map(q => [(q[0] * W).toFixed(1), (H - ((q[1] - lo) / (hi - lo)) * H).toFixed(1)]);
+const line = 'M' + p.map(a => a[0] + ' ' + a[1]).join(' L');
+return { line: line, area: line + ' L' + W + ' ' + H + ' L0 ' + H + ' Z' };
+};
+const nav = [[0,1.008972645],[455,1.138330223],[456,1.139409566],[481,1.147921275],[491,1.151213761],[510,1.157495524]].map(a => [a[0] / 510, a[1]]);
+const tv = [19.38,24.4,29.25,34.24,41.15,65.58,87.57,115.68,145.94,143.71,190.09,205.71,247.36,284.88,292.22,293.84];
+const tvl = tv.map((v, i) => [i / (tv.length - 1), v]);
+const n = mk(nav, 800, 250, 1.0, 1.17);
+const t = mk(tvl, 800, 110, 0, 320);
+return { navLine: n.line, navArea: n.area, tvlLine: t.line };
+}
+}
+</script>
+</body>
+</html>

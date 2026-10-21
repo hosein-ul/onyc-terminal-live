@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Pastel Blocks</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#101426;text-decoration:none}a:hover{opacity:.65}
+</style>
+</helmet>
+<div style="background:#FFFFFF;color:#101426;font-family:'Onest',Arial,sans-serif;min-height:1240px;box-sizing:border-box;padding:28px 32px 56px">
+<div style="max-width:1296px;margin:0 auto">
+
+<div style="display:flex;flex-wrap:wrap;gap:12px 24px;align-items:center;justify-content:space-between;margin-bottom:28px">
+<div style="font-weight:800;font-size:22px;letter-spacing:-.02em">onyc terminal</div>
+<nav style="display:flex;flex-wrap:wrap;gap:8px;font-size:14px;font-weight:600">
+<a href="#" style="background:#101426;color:#FFFFFF;padding:10px 18px;border-radius:14px">Market</a><a href="#" style="background:#EEF1F6;padding:10px 18px;border-radius:14px">Peg</a><a href="#" style="background:#EEF1F6;padding:10px 18px;border-radius:14px">DeFi</a><a href="#" style="background:#EEF1F6;padding:10px 18px;border-radius:14px">Wallets</a><a href="#" style="background:#EEF1F6;padding:10px 18px;border-radius:14px">Points</a><a href="#" style="background:#EEF1F6;padding:10px 18px;border-radius:14px">Risk</a>
+</nav>
+</div>
+
+<h1 style="margin:0 0 28px;font-weight:800;font-size:58px;line-height:1.05;letter-spacing:-.035em;max-width:900px;text-wrap:balance">ONyc is worth <span style="background:#CFE3FF;padding:0 12px;border-radius:16px">1.1575 USDC</span> and earning <span style="background:#CDEFE0;padding:0 12px;border-radius:16px">11.02%</span> a year.</h1>
+
+<div style="display:flex;flex-wrap:wrap;gap:16px;align-items:flex-start">
+
+<div style="flex:1 1 380px;min-width:0;display:flex;flex-direction:column;gap:16px">
+<div style="background:#CFE3FF;border-radius:30px;padding:28px">
+<div style="font-weight:600;font-size:15px">NAV per ONyc</div>
+<div style="font-weight:800;font-size:72px;line-height:1.05;letter-spacing:-.04em;font-variant-numeric:tabular-nums">1.1575</div>
+<svg viewBox="0 0 400 130" preserveAspectRatio="none" role="img" aria-label="NAV rising since May 2025" style="width:100%;height:130px;display:block;margin-top:10px">
+<path d="{{navLineS}}" fill="none" stroke="#101426" stroke-width="3.5" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>
+</svg>
+<div style="font-size:13px;font-weight:600;margin-top:8px">+14.72% since 28 May 2025</div>
+</div>
+<div style="background:#E1D9FF;border-radius:30px;padding:28px">
+<div style="font-weight:700;font-size:18px;margin-bottom:12px">Points program</div>
+<div style="font-weight:800;font-size:44px;letter-spacing:-.03em">24,727 <span style="font-size:16px;font-weight:600;letter-spacing:0">wallets</span></div>
+<div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;font-size:14px;font-weight:600"><span style="background:#FFFFFF;padding:7px 12px;border-radius:12px">Hodl 1×</span><span style="background:#FFFFFF;padding:7px 12px;border-radius:12px">LP 2×</span><span style="background:#FFFFFF;padding:7px 12px;border-radius:12px">Lend 3–4×</span><span style="background:#FFFFFF;padding:7px 12px;border-radius:12px">YT 5×</span><span style="background:#101426;color:#FFFFFF;padding:7px 12px;border-radius:12px">Loop 6×</span></div>
+</div>
+</div>
+
+<div style="flex:1 1 380px;min-width:0;display:flex;flex-direction:column;gap:16px">
+<div style="display:flex;gap:16px;flex-wrap:wrap">
+<div style="flex:1 1 160px;background:#CDEFE0;border-radius:30px;padding:24px"><div style="font-weight:600;font-size:14px">Live APY</div><div style="font-weight:800;font-size:40px;letter-spacing:-.03em">11.02%</div></div>
+<div style="flex:1 1 160px;background:#FAD4E4;border-radius:30px;padding:24px"><div style="font-weight:600;font-size:14px">AUM</div><div style="font-weight:800;font-size:40px;letter-spacing:-.03em">$282M</div></div>
+</div>
+<div style="background:#F3F5F9;border-radius:30px;padding:28px">
+<div style="font-weight:700;font-size:18px">TVL, month-end</div>
+<div style="font-size:14px;color:#44506B;margin:2px 0 14px">$19M in Jul 2025 to $294M now</div>
+<div style="display:flex;align-items:flex-end;gap:5px;height:150px">
+<sc-for list="{{bars}}" as="b" hint-placeholder-count="16"><div style="flex:1;height:{{b.h}}%;background:#101426;opacity:{{b.o}};border-radius:8px 8px 3px 3px"></div></sc-for>
+</div>
+</div>
+<div style="background:#FFE9A8;border-radius:30px;padding:24px 28px">
+<div style="font-weight:700;font-size:18px">Fees</div>
+<div style="display:flex;flex-wrap:wrap;gap:8px 28px;margin-top:10px;font-size:15px"><span>Management <b>0.75%</b></span><span>Performance <b>20%</b></span><span>Redemption <b>≥0.30%</b></span></div>
+</div>
+</div>
+
+<div style="flex:1 1 380px;min-width:0;display:flex;flex-direction:column;gap:16px">
+<div style="background:#F3F5F9;border-radius:30px;padding:28px">
+<div style="font-weight:700;font-size:18px;margin-bottom:12px">Last 29 days</div>
+<div style="font-size:14px;color:#44506B">Supply</div>
+<div style="font-weight:800;font-size:36px;letter-spacing:-.03em">244.0M <span style="font-size:15px;color:#9A1B3A;font-weight:700;letter-spacing:0">−7.4%</span></div>
+<div style="font-size:14px;color:#44506B;margin-top:14px">AUM</div>
+<div style="font-weight:800;font-size:36px;letter-spacing:-.03em">$282.5M <span style="font-size:15px;color:#9A1B3A;font-weight:700;letter-spacing:0">−6.7%</span></div>
+</div>
+<div style="background:#101426;color:#FFFFFF;border-radius:30px;padding:28px">
+<div style="font-weight:700;font-size:18px">Same metric, three answers</div>
+<div style="display:flex;justify-content:space-between;padding:11px 0;border-top:1px solid #2C3350;margin-top:12px;font-size:15px"><span style="color:#B7C0DA">NAV API</span><b>$282.47M</b></div>
+<div style="display:flex;justify-content:space-between;padding:11px 0;border-top:1px solid #2C3350;font-size:15px"><span style="color:#B7C0DA">Live TVL</span><b>$283.78M</b></div>
+<div style="display:flex;justify-content:space-between;padding:11px 0;border-top:1px solid #2C3350;font-size:15px"><span style="color:#B7C0DA">DefiLlama</span><b>$293.84M</b></div>
+<div style="background:#FFE9A8;color:#101426;border-radius:14px;padding:9px 14px;font-weight:700;font-size:14px;margin-top:8px">4.0% spread — flagged</div>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1360,"height":1240}}'>
+class Component extends DCLogic {
+renderVals() {
+const nav = [[0,1.008972645],[455,1.138330223],[456,1.139409566],[481,1.147921275],[491,1.151213761],[510,1.157495524]].map(a => [a[0] / 510, a[1]]);
+const p = nav.map(q => [(q[0] * 400).toFixed(1), (130 - ((q[1] - 1.0) / 0.17) * 130).toFixed(1)]);
+const tv = [19.38,24.4,29.25,34.24,41.15,65.58,87.57,115.68,145.94,143.71,190.09,205.71,247.36,284.88,292.22,293.84];
+const bars = tv.map((v, i) => ({ h: Math.round(v / 300 * 100), o: i === tv.length - 1 ? 1 : 0.4 }));
+return { navLineS: 'M' + p.map(a => a[0] + ' ' + a[1]).join(' L'), bars: bars };
+}
+}
+</script>
+</body>
+</html>

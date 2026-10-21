@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Cobalt Field</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#BFCBFF;text-decoration:none}a:hover{color:#FFFFFF}
+</style>
+</helmet>
+<div style="background:#1535E8;color:#FFFFFF;font-family:'Bricolage Grotesque',Arial,sans-serif;min-height:1060px;box-sizing:border-box;padding:0 40px 56px">
+<div style="max-width:1280px;margin:0 auto">
+
+<div style="display:flex;flex-wrap:wrap;gap:12px 36px;align-items:center;justify-content:space-between;padding:26px 0">
+<div style="font-weight:800;font-size:22px;letter-spacing:-.02em">onyc terminal</div>
+<nav style="display:flex;flex-wrap:wrap;gap:6px 26px;font-size:15px;font-weight:600">
+<a href="#" style="color:#fff">Market</a><a href="#">Peg &amp; liquidity</a><a href="#">DeFi map</a><a href="#">Wallet lab</a><a href="#">Points</a><a href="#">Risk</a>
+</nav>
+</div>
+
+<div style="display:flex;flex-wrap:wrap;gap:32px 48px;padding:28px 0 40px;align-items:flex-end">
+<div style="flex:1 1 640px;min-width:0">
+<div style="font-family:'Geist Mono',monospace;font-size:13px;color:#BFCBFF">NAV per ONyc · 20 Oct 2026</div>
+<div style="font-weight:800;font-size:220px;line-height:.86;letter-spacing:-.06em;margin-top:14px;font-variant-numeric:tabular-nums">1.1575</div>
+</div>
+<div style="flex:1 1 300px;min-width:0;display:flex;flex-direction:column;gap:14px">
+<div style="background:#FFFFFF;color:#0A1FA8;border-radius:999px;padding:18px 28px;display:flex;justify-content:space-between;align-items:baseline"><span style="font-weight:600;font-size:15px">Live APY</span><span style="font-weight:800;font-size:44px;letter-spacing:-.03em;font-variant-numeric:tabular-nums">11.02%</span></div>
+<div style="border:2px solid #FFFFFF;border-radius:999px;padding:18px 28px;display:flex;justify-content:space-between;align-items:baseline"><span style="font-weight:600;font-size:15px">AUM</span><span style="font-weight:800;font-size:44px;letter-spacing:-.03em;font-variant-numeric:tabular-nums">$282M</span></div>
+</div>
+</div>
+
+<div style="display:flex;flex-wrap:wrap;gap:20px">
+<div style="flex:2 1 620px;min-width:0;background:#0E24B8;border-radius:28px;padding:28px">
+<div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:18px"><span style="font-weight:800;font-size:20px;letter-spacing:-.01em">Growth since launch</span><span style="font-family:'Geist Mono',monospace;font-size:13px;color:#BFCBFF">+14.72% · 510 days</span></div>
+<svg viewBox="0 0 800 260" preserveAspectRatio="none" role="img" aria-label="NAV per ONyc rising from 1.009 to 1.157" style="width:100%;height:260px;display:block">
+<path d="{{navArea}}" fill="#FFFFFF" fill-opacity=".14"/>
+<path d="{{navLine}}" fill="none" stroke="#FFFFFF" stroke-width="3.5" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>
+</svg>
+<div style="display:flex;justify-content:space-between;font-family:'Geist Mono',monospace;font-size:12px;color:#BFCBFF;margin-top:10px"><span>28.05.25 · 1.0090</span><span>20.10.26 · 1.1575</span></div>
+</div>
+<div style="flex:1 1 340px;min-width:0;display:flex;flex-direction:column;gap:20px">
+<div style="background:#FFFFFF;color:#0A1FA8;border-radius:28px;padding:26px 28px">
+<div style="font-weight:600;font-size:15px">Circulating supply</div>
+<div style="font-weight:800;font-size:52px;letter-spacing:-.04em;margin-top:6px;font-variant-numeric:tabular-nums">244.03M</div>
+<div style="font-family:'Geist Mono',monospace;font-size:12px;margin-top:6px">−7.4% in 29 days</div>
+</div>
+<div style="background:#0E24B8;border-radius:28px;padding:26px 28px">
+<div style="font-weight:600;font-size:15px;color:#BFCBFF">Three sources, one metric</div>
+<div style="display:flex;justify-content:space-between;margin-top:14px;font-family:'Geist Mono',monospace;font-size:14px"><span>NAV API</span><span>282.47</span></div>
+<div style="display:flex;justify-content:space-between;margin-top:8px;font-family:'Geist Mono',monospace;font-size:14px"><span>live-tvl</span><span>283.78</span></div>
+<div style="display:flex;justify-content:space-between;margin-top:8px;font-family:'Geist Mono',monospace;font-size:14px"><span>DefiLlama</span><span>293.84</span></div>
+<div style="display:flex;justify-content:space-between;margin-top:14px;padding-top:12px;border-top:1px solid #4A63F0;font-family:'Geist Mono',monospace;font-size:14px"><span>spread</span><span>$11.37M</span></div>
+</div>
+</div>
+</div>
+
+<div style="margin-top:20px;background:#0E24B8;border-radius:28px;padding:28px">
+<div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:18px"><span style="font-weight:800;font-size:20px;letter-spacing:-.01em">TVL, month-end</span><span style="font-family:'Geist Mono',monospace;font-size:13px;color:#BFCBFF">$19.4M → $293.8M</span></div>
+<svg viewBox="0 0 800 130" preserveAspectRatio="none" role="img" aria-label="TVL growth from 19 to 294 million dollars" style="width:100%;height:130px;display:block">
+<path d="{{tvlArea}}" fill="#FFFFFF" fill-opacity=".14"/>
+<path d="{{tvlLine}}" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>
+</svg>
+</div>
+
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1360,"height":1060}}'>
+class Component extends DCLogic {
+renderVals() {
+const mk = (pts, W, H, lo, hi) => {
+const p = pts.map(q => [(q[0] * W).toFixed(1), (H - ((q[1] - lo) / (hi - lo)) * H).toFixed(1)]);
+const line = 'M' + p.map(a => a[0] + ' ' + a[1]).join(' L');
+return { line: line, area: line + ' L' + W + ' ' + H + ' L0 ' + H + ' Z' };
+};
+const nav = [[0,1.008972645],[455,1.138330223],[456,1.139409566],[481,1.147921275],[491,1.151213761],[510,1.157495524]].map(a => [a[0] / 510, a[1]]);
+const tv = [19.38,24.4,29.25,34.24,41.15,65.58,87.57,115.68,145.94,143.71,190.09,205.71,247.36,284.88,292.22,293.84];
+const tvl = tv.map((v, i) => [i / (tv.length - 1), v]);
+const n = mk(nav, 800, 260, 1.0, 1.17);
+const t = mk(tvl, 800, 130, 0, 320);
+return { navLine: n.line, navArea: n.area, tvlLine: t.line, tvlArea: t.area };
+}
+}
+</script>
+</body>
+</html>
