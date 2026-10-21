@@ -1,7 +1,6 @@
 packages:
   - "apps/*"
   - "packages/*"
-  - "spike"
 allowBuilds:
   "@embedded-postgres/windows-x64": true
   esbuild: true

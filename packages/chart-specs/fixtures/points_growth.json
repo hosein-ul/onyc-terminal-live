@@ -1,0 +1,302 @@
+{
+  "data": {
+    "series": [
+      {
+        "date": "2026-09-21",
+        "base": 222746786131,
+        "referral": 6150068945,
+        "total": 228896855076,
+        "dailyBase": 222746786131,
+        "dailyReferral": 6150068945,
+        "dailyTotal": 228896855076
+      },
+      {
+        "date": "2026-09-22",
+        "base": 224339608522,
+        "referral": 6222615924,
+        "total": 230562224446,
+        "dailyBase": 1592822391,
+        "dailyReferral": 72546979,
+        "dailyTotal": 1665369370
+      },
+      {
+        "date": "2026-09-23",
+        "base": 225618476929,
+        "referral": 6271967660,
+        "total": 231890444589,
+        "dailyBase": 1278868407,
+        "dailyReferral": 49351736,
+        "dailyTotal": 1328220143
+      },
+      {
+        "date": "2026-09-24",
+        "base": 226897934477,
+        "referral": 6322219093,
+        "total": 233220153570,
+        "dailyBase": 1279457548,
+        "dailyReferral": 50251433,
+        "dailyTotal": 1329708981
+      },
+      {
+        "date": "2026-09-25",
+        "base": 228175505305,
+        "referral": 6372940930,
+        "total": 234548446235,
+        "dailyBase": 1277570828,
+        "dailyReferral": 50721837,
+        "dailyTotal": 1328292665
+      },
+      {
+        "date": "2026-09-26",
+        "base": 229445281233,
+        "referral": 6423945028,
+        "total": 235869226261,
+        "dailyBase": 1269775928,
+        "dailyReferral": 51004098,
+        "dailyTotal": 1320780026
+      },
+      {
+        "date": "2026-09-27",
+        "base": 230719237660,
+        "referral": 6475240036,
+        "total": 237194477696,
+        "dailyBase": 1273956427,
+        "dailyReferral": 51295008,
+        "dailyTotal": 1325251435
+      },
+      {
+        "date": "2026-09-28",
+        "base": 231995325869,
+        "referral": 6525936661,
+        "total": 238521262530,
+        "dailyBase": 1276088209,
+        "dailyReferral": 50696625,
+        "dailyTotal": 1326784834
+      },
+      {
+        "date": "2026-09-29",
+        "base": 233268949047,
+        "referral": 6576683890,
+        "total": 239845632937,
+        "dailyBase": 1273623178,
+        "dailyReferral": 50747229,
+        "dailyTotal": 1324370407
+      },
+      {
+        "date": "2026-09-30",
+        "base": 234516819787,
+        "referral": 6627585827,
+        "total": 241144405614,
+        "dailyBase": 1247870740,
+        "dailyReferral": 50901937,
+        "dailyTotal": 1298772677
+      },
+      {
+        "date": "2026-10-01",
+        "base": 235747006242,
+        "referral": 6678675442,
+        "total": 242425681684,
+        "dailyBase": 1230186455,
+        "dailyReferral": 51089615,
+        "dailyTotal": 1281276070
+      },
+      {
+        "date": "2026-10-02",
+        "base": 236943963751,
+        "referral": 6727501724,
+        "total": 243671465475,
+        "dailyBase": 1196957509,
+        "dailyReferral": 48826282,
+        "dailyTotal": 1245783791
+      },
+      {
+        "date": "2026-10-03",
+        "base": 237438800746,
+        "referral": 6792788606,
+        "total": 244231589352,
+        "dailyBase": 494836995,
+        "dailyReferral": 65286882,
+        "dailyTotal": 560123877
+      },
+      {
+        "date": "2026-10-04",
+        "base": 238570899976,
+        "referral": 6842148220,
+        "total": 245413048196,
+        "dailyBase": 1132099230,
+        "dailyReferral": 49359614,
+        "dailyTotal": 1181458844
+      },
+      {
+        "date": "2026-10-05",
+        "base": 239711692619,
+        "referral": 6893091575,
+        "total": 246604784194,
+        "dailyBase": 1140792643,
+        "dailyReferral": 50943355,
+        "dailyTotal": 1191735998
+      },
+      {
+        "date": "2026-10-06",
+        "base": 240854776469,
+        "referral": 6944604321,
+        "total": 247799380790,
+        "dailyBase": 1143083850,
+        "dailyReferral": 51512746,
+        "dailyTotal": 1194596596
+      },
+      {
+        "date": "2026-10-07",
+        "base": 242006220060,
+        "referral": 6996155878,
+        "total": 249002375938,
+        "dailyBase": 1151443591,
+        "dailyReferral": 51551557,
+        "dailyTotal": 1202995148
+      },
+      {
+        "date": "2026-10-08",
+        "base": 243163869059,
+        "referral": 7047775825,
+        "total": 250211644884,
+        "dailyBase": 1157648999,
+        "dailyReferral": 51619947,
+        "dailyTotal": 1209268946
+      },
+      {
+        "date": "2026-10-09",
+        "base": 244312449273,
+        "referral": 7099414064,
+        "total": 251411863337,
+        "dailyBase": 1148580214,
+        "dailyReferral": 51638239,
+        "dailyTotal": 1200218453
+      },
+      {
+        "date": "2026-10-10",
+        "base": 245464390681,
+        "referral": 7151717026,
+        "total": 252616107707,
+        "dailyBase": 1151941408,
+        "dailyReferral": 52302962,
+        "dailyTotal": 1204244370
+      },
+      {
+        "date": "2026-10-11",
+        "base": 246629219373,
+        "referral": 7205328264,
+        "total": 253834547637,
+        "dailyBase": 1164828692,
+        "dailyReferral": 53611238,
+        "dailyTotal": 1218439930
+      },
+      {
+        "date": "2026-10-12",
+        "base": 247787560564,
+        "referral": 7257470150,
+        "total": 255045030714,
+        "dailyBase": 1158341191,
+        "dailyReferral": 52141886,
+        "dailyTotal": 1210483077
+      },
+      {
+        "date": "2026-10-13",
+        "base": 248938887478,
+        "referral": 7308536474,
+        "total": 256247423952,
+        "dailyBase": 1151326914,
+        "dailyReferral": 51066324,
+        "dailyTotal": 1202393238
+      },
+      {
+        "date": "2026-10-14",
+        "base": 250104618043,
+        "referral": 7361906413,
+        "total": 257466524456,
+        "dailyBase": 1165730565,
+        "dailyReferral": 53369939,
+        "dailyTotal": 1219100504
+      },
+      {
+        "date": "2026-10-15",
+        "base": 250913709656,
+        "referral": 7396011382,
+        "total": 258309721038,
+        "dailyBase": 809091613,
+        "dailyReferral": 34104969,
+        "dailyTotal": 843196582
+      },
+      {
+        "date": "2026-10-16",
+        "base": 251731570951,
+        "referral": 7430559633,
+        "total": 259162130584,
+        "dailyBase": 817861295,
+        "dailyReferral": 34548251,
+        "dailyTotal": 852409546
+      },
+      {
+        "date": "2026-10-17",
+        "base": 253484908790,
+        "referral": 7518702290,
+        "total": 261003611080,
+        "dailyBase": 1753337839,
+        "dailyReferral": 88142657,
+        "dailyTotal": 1841480496
+      },
+      {
+        "date": "2026-10-18",
+        "base": 254632524084,
+        "referral": 7570620062,
+        "total": 262203144146,
+        "dailyBase": 1147615294,
+        "dailyReferral": 51917772,
+        "dailyTotal": 1199533066
+      },
+      {
+        "date": "2026-10-19",
+        "base": 255789814257,
+        "referral": 7623006934,
+        "total": 263412821191,
+        "dailyBase": 1157290173,
+        "dailyReferral": 52386872,
+        "dailyTotal": 1209677045
+      },
+      {
+        "date": "2026-10-20",
+        "base": 257805109728,
+        "referral": 7688727966,
+        "total": 265493837694,
+        "dailyBase": 2015295471,
+        "dailyReferral": 65721032,
+        "dailyTotal": 2081016503
+      },
+      {
+        "date": "2026-10-21",
+        "base": 258971181202,
+        "referral": 7741246949,
+        "total": 266712428151,
+        "dailyBase": 1166071474,
+        "dailyReferral": 52518983,
+        "dailyTotal": 1218590457
+      }
+    ],
+    "activeMultiplier": {
+      "value": 0.0001,
+      "since": "2026-10-03",
+      "note": "Reported by OnRe on leaderboard rows. OnRe does not explain what it applies to."
+    }
+  },
+  "meta": {
+    "series": {
+      "source": "OnRe rewards API (points growth)",
+      "fetchedAt": "2026-10-21T15:28:16.326Z",
+      "stale": false
+    },
+    "activeMultiplier": {
+      "source": "OnRe rewards API (leaderboard crawl)",
+      "fetchedAt": "2026-10-21T15:31:10.028Z",
+      "stale": false
+    }
+  }
+}

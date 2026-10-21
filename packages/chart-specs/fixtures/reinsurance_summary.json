@@ -1,0 +1,259 @@
+{
+  "data": {
+    "totals": {
+      "layers": 30,
+      "capital": 152722725,
+      "premium": 34470495,
+      "expectedLoss": 19409626,
+      "expectedYield": 0.14070336976111447,
+      "premiumToEL": 1.7759484391919762,
+      "capitalOverAum": 0.5399797824761914
+    },
+    "byPeril": [
+      { "key": "US", "capital": 62937569, "share": 0.4121034967127518, "layers": 10 },
+      { "key": "Worldwide", "capital": 36967045, "share": 0.24205333554649447, "layers": 6 },
+      { "key": "Multi-region", "capital": 29874075, "share": 0.1956098871336928, "layers": 7 },
+      { "key": "North America", "capital": 11962125, "share": 0.07832576978966294, "layers": 3 },
+      { "key": "Contingency", "capital": 5864302, "share": 0.03839835885589391, "layers": 1 },
+      { "key": "Australia", "capital": 2914483, "share": 0.01908349264983322, "layers": 1 },
+      { "key": "Japan", "capital": 2203126, "share": 0.014425659311670874, "layers": 2 }
+    ],
+    "byStructure": [
+      { "key": "Per occurrence", "capital": 83272752, "share": 0.545254493069057, "layers": 18 },
+      { "key": "Quota share", "capital": 35910114, "share": 0.23513274792602085, "layers": 2 },
+      { "key": "Aggregate", "capital": 19879500, "share": 0.13016726882001353, "layers": 5 },
+      { "key": "ILW", "capital": 13660359, "share": 0.08944549018490863, "layers": 5 }
+    ],
+    "renewalCalendar": [
+      { "key": "2026-07", "capital": 5864302, "share": 0.03839835885589391, "layers": 1 },
+      { "key": "2026-11", "capital": 2203126, "share": 0.014425659311670874, "layers": 2 },
+      { "key": "2026-12", "capital": 71048603, "share": 0.4652130388584934, "layers": 14 },
+      { "key": "2027-03", "capital": 10225750, "share": 0.06695630921986234, "layers": 4 },
+      { "key": "2027-04", "capital": 3811500, "share": 0.024956993139036775, "layers": 1 },
+      { "key": "2027-05", "capital": 16007125, "share": 0.1048116775024804, "layers": 4 },
+      { "key": "2027-06", "capital": 41253569, "share": 0.2701206974927929, "layers": 3 },
+      { "key": "2027-07", "capital": 2308750, "share": 0.015117265619769423, "layers": 1 }
+    ],
+    "pastRenewal": { "count": 1, "capital": 5864302, "layerIds": ["9000002"] },
+    "history": [
+      {
+        "layerId": "9000000",
+        "uiLayerNumber": "0000",
+        "firstSeen": "2026-10-21T15:28:25.072Z",
+        "changes": [{ "ts": "2026-10-21T15:28:25.072Z", "status": "Bound", "capital": 1101563 }]
+      },
+      {
+        "layerId": "9000001",
+        "uiLayerNumber": "0001",
+        "firstSeen": "2026-10-21T15:28:25.072Z",
+        "changes": [{ "ts": "2026-10-21T15:28:25.072Z", "status": "Bound", "capital": 1101563 }]
+      },
+      {
+        "layerId": "9000002",
+        "uiLayerNumber": "0002",
+        "firstSeen": "2026-10-21T15:28:25.072Z",
+        "changes": [{ "ts": "2026-10-21T15:28:25.072Z", "status": "Bound", "capital": 5864302 }]
+      },
+      {
+        "layerId": "9000003",
+        "uiLayerNumber": "0003",
+        "firstSeen": "2026-10-21T15:28:25.072Z",
+        "changes": [{ "ts": "2026-10-21T15:28:25.072Z", "status": "Bound", "capital": 1176000 }]
+      },
+      {
+        "layerId": "9000004",
+        "uiLayerNumber": "0004",
+        "firstSeen": "2026-10-21T15:28:25.072Z",
+        "changes": [{ "ts": "2026-10-21T15:28:25.072Z", "status": "Bound", "capital": 2996000 }]
+      },
+      {
+        "layerId": "9000005",
+        "uiLayerNumber": "0005",
+        "firstSeen": "2026-10-21T15:28:25.072Z",
+        "changes": [{ "ts": "2026-10-21T15:28:25.072Z", "status": "Bound", "capital": 4630250 }]
+      },
+      {
+        "layerId": "9000006",
+        "uiLayerNumber": "0006",
+        "firstSeen": "2026-10-21T15:28:25.072Z",
+        "changes": [{ "ts": "2026-10-21T15:28:25.072Z", "status": "Bound", "capital": 2914483 }]
+      },
+      {
+        "layerId": "9000007",
+        "uiLayerNumber": "0007",
+        "firstSeen": "2026-10-21T15:28:25.072Z",
+        "changes": [{ "ts": "2026-10-21T15:28:25.072Z", "status": "Bound", "capital": 1155600 }]
+      },
+      {
+        "layerId": "9000008",
+        "uiLayerNumber": "0008",
+        "firstSeen": "2026-10-21T15:28:25.072Z",
+        "changes": [{ "ts": "2026-10-21T15:28:25.072Z", "status": "Bound", "capital": 3155600 }]
+      },
+      {
+        "layerId": "9000009",
+        "uiLayerNumber": "0009",
+        "firstSeen": "2026-10-21T15:28:25.072Z",
+        "changes": [{ "ts": "2026-10-21T15:28:25.072Z", "status": "Bound", "capital": 4437500 }]
+      },
+      {
+        "layerId": "9000010",
+        "uiLayerNumber": "0010",
+        "firstSeen": "2026-10-21T15:28:25.072Z",
+        "changes": [{ "ts": "2026-10-21T15:28:25.072Z", "status": "Bound", "capital": 3912500 }]
+      },
+      {
+        "layerId": "9000011",
+        "uiLayerNumber": "0011",
+        "firstSeen": "2026-10-21T15:28:25.072Z",
+        "changes": [{ "ts": "2026-10-21T15:28:25.072Z", "status": "Bound", "capital": 16040000 }]
+      },
+      {
+        "layerId": "9000012",
+        "uiLayerNumber": "0012",
+        "firstSeen": "2026-10-21T15:28:25.072Z",
+        "changes": [{ "ts": "2026-10-21T15:28:25.072Z", "status": "Bound", "capital": 946250 }]
+      },
+      {
+        "layerId": "9000013",
+        "uiLayerNumber": "0013",
+        "firstSeen": "2026-10-21T15:28:25.072Z",
+        "changes": [{ "ts": "2026-10-21T15:28:25.072Z", "status": "Bound", "capital": 3560000 }]
+      },
+      {
+        "layerId": "9000014",
+        "uiLayerNumber": "0014",
+        "firstSeen": "2026-10-21T15:28:25.072Z",
+        "changes": [{ "ts": "2026-10-21T15:28:25.072Z", "status": "Bound", "capital": 2072500 }]
+      },
+      {
+        "layerId": "9000015",
+        "uiLayerNumber": "0015",
+        "firstSeen": "2026-10-21T15:28:25.072Z",
+        "changes": [{ "ts": "2026-10-21T15:28:25.072Z", "status": "Bound", "capital": 2190625 }]
+      },
+      {
+        "layerId": "9000016",
+        "uiLayerNumber": "0016",
+        "firstSeen": "2026-10-21T15:28:25.072Z",
+        "changes": [{ "ts": "2026-10-21T15:28:25.072Z", "status": "Bound", "capital": 3811500 }]
+      },
+      {
+        "layerId": "9000017",
+        "uiLayerNumber": "0017",
+        "firstSeen": "2026-10-21T15:28:25.072Z",
+        "changes": [{ "ts": "2026-10-21T15:28:25.072Z", "status": "Bound", "capital": 3064000 }]
+      },
+      {
+        "layerId": "9000018",
+        "uiLayerNumber": "0018",
+        "firstSeen": "2026-10-21T15:28:25.072Z",
+        "changes": [{ "ts": "2026-10-21T15:28:25.072Z", "status": "Bound", "capital": 4460625 }]
+      },
+      {
+        "layerId": "9000019",
+        "uiLayerNumber": "0019",
+        "firstSeen": "2026-10-21T15:28:25.072Z",
+        "changes": [{ "ts": "2026-10-21T15:28:25.072Z", "status": "Bound", "capital": 5711250 }]
+      },
+      {
+        "layerId": "9000020",
+        "uiLayerNumber": "0020",
+        "firstSeen": "2026-10-21T15:28:25.072Z",
+        "changes": [{ "ts": "2026-10-21T15:28:25.072Z", "status": "Bound", "capital": 2771250 }]
+      },
+      {
+        "layerId": "9000021",
+        "uiLayerNumber": "0021",
+        "firstSeen": "2026-10-21T15:28:25.072Z",
+        "changes": [{ "ts": "2026-10-21T15:28:25.072Z", "status": "Bound", "capital": 10280250 }]
+      },
+      {
+        "layerId": "9000022",
+        "uiLayerNumber": "0022",
+        "firstSeen": "2026-10-21T15:28:25.072Z",
+        "changes": [{ "ts": "2026-10-21T15:28:25.072Z", "status": "Bound", "capital": 8920000 }]
+      },
+      {
+        "layerId": "9000023",
+        "uiLayerNumber": "0023",
+        "firstSeen": "2026-10-21T15:28:25.072Z",
+        "changes": [{ "ts": "2026-10-21T15:28:25.072Z", "status": "Bound", "capital": 5764500 }]
+      },
+      {
+        "layerId": "9000024",
+        "uiLayerNumber": "0024",
+        "firstSeen": "2026-10-21T15:28:25.072Z",
+        "changes": [{ "ts": "2026-10-21T15:28:25.072Z", "status": "Bound", "capital": 10701295 }]
+      },
+      {
+        "layerId": "9000025",
+        "uiLayerNumber": "0025",
+        "firstSeen": "2026-10-21T15:28:25.072Z",
+        "changes": [{ "ts": "2026-10-21T15:28:25.072Z", "status": "Bound", "capital": 2297500 }]
+      },
+      {
+        "layerId": "9000026",
+        "uiLayerNumber": "0026",
+        "firstSeen": "2026-10-21T15:28:25.072Z",
+        "changes": [{ "ts": "2026-10-21T15:28:25.072Z", "status": "Bound", "capital": 2308750 }]
+      },
+      {
+        "layerId": "9000027",
+        "uiLayerNumber": "0027",
+        "firstSeen": "2026-10-21T15:28:25.072Z",
+        "changes": [{ "ts": "2026-10-21T15:28:25.072Z", "status": "Bound", "capital": 3647000 }]
+      },
+      {
+        "layerId": "9000028",
+        "uiLayerNumber": "0028",
+        "firstSeen": "2026-10-21T15:28:25.072Z",
+        "changes": [{ "ts": "2026-10-21T15:28:25.072Z", "status": "Bound", "capital": 25208819 }]
+      },
+      {
+        "layerId": "9000031",
+        "uiLayerNumber": "0031",
+        "firstSeen": "2026-10-21T15:28:25.072Z",
+        "changes": [{ "ts": "2026-10-21T15:28:25.072Z", "status": "Bound", "capital": 6521250 }]
+      }
+    ],
+    "historyNote": "First seen is when this tool first observed the layer in the published sheet, not the layer's inception date."
+  },
+  "meta": {
+    "totals": {
+      "source": "OnRe published sheet: reinsurance layers",
+      "fetchedAt": "2026-10-21T15:33:03.795Z",
+      "stale": true
+    },
+    "byPeril": {
+      "source": "OnRe published sheet: reinsurance layers",
+      "fetchedAt": "2026-10-21T15:33:03.795Z",
+      "stale": true
+    },
+    "byStructure": {
+      "source": "OnRe published sheet: reinsurance layers",
+      "fetchedAt": "2026-10-21T15:33:03.795Z",
+      "stale": true
+    },
+    "renewalCalendar": {
+      "source": "OnRe published sheet: reinsurance layers",
+      "fetchedAt": "2026-10-21T15:33:03.795Z",
+      "stale": true
+    },
+    "pastRenewal": {
+      "source": "OnRe published sheet: reinsurance layers",
+      "fetchedAt": "2026-10-21T15:33:03.795Z",
+      "stale": true
+    },
+    "history": {
+      "source": "OnRe published sheet: reinsurance layers",
+      "fetchedAt": "2026-10-21T15:33:03.795Z",
+      "stale": true
+    },
+    "historyNote": {
+      "source": "Computed from stored data",
+      "fetchedAt": "2026-10-21T18:02:24.816Z",
+      "stale": false
+    }
+  }
+}

@@ -1,0 +1,352 @@
+{
+  "data": {
+    "marketPrice": 1.1557951556884236,
+    "nav": 1.157827091,
+    "premiumBps": -17.549557506219003,
+    "history": [
+      {
+        "t": "2026-10-21T15:28:00.000Z",
+        "premiumBps": -17.800626389116168,
+        "marketPrice": 1.155766086252991,
+        "nav": 1.157827091
+      },
+      {
+        "t": "2026-10-21T15:29:00.000Z",
+        "premiumBps": -18.12245280686242,
+        "marketPrice": 1.1557288243184844,
+        "nav": 1.157827091
+      },
+      {
+        "t": "2026-10-21T15:30:00.000Z",
+        "premiumBps": -18.12245280686242,
+        "marketPrice": 1.1557288243184844,
+        "nav": 1.157827091
+      },
+      {
+        "t": "2026-10-21T15:31:00.000Z",
+        "premiumBps": -15.489883260683124,
+        "marketPrice": 1.1560336303524352,
+        "nav": 1.157827091
+      },
+      {
+        "t": "2026-10-21T15:32:00.000Z",
+        "premiumBps": -17.639214187604722,
+        "marketPrice": 1.155784774994964,
+        "nav": 1.157827091
+      },
+      {
+        "t": "2026-10-21T15:33:00.000Z",
+        "premiumBps": -17.639214187604722,
+        "marketPrice": 1.155784774994964,
+        "nav": 1.157827091
+      },
+      {
+        "t": "2026-10-21T15:34:00.000Z",
+        "premiumBps": -17.639214187604722,
+        "marketPrice": 1.155784774994964,
+        "nav": 1.157827091
+      },
+      {
+        "t": "2026-10-21T15:35:00.000Z",
+        "premiumBps": -17.639214187604722,
+        "marketPrice": 1.155784774994964,
+        "nav": 1.157827091
+      },
+      {
+        "t": "2026-10-21T15:36:00.000Z",
+        "premiumBps": -17.639214187604722,
+        "marketPrice": 1.155784774994964,
+        "nav": 1.157827091
+      },
+      {
+        "t": "2026-10-21T15:37:00.000Z",
+        "premiumBps": -17.677807888125674,
+        "marketPrice": 1.1557803065117633,
+        "nav": 1.157827091
+      },
+      {
+        "t": "2026-10-21T15:38:00.000Z",
+        "premiumBps": -17.677807888125674,
+        "marketPrice": 1.1557803065117633,
+        "nav": 1.157827091
+      },
+      {
+        "t": "2026-10-21T15:39:00.000Z",
+        "premiumBps": -17.677807888125674,
+        "marketPrice": 1.1557803065117633,
+        "nav": 1.157827091
+      },
+      {
+        "t": "2026-10-21T15:40:00.000Z",
+        "premiumBps": -15.95030397033792,
+        "marketPrice": 1.1559803215953457,
+        "nav": 1.157827091
+      },
+      {
+        "t": "2026-10-21T15:41:00.000Z",
+        "premiumBps": -17.53500031932753,
+        "marketPrice": 1.1557968411589588,
+        "nav": 1.157827091
+      },
+      {
+        "t": "2026-10-21T15:42:00.000Z",
+        "premiumBps": -15.807329317164553,
+        "marketPrice": 1.1559968755880228,
+        "nav": 1.157827091
+      },
+      {
+        "t": "2026-10-21T15:43:00.000Z",
+        "premiumBps": -17.549557506219003,
+        "marketPrice": 1.1557951556884236,
+        "nav": 1.157827091
+      }
+    ],
+    "historySince": "2026-10-21T15:28:00.000Z",
+    "bands": [25, 50, 100],
+    "pools": [
+      {
+        "pool": "7jhhyxPUKpu42hPGSYwgMXbR2dtVJHKhs8DW3sAAgAvX",
+        "name": "ONYC / USDC",
+        "dex": "orca",
+        "priceUsd": 1.1548111301,
+        "liquidityUsd": 3766273.5219,
+        "volume24h": 805388.285702366,
+        "priceChange24hPct": 0.03
+      },
+      {
+        "pool": "A9RdNEf4T9x1eNPnEHFX1ABHS7J4e9kxBm43S3o5r9Kw",
+        "name": "USDG / ONYC",
+        "dex": "raydium-clmm",
+        "priceUsd": 1.0011415793,
+        "liquidityUsd": 2055116.9274,
+        "volume24h": 515829.831788884,
+        "priceChange24hPct": 0.1
+      },
+      {
+        "pool": "7oosvePcbsgm8kXQjPhs6oSKtxatC2dBtuxsLCxphXPc",
+        "name": "STONKB / ONYC",
+        "dex": "meteora",
+        "priceUsd": 0.0002175578685,
+        "liquidityUsd": 44307.0468,
+        "volume24h": 73.2884357881,
+        "priceChange24hPct": -0.37
+      },
+      {
+        "pool": "4MKCGZ9X9VYcFqkTTJhWBEVScw1EVPcW1SUrHx5TrPzK",
+        "name": "ONYC / JitoSOL",
+        "dex": "orca",
+        "priceUsd": 1.1551187878,
+        "liquidityUsd": 27244.7752,
+        "volume24h": 9319.5129073226,
+        "priceChange24hPct": 0
+      },
+      {
+        "pool": "F4s88y2bKbiiZTwiYUv5wt7L4K7bDq1bsVgQjpZWgHEj",
+        "name": "ONYC / syrupUSDC",
+        "dex": "orca",
+        "priceUsd": 1.1172379477,
+        "liquidityUsd": 18345.4637,
+        "volume24h": 0,
+        "priceChange24hPct": 0
+      },
+      {
+        "pool": "9JYMPTkihd4mEdqxDvNeT3SKK66uwmhS7UfbqyA7UeVi",
+        "name": "ONYC / USDC",
+        "dex": "meteora",
+        "priceUsd": 1.1563237816,
+        "liquidityUsd": 11572.5441,
+        "volume24h": 60803.0543082868,
+        "priceChange24hPct": 0.05
+      },
+      {
+        "pool": "DPNk4oGMs6sJTjCdfMY5QUNiM741HqzoekmyZauZegSp",
+        "name": "ONYC / YCAT",
+        "dex": "raydium",
+        "priceUsd": 1.1585933894,
+        "liquidityUsd": 4947.4869,
+        "volume24h": 4.2628679264,
+        "priceChange24hPct": -0.04
+      },
+      {
+        "pool": "BqVibzxZXg8QLhAgWnzh1kQn5uUpVDJaEJ1hLMinMaLL",
+        "name": "YIELD / ONYC",
+        "dex": "stonkfun",
+        "priceUsd": 0.000003703999426,
+        "liquidityUsd": 3789.3369,
+        "volume24h": 972.0449942274,
+        "priceChange24hPct": 0.03
+      },
+      {
+        "pool": "98Je7wTkha4YiWJoGoDFbFi4zNzEWmXZxQ4iTLN7LoY8",
+        "name": "ONYC / ONYC",
+        "dex": "stonkfun",
+        "priceUsd": 0.000003382259942,
+        "liquidityUsd": 3401.5251,
+        "volume24h": 1135.6544504683,
+        "priceChange24hPct": 0.03
+      },
+      {
+        "pool": "4mqn2vcELXwkV1kwhTUFnH4GM9cytX7MJFwcMYr5s6gb",
+        "name": "ONYC / XSGD",
+        "dex": "orca",
+        "priceUsd": 1.1541972144,
+        "liquidityUsd": 2643.0815,
+        "volume24h": 82.4932072698,
+        "priceChange24hPct": 0.07
+      },
+      {
+        "pool": "ALeVpn4To81t9hLh4M5G5qjqmbKCUpYij7VY5CYvM7MQ",
+        "name": "STIX / ONYC",
+        "dex": "meteora-damm-v2",
+        "priceUsd": 0.00001065047694,
+        "liquidityUsd": 1031.8632,
+        "volume24h": 13.1721359852,
+        "priceChange24hPct": 0.01
+      },
+      {
+        "pool": "G4SfFuAJVJdPpcuG6HGR9rvoGTBThvB9fpxGp8xxXxZg",
+        "name": "MYRC / ONYC",
+        "dex": "orca",
+        "priceUsd": 0.2549063652,
+        "liquidityUsd": 361.0307,
+        "volume24h": 15.7677560599,
+        "priceChange24hPct": -0.17
+      },
+      {
+        "pool": "DTF5pydg8RpCnGhSYYBgbGTj7YD5SjkgaMhGtRPoWRKp",
+        "name": "ONYC / USSBH",
+        "dex": "orca",
+        "priceUsd": 1.1588740668,
+        "liquidityUsd": 191.4419,
+        "volume24h": 0.1992799379,
+        "priceChange24hPct": 0.05
+      },
+      {
+        "pool": "3CgCLjexrRoxGt4wt9MSCSTHU9mn3PERq8jFC4bR7efi",
+        "name": "ONYC / SOL",
+        "dex": "meteora",
+        "priceUsd": 1.1563152167,
+        "liquidityUsd": 164.349,
+        "volume24h": 753.7177682989,
+        "priceChange24hPct": 0.1
+      },
+      {
+        "pool": "GV47TW6v6Lv7rz3x3BTzgv4xqS9d4ppKFePmoY8gpbik",
+        "name": "ONYC / SOL",
+        "dex": "orca",
+        "priceUsd": 1.1597179142,
+        "liquidityUsd": 105.0351,
+        "volume24h": 0.2921413854,
+        "priceChange24hPct": -0.18
+      },
+      {
+        "pool": "BsLNu9445dLmLELRrdfKpgWLqgUpB28W65jejLDtvsyc",
+        "name": "HODL / ONYC",
+        "dex": "meteora-damm-v2",
+        "priceUsd": 0.00003680605027,
+        "liquidityUsd": 56.69,
+        "volume24h": 0.4686884409,
+        "priceChange24hPct": -0.29
+      },
+      {
+        "pool": "HVDz74WyEENVH1GBkYRPqB8kuEHqq3voqWEhJqSa8s1D",
+        "name": "ONYC / sUSDe",
+        "dex": "orca",
+        "priceUsd": 1.154729211,
+        "liquidityUsd": 38.4458,
+        "volume24h": 115.1095599493,
+        "priceChange24hPct": -0.31
+      },
+      {
+        "pool": "8CA9zadmbpQqoXPXN9Xsk33RVv171sidc8KK1NzVVZbz",
+        "name": "ONYC / sHYUSD",
+        "dex": "orca",
+        "priceUsd": 1.1575607695,
+        "liquidityUsd": 24.4504,
+        "volume24h": 4.6162256208,
+        "priceChange24hPct": 0.25
+      },
+      {
+        "pool": "E4yDtEvwVuKw3nCXGdamEZv6vq6Kpg4m8XiricMNYs4J",
+        "name": "ONYC / SPYx",
+        "dex": "orca",
+        "priceUsd": 1.1584044436,
+        "liquidityUsd": 17.607,
+        "volume24h": 2.8408447844,
+        "priceChange24hPct": -0.15
+      },
+      {
+        "pool": "5M7RnayvsX4FaAUMC5psfPf8EpSugjSjuz67K1QiPqGc",
+        "name": "ONYC / QQQx",
+        "dex": "orca",
+        "priceUsd": 1.155517584,
+        "liquidityUsd": 16.2875,
+        "volume24h": 1.9178902317,
+        "priceChange24hPct": 0.54
+      }
+    ],
+    "poolsTotals": { "liquidityUsd": 5939648.910100001, "volume24h": 1394516.5309532336 },
+    "liquidityCoverage": 0.2377336614999141,
+    "liquidityLayerUsd": 67238318.52,
+    "aumUsd": 282830450.24326223,
+    "coverageTarget": 0.15
+  },
+  "meta": {
+    "marketPrice": {
+      "source": "Jupiter price API",
+      "fetchedAt": "2026-10-21T15:43:00.866Z",
+      "stale": true
+    },
+    "nav": {
+      "source": "OnRe core API (live)",
+      "fetchedAt": "2026-10-21T15:43:00.613Z",
+      "stale": true
+    },
+    "premiumBps": {
+      "source": "Jupiter price API",
+      "fetchedAt": "2026-10-21T15:43:00.866Z",
+      "stale": true
+    },
+    "history": {
+      "source": "Jupiter price API",
+      "fetchedAt": "2026-10-21T15:43:00.866Z",
+      "stale": true
+    },
+    "historySince": {
+      "source": "Jupiter price API",
+      "fetchedAt": "2026-10-21T15:43:00.866Z",
+      "stale": true
+    },
+    "bands": {
+      "source": "Computed from stored data",
+      "fetchedAt": "2026-10-21T18:02:24.321Z",
+      "stale": false
+    },
+    "pools": { "source": "GeckoTerminal", "fetchedAt": "2026-10-21T15:39:08.620Z", "stale": true },
+    "poolsTotals": {
+      "source": "GeckoTerminal",
+      "fetchedAt": "2026-10-21T15:39:08.620Z",
+      "stale": true
+    },
+    "liquidityCoverage": {
+      "source": "OnRe published sheet: collateral",
+      "fetchedAt": "2026-10-21T15:33:08.780Z",
+      "stale": true
+    },
+    "liquidityLayerUsd": {
+      "source": "OnRe published sheet: collateral",
+      "fetchedAt": "2026-10-21T15:33:08.780Z",
+      "stale": true
+    },
+    "aumUsd": {
+      "source": "OnRe core API (live)",
+      "fetchedAt": "2026-10-21T15:43:00.613Z",
+      "stale": true
+    },
+    "coverageTarget": {
+      "source": "Computed from stored data",
+      "fetchedAt": "2026-10-21T18:02:24.321Z",
+      "stale": false
+    }
+  }
+}

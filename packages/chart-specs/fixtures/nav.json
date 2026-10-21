@@ -1,0 +1,4209 @@
+{
+  "data": {
+    "range": "all",
+    "series": [
+      {
+        "date": "2025-05-28",
+        "nav": 1.0089726451053,
+        "aum": null,
+        "circulatingSupply": null,
+        "apyReported": null,
+        "incrementPpm": null
+      },
+      {
+        "date": "2025-05-29",
+        "nav": 1.00944610715795,
+        "aum": null,
+        "circulatingSupply": null,
+        "apyReported": null,
+        "incrementPpm": 469.2516243594014
+      },
+      {
+        "date": "2025-05-30",
+        "nav": 1.0099195692106,
+        "aum": null,
+        "circulatingSupply": null,
+        "apyReported": null,
+        "incrementPpm": 469.0315305519999
+      },
+      {
+        "date": "2025-05-31",
+        "nav": 1.01039303126325,
+        "aum": null,
+        "circulatingSupply": null,
+        "apyReported": null,
+        "incrementPpm": 468.8116431095235
+      },
+      {
+        "date": "2025-06-01",
+        "nav": 1.0108664933159,
+        "aum": null,
+        "circulatingSupply": null,
+        "apyReported": null,
+        "incrementPpm": 468.59196174176
+      },
+      {
+        "date": "2025-06-02",
+        "nav": 1.01133995536855,
+        "aum": null,
+        "circulatingSupply": null,
+        "apyReported": null,
+        "incrementPpm": 468.3724861598293
+      },
+      {
+        "date": "2025-06-03",
+        "nav": 1.0118134174212,
+        "aum": null,
+        "circulatingSupply": null,
+        "apyReported": null,
+        "incrementPpm": 468.1532160739632
+      },
+      {
+        "date": "2025-06-04",
+        "nav": 1.01228687947385,
+        "aum": 12067456.022702817,
+        "circulatingSupply": 11920984.325090772,
+        "apyReported": null,
+        "incrementPpm": 467.9341511963919
+      },
+      {
+        "date": "2025-06-05",
+        "nav": 1.0127603415265,
+        "aum": 12083509.676746726,
+        "circulatingSupply": 11931262.68998019,
+        "apyReported": null,
+        "incrementPpm": 467.71529123845744
+      },
+      {
+        "date": "2025-06-06",
+        "nav": 1.01323380357915,
+        "aum": 12089158.67687063,
+        "circulatingSupply": 11931262.68998019,
+        "apyReported": null,
+        "incrementPpm": 467.49663591305614
+      },
+      {
+        "date": "2025-06-07",
+        "nav": 1.0137072656318,
+        "aum": 12111284.632938564,
+        "circulatingSupply": 11947516.845891522,
+        "apyReported": null,
+        "incrementPpm": 467.27818493375037
+      },
+      {
+        "date": "2025-06-08",
+        "nav": 1.01418072768445,
+        "aum": 12116941.32878849,
+        "circulatingSupply": 11947516.845891522,
+        "apyReported": null,
+        "incrementPpm": 467.0599380134366
+      },
+      {
+        "date": "2025-06-09",
+        "nav": 1.0146541897371,
+        "aum": 12142160.985345485,
+        "circulatingSupply": 11966797.267640077,
+        "apyReported": null,
+        "incrementPpm": 466.8418948672315
+      },
+      {
+        "date": "2025-06-10",
+        "nav": 1.01512765178975,
+        "aum": 12147846.819075948,
+        "circulatingSupply": 11966816.978789158,
+        "apyReported": null,
+        "incrementPpm": 466.6240552091416
+      },
+      {
+        "date": "2025-06-11",
+        "nav": 1.0156011138424,
+        "aum": 12153701.377778916,
+        "circulatingSupply": 11967002.804670924,
+        "apyReported": null,
+        "incrementPpm": 466.4064187545058
+      },
+      {
+        "date": "2025-06-12",
+        "nav": 1.01607457589505,
+        "aum": 12159421.515263902,
+        "circulatingSupply": 11967056.162735682,
+        "apyReported": null,
+        "incrementPpm": 466.1889852195511
+      },
+      {
+        "date": "2025-06-13",
+        "nav": 1.0165480379477,
+        "aum": 12165140.987168377,
+        "circulatingSupply": 11967108.816351144,
+        "apyReported": null,
+        "incrementPpm": 465.97175432028234
+      },
+      {
+        "date": "2025-06-14",
+        "nav": 1.0165536542428,
+        "aum": 15172254.246303676,
+        "circulatingSupply": 14925187.847172739,
+        "apyReported": null,
+        "incrementPpm": 5.524869352235839
+      },
+      {
+        "date": "2025-06-15",
+        "nav": 1.0165564050556,
+        "aum": 15179632.063665658,
+        "circulatingSupply": 14932405.116109041,
+        "apyReported": null,
+        "incrementPpm": 2.7060183085403366
+      },
+      {
+        "date": "2025-06-16",
+        "nav": 1.0165591558684,
+        "aum": 15187009.881027639,
+        "circulatingSupply": 14939622.345985433,
+        "apyReported": null,
+        "incrementPpm": 2.7060109859533554
+      },
+      {
+        "date": "2025-06-17",
+        "nav": 1.0165619066812,
+        "aum": 15194387.69838962,
+        "circulatingSupply": 14946839.53680223,
+        "apyReported": null,
+        "incrementPpm": 2.706003663588419
+      },
+      {
+        "date": "2025-06-18",
+        "nav": 1.016564657494,
+        "aum": 15201765.5157516,
+        "circulatingSupply": 14954056.688559748,
+        "apyReported": null,
+        "incrementPpm": 2.7059963410014376
+      },
+      {
+        "date": "2025-06-19",
+        "nav": 1.0165674083068,
+        "aum": 15209143.333113581,
+        "circulatingSupply": 14961273.801258305,
+        "apyReported": null,
+        "incrementPpm": 2.705989018636501
+      },
+      {
+        "date": "2025-06-20",
+        "nav": 1.0165701591196,
+        "aum": 15216521.150475562,
+        "circulatingSupply": 14968490.874898218,
+        "apyReported": null,
+        "incrementPpm": 2.7059816962715644
+      },
+      {
+        "date": "2025-06-21",
+        "nav": 1.0165729099324,
+        "aum": 15216562.325991858,
+        "circulatingSupply": 14968490.874898218,
+        "apyReported": null,
+        "incrementPpm": 2.7059743741286724
+      },
+      {
+        "date": "2025-06-22",
+        "nav": 1.0165756607452,
+        "aum": 15216603.501508152,
+        "circulatingSupply": 14968490.874898218,
+        "apyReported": null,
+        "incrementPpm": 2.7059670517637358
+      },
+      {
+        "date": "2025-06-23",
+        "nav": 1.016578411558,
+        "aum": 15216644.677024448,
+        "circulatingSupply": 14968490.874898218,
+        "apyReported": null,
+        "incrementPpm": 2.7059597298428884
+      },
+      {
+        "date": "2025-06-24",
+        "nav": 1.0165811623708,
+        "aum": 15216685.852540743,
+        "circulatingSupply": 14968490.874898218,
+        "apyReported": null,
+        "incrementPpm": 2.705952407255907
+      },
+      {
+        "date": "2025-06-25",
+        "nav": 1.0165839131836,
+        "aum": 15216727.028057039,
+        "circulatingSupply": 14968490.874898218,
+        "apyReported": null,
+        "incrementPpm": 2.705945085113015
+      },
+      {
+        "date": "2025-06-26",
+        "nav": 1.0165866639964,
+        "aum": 15216768.203573335,
+        "circulatingSupply": 14968490.874898218,
+        "apyReported": null,
+        "incrementPpm": 2.705937762970123
+      },
+      {
+        "date": "2025-06-27",
+        "nav": 1.0165894148092,
+        "aum": 15216809.37908963,
+        "circulatingSupply": 14968490.874898218,
+        "apyReported": null,
+        "incrementPpm": 2.7059304410492757
+      },
+      {
+        "date": "2025-06-28",
+        "nav": 1.016592165622,
+        "aum": 15216850.554605925,
+        "circulatingSupply": 14968490.874898218,
+        "apyReported": null,
+        "incrementPpm": 2.7059231189063837
+      },
+      {
+        "date": "2025-06-29",
+        "nav": 1.0165949164348,
+        "aum": 15216891.73012222,
+        "circulatingSupply": 14968490.874898218,
+        "apyReported": null,
+        "incrementPpm": 2.7059157969855363
+      },
+      {
+        "date": "2025-06-30",
+        "nav": 1.0165976672476,
+        "aum": 15216932.905638516,
+        "circulatingSupply": 14968490.874898218,
+        "apyReported": null,
+        "incrementPpm": 2.705908475064689
+      },
+      {
+        "date": "2025-07-01",
+        "nav": 1.0166004180604,
+        "aum": 15216974.08115481,
+        "circulatingSupply": 14968490.874898218,
+        "apyReported": null,
+        "incrementPpm": 2.7059011531438415
+      },
+      {
+        "date": "2025-07-02",
+        "nav": 1.0166031688732,
+        "aum": 15217015.256671106,
+        "circulatingSupply": 14968490.874898218,
+        "apyReported": null,
+        "incrementPpm": 2.705893831222994
+      },
+      {
+        "date": "2025-07-03",
+        "nav": 1.016605919686,
+        "aum": 15217057.532189261,
+        "circulatingSupply": 14968491.956931913,
+        "apyReported": null,
+        "incrementPpm": 2.7058865093021467
+      },
+      {
+        "date": "2025-07-04",
+        "nav": 1.0166086704988,
+        "aum": 15217099.808709504,
+        "circulatingSupply": 14968493.039945468,
+        "apyReported": null,
+        "incrementPpm": 2.705879187603344
+      },
+      {
+        "date": "2025-07-06",
+        "nav": 1.01412925624955,
+        "aum": 15179987.71391458,
+        "circulatingSupply": 14968494.02614926,
+        "apyReported": null,
+        "incrementPpm": -2438.907242482413
+      },
+      {
+        "date": "2025-07-07",
+        "nav": 1.01426930624915,
+        "aum": 15182084.051496955,
+        "circulatingSupply": 14968494.02614926,
+        "apyReported": null,
+        "incrementPpm": 138.09876673676058
+      },
+      {
+        "date": "2025-07-08",
+        "nav": 1.01440935624875,
+        "aum": 15684214.908922149,
+        "circulatingSupply": 15461425.717643045,
+        "apyReported": null,
+        "incrementPpm": 138.0796981009791
+      },
+      {
+        "date": "2025-07-09",
+        "nav": 1.01454940624835,
+        "aum": 16186426.299681533,
+        "circulatingSupply": 15954300.697426343,
+        "apyReported": null,
+        "incrementPpm": 138.06063473031926
+      },
+      {
+        "date": "2025-07-10",
+        "nav": 1.01468945624795,
+        "aum": 16188660.89950853,
+        "circulatingSupply": 15954300.894551389,
+        "apyReported": null,
+        "incrementPpm": 138.04157662256068
+      },
+      {
+        "date": "2025-07-11",
+        "nav": 1.01482950624755,
+        "aum": 16190895.399347605,
+        "circulatingSupply": 15954300.993095206,
+        "apyReported": null,
+        "incrementPpm": 138.02252377570488
+      },
+      {
+        "date": "2025-07-12",
+        "nav": 1.01496955624715,
+        "aum": 16193134.79968405,
+        "circulatingSupply": 15954305.919832872,
+        "apyReported": null,
+        "incrementPpm": 138.0034761875315
+      },
+      {
+        "date": "2025-07-13",
+        "nav": 1.01510960624675,
+        "aum": 16195838.211006284,
+        "circulatingSupply": 15954767.949530609,
+        "apyReported": null,
+        "incrementPpm": 137.98443385626413
+      },
+      {
+        "date": "2025-07-14",
+        "nav": 1.01524965624635,
+        "aum": 16198472.717639424,
+        "circulatingSupply": 15955161.982058205,
+        "apyReported": null,
+        "incrementPpm": 137.9653967790162
+      },
+      {
+        "date": "2025-07-15",
+        "nav": 1.01480005320515,
+        "aum": 16199640.941005362,
+        "circulatingSupply": 15963382.037515989,
+        "apyReported": null,
+        "incrementPpm": -442.84973497288325
+      },
+      {
+        "date": "2025-07-16",
+        "nav": 1.01499967884635,
+        "aum": 16196855.780413065,
+        "circulatingSupply": 15957498.42879008,
+        "apyReported": null,
+        "incrementPpm": 196.71425969036704
+      },
+      {
+        "date": "2025-07-17",
+        "nav": 1.01519930448755,
+        "aum": 16200042.306334412,
+        "circulatingSupply": 15957499.413882904,
+        "apyReported": null,
+        "incrementPpm": 196.6755708011636
+      },
+      {
+        "date": "2025-07-18",
+        "nav": 1.01539893012875,
+        "aum": 16203247.934855284,
+        "circulatingSupply": 15957519.211489374,
+        "apyReported": null,
+        "incrementPpm": 196.6368971271226
+      },
+      {
+        "date": "2025-07-19",
+        "nav": 1.01559855576995,
+        "aum": 16206438.465023644,
+        "circulatingSupply": 15957524.134855773,
+        "apyReported": null,
+        "incrementPpm": 196.59823865936232
+      },
+      {
+        "date": "2025-07-20",
+        "nav": 1.01579818141115,
+        "aum": 16734699.24482919,
+        "circulatingSupply": 16474433.161104202,
+        "apyReported": null,
+        "incrementPpm": 196.55959538922298
+      },
+      {
+        "date": "2025-07-21",
+        "nav": 1.01599780705235,
+        "aum": 16737987.964112384,
+        "circulatingSupply": 16474433.161104202,
+        "apyReported": null,
+        "incrementPpm": 196.52096730737867
+      },
+      {
+        "date": "2025-07-22",
+        "nav": 1.01619743269355,
+        "aum": 16741276.683395576,
+        "circulatingSupply": 16474433.161104202,
+        "apyReported": null,
+        "incrementPpm": 196.4823544047256
+      },
+      {
+        "date": "2025-07-23",
+        "nav": 1.01639705833475,
+        "aum": 16744565.502691861,
+        "circulatingSupply": 16474433.259503832,
+        "apyReported": null,
+        "incrementPpm": 196.44375667327017
+      },
+      {
+        "date": "2025-07-24",
+        "nav": 1.01659668397595,
+        "aum": 16850361.770393044,
+        "circulatingSupply": 16575267.29724379,
+        "apyReported": null,
+        "incrementPpm": 196.40517410302039
+      },
+      {
+        "date": "2025-07-25",
+        "nav": 1.01679630961715,
+        "aum": 18353864.700056087,
+        "circulatingSupply": 18050679.89179346,
+        "apyReported": null,
+        "incrementPpm": 196.3666066855385
+      },
+      {
+        "date": "2025-07-26",
+        "nav": 1.01699593525835,
+        "aum": 18357468.078603584,
+        "circulatingSupply": 18050679.89179346,
+        "apyReported": null,
+        "incrementPpm": 196.3280544114987
+      },
+      {
+        "date": "2025-07-27",
+        "nav": 1.01719556089955,
+        "aum": 18371298.85769184,
+        "circulatingSupply": 18060734.399435744,
+        "apyReported": null,
+        "incrementPpm": 196.28951727246323
+      },
+      {
+        "date": "2025-07-28",
+        "nav": 1.01739518654075,
+        "aum": 18399988.96545111,
+        "circulatingSupply": 18085390.22875958,
+        "apyReported": null,
+        "incrementPpm": 196.2509952593283
+      },
+      {
+        "date": "2025-07-29",
+        "nav": 1.0162085066667,
+        "aum": 18378530.574715797,
+        "circulatingSupply": 18085393.355936214,
+        "apyReported": null,
+        "incrementPpm": -1166.390297250075
+      },
+      {
+        "date": "2025-07-30",
+        "nav": 1.01662381000005,
+        "aum": 18386041.498861466,
+        "circulatingSupply": 18085393.355936214,
+        "apyReported": null,
+        "incrementPpm": 408.6792529540695
+      },
+      {
+        "date": "2025-07-31",
+        "nav": 1.0170391133334,
+        "aum": 19393960.93530973,
+        "circulatingSupply": 19069041.378108837,
+        "apyReported": null,
+        "incrementPpm": 408.51230245131376
+      },
+      {
+        "date": "2025-08-01",
+        "nav": 1.016280594,
+        "aum": 19379497.69875503,
+        "circulatingSupply": 19069042.362089057,
+        "apyReported": null,
+        "incrementPpm": -745.8113689590151
+      },
+      {
+        "date": "2025-08-02",
+        "nav": 1.016645288,
+        "aum": 19386452.064090226,
+        "circulatingSupply": 19069042.362089057,
+        "apyReported": null,
+        "incrementPpm": 358.8516814678755
+      },
+      {
+        "date": "2025-08-03",
+        "nav": 1.017009982,
+        "aum": 19393406.429425426,
+        "circulatingSupply": 19069042.362089057,
+        "apyReported": null,
+        "incrementPpm": 358.7229531327729
+      },
+      {
+        "date": "2025-08-04",
+        "nav": 1.017374676,
+        "aum": 19400360.794760626,
+        "circulatingSupply": 19069042.362089057,
+        "apyReported": null,
+        "incrementPpm": 358.5943171204864
+      },
+      {
+        "date": "2025-08-05",
+        "nav": 1.01773937,
+        "aum": 19407315.160095826,
+        "circulatingSupply": 19069042.362089057,
+        "apyReported": null,
+        "incrementPpm": 358.4657733313179
+      },
+      {
+        "date": "2025-08-06",
+        "nav": 1.018104064,
+        "aum": 19926466.607051972,
+        "circulatingSupply": 19572131.486012783,
+        "apyReported": null,
+        "incrementPpm": 358.33732166623554
+      },
+      {
+        "date": "2025-08-07",
+        "nav": 1.018468758,
+        "aum": 20391206.85994787,
+        "circulatingSupply": 20021435.80721194,
+        "apyReported": null,
+        "incrementPpm": 358.2089620259854
+      },
+      {
+        "date": "2025-08-08",
+        "nav": 1.018833452,
+        "aum": 20838808.17902746,
+        "circulatingSupply": 20453596.353869483,
+        "apyReported": null,
+        "incrementPpm": 358.0806943122017
+      },
+      {
+        "date": "2025-08-09",
+        "nav": 1.019198146,
+        "aum": 21064408.803880863,
+        "circulatingSupply": 20667628.651554536,
+        "apyReported": null,
+        "incrementPpm": 357.95251842585253
+      },
+      {
+        "date": "2025-08-10",
+        "nav": 1.01956284,
+        "aum": 21083012.62116465,
+        "circulatingSupply": 20678482.771267585,
+        "apyReported": null,
+        "incrementPpm": 357.82443426879416
+      },
+      {
+        "date": "2025-08-11",
+        "nav": 1.019927534,
+        "aum": 21090553.93976043,
+        "circulatingSupply": 20678482.771267585,
+        "apyReported": null,
+        "incrementPpm": 357.6964417415507
+      },
+      {
+        "date": "2025-08-12",
+        "nav": 1.020292228,
+        "aum": 21098095.258356217,
+        "circulatingSupply": 20678482.771267585,
+        "apyReported": null,
+        "incrementPpm": 357.5685407468665
+      },
+      {
+        "date": "2025-08-13",
+        "nav": 1.0206067316,
+        "aum": 21104848.792180732,
+        "circulatingSupply": 20678727.79860541,
+        "apyReported": null,
+        "incrementPpm": 308.2485501400001
+      },
+      {
+        "date": "2025-08-14",
+        "nav": 1.0209191474,
+        "aum": 21111309.153468914,
+        "circulatingSupply": 20678727.79860541,
+        "apyReported": null,
+        "incrementPpm": 306.1079163275693
+      },
+      {
+        "date": "2025-08-15",
+        "nav": 1.0212315632,
+        "aum": 21117769.514757097,
+        "circulatingSupply": 20678727.79860541,
+        "apyReported": null,
+        "incrementPpm": 306.01424294540715
+      },
+      {
+        "date": "2025-08-16",
+        "nav": 1.021543979,
+        "aum": 21139234.464854684,
+        "circulatingSupply": 20693415.946269978,
+        "apyReported": null,
+        "incrementPpm": 305.92062687628817
+      },
+      {
+        "date": "2025-08-17",
+        "nav": 1.0218563948,
+        "aum": 21145699.41495227,
+        "circulatingSupply": 20693415.946269978,
+        "apyReported": null,
+        "incrementPpm": 305.82706806780993
+      },
+      {
+        "date": "2025-08-18",
+        "nav": 1.0221688106,
+        "aum": 21160600.575118132,
+        "circulatingSupply": 20701669.1917034,
+        "apyReported": null,
+        "incrementPpm": 305.73356646779183
+      },
+      {
+        "date": "2025-08-19",
+        "nav": 1.0224812264,
+        "aum": 21168079.66109106,
+        "circulatingSupply": 20702658.50808883,
+        "apyReported": null,
+        "incrementPpm": 305.64012202316525
+      },
+      {
+        "date": "2025-08-20",
+        "nav": 1.0227936422,
+        "aum": 21174966.0591447,
+        "circulatingSupply": 20703067.740622588,
+        "apyReported": null,
+        "incrementPpm": 305.54673468174974
+      },
+      {
+        "date": "2025-08-21",
+        "nav": 1.023106058,
+        "aum": 22055002.260587398,
+        "circulatingSupply": 21556907.114499167,
+        "apyReported": null,
+        "incrementPpm": 305.45340439158684
+      },
+      {
+        "date": "2025-08-22",
+        "nav": 1.0234184738,
+        "aum": 22274858.572926547,
+        "circulatingSupply": 21765151.93263902,
+        "apyReported": null,
+        "incrementPpm": 305.360131100052
+      },
+      {
+        "date": "2025-08-23",
+        "nav": 1.0237308896,
+        "aum": 22579620.328803513,
+        "circulatingSupply": 22056206.917450733,
+        "apyReported": null,
+        "incrementPpm": 305.26691475474263
+      },
+      {
+        "date": "2025-08-24",
+        "nav": 1.0240433054,
+        "aum": 22606025.894477088,
+        "circulatingSupply": 22075263.590192586,
+        "apyReported": null,
+        "incrementPpm": 305.1737553041445
+      },
+      {
+        "date": "2025-08-25",
+        "nav": 1.0243557212,
+        "aum": 23583630.845524132,
+        "circulatingSupply": 23022891.713726815,
+        "apyReported": null,
+        "incrementPpm": 305.0806526956329
+      },
+      {
+        "date": "2025-08-26",
+        "nav": 1.024668137,
+        "aum": 23592501.343609974,
+        "circulatingSupply": 23024529.10528043,
+        "apyReported": null,
+        "incrementPpm": 304.98760687724945
+      },
+      {
+        "date": "2025-08-27",
+        "nav": 1.025036,
+        "aum": 23677007.885284968,
+        "circulatingSupply": 23098708.616365638,
+        "apyReported": null,
+        "incrementPpm": 359.00696695523317
+      },
+      {
+        "date": "2025-08-28",
+        "nav": 1.0253500322667,
+        "aum": 23998131.81857466,
+        "circulatingSupply": 23404818.904157985,
+        "apyReported": null,
+        "incrementPpm": 306.36218308410787
+      },
+      {
+        "date": "2025-08-29",
+        "nav": 1.02566389840005,
+        "aum": 24139199.14234539,
+        "circulatingSupply": 23535194.306829482,
+        "apyReported": null,
+        "incrementPpm": 306.1063280567211
+      },
+      {
+        "date": "2025-08-30",
+        "nav": 1.0259777645334,
+        "aum": 24235682.26140584,
+        "circulatingSupply": 23622034.60854523,
+        "apyReported": null,
+        "incrementPpm": 306.0126556464482
+      },
+      {
+        "date": "2025-08-31",
+        "nav": 1.02629163066675,
+        "aum": 24416424.768454738,
+        "circulatingSupply": 23790922.617767178,
+        "apyReported": null,
+        "incrementPpm": 305.9190405483303
+      },
+      {
+        "date": "2025-09-01",
+        "nav": 1.0266054968001,
+        "aum": 24443469.728556745,
+        "circulatingSupply": 23809993.03505226,
+        "apyReported": null,
+        "incrementPpm": 305.8254827099649
+      },
+      {
+        "date": "2025-09-02",
+        "nav": 1.02691936293345,
+        "aum": 24746638.489688538,
+        "circulatingSupply": 24097937.36773883,
+        "apyReported": null,
+        "incrementPpm": 305.73198207917153
+      },
+      {
+        "date": "2025-09-03",
+        "nav": 1.0272332290668,
+        "aum": 24835638.90275321,
+        "circulatingSupply": 24177215.261343706,
+        "apyReported": null,
+        "incrementPpm": 305.63853860288145
+      },
+      {
+        "date": "2025-09-04",
+        "nav": 1.02754709520015,
+        "aum": 25060777.35109141,
+        "circulatingSupply": 24388933.089446343,
+        "apyReported": null,
+        "incrementPpm": 305.54515222913636
+      },
+      {
+        "date": "2025-09-05",
+        "nav": 1.0278609613335,
+        "aum": 25298615.994009104,
+        "circulatingSupply": 24612877.563895248,
+        "apyReported": null,
+        "incrementPpm": 305.4518229053116
+      },
+      {
+        "date": "2025-09-06",
+        "nav": 1.02817482746685,
+        "aum": 25320691.48798691,
+        "circulatingSupply": 24626834.67010214,
+        "apyReported": null,
+        "incrementPpm": 305.35855057967075
+      },
+      {
+        "date": "2025-09-07",
+        "nav": 1.0284886936002,
+        "aum": 25353950.936690167,
+        "circulatingSupply": 24651657.421667192,
+        "apyReported": null,
+        "incrementPpm": 305.2653351991452
+      },
+      {
+        "date": "2025-09-08",
+        "nav": 1.02880255973355,
+        "aum": 25374903.659312062,
+        "circulatingSupply": 24664502.84288165,
+        "apyReported": null,
+        "incrementPpm": 305.1721767122206
+      },
+      {
+        "date": "2025-09-09",
+        "nav": 1.0291164258669,
+        "aum": 25515815.97889926,
+        "circulatingSupply": 24793906.051402707,
+        "apyReported": null,
+        "incrementPpm": 305.0790750671606
+      },
+      {
+        "date": "2025-09-10",
+        "nav": 1.02943029200025,
+        "aum": 25730128.919197682,
+        "circulatingSupply": 24994532.528474916,
+        "apyReported": null,
+        "incrementPpm": 304.98603021089644
+      },
+      {
+        "date": "2025-09-11",
+        "nav": 1.0299214176,
+        "aum": 26104107.46263368,
+        "circulatingSupply": 25345727.369631197,
+        "apyReported": null,
+        "incrementPpm": 477.0848532109628
+      },
+      {
+        "date": "2025-09-12",
+        "nav": 1.0301669764,
+        "aum": 26241278.19393082,
+        "circulatingSupply": 25472839.641621053,
+        "apyReported": null,
+        "incrementPpm": 238.42479222579982
+      },
+      {
+        "date": "2025-09-13",
+        "nav": 1.0304125352,
+        "aum": 26528742.22328074,
+        "circulatingSupply": 25745748.733667716,
+        "apyReported": null,
+        "incrementPpm": 238.3679593942478
+      },
+      {
+        "date": "2025-09-14",
+        "nav": 1.030658094,
+        "aum": 26786400.29002776,
+        "circulatingSupply": 25989608.431705344,
+        "apyReported": null,
+        "incrementPpm": 238.31115365102738
+      },
+      {
+        "date": "2025-09-15",
+        "nav": 1.0309036528,
+        "aum": 27110796.34337937,
+        "circulatingSupply": 26298089.32167882,
+        "apyReported": null,
+        "incrementPpm": 238.25437497593248
+      },
+      {
+        "date": "2025-09-16",
+        "nav": 1.0311492116,
+        "aum": 27644942.52491404,
+        "circulatingSupply": 26809837.232012525,
+        "apyReported": null,
+        "incrementPpm": 238.19762335031135
+      },
+      {
+        "date": "2025-09-17",
+        "nav": 1.0313947704,
+        "aum": 27814158.805301033,
+        "circulatingSupply": 26967519.71557314,
+        "apyReported": null,
+        "incrementPpm": 238.14089875395794
+      },
+      {
+        "date": "2025-09-18",
+        "nav": 1.0316403292,
+        "aum": 27856349.804296512,
+        "circulatingSupply": 27001997.707765173,
+        "apyReported": null,
+        "incrementPpm": 238.08420116844252
+      },
+      {
+        "date": "2025-09-19",
+        "nav": 1.031885888,
+        "aum": 27939873.891169496,
+        "circulatingSupply": 27076515.161305796,
+        "apyReported": null,
+        "incrementPpm": 238.02753057378112
+      },
+      {
+        "date": "2025-09-20",
+        "nav": 1.0321989365333,
+        "aum": 28211238.24841708,
+        "circulatingSupply": 27331202.59081661,
+        "apyReported": null,
+        "incrementPpm": 303.37514733025375
+      },
+      {
+        "date": "2025-09-21",
+        "nav": 1.03247825479995,
+        "aum": 28429479.514369853,
+        "circulatingSupply": 27535184.767526425,
+        "apyReported": null,
+        "incrementPpm": 270.6050711389629
+      },
+      {
+        "date": "2025-09-22",
+        "nav": 1.0327575730666,
+        "aum": 28565381.926033605,
+        "circulatingSupply": 27659329.421534527,
+        "apyReported": null,
+        "incrementPpm": 270.5318638445142
+      },
+      {
+        "date": "2025-09-23",
+        "nav": 1.03303689133325,
+        "aum": 28658009.574010547,
+        "circulatingSupply": 27741516.12051741,
+        "apyReported": null,
+        "incrementPpm": 270.4586961492783
+      },
+      {
+        "date": "2025-09-24",
+        "nav": 1.0333162095999,
+        "aum": 28833089.97671635,
+        "circulatingSupply": 27903452.698066667,
+        "apyReported": null,
+        "incrementPpm": 270.3855680212808
+      },
+      {
+        "date": "2025-09-25",
+        "nav": 1.03359552786655,
+        "aum": 28879602.207974415,
+        "circulatingSupply": 27940912.503351245,
+        "apyReported": null,
+        "incrementPpm": 270.31247942788104
+      },
+      {
+        "date": "2025-09-26",
+        "nav": 1.0338748461332,
+        "aum": 28922728.70882979,
+        "circulatingSupply": 27975077.270719778,
+        "apyReported": null,
+        "incrementPpm": 270.2394303373268
+      },
+      {
+        "date": "2025-09-27",
+        "nav": 1.03415416439985,
+        "aum": 28951080.4824954,
+        "circulatingSupply": 27994936.808378626,
+        "apyReported": null,
+        "incrementPpm": 270.16642071786555
+      },
+      {
+        "date": "2025-09-28",
+        "nav": 1.0344334826665,
+        "aum": 29050644.460868463,
+        "circulatingSupply": 28083627.364790503,
+        "apyReported": null,
+        "incrementPpm": 270.09345053707887
+      },
+      {
+        "date": "2025-09-29",
+        "nav": 1.03471280093315,
+        "aum": 29152224.33795326,
+        "circulatingSupply": 28174218.306434873,
+        "apyReported": null,
+        "incrementPpm": 270.0205197632144
+      },
+      {
+        "date": "2025-09-30",
+        "nav": 1.0349921191998,
+        "aum": 29270004.452628423,
+        "circulatingSupply": 28280412.874310974,
+        "apyReported": null,
+        "incrementPpm": 269.9476283640756
+      },
+      {
+        "date": "2025-10-01",
+        "nav": 1.03527143746645,
+        "aum": 29475758.985885944,
+        "circulatingSupply": 28471527.2914512,
+        "apyReported": null,
+        "incrementPpm": 269.8747763083542
+      },
+      {
+        "date": "2025-10-02",
+        "nav": 1.0355507557331,
+        "aum": 29745825.398904216,
+        "circulatingSupply": 28724642.644721147,
+        "apyReported": null,
+        "incrementPpm": 269.80196356385375
+      },
+      {
+        "date": "2025-10-03",
+        "nav": 1.03583007399975,
+        "aum": 29818192.86256465,
+        "circulatingSupply": 28786761.082756367,
+        "apyReported": null,
+        "incrementPpm": 269.7291900985999
+      },
+      {
+        "date": "2025-10-04",
+        "nav": 1.0359797293636,
+        "aum": 29886973.801713884,
+        "circulatingSupply": 28848994.777217682,
+        "apyReported": null,
+        "incrementPpm": 144.47868198308456
+      },
+      {
+        "date": "2025-10-05",
+        "nav": 1.0362603340454,
+        "aum": 29931838.265991747,
+        "circulatingSupply": 28884477.464405574,
+        "apyReported": null,
+        "incrementPpm": 270.859239661414
+      },
+      {
+        "date": "2025-10-06",
+        "nav": 1.0365409387272,
+        "aum": 30144765.78143702,
+        "circulatingSupply": 29082079.303546555,
+        "apyReported": null,
+        "incrementPpm": 270.7858947998965
+      },
+      {
+        "date": "2025-10-07",
+        "nav": 1.036821543409,
+        "aum": 30449937.677148085,
+        "circulatingSupply": 29368542.610554487,
+        "apyReported": null,
+        "incrementPpm": 270.7125896490581
+      },
+      {
+        "date": "2025-10-08",
+        "nav": 1.0371021480908,
+        "aum": 31905304.59554838,
+        "circulatingSupply": 30763897.899819043,
+        "apyReported": null,
+        "incrementPpm": 270.6393241767024
+      },
+      {
+        "date": "2025-10-09",
+        "nav": 1.0373827527726,
+        "aum": 32124194.432210084,
+        "circulatingSupply": 30966578.48451032,
+        "apyReported": null,
+        "incrementPpm": 270.56609835063307
+      },
+      {
+        "date": "2025-10-10",
+        "nav": 1.0376633574544,
+        "aum": 32285413.699519742,
+        "circulatingSupply": 31113572.111404657,
+        "apyReported": null,
+        "incrementPpm": 270.4929121388755
+      },
+      {
+        "date": "2025-10-11",
+        "nav": 1.0379439621362,
+        "aum": 32322693.134396423,
+        "circulatingSupply": 31141077.277305853,
+        "apyReported": null,
+        "incrementPpm": 270.41976550901126
+      },
+      {
+        "date": "2025-10-12",
+        "nav": 1.038224566818,
+        "aum": 32428964.896152597,
+        "circulatingSupply": 31235019.79493938,
+        "apyReported": null,
+        "incrementPpm": 270.34665842884385
+      },
+      {
+        "date": "2025-10-13",
+        "nav": 1.0385051714998,
+        "aum": 32483294.858191222,
+        "circulatingSupply": 31278895.61809224,
+        "apyReported": null,
+        "incrementPpm": 270.273590866843
+      },
+      {
+        "date": "2025-10-14",
+        "nav": 1.0387857761816,
+        "aum": 32522591.58566093,
+        "circulatingSupply": 31308275.807557214,
+        "apyReported": null,
+        "incrementPpm": 270.20056279036805
+      },
+      {
+        "date": "2025-10-15",
+        "nav": 1.0390663808634,
+        "aum": 32171011.39577284,
+        "circulatingSupply": 30961459.237128545,
+        "apyReported": null,
+        "incrementPpm": 270.1275741678888
+      },
+      {
+        "date": "2025-10-16",
+        "nav": 1.0393469855452,
+        "aum": 32486665.862873863,
+        "circulatingSupply": 31256804.81560511,
+        "apyReported": null,
+        "incrementPpm": 270.05462496720867
+      },
+      {
+        "date": "2025-10-17",
+        "nav": 1.039627590227,
+        "aum": 32100208.592229534,
+        "circulatingSupply": 30876641.687837984,
+        "apyReported": null,
+        "incrementPpm": 269.9817151563533
+      },
+      {
+        "date": "2025-10-18",
+        "nav": 1.0399081949088,
+        "aum": 32224051.279840156,
+        "circulatingSupply": 30987400.07781765,
+        "apyReported": null,
+        "incrementPpm": 269.90884470357025
+      },
+      {
+        "date": "2025-10-19",
+        "nav": 1.0401887995906,
+        "aum": 32540298.81009349,
+        "circulatingSupply": 31283069.787812345,
+        "apyReported": null,
+        "incrementPpm": 269.83601357688514
+      },
+      {
+        "date": "2025-10-20",
+        "nav": 1.0404694042724,
+        "aum": 32556402.058338035,
+        "circulatingSupply": 31290109.949080836,
+        "apyReported": null,
+        "incrementPpm": 269.7632217443236
+      },
+      {
+        "date": "2025-10-21",
+        "nav": 1.0407500089542,
+        "aum": 32775760.81738014,
+        "circulatingSupply": 31492443.464223403,
+        "apyReported": null,
+        "incrementPpm": 269.69046917435514
+      },
+      {
+        "date": "2025-10-22",
+        "nav": 1.041030613636,
+        "aum": 32839564.01199522,
+        "circulatingSupply": 31545243.32122829,
+        "apyReported": null,
+        "incrementPpm": 269.61775583544954
+      },
+      {
+        "date": "2025-10-23",
+        "nav": 1.0413112183178,
+        "aum": 32986303.442864016,
+        "circulatingSupply": 31677660.68644893,
+        "apyReported": null,
+        "incrementPpm": 269.5450816954104
+      },
+      {
+        "date": "2025-10-24",
+        "nav": 1.0415918229996,
+        "aum": 33086552.63348095,
+        "circulatingSupply": 31765372.86765322,
+        "apyReported": null,
+        "incrementPpm": 269.47244672292925
+      },
+      {
+        "date": "2025-10-25",
+        "nav": 1.0418724281,
+        "aum": 33276693.074905384,
+        "circulatingSupply": 31939316.347578257,
+        "apyReported": null,
+        "incrementPpm": 269.4002527707795
+      },
+      {
+        "date": "2025-10-26",
+        "nav": 1.0421530328,
+        "aum": 33724937.74967376,
+        "circulatingSupply": 32360830.596120264,
+        "apyReported": null,
+        "incrementPpm": 269.327311513301
+      },
+      {
+        "date": "2025-10-27",
+        "nav": 1.0424336375,
+        "aum": 33588766.95564172,
+        "circulatingSupply": 32221491.850738287,
+        "apyReported": null,
+        "incrementPpm": 269.25479384365406
+      },
+      {
+        "date": "2025-10-28",
+        "nav": 1.0427142422,
+        "aum": 34090834.86737411,
+        "circulatingSupply": 32694321.69205496,
+        "apyReported": null,
+        "incrementPpm": 269.18231521477765
+      },
+      {
+        "date": "2025-10-29",
+        "nav": 1.0429948469,
+        "aum": 34705294.92408186,
+        "circulatingSupply": 33274656.17613864,
+        "apyReported": null,
+        "incrementPpm": 269.10987559558566
+      },
+      {
+        "date": "2025-10-30",
+        "nav": 1.0432754516,
+        "aum": 34750577.7121769,
+        "circulatingSupply": 33309110.89576805,
+        "apyReported": null,
+        "incrementPpm": 269.03747495388154
+      },
+      {
+        "date": "2025-10-31",
+        "nav": 1.0435560563,
+        "aum": 34257902.93421309,
+        "circulatingSupply": 32828042.851552073,
+        "apyReported": null,
+        "incrementPpm": 268.96511325902316
+      },
+      {
+        "date": "2025-11-01",
+        "nav": 1.043836661,
+        "aum": 33695917.08994901,
+        "circulatingSupply": 32280833.150339995,
+        "apyReported": null,
+        "incrementPpm": 268.89279047925817
+      },
+      {
+        "date": "2025-11-02",
+        "nav": 1.0441172657,
+        "aum": 33791512.857332736,
+        "circulatingSupply": 32363714.275597323,
+        "apyReported": null,
+        "incrementPpm": 268.8205065830562
+      },
+      {
+        "date": "2025-11-03",
+        "nav": 1.0443978704,
+        "aum": 33859521.88142772,
+        "circulatingSupply": 32420136.847329713,
+        "apyReported": null,
+        "incrementPpm": 268.74826153933105
+      },
+      {
+        "date": "2025-11-04",
+        "nav": 1.0446784751,
+        "aum": 33898264.53621464,
+        "circulatingSupply": 32448514.39383758,
+        "apyReported": null,
+        "incrementPpm": 268.67605531633035
+      },
+      {
+        "date": "2025-11-05",
+        "nav": 1.0449590798,
+        "aum": 32827913.963707387,
+        "circulatingSupply": 31415501.906534452,
+        "apyReported": null,
+        "incrementPpm": 268.60388788341186
+      },
+      {
+        "date": "2025-11-06",
+        "nav": 1.0452396845,
+        "aum": 32899259.646072872,
+        "circulatingSupply": 31475325.83572976,
+        "apyReported": null,
+        "incrementPpm": 268.5317592090453
+      },
+      {
+        "date": "2025-11-07",
+        "nav": 1.0455202892,
+        "aum": 32467254.650996346,
+        "circulatingSupply": 31053682.06277402,
+        "apyReported": null,
+        "incrementPpm": 268.4596692614782
+      },
+      {
+        "date": "2025-11-08",
+        "nav": 1.0458008939,
+        "aum": 32747318.75589277,
+        "circulatingSupply": 31313148.560976543,
+        "apyReported": null,
+        "incrementPpm": 268.3876180105127
+      },
+      {
+        "date": "2025-11-09",
+        "nav": 1.0460814986,
+        "aum": 33071545.76797214,
+        "circulatingSupply": 31614693.321918715,
+        "apyReported": null,
+        "incrementPpm": 268.31560542417424
+      },
+      {
+        "date": "2025-11-10",
+        "nav": 1.0463621033,
+        "aum": 33210920.489961628,
+        "circulatingSupply": 31739414.47728426,
+        "apyReported": null,
+        "incrementPpm": 268.2436314718206
+      },
+      {
+        "date": "2025-11-11",
+        "nav": 1.046642708,
+        "aum": 33372598.530504264,
+        "circulatingSupply": 31885378.148074064,
+        "apyReported": null,
+        "incrementPpm": 268.1716961223657
+      },
+      {
+        "date": "2025-11-12",
+        "nav": 1.0469233127,
+        "aum": 33634927.64578778,
+        "circulatingSupply": 32127403.44757802,
+        "apyReported": null,
+        "incrementPpm": 268.09979934427906
+      },
+      {
+        "date": "2025-11-13",
+        "nav": 1.0472039174,
+        "aum": 33886727.9746115,
+        "circulatingSupply": 32359244.853424095,
+        "apyReported": null,
+        "incrementPpm": 268.0279411071407
+      },
+      {
+        "date": "2025-11-14",
+        "nav": 1.0474845221,
+        "aum": 33084243.932136264,
+        "circulatingSupply": 31584470.447170787,
+        "apyReported": null,
+        "incrementPpm": 267.95612137942015
+      },
+      {
+        "date": "2025-11-15",
+        "nav": 1.0477651268,
+        "aum": 33167899.124307223,
+        "circulatingSupply": 31655853.27849759,
+        "apyReported": null,
+        "incrementPpm": 267.8843401306974
+      },
+      {
+        "date": "2025-11-16",
+        "nav": 1.0480457315,
+        "aum": 33187690.24272495,
+        "circulatingSupply": 31666261.543020226,
+        "apyReported": null,
+        "incrementPpm": 267.8125973301082
+      },
+      {
+        "date": "2025-11-17",
+        "nav": 1.0483263362,
+        "aum": 33305276.59277924,
+        "circulatingSupply": 31769951.247724116,
+        "apyReported": null,
+        "incrementPpm": 267.7408929459002
+      },
+      {
+        "date": "2025-11-18",
+        "nav": 1.0486069409,
+        "aum": 33832676.93007365,
+        "circulatingSupply": 32264403.000265937,
+        "apyReported": null,
+        "incrementPpm": 267.6692269483194
+      },
+      {
+        "date": "2025-11-19",
+        "nav": 1.0488875456,
+        "aum": 34292778.71457375,
+        "circulatingSupply": 32694428.357386097,
+        "apyReported": null,
+        "incrementPpm": 267.5975993053914
+      },
+      {
+        "date": "2025-11-20",
+        "nav": 1.0491681503,
+        "aum": 34764310.47753507,
+        "circulatingSupply": 33135118.014776308,
+        "apyReported": null,
+        "incrementPpm": 267.52600998758425
+      },
+      {
+        "date": "2025-11-21",
+        "nav": 1.049448755,
+        "aum": 35630726.10143148,
+        "circulatingSupply": 33951849.417775035,
+        "apyReported": null,
+        "incrementPpm": 267.45445896314556
+      },
+      {
+        "date": "2025-11-22",
+        "nav": 1.0501728817143,
+        "aum": 36360198.247288264,
+        "circulatingSupply": 34623059.574661605,
+        "apyReported": null,
+        "incrementPpm": 690.0067400621434
+      },
+      {
+        "date": "2025-11-23",
+        "nav": 1.05053492257145,
+        "aum": 36875281.464897014,
+        "circulatingSupply": 35101433.25329484,
+        "apyReported": null,
+        "incrementPpm": 344.7440544828151
+      },
+      {
+        "date": "2025-11-24",
+        "nav": 1.0508969634286,
+        "aum": 38454148.08533441,
+        "circulatingSupply": 36591739.65055144,
+        "apyReported": null,
+        "incrementPpm": 344.6252469778699
+      },
+      {
+        "date": "2025-11-25",
+        "nav": 1.05125900428575,
+        "aum": 39475933.30228762,
+        "circulatingSupply": 37551101.24275082,
+        "apyReported": null,
+        "incrementPpm": 344.5065213327769
+      },
+      {
+        "date": "2025-11-26",
+        "nav": 1.0516210451429,
+        "aum": 39363135.90725609,
+        "circulatingSupply": 37430913.0547185,
+        "apyReported": null,
+        "incrementPpm": 344.38787746315927
+      },
+      {
+        "date": "2025-11-27",
+        "nav": 1.05198308600005,
+        "aum": 40516929.22693169,
+        "circulatingSupply": 38514810.519424796,
+        "apyReported": null,
+        "incrementPpm": 344.26931528441787
+      },
+      {
+        "date": "2025-11-28",
+        "nav": 1.0523451268572,
+        "aum": 40965046.81237567,
+        "circulatingSupply": 38927387.76176658,
+        "apyReported": null,
+        "incrementPpm": 344.15083471195373
+      },
+      {
+        "date": "2025-11-29",
+        "nav": 1.0527064753680324,
+        "aum": 41917508.28426556,
+        "circulatingSupply": 39818799.69875834,
+        "apyReported": null,
+        "incrementPpm": 343.3745276244515
+      },
+      {
+        "date": "2025-11-30",
+        "nav": 1.0530678247360648,
+        "aum": 42454989.3186494,
+        "circulatingSupply": 40315531.74582092,
+        "apyReported": null,
+        "incrementPpm": 343.2574763122531
+      },
+      {
+        "date": "2025-12-01",
+        "nav": 1.0534291741040973,
+        "aum": 42790240.25232366,
+        "circulatingSupply": 40619949.87818254,
+        "apyReported": null,
+        "incrementPpm": 343.1396910480444
+      },
+      {
+        "date": "2025-12-02",
+        "nav": 1.0537905234721296,
+        "aum": 42983956.47427246,
+        "circulatingSupply": 40789849.136851996,
+        "apyReported": null,
+        "incrementPpm": 343.0219865894202
+      },
+      {
+        "date": "2025-12-03",
+        "nav": 1.054151872840162,
+        "aum": 43116405.88010637,
+        "circulatingSupply": 40901512.38259383,
+        "apyReported": null,
+        "incrementPpm": 342.90436285355776
+      },
+      {
+        "date": "2025-12-04",
+        "nav": 1.054517676268863,
+        "aum": 44735220.87930182,
+        "circulatingSupply": 42422447.61376195,
+        "apyReported": null,
+        "incrementPpm": 347.012074944697
+      },
+      {
+        "date": "2025-12-05",
+        "nav": 1.054883452537726,
+        "aum": 45196382.11844307,
+        "circulatingSupply": 42844905.766333185,
+        "apyReported": null,
+        "incrementPpm": 346.8659436389743
+      },
+      {
+        "date": "2025-12-06",
+        "nav": 1.0552492288065891,
+        "aum": 45218466.72028096,
+        "circulatingSupply": 42850982.95823423,
+        "apyReported": null,
+        "incrementPpm": 346.7456693753146
+      },
+      {
+        "date": "2025-12-07",
+        "nav": 1.055615005075452,
+        "aum": 45234194.68693744,
+        "circulatingSupply": 42851034.20228878,
+        "apyReported": null,
+        "incrementPpm": 346.6254784916245
+      },
+      {
+        "date": "2025-12-08",
+        "nav": 1.0559807813443152,
+        "aum": 45781714.56420676,
+        "circulatingSupply": 43354685.400547154,
+        "apyReported": null,
+        "incrementPpm": 346.5053709017507
+      },
+      {
+        "date": "2025-12-09",
+        "nav": 1.056346557613178,
+        "aum": 45839471.56674177,
+        "circulatingSupply": 43394349.36041857,
+        "apyReported": null,
+        "incrementPpm": 346.3853465186517
+      },
+      {
+        "date": "2025-12-10",
+        "nav": 1.056712333882041,
+        "aum": 45940007.17183583,
+        "circulatingSupply": 43474468.593610674,
+        "apyReported": null,
+        "incrementPpm": 346.26540525617423
+      },
+      {
+        "date": "2025-12-11",
+        "nav": 1.0570781101509041,
+        "aum": 46370854.23891563,
+        "circulatingSupply": 43867008.30679005,
+        "apyReported": null,
+        "incrementPpm": 346.14554702838694
+      },
+      {
+        "date": "2025-12-12",
+        "nav": 1.057443886419767,
+        "aum": 52656197.632702395,
+        "circulatingSupply": 49795736.97379133,
+        "apyReported": null,
+        "incrementPpm": 346.0257717480264
+      },
+      {
+        "date": "2025-12-13",
+        "nav": 1.0578096626886302,
+        "aum": 54375860.68812472,
+        "circulatingSupply": 51404201.15838026,
+        "apyReported": null,
+        "incrementPpm": 345.9060793302715
+      },
+      {
+        "date": "2025-12-14",
+        "nav": 1.058175438957493,
+        "aum": 54678513.43708511,
+        "circulatingSupply": 51672446.197536,
+        "apyReported": null,
+        "incrementPpm": 345.78646968785876
+      },
+      {
+        "date": "2025-12-15",
+        "nav": 1.0585412152263562,
+        "aum": 55051247.80441191,
+        "circulatingSupply": 52006711.701480485,
+        "apyReported": null,
+        "incrementPpm": 345.6669427364112
+      },
+      {
+        "date": "2025-12-16",
+        "nav": 1.0589069914952192,
+        "aum": 59485555.802468374,
+        "circulatingSupply": 56176374.582693405,
+        "apyReported": null,
+        "incrementPpm": 345.54749838888733
+      },
+      {
+        "date": "2025-12-17",
+        "nav": 1.0592727677640823,
+        "aum": 59230033.92175848,
+        "circulatingSupply": 55915752.50894206,
+        "apyReported": null,
+        "incrementPpm": 345.4281365604661
+      },
+      {
+        "date": "2025-12-18",
+        "nav": 1.0596385440329452,
+        "aum": 59810327.830306455,
+        "circulatingSupply": 56444084.79392468,
+        "apyReported": null,
+        "incrementPpm": 345.3088571652163
+      },
+      {
+        "date": "2025-12-19",
+        "nav": 1.0600043203018081,
+        "aum": 60942431.54978569,
+        "circulatingSupply": 57492625.626689844,
+        "apyReported": null,
+        "incrementPpm": 345.18966011831685
+      },
+      {
+        "date": "2025-12-20",
+        "nav": 1.0603700965706713,
+        "aum": 61220766.37440471,
+        "circulatingSupply": 57735281.83451983,
+        "apyReported": null,
+        "incrementPpm": 345.0705453342806
+      },
+      {
+        "date": "2025-12-21",
+        "nav": 1.0607358728395342,
+        "aum": 61488479.940394126,
+        "circulatingSupply": 57967757.586808756,
+        "apyReported": null,
+        "incrementPpm": 344.9515127273983
+      },
+      {
+        "date": "2025-12-22",
+        "nav": 1.0611016491083973,
+        "aum": 62825847.839281976,
+        "circulatingSupply": 59208133.256669715,
+        "apyReported": null,
+        "incrementPpm": 344.8325622135151
+      },
+      {
+        "date": "2025-12-23",
+        "nav": 1.0614016743111916,
+        "aum": 65097431.97520269,
+        "circulatingSupply": 61331570.83763636,
+        "apyReported": null,
+        "incrementPpm": 282.7487857042232
+      },
+      {
+        "date": "2025-12-24",
+        "nav": 1.0617016986223833,
+        "aum": 65214997.68961163,
+        "circulatingSupply": 61424972.54570818,
+        "apyReported": null,
+        "incrementPpm": 282.66802140319845
+      },
+      {
+        "date": "2025-12-25",
+        "nav": 1.062001722933575,
+        "aum": 65319529.78898119,
+        "circulatingSupply": 61506048.79297991,
+        "apyReported": null,
+        "incrementPpm": 282.5881427721555
+      },
+      {
+        "date": "2025-12-26",
+        "nav": 1.0623017472447667,
+        "aum": 65454663.413786635,
+        "circulatingSupply": 61615886.0545535,
+        "apyReported": null,
+        "incrementPpm": 282.5083092736769
+      },
+      {
+        "date": "2025-12-27",
+        "nav": 1.0626017715559581,
+        "aum": 65722493.86237228,
+        "circulatingSupply": 61850540.458007544,
+        "apyReported": null,
+        "incrementPpm": 282.42852086957095
+      },
+      {
+        "date": "2025-12-28",
+        "nav": 1.0629017958671498,
+        "aum": 65968674.557345934,
+        "circulatingSupply": 62064693.8539854,
+        "apyReported": null,
+        "incrementPpm": 282.3487775220901
+      },
+      {
+        "date": "2025-12-29",
+        "nav": 1.0632018201783415,
+        "aum": 69213472.24858369,
+        "circulatingSupply": 65099091.193216555,
+        "apyReported": null,
+        "incrementPpm": 282.2690791925986
+      },
+      {
+        "date": "2025-12-30",
+        "nav": 1.0635018444895332,
+        "aum": 69752167.79089311,
+        "circulatingSupply": 65587256.05631011,
+        "apyReported": null,
+        "incrementPpm": 282.18942584334883
+      },
+      {
+        "date": "2025-12-31",
+        "nav": 1.0638018688007247,
+        "aum": 72537424.73794168,
+        "circulatingSupply": 68186968.70660383,
+        "apyReported": null,
+        "incrementPpm": 282.10981743570505
+      },
+      {
+        "date": "2026-01-01",
+        "nav": 1.0641018931119164,
+        "aum": 73514418.53781824,
+        "circulatingSupply": 69085882.67128137,
+        "apyReported": null,
+        "incrementPpm": 282.0302539323638
+      },
+      {
+        "date": "2026-01-02",
+        "nav": 1.064401917423108,
+        "aum": 73916419.10139766,
+        "circulatingSupply": 69444086.76033539,
+        "apyReported": null,
+        "incrementPpm": 281.95073529491134
+      },
+      {
+        "date": "2026-01-03",
+        "nav": 1.0647019417342998,
+        "aum": 74697868.28741123,
+        "circulatingSupply": 70158478.49937738,
+        "apyReported": null,
+        "incrementPpm": 281.87126148560003
+      },
+      {
+        "date": "2026-01-04",
+        "nav": 1.0650019660454915,
+        "aum": 75238906.83431983,
+        "circulatingSupply": 70646730.45975018,
+        "apyReported": null,
+        "incrementPpm": 281.7918324662383
+      },
+      {
+        "date": "2026-01-05",
+        "nav": 1.065301990356683,
+        "aum": 75558301.52895072,
+        "circulatingSupply": 70926650.10759285,
+        "apyReported": null,
+        "incrementPpm": 281.7124481990785
+      },
+      {
+        "date": "2026-01-06",
+        "nav": 1.0656020146678746,
+        "aum": 75819632.12408485,
+        "circulatingSupply": 71151922.65070577,
+        "apyReported": null,
+        "incrementPpm": 281.6331086468171
+      },
+      {
+        "date": "2026-01-07",
+        "nav": 1.0659020389790663,
+        "aum": 76194296.03348014,
+        "circulatingSupply": 71483394.57766676,
+        "apyReported": null,
+        "incrementPpm": 281.55381377081846
+      },
+      {
+        "date": "2026-01-08",
+        "nav": 1.066202063290258,
+        "aum": 76592463.15166593,
+        "circulatingSupply": 71836723.81509428,
+        "apyReported": null,
+        "incrementPpm": 281.47456353400105
+      },
+      {
+        "date": "2026-01-09",
+        "nav": 1.0665020876014495,
+        "aum": 80230032.76009496,
+        "circulatingSupply": 75227262.74313381,
+        "apyReported": null,
+        "incrementPpm": 281.3953578983952
+      },
+      {
+        "date": "2026-01-10",
+        "nav": 1.0668021119126412,
+        "aum": 82059126.15232448,
+        "circulatingSupply": 76920663.38826688,
+        "apyReported": null,
+        "incrementPpm": 281.3161968266975
+      },
+      {
+        "date": "2026-01-11",
+        "nav": 1.0671021362238329,
+        "aum": 82426419.34807631,
+        "circulatingSupply": 77243233.3794773,
+        "apyReported": null,
+        "incrementPpm": 281.23708028071627
+      },
+      {
+        "date": "2026-01-12",
+        "nav": 1.0674021605350246,
+        "aum": 83279707.8649181,
+        "circulatingSupply": 78020928.70336238,
+        "apyReported": null,
+        "incrementPpm": 281.15800822337
+      },
+      {
+        "date": "2026-01-13",
+        "nav": 1.0677021848462163,
+        "aum": 85318589.13759184,
+        "circulatingSupply": 79908602.181872,
+        "apyReported": null,
+        "incrementPpm": 281.0789806171332
+      },
+      {
+        "date": "2026-01-14",
+        "nav": 1.0680022091574077,
+        "aum": 86447458.55673735,
+        "circulatingSupply": 80943145.8245198,
+        "apyReported": null,
+        "incrementPpm": 280.9999974240362
+      },
+      {
+        "date": "2026-01-15",
+        "nav": 1.0683022334685994,
+        "aum": 87078607.27108917,
+        "circulatingSupply": 81511209.60251056,
+        "apyReported": null,
+        "incrementPpm": 280.92105860744175
+      },
+      {
+        "date": "2026-01-16",
+        "nav": 1.0686022577797911,
+        "aum": 87303520.60235485,
+        "circulatingSupply": 81698798.56303434,
+        "apyReported": null,
+        "incrementPpm": 280.84216412960217
+      },
+      {
+        "date": "2026-01-17",
+        "nav": 1.0689022820909828,
+        "aum": 89218186.37315883,
+        "circulatingSupply": 83467111.88475578,
+        "apyReported": null,
+        "incrementPpm": 280.76331395276986
+      },
+      {
+        "date": "2026-01-18",
+        "nav": 1.0692023064021743,
+        "aum": 90974281.66234168,
+        "circulatingSupply": 85086125.5326569,
+        "apyReported": null,
+        "incrementPpm": 280.68450803986343
+      },
+      {
+        "date": "2026-01-19",
+        "nav": 1.069502330713366,
+        "aum": 91634979.94212776,
+        "circulatingSupply": 85680018.93086718,
+        "apyReported": null,
+        "incrementPpm": 280.6057463542455
+      },
+      {
+        "date": "2026-01-20",
+        "nav": 1.0698023550245577,
+        "aum": 91978063.09444332,
+        "circulatingSupply": 85976687.8082185,
+        "apyReported": null,
+        "incrementPpm": 280.52702885794645
+      },
+      {
+        "date": "2026-01-21",
+        "nav": 1.0700622152491936,
+        "aum": 92415496.99599448,
+        "circulatingSupply": 86364601.68297127,
+        "apyReported": null,
+        "incrementPpm": 242.90489118428127
+      },
+      {
+        "date": "2026-01-22",
+        "nav": 1.0703220804983875,
+        "aum": 92765381.35344148,
+        "circulatingSupply": 86670529.40760222,
+        "apyReported": null,
+        "incrementPpm": 242.85059830231324
+      },
+      {
+        "date": "2026-01-23",
+        "nav": 1.0705819457475811,
+        "aum": 92703172.29092872,
+        "circulatingSupply": 86591383.92829391,
+        "apyReported": null,
+        "incrementPpm": 242.79163620799517
+      },
+      {
+        "date": "2026-01-24",
+        "nav": 1.0708418109967748,
+        "aum": 92932275.21324033,
+        "circulatingSupply": 86784317.02880177,
+        "apyReported": null,
+        "incrementPpm": 242.73270273789115
+      },
+      {
+        "date": "2026-01-25",
+        "nav": 1.0711016762459684,
+        "aum": 93096810.73569272,
+        "circulatingSupply": 86916875.21392125,
+        "apyReported": null,
+        "incrementPpm": 242.67379787090704
+      },
+      {
+        "date": "2026-01-26",
+        "nav": 1.0713615414951623,
+        "aum": 92096722.70035692,
+        "circulatingSupply": 85962319.09895636,
+        "apyReported": null,
+        "incrementPpm": 242.61492158683672
+      },
+      {
+        "date": "2026-01-27",
+        "nav": 1.071621406744356,
+        "aum": 92854723.7465868,
+        "circulatingSupply": 86648813.80886604,
+        "apyReported": null,
+        "incrementPpm": 242.5560738636978
+      },
+      {
+        "date": "2026-01-28",
+        "nav": 1.0718812719935495,
+        "aum": 94045516.9493208,
+        "circulatingSupply": 87738744.39881691,
+        "apyReported": null,
+        "incrementPpm": 242.49725468172835
+      },
+      {
+        "date": "2026-01-29",
+        "nav": 1.0721411372427432,
+        "aum": 93601764.2836081,
+        "circulatingSupply": 87303584.41830382,
+        "apyReported": null,
+        "incrementPpm": 242.43846401983404
+      },
+      {
+        "date": "2026-01-30",
+        "nav": 1.072401002491937,
+        "aum": 93941933.39925556,
+        "circulatingSupply": 87599632.20937204,
+        "apyReported": null,
+        "incrementPpm": 242.3797018573648
+      },
+      {
+        "date": "2026-01-31",
+        "nav": 1.0726608677411307,
+        "aum": 93442495.3888091,
+        "circulatingSupply": 87112803.49546593,
+        "apyReported": null,
+        "incrementPpm": 242.3209681730043
+      },
+      {
+        "date": "2026-02-01",
+        "nav": 1.0729207329903243,
+        "aum": 92834943.52088304,
+        "circulatingSupply": 86525444.67301315,
+        "apyReported": null,
+        "incrementPpm": 242.2622629469906
+      },
+      {
+        "date": "2026-02-02",
+        "nav": 1.0731805982395182,
+        "aum": 91223924.06993078,
+        "circulatingSupply": 85003329.56035322,
+        "apyReported": null,
+        "incrementPpm": 242.20358615822946
+      },
+      {
+        "date": "2026-02-03",
+        "nav": 1.0734404634887118,
+        "aum": 91313331.30135526,
+        "circulatingSupply": 85066041.76684783,
+        "apyReported": null,
+        "incrementPpm": 242.14493778584867
+      },
+      {
+        "date": "2026-02-04",
+        "nav": 1.0737003287379054,
+        "aum": 90785568.729462,
+        "circulatingSupply": 84553917.23329082,
+        "apyReported": null,
+        "incrementPpm": 242.08631780942014
+      },
+      {
+        "date": "2026-02-05",
+        "nav": 1.073960193987099,
+        "aum": 88230131.24845396,
+        "circulatingSupply": 82154005.09482366,
+        "apyReported": null,
+        "incrementPpm": 242.0277262082937
+      },
+      {
+        "date": "2026-02-06",
+        "nav": 1.074220059236293,
+        "aum": 87316932.76414748,
+        "circulatingSupply": 81284027.43309845,
+        "apyReported": null,
+        "incrementPpm": 241.96916296226334
+      },
+      {
+        "date": "2026-02-07",
+        "nav": 1.0745072818992274,
+        "aum": 87771713.60948014,
+        "circulatingSupply": 81685545.63384691,
+        "apyReported": null,
+        "incrementPpm": 267.3778621660183
+      },
+      {
+        "date": "2026-02-08",
+        "nav": 1.0747945047984546,
+        "aum": 88456138.93332195,
+        "circulatingSupply": 82300512.83143584,
+        "apyReported": null,
+        "incrementPpm": 267.3066102627519
+      },
+      {
+        "date": "2026-02-09",
+        "nav": 1.075081727697682,
+        "aum": 89952555.53515752,
+        "circulatingSupply": 83670434.73782542,
+        "apyReported": null,
+        "incrementPpm": 267.23517653381987
+      },
+      {
+        "date": "2026-02-10",
+        "nav": 1.0753689505969095,
+        "aum": 90679816.26398511,
+        "circulatingSupply": 84324376.49762075,
+        "apyReported": null,
+        "incrementPpm": 267.1637809736893
+      },
+      {
+        "date": "2026-02-11",
+        "nav": 1.0756561734961367,
+        "aum": 91384737.60415876,
+        "circulatingSupply": 84957200.87501265,
+        "apyReported": null,
+        "incrementPpm": 267.092423551718
+      },
+      {
+        "date": "2026-02-12",
+        "nav": 1.0759433963953642,
+        "aum": 92907148.33883129,
+        "circulatingSupply": 86349475.864706,
+        "apyReported": null,
+        "incrementPpm": 267.0211042381521
+      },
+      {
+        "date": "2026-02-13",
+        "nav": 1.0762306192945916,
+        "aum": 94777610.97912364,
+        "circulatingSupply": 88064406.7172564,
+        "apyReported": null,
+        "incrementPpm": 266.9498230014611
+      },
+      {
+        "date": "2026-02-14",
+        "nav": 1.0765178421938189,
+        "aum": 95532718.33422929,
+        "circulatingSupply": 88742345.54212743,
+        "apyReported": null,
+        "incrementPpm": 266.87857981166906
+      },
+      {
+        "date": "2026-02-15",
+        "nav": 1.0768050650930463,
+        "aum": 96374868.62677953,
+        "circulatingSupply": 89500757.14813973,
+        "apyReported": null,
+        "incrementPpm": 266.8073746388
+      },
+      {
+        "date": "2026-02-16",
+        "nav": 1.0770922879922735,
+        "aum": 99278120.70438653,
+        "circulatingSupply": 92172343.8289985,
+        "apyReported": null,
+        "incrementPpm": 266.73620745132354
+      },
+      {
+        "date": "2026-02-17",
+        "nav": 1.077379510891501,
+        "aum": 100742642.59158301,
+        "circulatingSupply": 93507108.28742357,
+        "apyReported": null,
+        "incrementPpm": 266.6650782199298
+      },
+      {
+        "date": "2026-02-18",
+        "nav": 1.0776667337907284,
+        "aum": 101652049.7794653,
+        "circulatingSupply": 94326053.30768712,
+        "apyReported": null,
+        "incrementPpm": 266.59398691353255
+      },
+      {
+        "date": "2026-02-19",
+        "nav": 1.0779539566899556,
+        "aum": 102833208.52059574,
+        "circulatingSupply": 95396661.31600177,
+        "apyReported": null,
+        "incrementPpm": 266.52293350171163
+      },
+      {
+        "date": "2026-02-20",
+        "nav": 1.078241179589183,
+        "aum": 104880361.07896157,
+        "circulatingSupply": 97269853.03874378,
+        "apyReported": null,
+        "incrementPpm": 266.4519179551572
+      },
+      {
+        "date": "2026-02-21",
+        "nav": 1.0785284024884105,
+        "aum": 105540008.11599986,
+        "circulatingSupply": 97855566.7820106,
+        "apyReported": null,
+        "incrementPpm": 266.380940242783
+      },
+      {
+        "date": "2026-02-22",
+        "nav": 1.0788156253876378,
+        "aum": 105764310.72548686,
+        "circulatingSupply": 98037429.4147657,
+        "apyReported": null,
+        "incrementPpm": 266.310000334391
+      },
+      {
+        "date": "2026-02-23",
+        "nav": 1.0791028482868652,
+        "aum": 106512367.25324903,
+        "circulatingSupply": 98704555.75420198,
+        "apyReported": null,
+        "incrementPpm": 266.2390982002272
+      },
+      {
+        "date": "2026-02-24",
+        "nav": 1.0793900711860924,
+        "aum": 107656707.99867873,
+        "circulatingSupply": 99738464.22394797,
+        "apyReported": null,
+        "incrementPpm": 266.1682338094273
+      },
+      {
+        "date": "2026-02-25",
+        "nav": 1.0796772940853199,
+        "aum": 109650069.78708956,
+        "circulatingSupply": 101558188.16212377,
+        "apyReported": null,
+        "incrementPpm": 266.0974071326816
+      },
+      {
+        "date": "2026-02-26",
+        "nav": 1.0799645169845473,
+        "aum": 114296657.33072044,
+        "circulatingSupply": 105833715.39822161,
+        "apyReported": null,
+        "incrementPpm": 266.0266181393478
+      },
+      {
+        "date": "2026-02-27",
+        "nav": 1.0802517398837745,
+        "aum": 115347628.42310229,
+        "circulatingSupply": 106778470.39201498,
+        "apyReported": null,
+        "incrementPpm": 265.95586679944995
+      },
+      {
+        "date": "2026-02-28",
+        "nav": 1.080538962783002,
+        "aum": 116172112.33704065,
+        "circulatingSupply": 107513117.37786062,
+        "apyReported": null,
+        "incrementPpm": 265.885153083234
+      },
+      {
+        "date": "2026-03-01",
+        "nav": 1.0808261856822292,
+        "aum": 116353997.81048177,
+        "circulatingSupply": 107652830.16994806,
+        "apyReported": null,
+        "incrementPpm": 265.8144769600579
+      },
+      {
+        "date": "2026-03-02",
+        "nav": 1.0811134085814567,
+        "aum": 118158158.98500875,
+        "circulatingSupply": 109293028.87848338,
+        "apyReported": null,
+        "incrementPpm": 265.74383840083374
+      },
+      {
+        "date": "2026-03-03",
+        "nav": 1.081400631480684,
+        "aum": 120563151.30392152,
+        "circulatingSupply": 111487960.88535945,
+        "apyReported": null,
+        "incrementPpm": 265.67323737514135
+      },
+      {
+        "date": "2026-03-04",
+        "nav": 1.0816878543799113,
+        "aum": 120748384.80217579,
+        "circulatingSupply": 111629602.11973171,
+        "apyReported": null,
+        "incrementPpm": 265.60267385256077
+      },
+      {
+        "date": "2026-03-05",
+        "nav": 1.0819750772791388,
+        "aum": 121268150.80467184,
+        "circulatingSupply": 112080355.03888586,
+        "apyReported": null,
+        "incrementPpm": 265.53214780444813
+      },
+      {
+        "date": "2026-03-06",
+        "nav": 1.0822623001783662,
+        "aum": 122103531.26296774,
+        "circulatingSupply": 112822493.44067886,
+        "apyReported": null,
+        "incrementPpm": 265.4616591999393
+      },
+      {
+        "date": "2026-03-07",
+        "nav": 1.0825495230775934,
+        "aum": 123313860.27756488,
+        "circulatingSupply": 113910594.98783426,
+        "apyReported": null,
+        "incrementPpm": 265.39120800928015
+      },
+      {
+        "date": "2026-03-08",
+        "nav": 1.082836745976821,
+        "aum": 127061781.60705595,
+        "circulatingSupply": 117341586.42024495,
+        "apyReported": null,
+        "incrementPpm": 265.32079420338306
+      },
+      {
+        "date": "2026-03-09",
+        "nav": 1.0831239688760481,
+        "aum": 127577146.66872025,
+        "circulatingSupply": 117786283.32000293,
+        "apyReported": null,
+        "incrementPpm": 265.2504177516057
+      },
+      {
+        "date": "2026-03-10",
+        "nav": 1.0834111917752756,
+        "aum": 128094081.89288114,
+        "circulatingSupply": 118232193.70937678,
+        "apyReported": null,
+        "incrementPpm": 265.1800786253045
+      },
+      {
+        "date": "2026-03-11",
+        "nav": 1.083698414674503,
+        "aum": 128932853.16198689,
+        "circulatingSupply": 118974847.07561637,
+        "apyReported": null,
+        "incrementPpm": 265.10977679383706
+      },
+      {
+        "date": "2026-03-12",
+        "nav": 1.0839856375737302,
+        "aum": 131248526.58116435,
+        "circulatingSupply": 121079580.79125112,
+        "apyReported": null,
+        "incrementPpm": 265.03951222767165
+      },
+      {
+        "date": "2026-03-13",
+        "nav": 1.0842728604729577,
+        "aum": 132644780.0783807,
+        "circulatingSupply": 122335239.50836629,
+        "apyReported": null,
+        "incrementPpm": 264.9692848979424
+      },
+      {
+        "date": "2026-03-14",
+        "nav": 1.0845600833721851,
+        "aum": 133634660.18345779,
+        "circulatingSupply": 123215543.54826723,
+        "apyReported": null,
+        "incrementPpm": 264.8990947742291
+      },
+      {
+        "date": "2026-03-15",
+        "nav": 1.0848473062714123,
+        "aum": 134118008.3946666,
+        "circulatingSupply": 123628466.07014784,
+        "apyReported": null,
+        "incrementPpm": 264.828941827
+      },
+      {
+        "date": "2026-03-16",
+        "nav": 1.0851345291706398,
+        "aum": 135901251.2994607,
+        "circulatingSupply": 125239081.09654297,
+        "apyReported": null,
+        "incrementPpm": 264.7588260273892
+      },
+      {
+        "date": "2026-03-17",
+        "nav": 1.085421752069867,
+        "aum": 136798215.24051678,
+        "circulatingSupply": 126032314.1485295,
+        "apyReported": null,
+        "incrementPpm": 264.68874734519864
+      },
+      {
+        "date": "2026-03-18",
+        "nav": 1.0857089749690945,
+        "aum": 137432686.18853942,
+        "circulatingSupply": 126583356.458347,
+        "apyReported": null,
+        "incrementPpm": 264.6187057517846
+      },
+      {
+        "date": "2026-03-19",
+        "nav": 1.0859992697835539,
+        "aum": 138756891.5915549,
+        "circulatingSupply": 127768862.69841596,
+        "apyReported": null,
+        "incrementPpm": 267.37811066523955
+      },
+      {
+        "date": "2026-03-20",
+        "nav": 1.0862895645671078,
+        "aum": 139067299.04808858,
+        "circulatingSupply": 128020468.56033976,
+        "apyReported": null,
+        "incrementPpm": 267.306610262974
+      },
+      {
+        "date": "2026-03-21",
+        "nav": 1.0865798593506617,
+        "aum": 139529930.18991518,
+        "circulatingSupply": 128412034.3195925,
+        "apyReported": null,
+        "incrementPpm": 267.23517653381987
+      },
+      {
+        "date": "2026-03-22",
+        "nav": 1.0868701541342156,
+        "aum": 139743319.6791232,
+        "circulatingSupply": 128574070.36854428,
+        "apyReported": null,
+        "incrementPpm": 267.1637809736893
+      },
+      {
+        "date": "2026-03-23",
+        "nav": 1.0871604489177695,
+        "aum": 140296039.34478325,
+        "circulatingSupply": 129048145.08699529,
+        "apyReported": null,
+        "incrementPpm": 267.0924235519401
+      },
+      {
+        "date": "2026-03-24",
+        "nav": 1.0874507437013234,
+        "aum": 140847206.97711802,
+        "circulatingSupply": 129520539.47539786,
+        "apyReported": null,
+        "incrementPpm": 267.02110423793
+      },
+      {
+        "date": "2026-03-25",
+        "nav": 1.0877410384848774,
+        "aum": 141673448.29167312,
+        "circulatingSupply": 130245566.98624808,
+        "apyReported": null,
+        "incrementPpm": 266.9498230014611
+      },
+      {
+        "date": "2026-03-26",
+        "nav": 1.0880313332684313,
+        "aum": 142406699.6948876,
+        "circulatingSupply": 130884741.40455113,
+        "apyReported": null,
+        "incrementPpm": 266.8785798118911
+      },
+      {
+        "date": "2026-03-27",
+        "nav": 1.0883216280519852,
+        "aum": 141369547.79287672,
+        "circulatingSupply": 129896846.8043015,
+        "apyReported": null,
+        "incrementPpm": 266.8073746385779
+      },
+      {
+        "date": "2026-03-28",
+        "nav": 1.088611922835539,
+        "aum": 143874944.25985113,
+        "circulatingSupply": 132163667.54930985,
+        "apyReported": null,
+        "incrementPpm": 266.73620745132354
+      },
+      {
+        "date": "2026-03-29",
+        "nav": 1.088902217619093,
+        "aum": 144320238.48673683,
+        "circulatingSupply": 132537372.18232138,
+        "apyReported": null,
+        "incrementPpm": 266.66507821970777
+      },
+      {
+        "date": "2026-03-30",
+        "nav": 1.089192512402647,
+        "aum": 142820178.8896865,
+        "circulatingSupply": 131124826.20233943,
+        "apyReported": null,
+        "incrementPpm": 266.59398691331046
+      },
+      {
+        "date": "2026-03-31",
+        "nav": 1.0894828071862008,
+        "aum": 143100778.86365733,
+        "circulatingSupply": 131347441.11588384,
+        "apyReported": null,
+        "incrementPpm": 266.52293350193366
+      },
+      {
+        "date": "2026-04-01",
+        "nav": 1.0897731019697547,
+        "aum": 140611844.8639501,
+        "circulatingSupply": 129028551.54875405,
+        "apyReported": null,
+        "incrementPpm": 266.4519179551572
+      },
+      {
+        "date": "2026-04-02",
+        "nav": 1.0900633967533087,
+        "aum": 132315472.38245912,
+        "circulatingSupply": 121383281.72155233,
+        "apyReported": null,
+        "incrementPpm": 266.380940242783
+      },
+      {
+        "date": "2026-04-03",
+        "nav": 1.0903536915368626,
+        "aum": 131801111.76691024,
+        "circulatingSupply": 120879227.34606923,
+        "apyReported": null,
+        "incrementPpm": 266.310000334391
+      },
+      {
+        "date": "2026-04-04",
+        "nav": 1.0906439863204165,
+        "aum": 131977480.34518996,
+        "circulatingSupply": 121008763.6300566,
+        "apyReported": null,
+        "incrementPpm": 266.2390982000051
+      },
+      {
+        "date": "2026-04-05",
+        "nav": 1.0909342811039702,
+        "aum": 132214792.87469076,
+        "circulatingSupply": 121194094.97416845,
+        "apyReported": null,
+        "incrementPpm": 266.1682338094273
+      },
+      {
+        "date": "2026-04-06",
+        "nav": 1.091224575887524,
+        "aum": 132453176.48223054,
+        "circulatingSupply": 121380309.24981926,
+        "apyReported": null,
+        "incrementPpm": 266.0974071326816
+      },
+      {
+        "date": "2026-04-07",
+        "nav": 1.091514870671078,
+        "aum": 132508558.35491475,
+        "circulatingSupply": 121398765.98607099,
+        "apyReported": null,
+        "incrementPpm": 266.0266181393478
+      },
+      {
+        "date": "2026-04-08",
+        "nav": 1.091805165454632,
+        "aum": 131793427.44834298,
+        "circulatingSupply": 120711489.20921588,
+        "apyReported": null,
+        "incrementPpm": 265.95586679944995
+      },
+      {
+        "date": "2026-04-09",
+        "nav": 1.0920954602381858,
+        "aum": 132546647.24137032,
+        "circulatingSupply": 121369103.77089372,
+        "apyReported": null,
+        "incrementPpm": 265.885153083234
+      },
+      {
+        "date": "2026-04-10",
+        "nav": 1.0923857550217397,
+        "aum": 133623680.66649261,
+        "circulatingSupply": 122322796.73386379,
+        "apyReported": null,
+        "incrementPpm": 265.81447696027993
+      },
+      {
+        "date": "2026-04-11",
+        "nav": 1.0926760498052936,
+        "aum": 135177085.39887175,
+        "circulatingSupply": 123711950.51173607,
+        "apyReported": null,
+        "incrementPpm": 265.74383840083374
+      },
+      {
+        "date": "2026-04-12",
+        "nav": 1.0929663445888476,
+        "aum": 134334038.28307903,
+        "circulatingSupply": 122907753.69996673,
+        "apyReported": null,
+        "incrementPpm": 265.6732373749193
+      },
+      {
+        "date": "2026-04-13",
+        "nav": 1.0932566393724015,
+        "aum": 133335806.91838868,
+        "circulatingSupply": 121962037.19826652,
+        "apyReported": null,
+        "incrementPpm": 265.6026738527828
+      },
+      {
+        "date": "2026-04-14",
+        "nav": 1.0935469341559554,
+        "aum": 136240503.50560048,
+        "circulatingSupply": 124585876.70108233,
+        "apyReported": null,
+        "incrementPpm": 265.53214780444813
+      },
+      {
+        "date": "2026-04-15",
+        "nav": 1.0938372289395093,
+        "aum": 136863551.08178172,
+        "circulatingSupply": 125122410.77630249,
+        "apyReported": null,
+        "incrementPpm": 265.4616591997172
+      },
+      {
+        "date": "2026-04-16",
+        "nav": 1.0941275237230632,
+        "aum": 139988989.96776456,
+        "circulatingSupply": 127945771.34063347,
+        "apyReported": null,
+        "incrementPpm": 265.39120800950224
+      },
+      {
+        "date": "2026-04-17",
+        "nav": 1.0944178185066171,
+        "aum": 148310821.06010932,
+        "circulatingSupply": 135515722.19692674,
+        "apyReported": null,
+        "incrementPpm": 265.32079420338306
+      },
+      {
+        "date": "2026-04-18",
+        "nav": 1.094708113290171,
+        "aum": 150182118.67748255,
+        "circulatingSupply": 137189189.3868464,
+        "apyReported": null,
+        "incrementPpm": 265.2504177518278
+      },
+      {
+        "date": "2026-04-19",
+        "nav": 1.094998408073725,
+        "aum": 148097507.79560667,
+        "circulatingSupply": 135249062.19373742,
+        "apyReported": null,
+        "incrementPpm": 265.1800786250824
+      },
+      {
+        "date": "2026-04-20",
+        "nav": 1.0952887028572789,
+        "aum": 143573747.35597646,
+        "circulatingSupply": 131083016.72557724,
+        "apyReported": null,
+        "incrementPpm": 265.10977679383706
+      },
+      {
+        "date": "2026-04-21",
+        "nav": 1.0955789976408328,
+        "aum": 141611205.8835393,
+        "circulatingSupply": 129256955.6266395,
+        "apyReported": null,
+        "incrementPpm": 265.0395122278937
+      },
+      {
+        "date": "2026-04-22",
+        "nav": 1.0958692924243867,
+        "aum": 141682794.63319278,
+        "circulatingSupply": 129288041.56903474,
+        "apyReported": null,
+        "incrementPpm": 264.9692848977203
+      },
+      {
+        "date": "2026-04-23",
+        "nav": 1.0961595872079406,
+        "aum": 140546259.26849774,
+        "circulatingSupply": 128216968.50409085,
+        "apyReported": null,
+        "incrementPpm": 264.8990947740071
+      },
+      {
+        "date": "2026-04-24",
+        "nav": 1.0964498819914945,
+        "aum": 141354479.10430142,
+        "circulatingSupply": 128920146.21549109,
+        "apyReported": null,
+        "incrementPpm": 264.828941827
+      },
+      {
+        "date": "2026-04-25",
+        "nav": 1.0967401767750484,
+        "aum": 141541811.97083163,
+        "circulatingSupply": 129056831.2971206,
+        "apyReported": null,
+        "incrementPpm": 264.7588260273892
+      },
+      {
+        "date": "2026-04-26",
+        "nav": 1.0970304715586023,
+        "aum": 141601927.47692364,
+        "circulatingSupply": 129077478.83770557,
+        "apyReported": null,
+        "incrementPpm": 264.68874734542067
+      },
+      {
+        "date": "2026-04-27",
+        "nav": 1.0973207663421563,
+        "aum": 141697830.3629778,
+        "circulatingSupply": 129130728.870937,
+        "apyReported": null,
+        "incrementPpm": 264.6187057515625
+      },
+      {
+        "date": "2026-04-28",
+        "nav": 1.0976110611257102,
+        "aum": 142147202.1974429,
+        "circulatingSupply": 129505985.52793072,
+        "apyReported": null,
+        "incrementPpm": 264.5487012167269
+      },
+      {
+        "date": "2026-04-29",
+        "nav": 1.097901355909264,
+        "aum": 143665092.00481975,
+        "circulatingSupply": 130854280.51579247,
+        "apyReported": null,
+        "incrementPpm": 264.4787337111598
+      },
+      {
+        "date": "2026-04-30",
+        "nav": 1.0981916506928178,
+        "aum": 142763134.77122697,
+        "circulatingSupply": 129998379.3185477,
+        "apyReported": null,
+        "incrementPpm": 264.4088032055514
+      },
+      {
+        "date": "2026-05-01",
+        "nav": 1.0984819454763717,
+        "aum": 157289579.98208824,
+        "circulatingSupply": 143188133.9787314,
+        "apyReported": null,
+        "incrementPpm": 264.3389096710358
+      },
+      {
+        "date": "2026-05-02",
+        "nav": 1.0988225285746624,
+        "aum": 166284270.31546956,
+        "circulatingSupply": 151329505.89497396,
+        "apyReported": null,
+        "incrementPpm": 310.0488812703972
+      },
+      {
+        "date": "2026-05-03",
+        "nav": 1.0991631121493246,
+        "aum": 166552999.37430456,
+        "circulatingSupply": 151527100.51251957,
+        "apyReported": null,
+        "incrementPpm": 309.9532142865069
+      },
+      {
+        "date": "2026-05-04",
+        "nav": 1.099503695723987,
+        "aum": 166828766.9019415,
+        "circulatingSupply": 151730974.21204233,
+        "apyReported": null,
+        "incrementPpm": 309.85717305997974
+      },
+      {
+        "date": "2026-05-05",
+        "nav": 1.0998442792986494,
+        "aum": 167189339.07059872,
+        "circulatingSupply": 152011827.69001836,
+        "apyReported": null,
+        "incrementPpm": 309.76119133296896
+      },
+      {
+        "date": "2026-05-06",
+        "nav": 1.1001848628733117,
+        "aum": 168847923.6011211,
+        "circulatingSupply": 153472320.24275202,
+        "apyReported": null,
+        "incrementPpm": 309.66526905018554
+      },
+      {
+        "date": "2026-05-07",
+        "nav": 1.1005254464479741,
+        "aum": 169555699.2532211,
+        "circulatingSupply": 154067949.8147675,
+        "apyReported": null,
+        "incrementPpm": 309.5694061567844
+      },
+      {
+        "date": "2026-05-08",
+        "nav": 1.1008660300226365,
+        "aum": 169747137.80943313,
+        "circulatingSupply": 154194182.74351034,
+        "apyReported": null,
+        "incrementPpm": 309.4736025974765
+      },
+      {
+        "date": "2026-05-09",
+        "nav": 1.1012066135972989,
+        "aum": 169922797.66309768,
+        "circulatingSupply": 154306009.03132322,
+        "apyReported": null,
+        "incrementPpm": 309.3778583169726
+      },
+      {
+        "date": "2026-05-10",
+        "nav": 1.1015471971719613,
+        "aum": 171541048.5719497,
+        "circulatingSupply": 155727370.56782743,
+        "apyReported": null,
+        "incrementPpm": 309.28217326064987
+      },
+      {
+        "date": "2026-05-11",
+        "nav": 1.1018877807466236,
+        "aum": 171931268.17166084,
+        "circulatingSupply": 156033373.97494566,
+        "apyReported": null,
+        "incrementPpm": 309.1865473734412
+      },
+      {
+        "date": "2026-05-12",
+        "nav": 1.102228364321286,
+        "aum": 172993185.63435674,
+        "circulatingSupply": 156948588.18197802,
+        "apyReported": null,
+        "incrementPpm": 309.0909806002795
+      },
+      {
+        "date": "2026-05-13",
+        "nav": 1.1025689478959482,
+        "aum": 171861985.65133515,
+        "circulatingSupply": 155874139.19039023,
+        "apyReported": null,
+        "incrementPpm": 308.9954728863198
+      },
+      {
+        "date": "2026-05-14",
+        "nav": 1.1029095314706105,
+        "aum": 171063841.43340597,
+        "circulatingSupply": 155102333.0130358,
+        "apyReported": null,
+        "incrementPpm": 308.90002417738316
+      },
+      {
+        "date": "2026-05-15",
+        "nav": 1.103250115045273,
+        "aum": 170337226.59486663,
+        "circulatingSupply": 154395838.5065536,
+        "apyReported": null,
+        "incrementPpm": 308.80463441840254
+      },
+      {
+        "date": "2026-05-16",
+        "nav": 1.1035906986199353,
+        "aum": 171660463.09055457,
+        "circulatingSupply": 155547218.09926432,
+        "apyReported": null,
+        "incrementPpm": 308.709303554755
+      },
+      {
+        "date": "2026-05-17",
+        "nav": 1.1039312821945977,
+        "aum": 172647266.43400502,
+        "circulatingSupply": 156393128.10375753,
+        "apyReported": null,
+        "incrementPpm": 308.6140315320396
+      },
+      {
+        "date": "2026-05-18",
+        "nav": 1.10427186576926,
+        "aum": 173904577.65168762,
+        "circulatingSupply": 157483481.235431,
+        "apyReported": null,
+        "incrementPpm": 308.5188182956333
+      },
+      {
+        "date": "2026-05-19",
+        "nav": 1.1046124493439224,
+        "aum": 176745476.10912132,
+        "circulatingSupply": 160006775.4207353,
+        "apyReported": null,
+        "incrementPpm": 308.42366379135734
+      },
+      {
+        "date": "2026-05-20",
+        "nav": 1.1049530329185848,
+        "aum": 177272729.52893087,
+        "circulatingSupply": 160434628.66533688,
+        "apyReported": null,
+        "incrementPpm": 308.32856796481065
+      },
+      {
+        "date": "2026-05-21",
+        "nav": 1.1052936164932472,
+        "aum": 178145755.39915287,
+        "circulatingSupply": 161175051.35364297,
+        "apyReported": null,
+        "incrementPpm": 308.23353076181445
+      },
+      {
+        "date": "2026-05-22",
+        "nav": 1.1056342000679096,
+        "aum": 177900660.61155966,
+        "circulatingSupply": 160903724.39694136,
+        "apyReported": null,
+        "incrementPpm": 308.13855212774575
+      },
+      {
+        "date": "2026-05-23",
+        "nav": 1.1059747836425717,
+        "aum": 178173111.59613165,
+        "circulatingSupply": 161100518.95515326,
+        "apyReported": null,
+        "incrementPpm": 308.04363200886974
+      },
+      {
+        "date": "2026-05-24",
+        "nav": 1.1063153672172341,
+        "aum": 178616449.82121667,
+        "circulatingSupply": 161451657.5599043,
+        "apyReported": null,
+        "incrementPpm": 307.9487703514516
+      },
+      {
+        "date": "2026-05-25",
+        "nav": 1.1066559507918965,
+        "aum": 179204598.8109512,
+        "circulatingSupply": 161933434.40001988,
+        "apyReported": null,
+        "incrementPpm": 307.85396710086843
+      },
+      {
+        "date": "2026-05-26",
+        "nav": 1.1069965343665589,
+        "aum": 180173520.5424736,
+        "circulatingSupply": 162758884.01545158,
+        "apyReported": null,
+        "incrementPpm": 307.7592222033854
+      },
+      {
+        "date": "2026-05-27",
+        "nav": 1.1073371179412212,
+        "aum": 182034376.07315192,
+        "circulatingSupply": 164389302.15903276,
+        "apyReported": null,
+        "incrementPpm": 307.66453560504556
+      },
+      {
+        "date": "2026-05-28",
+        "nav": 1.1076777015158836,
+        "aum": 183171053.71694335,
+        "circulatingSupply": 165364937.3516045,
+        "apyReported": null,
+        "incrementPpm": 307.5699072525584
+      },
+      {
+        "date": "2026-05-29",
+        "nav": 1.108018285090546,
+        "aum": 184014695.0581697,
+        "circulatingSupply": 166075503.9282878,
+        "apyReported": null,
+        "incrementPpm": 307.4753370915229
+      },
+      {
+        "date": "2026-05-30",
+        "nav": 1.1083588686652084,
+        "aum": 184463022.6980757,
+        "circulatingSupply": 166428968.01125768,
+        "apyReported": null,
+        "incrementPpm": 307.3808250686483
+      },
+      {
+        "date": "2026-05-31",
+        "nav": 1.1086994522398708,
+        "aum": 185806724.77552718,
+        "circulatingSupply": 167589804.79348817,
+        "apyReported": null,
+        "incrementPpm": 307.2863711304219
+      },
+      {
+        "date": "2026-06-01",
+        "nav": 1.1090400358145331,
+        "aum": 183476021.7087537,
+        "circulatingSupply": 165436788.37887937,
+        "apyReported": null,
+        "incrementPpm": 307.1919752231089
+      },
+      {
+        "date": "2026-06-02",
+        "nav": 1.1093806193891953,
+        "aum": 183641859.50362498,
+        "circulatingSupply": 165535485.56196594,
+        "apyReported": null,
+        "incrementPpm": 307.0976372931966
+      },
+      {
+        "date": "2026-06-03",
+        "nav": 1.1097212029638577,
+        "aum": 183848518.66200894,
+        "circulatingSupply": 165670907.4053771,
+        "apyReported": null,
+        "incrementPpm": 307.00335728761627
+      },
+      {
+        "date": "2026-06-04",
+        "nav": 1.11006178653852,
+        "aum": 183274394.7198913,
+        "circulatingSupply": 165102877.1032571,
+        "apyReported": null,
+        "incrementPpm": 306.90913515285524
+      },
+      {
+        "date": "2026-06-05",
+        "nav": 1.1104023701131824,
+        "aum": 181632817.4124349,
+        "circulatingSupply": 163573874.03083554,
+        "apyReported": null,
+        "incrementPpm": 306.8149708354007
+      },
+      {
+        "date": "2026-06-06",
+        "nav": 1.1107429536878448,
+        "aum": 181715239.06171724,
+        "circulatingSupply": 163597921.96600795,
+        "apyReported": null,
+        "incrementPpm": 306.72086428240596
+      },
+      {
+        "date": "2026-06-07",
+        "nav": 1.1110835372625072,
+        "aum": 180310491.91649875,
+        "circulatingSupply": 162283470.02669898,
+        "apyReported": null,
+        "incrementPpm": 306.62681544058046
+      },
+      {
+        "date": "2026-06-08",
+        "nav": 1.1114241208371696,
+        "aum": 181284966.62399775,
+        "circulatingSupply": 163110520.3002492,
+        "apyReported": null,
+        "incrementPpm": 306.53282425685546
+      },
+      {
+        "date": "2026-06-09",
+        "nav": 1.111764704411832,
+        "aum": 180399392.69675902,
+        "circulatingSupply": 162264004.22758296,
+        "apyReported": null,
+        "incrementPpm": 306.43889067816235
+      },
+      {
+        "date": "2026-06-10",
+        "nav": 1.1121052879864943,
+        "aum": 184031106.4905686,
+        "circulatingSupply": 165479931.15270895,
+        "apyReported": null,
+        "incrementPpm": 306.34501465187645
+      },
+      {
+        "date": "2026-06-11",
+        "nav": 1.1124458715611567,
+        "aum": 184582837.21705803,
+        "circulatingSupply": 165925230.10402545,
+        "apyReported": null,
+        "incrementPpm": 306.2511961247072
+      },
+      {
+        "date": "2026-06-12",
+        "nav": 1.1127864551358189,
+        "aum": 186324070.15142787,
+        "circulatingSupply": 167439196.7043546,
+        "apyReported": null,
+        "incrementPpm": 306.1574350438079
+      },
+      {
+        "date": "2026-06-13",
+        "nav": 1.1131270387104812,
+        "aum": 187173662.28265253,
+        "circulatingSupply": 168151213.44953284,
+        "apyReported": null,
+        "incrementPpm": 306.06373135699806
+      },
+      {
+        "date": "2026-06-14",
+        "nav": 1.1134676222851436,
+        "aum": 187874269.5562726,
+        "circulatingSupply": 168728992.0210725,
+        "apyReported": null,
+        "incrementPpm": 305.97008501098696
+      },
+      {
+        "date": "2026-06-15",
+        "nav": 1.113808205859806,
+        "aum": 188304976.72415385,
+        "circulatingSupply": 169064095.35633788,
+        "apyReported": null,
+        "incrementPpm": 305.87649595359426
+      },
+      {
+        "date": "2026-06-16",
+        "nav": 1.1141487894344684,
+        "aum": 188545662.53521997,
+        "circulatingSupply": 169228440.8718193,
+        "apyReported": null,
+        "incrementPpm": 305.78296413197313
+      },
+      {
+        "date": "2026-06-17",
+        "nav": 1.1144893730091308,
+        "aum": 190461067.4453344,
+        "circulatingSupply": 170895364.33271492,
+        "apyReported": null,
+        "incrementPpm": 305.6894894937212
+      },
+      {
+        "date": "2026-06-18",
+        "nav": 1.1148299565837931,
+        "aum": 190847848.0735248,
+        "circulatingSupply": 171190096.70169395,
+        "apyReported": null,
+        "incrementPpm": 305.59607198665793
+      },
+      {
+        "date": "2026-06-19",
+        "nav": 1.1151705401584555,
+        "aum": 190930519.3173947,
+        "circulatingSupply": 171211946.91016966,
+        "apyReported": null,
+        "incrementPpm": 305.5027115579367
+      },
+      {
+        "date": "2026-06-20",
+        "nav": 1.115511123733118,
+        "aum": 192994938.18989754,
+        "circulatingSupply": 173010321.53227627,
+        "apyReported": null,
+        "incrementPpm": 305.4094081555991
+      },
+      {
+        "date": "2026-06-21",
+        "nav": 1.1158517073077803,
+        "aum": 193313052.4663596,
+        "circulatingSupply": 173242601.32447773,
+        "apyReported": null,
+        "incrementPpm": 305.31616172746465
+      },
+      {
+        "date": "2026-06-22",
+        "nav": 1.1161922908824424,
+        "aum": 196484894.98338622,
+        "circulatingSupply": 176031403.00140277,
+        "apyReported": null,
+        "incrementPpm": 305.2229722209088
+      },
+      {
+        "date": "2026-06-23",
+        "nav": 1.1165328744571048,
+        "aum": 200971546.8378685,
+        "circulatingSupply": 179996085.59272158,
+        "apyReported": null,
+        "incrementPpm": 305.1298395844171
+      },
+      {
+        "date": "2026-06-24",
+        "nav": 1.1168734580317672,
+        "aum": 202498574.45932463,
+        "circulatingSupply": 181308431.14150268,
+        "apyReported": null,
+        "incrementPpm": 305.03676376558707
+      },
+      {
+        "date": "2026-06-25",
+        "nav": 1.1172140416064296,
+        "aum": 201884981.33749726,
+        "circulatingSupply": 180703941.96550655,
+        "apyReported": null,
+        "incrementPpm": 304.94374471268236
+      },
+      {
+        "date": "2026-06-26",
+        "nav": 1.117554625181092,
+        "aum": 202065492.47149938,
+        "circulatingSupply": 180810394.33643442,
+        "apyReported": null,
+        "incrementPpm": 304.85078237352246
+      },
+      {
+        "date": "2026-06-27",
+        "nav": 1.1178952087557543,
+        "aum": 203127411.56825274,
+        "circulatingSupply": 181705234.96056372,
+        "apyReported": null,
+        "incrementPpm": 304.757876696371
+      },
+      {
+        "date": "2026-06-28",
+        "nav": 1.1182357923304167,
+        "aum": 203236579.77270967,
+        "circulatingSupply": 181747517.98023048,
+        "apyReported": null,
+        "incrementPpm": 304.66502762949153
+      },
+      {
+        "date": "2026-06-29",
+        "nav": 1.118576375905079,
+        "aum": 204357098.58261564,
+        "circulatingSupply": 182693916.11034447,
+        "apyReported": null,
+        "incrementPpm": 304.5722351209257
+      },
+      {
+        "date": "2026-06-30",
+        "nav": 1.1189169594797415,
+        "aum": 204482343.37505844,
+        "circulatingSupply": 182750240.43798193,
+        "apyReported": null,
+        "incrementPpm": 304.4794991193811
+      },
+      {
+        "date": "2026-07-01",
+        "nav": 1.1192575430544038,
+        "aum": 205951924.47002253,
+        "circulatingSupply": 184007626.97384995,
+        "apyReported": null,
+        "incrementPpm": 304.38681957312144
+      },
+      {
+        "date": "2026-07-02",
+        "nav": 1.119598126629066,
+        "aum": 209402293.03100508,
+        "circulatingSupply": 187033443.56379238,
+        "apyReported": null,
+        "incrementPpm": 304.2941964301882
+      },
+      {
+        "date": "2026-07-03",
+        "nav": 1.1199387102037284,
+        "aum": 210694412.37470174,
+        "circulatingSupply": 188130306.10967475,
+        "apyReported": null,
+        "incrementPpm": 304.20162963995523
+      },
+      {
+        "date": "2026-07-04",
+        "nav": 1.1202792937783908,
+        "aum": 212851217.95248917,
+        "circulatingSupply": 189998350.53150108,
+        "apyReported": null,
+        "incrementPpm": 304.10911915024207
+      },
+      {
+        "date": "2026-07-05",
+        "nav": 1.1206198773530531,
+        "aum": 213514774.55041462,
+        "circulatingSupply": 190532738.94689843,
+        "apyReported": null,
+        "incrementPpm": 304.0166649102005
+      },
+      {
+        "date": "2026-07-06",
+        "nav": 1.1209604609277155,
+        "aum": 214528686.96810037,
+        "circulatingSupply": 191379352.30164567,
+        "apyReported": null,
+        "incrementPpm": 303.92426686809415
+      },
+      {
+        "date": "2026-07-07",
+        "nav": 1.1213010445023779,
+        "aum": 214701643.22588408,
+        "circulatingSupply": 191475468.85695314,
+        "apyReported": null,
+        "incrementPpm": 303.83192497307476
+      },
+      {
+        "date": "2026-07-08",
+        "nav": 1.1216416280770403,
+        "aum": 214925697.4714307,
+        "circulatingSupply": 191617083.47068274,
+        "apyReported": null,
+        "incrementPpm": 303.73963917385004
+      },
+      {
+        "date": "2026-07-09",
+        "nav": 1.1219822116517026,
+        "aum": 215498371.08460438,
+        "circulatingSupply": 192069329.48372057,
+        "apyReported": null,
+        "incrementPpm": 303.64740941934974
+      },
+      {
+        "date": "2026-07-10",
+        "nav": 1.122322795226365,
+        "aum": 218004091.4061013,
+        "circulatingSupply": 194243663.52830902,
+        "apyReported": null,
+        "incrementPpm": 303.55523565828156
+      },
+      {
+        "date": "2026-07-11",
+        "nav": 1.1226633788010272,
+        "aum": 219237730.4509487,
+        "circulatingSupply": 195283585.97132504,
+        "apyReported": null,
+        "incrementPpm": 303.4631178397973
+      },
+      {
+        "date": "2026-07-12",
+        "nav": 1.1230039623756896,
+        "aum": 220544001.82049674,
+        "circulatingSupply": 196387554.46057454,
+        "apyReported": null,
+        "incrementPpm": 303.3710559134928
+      },
+      {
+        "date": "2026-07-13",
+        "nav": 1.123344545950352,
+        "aum": 221101420.9063211,
+        "circulatingSupply": 196824226.10532978,
+        "apyReported": null,
+        "incrementPpm": 303.27904982807576
+      },
+      {
+        "date": "2026-07-14",
+        "nav": 1.1236851295250143,
+        "aum": 219810146.30879655,
+        "circulatingSupply": 195615426.89606568,
+        "apyReported": null,
+        "incrementPpm": 303.18709953247594
+      },
+      {
+        "date": "2026-07-15",
+        "nav": 1.1240257130996767,
+        "aum": 220171177.99242288,
+        "circulatingSupply": 195877349.98095942,
+        "apyReported": null,
+        "incrementPpm": 303.09520497651124
+      },
+      {
+        "date": "2026-07-16",
+        "nav": 1.124366296674339,
+        "aum": 224535836.24700293,
+        "circulatingSupply": 199699899.32207775,
+        "apyReported": null,
+        "incrementPpm": 303.00336610911137
+      },
+      {
+        "date": "2026-07-17",
+        "nav": 1.1247068802490015,
+        "aum": 229414262.09331888,
+        "circulatingSupply": 203976934.89927644,
+        "apyReported": null,
+        "incrementPpm": 302.9115828798723
+      },
+      {
+        "date": "2026-07-18",
+        "nav": 1.1250474638236638,
+        "aum": 229629515.3475543,
+        "circulatingSupply": 204106513.48621294,
+        "apyReported": null,
+        "incrementPpm": 302.8198552381678
+      },
+      {
+        "date": "2026-07-19",
+        "nav": 1.1253880473983262,
+        "aum": 232197630.5354467,
+        "circulatingSupply": 206326725.3213161,
+        "apyReported": null,
+        "incrementPpm": 302.72818313359375
+      },
+      {
+        "date": "2026-07-20",
+        "nav": 1.1257286309729886,
+        "aum": 233977496.71962103,
+        "circulatingSupply": 207845381.45520017,
+        "apyReported": null,
+        "incrementPpm": 302.636566515746
+      },
+      {
+        "date": "2026-07-21",
+        "nav": 1.1260692145476507,
+        "aum": 234724766.3504086,
+        "circulatingSupply": 208446126.86148164,
+        "apyReported": null,
+        "incrementPpm": 302.5450053337764
+      },
+      {
+        "date": "2026-07-22",
+        "nav": 1.1264097981223131,
+        "aum": 240826107.54384443,
+        "circulatingSupply": 213799727.19102174,
+        "apyReported": null,
+        "incrementPpm": 302.45349953839093
+      },
+      {
+        "date": "2026-07-23",
+        "nav": 1.1267503816969755,
+        "aum": 243912696.12535366,
+        "circulatingSupply": 216474473.92740333,
+        "apyReported": null,
+        "incrementPpm": 302.3620490785195
+      },
+      {
+        "date": "2026-07-24",
+        "nav": 1.1270909652716379,
+        "aum": 244024117.0053286,
+        "circulatingSupply": 216507916.862342,
+        "apyReported": null,
+        "incrementPpm": 302.27065390420194
+      },
+      {
+        "date": "2026-07-25",
+        "nav": 1.1274315488463003,
+        "aum": 244443660.32923308,
+        "circulatingSupply": 216814635.51323542,
+        "apyReported": null,
+        "incrementPpm": 302.1793139654783
+      },
+      {
+        "date": "2026-07-26",
+        "nav": 1.1277721324209626,
+        "aum": 245148478.33622903,
+        "circulatingSupply": 217374123.0952164,
+        "apyReported": null,
+        "incrementPpm": 302.08802921194433
+      },
+      {
+        "date": "2026-07-27",
+        "nav": 1.128112715995625,
+        "aum": 245462386.41731882,
+        "circulatingSupply": 217586756.1254143,
+        "apyReported": null,
+        "incrementPpm": 301.9967995938622
+      },
+      {
+        "date": "2026-07-28",
+        "nav": 1.1284532995702874,
+        "aum": 246465092.85921094,
+        "circulatingSupply": 218409652.35607386,
+        "apyReported": null,
+        "incrementPpm": 301.90562506149377
+      },
+      {
+        "date": "2026-07-29",
+        "nav": 1.1287938831449498,
+        "aum": 247264851.75367185,
+        "circulatingSupply": 219052260.51080602,
+        "apyReported": null,
+        "incrementPpm": 301.814505564435
+      },
+      {
+        "date": "2026-07-30",
+        "nav": 1.1291344667196122,
+        "aum": 247373613.3558402,
+        "circulatingSupply": 219082510.22973007,
+        "apyReported": null,
+        "incrementPpm": 301.72344105316995
+      },
+      {
+        "date": "2026-07-31",
+        "nav": 1.1294750502942743,
+        "aum": 245805745.82294482,
+        "circulatingSupply": 217628309.50440416,
+        "apyReported": null,
+        "incrementPpm": 301.6324314779606
+      },
+      {
+        "date": "2026-08-01",
+        "nav": 1.1298156338689367,
+        "aum": 246503873.52551284,
+        "circulatingSupply": 218180618.2672352,
+        "apyReported": null,
+        "incrementPpm": 301.541476789291
+      },
+      {
+        "date": "2026-08-02",
+        "nav": 1.130156217443599,
+        "aum": 246957482.06499696,
+        "circulatingSupply": 218516235.41355374,
+        "apyReported": null,
+        "incrementPpm": 301.4505769372011
+      },
+      {
+        "date": "2026-08-03",
+        "nav": 1.1304968010182614,
+        "aum": 248239204.94002086,
+        "circulatingSupply": 219584172.83129573,
+        "apyReported": null,
+        "incrementPpm": 301.359731872175
+      },
+      {
+        "date": "2026-08-04",
+        "nav": 1.1308373845929238,
+        "aum": 248439756.72835293,
+        "circulatingSupply": 219695386.89931592,
+        "apyReported": null,
+        "incrementPpm": 301.26894154469676
+      },
+      {
+        "date": "2026-08-05",
+        "nav": 1.1311779681675862,
+        "aum": 248361383.56904018,
+        "circulatingSupply": 219559954.8065499,
+        "apyReported": null,
+        "incrementPpm": 301.17820590525037
+      },
+      {
+        "date": "2026-08-06",
+        "nav": 1.1315185517422486,
+        "aum": 249336266.38195172,
+        "circulatingSupply": 220355438.27190265,
+        "apyReported": null,
+        "incrementPpm": 301.087524904764
+      },
+      {
+        "date": "2026-08-07",
+        "nav": 1.131859135316911,
+        "aum": 247393788.5471301,
+        "circulatingSupply": 218572948.54793212,
+        "apyReported": null,
+        "incrementPpm": 300.99689849349966
+      },
+      {
+        "date": "2026-08-08",
+        "nav": 1.1321997188915733,
+        "aum": 247501297.20228583,
+        "circulatingSupply": 218602153.90672442,
+        "apyReported": null,
+        "incrementPpm": 300.90632662260754
+      },
+      {
+        "date": "2026-08-09",
+        "nav": 1.1325403024662357,
+        "aum": 247916471.36782607,
+        "circulatingSupply": 218903001.3571788,
+        "apyReported": null,
+        "incrementPpm": 300.81580924234964
+      },
+      {
+        "date": "2026-08-10",
+        "nav": 1.1328808860408979,
+        "aum": 250719375.64735675,
+        "circulatingSupply": 221311330.02300966,
+        "apyReported": null,
+        "incrementPpm": 300.72534630387617
+      },
+      {
+        "date": "2026-08-11",
+        "nav": 1.1332214696155603,
+        "aum": 251731114.8918929,
+        "circulatingSupply": 222137615.32182357,
+        "apyReported": null,
+        "incrementPpm": 300.63493775811526
+      },
+      {
+        "date": "2026-08-12",
+        "nav": 1.1335620531902226,
+        "aum": 251951907.6067449,
+        "circulatingSupply": 222265650.91665512,
+        "apyReported": null,
+        "incrementPpm": 300.544583555995
+      },
+      {
+        "date": "2026-08-13",
+        "nav": 1.133902636764885,
+        "aum": 254352771.54509792,
+        "circulatingSupply": 224316236.0666051,
+        "apyReported": null,
+        "incrementPpm": 300.4542836484436
+      },
+      {
+        "date": "2026-08-14",
+        "nav": 1.1342432203395474,
+        "aum": 256524539.37748727,
+        "circulatingSupply": 226163608.2785613,
+        "apyReported": null,
+        "incrementPpm": 300.36403798661127
+      },
+      {
+        "date": "2026-08-15",
+        "nav": 1.1345838039142098,
+        "aum": 257157467.56498757,
+        "circulatingSupply": 226653568.18757498,
+        "apyReported": null,
+        "incrementPpm": 300.2738465216481
+      },
+      {
+        "date": "2026-08-16",
+        "nav": 1.1349243874888721,
+        "aum": 257460699.48956117,
+        "circulatingSupply": 226852733.38712668,
+        "apyReported": null,
+        "incrementPpm": 300.18370920448234
+      },
+      {
+        "date": "2026-08-17",
+        "nav": 1.1352649710635345,
+        "aum": 262674470.6775498,
+        "circulatingSupply": 231377235.59943202,
+        "apyReported": null,
+        "incrementPpm": 300.09362598670816
+      },
+      {
+        "date": "2026-08-18",
+        "nav": 1.135605554638197,
+        "aum": 264572659.4093811,
+        "circulatingSupply": 232979363.5904447,
+        "apyReported": null,
+        "incrementPpm": 300.0035968196979
+      },
+      {
+        "date": "2026-08-19",
+        "nav": 1.1359461382128593,
+        "aum": 266115363.24196133,
+        "circulatingSupply": 234267589.18396476,
+        "apyReported": null,
+        "incrementPpm": 299.91362165437965
+      },
+      {
+        "date": "2026-08-20",
+        "nav": 1.1362867217875214,
+        "aum": 266710540.14819908,
+        "circulatingSupply": 234721162.39168048,
+        "apyReported": null,
+        "incrementPpm": 299.8237004423476
+      },
+      {
+        "date": "2026-08-21",
+        "nav": 1.1366273053621838,
+        "aum": 267032430.24611592,
+        "circulatingSupply": 234934027.17527238,
+        "apyReported": null,
+        "incrementPpm": 299.7338331356403
+      },
+      {
+        "date": "2026-08-22",
+        "nav": 1.1369678889368462,
+        "aum": 267397737.81667614,
+        "circulatingSupply": 235184951.50000578,
+        "apyReported": null,
+        "incrementPpm": 299.64401968496367
+      },
+      {
+        "date": "2026-08-23",
+        "nav": 1.1373084725115086,
+        "aum": 268979641.5573756,
+        "circulatingSupply": 236505440.74765408,
+        "apyReported": null,
+        "incrementPpm": 299.5542600423562
+      },
+      {
+        "date": "2026-08-24",
+        "nav": 1.137649056086171,
+        "aum": 270142153.0306308,
+        "circulatingSupply": 237456491.16081098,
+        "apyReported": null,
+        "incrementPpm": 299.4645541594121
+      },
+      {
+        "date": "2026-08-25",
+        "nav": 1.1379896396608333,
+        "aum": 270062155.97891605,
+        "circulatingSupply": 237315127.1037981,
+        "apyReported": null,
+        "incrementPpm": 299.3749019879477
+      },
+      {
+        "date": "2026-08-26",
+        "nav": 1.1383302232354957,
+        "aum": 270624040.3743154,
+        "circulatingSupply": 237737727.4628763,
+        "apyReported": null,
+        "incrementPpm": 299.2853034795573
+      },
+      {
+        "date": "2026-08-27",
+        "nav": 1.139409566,
+        "aum": 276171009.5038585,
+        "circulatingSupply": 242380806.46749502,
+        "apyReported": null,
+        "incrementPpm": 948.1807145879095
+      },
+      {
+        "date": "2026-08-28",
+        "nav": 1.139750574,
+        "aum": 277354691.4564818,
+        "circulatingSupply": 243346832.00298333,
+        "apyReported": null,
+        "incrementPpm": 299.28483152641405
+      },
+      {
+        "date": "2026-08-29",
+        "nav": 1.140091684,
+        "aum": 277468370.97647965,
+        "circulatingSupply": 243373734.64823875,
+        "apyReported": null,
+        "incrementPpm": 299.2847801803755
+      },
+      {
+        "date": "2026-08-30",
+        "nav": 1.140432897,
+        "aum": 277095954.8592162,
+        "circulatingSupply": 242974361.39218652,
+        "apyReported": null,
+        "incrementPpm": 299.2855792114391
+      },
+      {
+        "date": "2026-08-31",
+        "nav": 1.140774211,
+        "aum": 279840940.40903383,
+        "circulatingSupply": 245307912.5655601,
+        "apyReported": null,
+        "incrementPpm": 299.2845970140046
+      },
+      {
+        "date": "2026-09-01",
+        "nav": 1.141115628,
+        "aum": 280227433.39581156,
+        "circulatingSupply": 245573214.94839042,
+        "apyReported": null,
+        "incrementPpm": 299.28534210177384
+      },
+      {
+        "date": "2026-09-02",
+        "nav": 1.141457146,
+        "aum": 279878888.49911463,
+        "circulatingSupply": 245194389.89005604,
+        "apyReported": null,
+        "incrementPpm": 299.2843070588336
+      },
+      {
+        "date": "2026-09-03",
+        "nav": 1.141798767,
+        "aum": 287759905.6878603,
+        "circulatingSupply": 252023310.9411479,
+        "apyReported": null,
+        "incrementPpm": 299.28499829989795
+      },
+      {
+        "date": "2026-09-04",
+        "nav": 1.14214049,
+        "aum": 286136146.1760643,
+        "circulatingSupply": 250526225.69756225,
+        "apyReported": null,
+        "incrementPpm": 299.2847863181325
+      },
+      {
+        "date": "2026-09-05",
+        "nav": 1.142482316,
+        "aum": 287351203.3352308,
+        "circulatingSupply": 251514793.1053235,
+        "apyReported": null,
+        "incrementPpm": 299.28542328439
+      },
+      {
+        "date": "2026-09-06",
+        "nav": 1.142824244,
+        "aum": 287456944.135606,
+        "circulatingSupply": 251532066.84649754,
+        "apyReported": null,
+        "incrementPpm": 299.28515760069274
+      },
+      {
+        "date": "2026-09-07",
+        "nav": 1.143166274,
+        "aum": 287956404.59861946,
+        "circulatingSupply": 251893719.3546172,
+        "apyReported": null,
+        "incrementPpm": 299.28486536356934
+      },
+      {
+        "date": "2026-09-08",
+        "nav": 1.143508406,
+        "aum": 289332639.57866865,
+        "circulatingSupply": 253021873.78819203,
+        "apyReported": null,
+        "incrementPpm": 299.28454659788883
+      },
+      {
+        "date": "2026-09-09",
+        "nav": 1.143850641,
+        "aum": 292399494.6994086,
+        "circulatingSupply": 255627338.23690587,
+        "apyReported": null,
+        "incrementPpm": 299.28507582832606
+      },
+      {
+        "date": "2026-09-10",
+        "nav": 1.144192978,
+        "aum": 294086203.53932565,
+        "circulatingSupply": 257025002.94432473,
+        "apyReported": null,
+        "incrementPpm": 299.2847035525603
+      },
+      {
+        "date": "2026-09-11",
+        "nav": 1.144535418,
+        "aum": 294792312.32753825,
+        "circulatingSupply": 257565041.40576822,
+        "apyReported": null,
+        "incrementPpm": 299.2851787979589
+      },
+      {
+        "date": "2026-09-12",
+        "nav": 1.14487796,
+        "aum": 295671868.19751424,
+        "circulatingSupply": 258256232.12933037,
+        "apyReported": null,
+        "incrementPpm": 299.28475310847523
+      },
+      {
+        "date": "2026-09-13",
+        "nav": 1.145220605,
+        "aum": 297250000.6753318,
+        "circulatingSupply": 259556979.1335808,
+        "apyReported": null,
+        "incrementPpm": 299.28517446520254
+      },
+      {
+        "date": "2026-09-14",
+        "nav": 1.145563352,
+        "aum": 297457860.828057,
+        "circulatingSupply": 259660768.9210164,
+        "apyReported": null,
+        "incrementPpm": 299.2846954581463
+      },
+      {
+        "date": "2026-09-15",
+        "nav": 1.145906202,
+        "aum": 298364217.61082184,
+        "circulatingSupply": 260374031.56564978,
+        "apyReported": null,
+        "incrementPpm": 299.2850630227917
+      },
+      {
+        "date": "2026-09-16",
+        "nav": 1.146249154,
+        "aum": 300276871.9389095,
+        "circulatingSupply": 261964749.01730612,
+        "apyReported": null,
+        "incrementPpm": 299.2845307945302
+      },
+      {
+        "date": "2026-09-17",
+        "nav": 1.146592209,
+        "aum": 300455036.0015339,
+        "circulatingSupply": 262041756.12145114,
+        "apyReported": null,
+        "incrementPpm": 299.284844663017
+      },
+      {
+        "date": "2026-09-18",
+        "nav": 1.146935367,
+        "aum": 301396746.3349505,
+        "circulatingSupply": 262784420.99427432,
+        "apyReported": null,
+        "incrementPpm": 299.2851314584932
+      },
+      {
+        "date": "2026-09-19",
+        "nav": 1.147263909,
+        "aum": 301491573.7381131,
+        "circulatingSupply": 262791822.6774038,
+        "apyReported": null,
+        "incrementPpm": 286.45206125221813
+      },
+      {
+        "date": "2026-09-20",
+        "nav": 1.147592545,
+        "aum": 300441542.10118353,
+        "circulatingSupply": 261801580.54371428,
+        "apyReported": null,
+        "incrementPpm": 286.4519640353169
+      },
+      {
+        "date": "2026-09-21",
+        "nav": 1.147921275,
+        "aum": 302584071.04021436,
+        "circulatingSupply": 263593050.87381917,
+        "apyReported": null,
+        "incrementPpm": 286.45184341113963
+      },
+      {
+        "date": "2026-09-22",
+        "nav": 1.1482501,
+        "aum": 300959436.9313477,
+        "circulatingSupply": 262102687.32512867,
+        "apyReported": null,
+        "incrementPpm": 286.45257053883097
+      },
+      {
+        "date": "2026-09-23",
+        "nav": 1.148579018,
+        "aum": 298925009.5102759,
+        "circulatingSupply": 260256373.1581904,
+        "apyReported": null,
+        "incrementPpm": 286.4515317697602
+      },
+      {
+        "date": "2026-09-24",
+        "nav": 1.148908031,
+        "aum": 296991711.3140383,
+        "circulatingSupply": 258499116.81402314,
+        "apyReported": null,
+        "incrementPpm": 286.4522116841073
+      },
+      {
+        "date": "2026-09-25",
+        "nav": 1.149237138,
+        "aum": 293169794.77289027,
+        "circulatingSupply": 255099478.6707722,
+        "apyReported": null,
+        "incrementPpm": 286.4519971310653
+      },
+      {
+        "date": "2026-09-26",
+        "nav": 1.14956634,
+        "aum": 293377110.07231,
+        "circulatingSupply": 255206767.8602263,
+        "apyReported": null,
+        "incrementPpm": 286.45262941373596
+      },
+      {
+        "date": "2026-09-27",
+        "nav": 1.149895635,
+        "aum": 293294416.99361104,
+        "circulatingSupply": 255061770.88289496,
+        "apyReported": null,
+        "incrementPpm": 286.45149787531744
+      },
+      {
+        "date": "2026-09-28",
+        "nav": 1.150225025,
+        "aum": 291408646.1985747,
+        "circulatingSupply": 253349248.94246215,
+        "apyReported": null,
+        "incrementPpm": 286.4520831056261
+      },
+      {
+        "date": "2026-09-29",
+        "nav": 1.15055451,
+        "aum": 287767164.48578674,
+        "circulatingSupply": 250111717.42378962,
+        "apyReported": null,
+        "incrementPpm": 286.45264434246087
+      },
+      {
+        "date": "2026-09-30",
+        "nav": 1.150884088,
+        "aum": 286636418.53321743,
+        "circulatingSupply": 249057591.04840228,
+        "apyReported": null,
+        "incrementPpm": 286.4514433131848
+      },
+      {
+        "date": "2026-10-01",
+        "nav": 1.151213761,
+        "aum": 286240389.9111606,
+        "circulatingSupply": 248642258.8125756,
+        "apyReported": null,
+        "incrementPpm": 286.45195761889397
+      },
+      {
+        "date": "2026-10-02",
+        "nav": 1.151543529,
+        "aum": 286491385.7892493,
+        "circulatingSupply": 248789019.75858292,
+        "apyReported": null,
+        "incrementPpm": 286.45244799152533
+      },
+      {
+        "date": "2026-10-03",
+        "nav": 1.151873391,
+        "aum": 286612946.4114322,
+        "circulatingSupply": 248823307.01519975,
+        "apyReported": null,
+        "incrementPpm": 286.4520460521547
+      },
+      {
+        "date": "2026-10-04",
+        "nav": 1.152203347,
+        "aum": 286732351.42339754,
+        "circulatingSupply": 248855683.47806364,
+        "apyReported": null,
+        "incrementPpm": 286.4516209661883
+      },
+      {
+        "date": "2026-10-05",
+        "nav": 1.152533398,
+        "aum": 287889863.3539946,
+        "circulatingSupply": 249788738.3164532,
+        "apyReported": null,
+        "incrementPpm": 286.45204065713693
+      },
+      {
+        "date": "2026-10-06",
+        "nav": 1.152863544,
+        "aum": 288057058.409045,
+        "circulatingSupply": 249862232.09868884,
+        "apyReported": null,
+        "incrementPpm": 286.4524364958321
+      },
+      {
+        "date": "2026-10-07",
+        "nav": 1.153193784,
+        "aum": 287521051.80307543,
+        "circulatingSupply": 249325877.2222756,
+        "apyReported": null,
+        "incrementPpm": 286.4519410981092
+      },
+      {
+        "date": "2026-10-08",
+        "nav": 1.153524119,
+        "aum": 287996074.01628447,
+        "circulatingSupply": 249666278.5568374,
+        "apyReported": null,
+        "incrementPpm": 286.4522897914057
+      },
+      {
+        "date": "2026-10-09",
+        "nav": 1.153854548,
+        "aum": 287627405.60182303,
+        "circulatingSupply": 249275271.39393228,
+        "apyReported": null,
+        "incrementPpm": 286.451747785188
+      },
+      {
+        "date": "2026-10-10",
+        "nav": 1.154185072,
+        "aum": 286583927.5078437,
+        "circulatingSupply": 248299804.30369288,
+        "apyReported": null,
+        "incrementPpm": 286.452049413688
+      },
+      {
+        "date": "2026-10-11",
+        "nav": 1.154515691,
+        "aum": 286286642.2618925,
+        "circulatingSupply": 247971200.81921217,
+        "apyReported": null,
+        "incrementPpm": 286.4523272920749
+      },
+      {
+        "date": "2026-10-12",
+        "nav": 1.154846404,
+        "aum": 286396014.5141642,
+        "circulatingSupply": 247994896.56995475,
+        "apyReported": null,
+        "incrementPpm": 286.45171527585944
+      },
+      {
+        "date": "2026-10-13",
+        "nav": 1.155177212,
+        "aum": 285285543.4576687,
+        "circulatingSupply": 246962578.98278964,
+        "apyReported": null,
+        "incrementPpm": 286.4519462104642
+      },
+      {
+        "date": "2026-10-14",
+        "nav": 1.155508115,
+        "aum": 285591621.1015499,
+        "circulatingSupply": 247156742.03772244,
+        "apyReported": null,
+        "incrementPpm": 286.4521534553521
+      },
+      {
+        "date": "2026-10-15",
+        "nav": 1.155839113,
+        "aum": 283924614.8488606,
+        "circulatingSupply": 245643716.02889392,
+        "apyReported": null,
+        "incrementPpm": 286.45233703117333
+      },
+      {
+        "date": "2026-10-16",
+        "nav": 1.156170205,
+        "aum": 282973153.84481204,
+        "circulatingSupply": 244750429.150535,
+        "apyReported": null,
+        "incrementPpm": 286.4516317850896
+      },
+      {
+        "date": "2026-10-17",
+        "nav": 1.156501393,
+        "aum": 283109553.79767054,
+        "circulatingSupply": 244798281.70658374,
+        "apyReported": null,
+        "incrementPpm": 286.45263350313144
+      },
+      {
+        "date": "2026-10-18",
+        "nav": 1.156832675,
+        "aum": 283386850.63021183,
+        "circulatingSupply": 244967882.35188103,
+        "apyReported": null,
+        "incrementPpm": 286.4518815153261
+      },
+      {
+        "date": "2026-10-19",
+        "nav": 1.157164052,
+        "aum": 283500346.0198589,
+        "circulatingSupply": 244995811.55313915,
+        "apyReported": null,
+        "incrementPpm": 286.4519711114344
+      },
+      {
+        "date": "2026-10-20",
+        "nav": 1.157495524,
+        "aum": 282467518.0434298,
+        "circulatingSupply": 244033356.66240534,
+        "apyReported": null,
+        "incrementPpm": 286.4520371395063
+      },
+      {
+        "date": "2026-10-21",
+        "nav": 1.157827091,
+        "aum": 282830450.24326223,
+        "circulatingSupply": 244276932.57633597,
+        "apyReported": null,
+        "incrementPpm": 286.45207961930373
+      }
+    ],
+    "events": [
+      { "date": "2025-06-14", "ppm": 5.524869352235839, "reason": "outlier" },
+      { "date": "2025-07-06", "ppm": -2438.907242482413, "reason": "downtick" },
+      { "date": "2025-07-07", "ppm": 138.09876673676058, "reason": "outlier" },
+      { "date": "2025-07-15", "ppm": -442.84973497288325, "reason": "downtick" },
+      { "date": "2025-07-16", "ppm": 196.71425969036704, "reason": "outlier" },
+      { "date": "2025-07-29", "ppm": -1166.390297250075, "reason": "downtick" },
+      { "date": "2025-08-01", "ppm": -745.8113689590151, "reason": "downtick" },
+      { "date": "2025-08-02", "ppm": 358.8516814678755, "reason": "outlier" },
+      { "date": "2025-09-11", "ppm": 477.0848532109628, "reason": "outlier" },
+      { "date": "2025-09-12", "ppm": 238.42479222579982, "reason": "outlier" },
+      { "date": "2025-09-21", "ppm": 270.6050711389629, "reason": "outlier" },
+      { "date": "2025-11-22", "ppm": 690.0067400621434, "reason": "outlier" },
+      { "date": "2025-11-23", "ppm": 344.7440544828151, "reason": "outlier" },
+      { "date": "2025-12-23", "ppm": 282.7487857042232, "reason": "outlier" },
+      { "date": "2026-01-21", "ppm": 242.90489118428127, "reason": "outlier" },
+      { "date": "2026-02-07", "ppm": 267.3778621660183, "reason": "outlier" },
+      { "date": "2026-05-02", "ppm": 310.0488812703972, "reason": "outlier" },
+      { "date": "2026-08-27", "ppm": 948.1807145879095, "reason": "new_vector" },
+      { "date": "2026-09-19", "ppm": 286.45206125221813, "reason": "new_vector" },
+      { "date": "2026-09-20", "ppm": 286.4519640353169, "reason": "outlier" }
+    ],
+    "returns": [
+      {
+        "window": "7d",
+        "from": "2026-10-14",
+        "to": "2026-10-21",
+        "days": 7,
+        "return": 0.0020068885453046192,
+        "annualized": 0.11019984279063011
+      },
+      {
+        "window": "30d",
+        "from": "2026-09-21",
+        "to": "2026-10-21",
+        "days": 30,
+        "return": 0.00862935134641507,
+        "annualized": 0.11019983537472355
+      },
+      {
+        "window": "90d",
+        "from": "2026-07-23",
+        "to": "2026-10-21",
+        "days": 90,
+        "return": 0.027580828733530627,
+        "annualized": 0.11665860443268605
+      },
+      {
+        "window": "ytd",
+        "from": "2025-12-31",
+        "to": "2026-10-21",
+        "days": 294,
+        "return": 0.08838602841079268,
+        "annualized": 0.11087685244749235
+      },
+      {
+        "window": "inception",
+        "from": "2025-05-28",
+        "to": "2026-10-21",
+        "days": 511,
+        "return": 0.14753070523449607,
+        "annualized": 0.10328775081457109
+      }
+    ],
+    "smoothness": {
+      "stdevPpm": 135.75824887405275,
+      "maxDrawdown": -0.002438907242482413,
+      "negativeDays": 4,
+      "observations": 510
+    },
+    "missingDates": ["2025-07-05"],
+    "benchmarks": {
+      "susdeApy": 0.03505714285714286,
+      "tbillApy": 0.03656,
+      "tbillSource": "Collateral sheet: Short-Term US T-Bills",
+      "reportedApy": 0.1102
+    }
+  },
+  "meta": {
+    "range": {
+      "source": "Computed from stored data",
+      "fetchedAt": "2026-10-21T18:02:24.105Z",
+      "stale": false
+    },
+    "series": {
+      "source": "OnRe core API (/data/nav)",
+      "fetchedAt": "2026-10-21T15:28:03.815Z",
+      "stale": false
+    },
+    "events": {
+      "source": "OnRe core API (/data/nav)",
+      "fetchedAt": "2026-10-21T15:28:03.815Z",
+      "stale": false
+    },
+    "returns": {
+      "source": "OnRe core API (/data/nav)",
+      "fetchedAt": "2026-10-21T15:28:03.815Z",
+      "stale": false
+    },
+    "smoothness": {
+      "source": "OnRe core API (/data/nav)",
+      "fetchedAt": "2026-10-21T15:28:03.815Z",
+      "stale": false
+    },
+    "missingDates": {
+      "source": "OnRe core API (/data/nav)",
+      "fetchedAt": "2026-10-21T15:28:03.815Z",
+      "stale": false
+    },
+    "benchmarks": {
+      "source": "OnRe core API (/settings)",
+      "fetchedAt": "2026-10-21T15:37:00.979Z",
+      "stale": true
+    }
+  }
+}

@@ -30,11 +30,11 @@
   },
   "devDependencies": {
     "@tanstack/react-query": "^5.104.5",
-    "@types/react": "^19.3.0",
-    "react": "^19.3.1"
+    "@types/react": "^18.3.12",
+    "react": "^18.3.1"
   },
   "peerDependencies": {
-    "react": "^19",
+    "react": "^18 || ^19",
     "@tanstack/react-query": "^5"
   }
 }

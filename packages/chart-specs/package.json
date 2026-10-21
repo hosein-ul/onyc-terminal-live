@@ -2,7 +2,7 @@
   "name": "@onyc/chart-specs",
   "version": "0.0.0",
   "private": true,
-  "description": "Library-agnostic chart data, annotations and units (Phase 3).",
+  "description": "Library-agnostic chart specs: data, annotations, units, provenance, table and CSV (Phase 3).",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -10,6 +10,10 @@
     ".": {
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
+    },
+    "./dom": {
+      "types": "./dist/dom.d.ts",
+      "default": "./dist/dom.js"
     }
   },
   "files": [
@@ -20,5 +24,9 @@
     "typecheck": "tsc --noEmit",
     "lint": "eslint .",
     "test": "vitest run --passWithNoTests"
+  },
+  "dependencies": {
+    "@onyc/format": "workspace:*",
+    "@onyc/sdk": "workspace:*"
   }
 }

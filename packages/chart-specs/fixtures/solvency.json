@@ -1,0 +1,87 @@
+{
+  "data": {
+    "collateralization": 1.001993,
+    "reservesUsd": 292595324.54,
+    "supplyUsd": 292013484.35,
+    "retrievedAt": "2026-10-15T05:43:01.026Z",
+    "ageHours": 156.32435305555555,
+    "merkleRoot": "5Qcwr2jHBHi2Ge5AeQ5SkPDrBZoCPuF3wT7y3WLRZ9QR",
+    "venues": [
+      {
+        "venue": "Solana",
+        "totalUsd": 98302475.01000002,
+        "assets": [
+          { "asset": "USDG", "usd": 65411321.75, "tag": "Stablecoin" },
+          { "asset": "syrupUSDC", "usd": 11225062.2, "tag": "Private Credit" },
+          { "asset": "USDC (kamino)", "usd": 10112703.4, "tag": "DeFi Lending" },
+          { "asset": "sUSDe", "usd": 5898930.28, "tag": "Yield-Bearing" },
+          { "asset": "USDG (kamino)", "usd": 3778356.76, "tag": "DeFi Lending" },
+          { "asset": "USDv", "usd": 1001175.76, "tag": "Other" },
+          { "asset": "USDC", "usd": 874924.86, "tag": "Stablecoin" }
+        ]
+      },
+      {
+        "venue": "Bank of New York Mellon",
+        "totalUsd": 94479092.08,
+        "assets": [{ "asset": "USD", "usd": 94479092.08, "tag": "Cash" }]
+      },
+      {
+        "venue": "Ethereum",
+        "totalUsd": 37449291.91,
+        "assets": [
+          { "asset": "sUSDS", "usd": 36578107.19, "tag": "Yield-Bearing" },
+          { "asset": "USYC", "usd": 871163.98, "tag": "Tokenized Treasury" },
+          { "asset": "sUSDe", "usd": 10.74, "tag": "Yield-Bearing" },
+          { "asset": "USDC", "usd": 10, "tag": "Stablecoin" }
+        ]
+      },
+      {
+        "venue": "Clarien Bank",
+        "totalUsd": 31674329.54,
+        "assets": [{ "asset": "USD", "usd": 31674329.54, "tag": "Cash" }]
+      },
+      {
+        "venue": "Radix ILS",
+        "totalUsd": 30690136,
+        "assets": [{ "asset": "USD", "usd": 30690136, "tag": "Cash" }]
+      }
+    ]
+  },
+  "meta": {
+    "collateralization": {
+      "source": "Accountable proof of solvency",
+      "fetchedAt": "2026-10-21T15:31:02.087Z",
+      "stale": true
+    },
+    "reservesUsd": {
+      "source": "Accountable proof of solvency",
+      "fetchedAt": "2026-10-21T15:31:02.087Z",
+      "stale": true
+    },
+    "supplyUsd": {
+      "source": "Accountable proof of solvency",
+      "fetchedAt": "2026-10-21T15:31:02.087Z",
+      "stale": true
+    },
+    "retrievedAt": {
+      "source": "Accountable proof of solvency",
+      "fetchedAt": "2026-10-21T15:31:02.087Z",
+      "stale": true
+    },
+    "ageHours": {
+      "source": "Computed from stored data",
+      "fetchedAt": "2026-10-21T18:02:28.698Z",
+      "stale": false
+    },
+    "merkleRoot": {
+      "source": "Accountable proof of solvency",
+      "fetchedAt": "2026-10-21T15:31:02.087Z",
+      "stale": true
+    },
+    "venues": {
+      "source": "Accountable proof of solvency",
+      "fetchedAt": "2026-10-21T15:31:02.087Z",
+      "stale": true
+    }
+  }
+}

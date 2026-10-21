@@ -1,0 +1,36 @@
+{
+  "data": {
+    "stack": {
+      "boundUsd": 152722725,
+      "offeredUsd": 0,
+      "availableUsd": 87683157.7067729,
+      "liquidityLayerUsd": 42424567.53648933,
+      "sumUsd": 282830450.24326223,
+      "aumUsd": 282830450.24326223,
+      "difference": 0,
+      "sumsToAum": true,
+      "measuredLiquidityLayerUsd": 67238318.52,
+      "liquidityTarget": 0.15,
+      "basis": {
+        "bound": "Sum of Bound layers in the reinsurance sheet",
+        "offered": "Sum of Offered layers in the reinsurance sheet",
+        "available": "AUM minus bound, offered and the liquidity layer",
+        "liquidityLayer": "15% of AUM, the policy share shown on the official Transparency page (not a measured balance)",
+        "aum": "Live TVL from the OnRe core API"
+      }
+    },
+    "note": "The sum check is shown, not assumed: available capital is AUM minus the other three parts, so a mismatch appears only if a part is added independently."
+  },
+  "meta": {
+    "stack": {
+      "source": "OnRe published sheet: reinsurance layers",
+      "fetchedAt": "2026-10-21T15:33:03.795Z",
+      "stale": true
+    },
+    "note": {
+      "source": "Computed from stored data",
+      "fetchedAt": "2026-10-21T18:02:25.018Z",
+      "stale": false
+    }
+  }
+}

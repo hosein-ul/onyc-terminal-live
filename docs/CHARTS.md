@@ -80,10 +80,10 @@ Not recommended: Chart.js (looks dated), unless a specific chart type needs it.
 
 ## Phase 3 spike result (2026-10-21)
 
-**Method.** A throwaway playground (`spike/`, deleted after this decision) drew the NAV hero chart (511 daily points, four
+**Method.** A throwaway playground (`spike/`, deleted once the decision was recorded) drew the NAV hero chart (511 daily points, four
 down-tick markers, end dot and value label) and the capital stacked area (7 protocols, 90 days) in four libraries, from the
 live `/v1/nav` and `/v1/capital/distribution` responses, in the Calm and Platinum skins. Screenshots:
-`docs/spike/calm.png`, `docs/spike/platinum.png`.
+`docs/spike/spike-calm.png`, `docs/spike/spike-platinum.png`.
 
 | Library | Skinning | Annotations | Keyboard | Bundle (gzip, these two charts) | Verdict |
 |---|---|---|---|---|---|
@@ -98,16 +98,64 @@ Other findings:
 - Smooth curves hide the day-step nature of NAV; the NAV chart uses straight segments, not smoothing.
 - NAV down-ticks are visible as markers in every library that supports annotations.
 
-### Decision per app
+### Decision per app (owner override, 2026-10-21)
 
-| App | Ordinary charts | Complex charts | Notes |
+The spike recommended Recharts + ECharts and dropping Tremor and ApexCharts. The owner chose **Tremor and shadcn/ui charts**
+as the main libraries, so the decision is:
+
+| App | Main libraries | Complex charts | Notes |
 |---|---|---|---|
-| web-calm | Recharts (shadcn pattern) | ECharts | white tooltip cards, 3 px line, 10% area |
-| web-cobalt | ECharts | ECharts | one library; white lines on cobalt, mono axis text |
-| web-matrix | ECharts | ECharts | SVG pattern fills, step lines, square markers |
-| web-platinum | Recharts (shadcn pattern) | ECharts | silver line, faint grid; rings are plain SVG, single ratios only |
-| web-pastel | Recharts (shadcn pattern) | ECharts | rounded-top bars, direct labels |
+| web-calm | shadcn/ui charts | ECharts | white tooltip cards, 3 px line, 10% area |
+| web-cobalt | shadcn/ui charts | ECharts | white lines on cobalt, mono axis text |
+| web-matrix | ECharts | ECharts | pattern fills, step lines and square markers are easiest there |
+| web-platinum | Tremor (simple charts) + shadcn/ui charts (annotated charts) | ECharts | rings and bar lists are plain SVG |
+| web-pastel | Tremor (bars, simple areas) + shadcn/ui charts (annotated charts) | ECharts | rounded-top bars, direct labels |
 
-Two libraries at most per app, two in the whole repo. ApexCharts and Tremor are not used anywhere. Cobalt and Matrix were not
-rendered in the spike; the decision rests on ECharts being fully skinnable (shown in two skins), and Phase 5 revisits it
-if a Cobalt or Matrix chart needs something ECharts cannot do.
+Rules that follow from the spike:
+- **Tremor is used only where it can be fully skinned**: plain area/line/bar charts, sparklines, bar lists. Any chart that needs
+  event markers, an end-point label or direct labels (NAV hero, capital stack) uses shadcn/ui charts, because Tremor 3 has no
+  annotation API.
+- Tremor 3 needs Tailwind 3 and React 18, so only apps that use it (web-platinum, web-pastel) carry Tailwind 3 and React 18;
+  the other apps may use a newer React. Tremor colours map to the skin through a safelisted Tailwind theme (see
+  `spike/tailwind.config.js`, copied into each such app), and its forced gradient fills are overridden with CSS.
+- ApexCharts is not used. At most three libraries in one app (shadcn/ui charts, Tremor, ECharts).
+- Cobalt and Matrix were not rendered in the spike; Phase 5 revisits them if a chart needs something their library cannot do.
+
+---
+
+## Phase 3 implementation (2026-10-21)
+
+**Packages**
+- `@onyc/chart-specs`: library-agnostic specs (`timeseries`, `stacked`, `bars`, `stackbar`, `bullet`, `scatter`, `calendar`,
+  `lorenz`, `gantt`, `treemap`, `sankey`, `waterfall`, `multiples`), one builder per catalogue chart that takes the whole
+  `{ data, meta }` API response, `provenanceFrom` (oldest fetch wins), `formatValue`/`axisFormatter`, `specToTable` and
+  `specToCsv`. A browser-only entry `@onyc/chart-specs/dom` has PNG export (`svgToPng`: copies computed style onto the SVG and embeds
+  the app's fonts so the picture matches the screen), CSV/PNG download and the reduced-motion check. 32 tests on real saved API
+  responses (`packages/chart-specs/fixtures/`).
+- `@onyc/charts-echarts`: `makeTheme(tokens)`, `optionFor(spec, { tokens, motion })` for scatter/bubble, calendar heatmap, Lorenz, Gantt,
+  treemap, sankey and waterfall, and `createEchart(el, spec, tokens)`, which adds resize, `prefers-reduced-motion`, an `aria-label` made
+  from the spec summary, and keyboard stepping (arrows, Home/End, Enter pins the tooltip, Escape releases). Treemap and sankey have no
+  reliable tooltip action in ECharts, so for them the table view is the keyboard path. Tokens are read from `--chart-*` CSS variables.
+  `onColor` picks the better of ink and surface for text on a fill by contrast ratio. 10 tests.
+
+**Per app** (`apps/web-calm`, `apps/web-platinum`; the other three get theirs in Phase 5)
+- `src/tokens.css` defines the app's tokens and the `--chart-*` skin; `src/charts/` holds that app's own frame, tooltip, crosshair store and
+  adapters. Nothing in `src/charts/` is shared between apps except through the two packages above.
+- Calm: Recharts for time series, stacked area and bars; SVG for the capital stack bar and the bullet meters; ECharts for the rest.
+- Platinum: Tremor for simple vertical bars and ranked bar lists; Recharts for everything with annotations, thresholds or edge labels,
+  and for sparklines; progress rings (plain SVG) for single ratios; ECharts for the rest.
+- `/_charts` gallery in both: all 25 chart panels from the live API, range control synced to the URL, table toggle, PNG/CSV export.
+
+**Findings during the build**
+- Tremor's `SparkAreaChart` cannot turn its 1.5 s entry animation off, which breaks the 300 ms and reduced-motion rules, so Platinum draws
+  sparklines with Recharts. Tremor charts have no keyboard crosshair; their table view is the accessible path.
+- Calm's initial JS is about 227 KB gzip; Platinum's is about 423 KB because of Tremor. ECharts loads lazily, only on a page that shows a
+  complex chart.
+- Recharts 3 draws the SVG with `accessibilityLayer`, so the chart is focusable and the arrow keys move the tooltip with no extra code.
+- Charts where the API has no history yet (market premium, opportunity APY history, 30-day premium) show an explicit "collecting since"
+  empty state instead of a stub line.
+
+**Verification**: `scripts/verify-charts.mjs <url>` drives a real browser against a gallery: footers on every chart, keyboard crosshair
+(Recharts and ECharts), table view, CSV export (line count equals table rows), PNG export (valid image), range control in the URL,
+no console errors, reduced motion. 9/9 pass on both apps. Phone width (390 px, touch emulation): no horizontal overflow; Gantt, sankey
+and calendar keep a minimum width and scroll sideways inside their frame. Screenshots: `docs/spike/gallery-*.png`, `docs/spike/mobile-*.png`.

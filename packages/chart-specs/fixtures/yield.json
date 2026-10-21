@@ -1,0 +1,153 @@
+{
+  "data": {
+    "reportedApy": 0.1102,
+    "reinsurance": { "capital": 152722725, "expectedYield": 0.14070336976111447 },
+    "collateral": {
+      "snapshotDate": "2026-10-20",
+      "totalUsd": 289827019.67,
+      "aumRowUsd": 283623613.83,
+      "blendedApy": 0.03871604574729332,
+      "assets": [
+        {
+          "asset": "Short-Term US T-Bills",
+          "amountUsd": 161379341.65,
+          "allocation": 0.5568126182,
+          "apy": 0.03656,
+          "liquidityLayer": false,
+          "proofs": ["T-Bills Collateral"]
+        },
+        {
+          "asset": "Short-Term U.S. T-Bills",
+          "amountUsd": 6151628.12,
+          "allocation": 0.02122517123,
+          "apy": 0.03656,
+          "liquidityLayer": false,
+          "proofs": ["T-Bills Collateral"]
+        },
+        {
+          "asset": "USDC (Lending)",
+          "amountUsd": 7020657.08,
+          "allocation": 0.02422361134,
+          "apy": 0.0656,
+          "liquidityLayer": false,
+          "proofs": ["USDC (Jupiter) (Kamino)"]
+        },
+        {
+          "asset": "USDG (Lending)",
+          "amountUsd": 3782247.44,
+          "allocation": 0.01305001668,
+          "apy": 0.0782,
+          "liquidityLayer": false,
+          "proofs": ["USDG (Jupiter) (Kamino)"]
+        },
+        {
+          "asset": "USDG",
+          "amountUsd": 67238318.52,
+          "allocation": 0.2319946518,
+          "apy": 0.03656,
+          "liquidityLayer": true,
+          "proofs": ["USDG (Solscan)"]
+        },
+        {
+          "asset": "sUSDS",
+          "amountUsd": 18289053.6,
+          "allocation": 0.0631033422,
+          "apy": 0.036,
+          "liquidityLayer": false,
+          "proofs": ["sUSDS (Etherscan)"]
+        },
+        {
+          "asset": "syrupUSDC",
+          "amountUsd": 11215075.81,
+          "allocation": 0.0386957566,
+          "apy": 0.0391,
+          "liquidityLayer": false,
+          "proofs": ["syrupUSDC (Solscan)"]
+        },
+        {
+          "asset": "sUSDe",
+          "amountUsd": 5888223.84,
+          "allocation": 0.02031633851,
+          "apy": 0.0481,
+          "liquidityLayer": false,
+          "proofs": ["sUSDe (Solscan)"]
+        },
+        {
+          "asset": "USCC",
+          "amountUsd": 5068221.46,
+          "allocation": 0.01748705647,
+          "apy": 0.0876,
+          "liquidityLayer": false,
+          "proofs": ["USCC (Solscan)"]
+        },
+        {
+          "asset": "USDv",
+          "amountUsd": 1001946.55,
+          "allocation": 0.003457050178,
+          "apy": 0.0425,
+          "liquidityLayer": false,
+          "proofs": ["USDv (Solscan)"]
+        },
+        {
+          "asset": "USYC",
+          "amountUsd": 435581.99,
+          "allocation": 0.00150290332,
+          "apy": 0.0339,
+          "liquidityLayer": false,
+          "proofs": ["USYC (Etherscan)"]
+        },
+        {
+          "asset": "USDC",
+          "amountUsd": 2242818.19,
+          "allocation": 0.007738471701,
+          "apy": 0,
+          "liquidityLayer": false,
+          "proofs": ["USDC (Solscan)"]
+        },
+        {
+          "asset": "USD",
+          "amountUsd": 113905.42,
+          "allocation": 0.0003930117355,
+          "apy": 0,
+          "liquidityLayer": false,
+          "proofs": ["T-Bills Collateral"]
+        }
+      ]
+    },
+    "blendedApy": 0.09378713878360533,
+    "difference": -0.01641286121639468,
+    "note": "A check, not the reported figure: bound capital at the book's expected yield plus the rest of AUM at the collateral blend. Fees, timing and OnRe's own accounting are not modelled, so a gap to the reported APY is expected."
+  },
+  "meta": {
+    "reportedApy": {
+      "source": "OnRe core API (live)",
+      "fetchedAt": "2026-10-21T15:43:00.613Z",
+      "stale": true
+    },
+    "reinsurance": {
+      "source": "OnRe published sheet: reinsurance layers",
+      "fetchedAt": "2026-10-21T15:33:03.795Z",
+      "stale": true
+    },
+    "collateral": {
+      "source": "OnRe published sheet: collateral",
+      "fetchedAt": "2026-10-21T15:33:08.780Z",
+      "stale": true
+    },
+    "blendedApy": {
+      "source": "Computed from stored data",
+      "fetchedAt": "2026-10-21T18:02:28.897Z",
+      "stale": false
+    },
+    "difference": {
+      "source": "Computed from stored data",
+      "fetchedAt": "2026-10-21T18:02:28.897Z",
+      "stale": false
+    },
+    "note": {
+      "source": "Computed from stored data",
+      "fetchedAt": "2026-10-21T18:02:28.897Z",
+      "stale": false
+    }
+  }
+}

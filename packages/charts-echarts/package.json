@@ -2,7 +2,7 @@
   "name": "@onyc/charts-echarts",
   "version": "0.0.0",
   "private": true,
-  "description": "ECharts layer for complex chart types (Phase 3).",
+  "description": "ECharts layer for the complex chart types, themed per app with makeTheme(tokens) (Phase 3).",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -20,5 +20,13 @@
     "typecheck": "tsc --noEmit",
     "lint": "eslint .",
     "test": "vitest run --passWithNoTests"
+  },
+  "dependencies": {
+    "@onyc/chart-specs": "workspace:*",
+    "@onyc/format": "workspace:*",
+    "echarts": "^6.1.0"
+  },
+  "devDependencies": {
+    "@onyc/sdk": "workspace:*"
   }
 }

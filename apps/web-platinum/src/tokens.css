@@ -1,0 +1,98 @@
+/* Platinum Rail tokens. Source: docs/DESIGN.md §4 and .design/direction.md. Components use these and nothing else. */
+:root {
+  --ground: #12151b;
+  --rail: #0d1015;
+  --panel: #1a1f27;
+  --border: #232933;
+  --chip-border: #2f3744;
+  --text: #f1f4f8;
+  --muted: #8c97a8;
+  --silver: #c9d1db;
+  --accent: #8fb4ff;
+  --alert: #ff8fa3;
+
+  --font-ui: "Outfit", ui-sans-serif, sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, monospace;
+
+  --fs-display: 64px;
+  --fs-h1: 32px;
+  --fs-h2: 20px;
+  --fs-body: 15px;
+  --fs-small: 13px;
+  --fs-label: 12px;
+
+  --gap: 16px;
+  --radius-panel: 22px;
+  --radius-control: 12px;
+  --radius-pill: 999px;
+
+  --dur-fast: 150ms;
+  --dur-base: 220ms;
+  --ease: cubic-bezier(0.2, 0, 0, 1);
+
+  /* chart skin (read by @onyc/charts-echarts readTokens and by the Recharts and Tremor adapters) */
+  --chart-ground: #12151b;
+  --chart-surface: #1a1f27;
+  --chart-ink: #f1f4f8;
+  --chart-muted: #8c97a8;
+  --chart-line: #232933;
+  --chart-grid: #232933;
+  --chart-accent: #8fb4ff;
+  --chart-primary: #c9d1db;
+  --chart-good: #8fb4ff;
+  --chart-bad: #ff8fa3;
+  --chart-s1: #8fb4ff;
+  --chart-s2: #c9d1db;
+  --chart-s3: #5f8fe0;
+  --chart-s4: #6e7a8e;
+  --chart-s5: #a7c4ff;
+  --chart-s6: #3e4a5e;
+  --chart-s7: #e3e8ef;
+  --chart-s8: #4a6fb5;
+  --chart-font-ui: "Outfit", ui-sans-serif, sans-serif;
+  --chart-font-mono: "Geist Mono", ui-monospace, monospace;
+  --chart-stroke: 2.5;
+  --chart-radius: 6;
+  --chart-tooltip-bg: #0d1015;
+  --chart-tooltip-ink: #f1f4f8;
+  --chart-marker: circle;
+  --chart-area-alpha: 0.1;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  background: var(--ground);
+  color: var(--text);
+  font-family: var(--font-ui);
+  font-size: var(--fs-body);
+  font-weight: 400;
+  line-height: 1.45;
+  font-variant-numeric: tabular-nums;
+  -webkit-font-smoothing: antialiased;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

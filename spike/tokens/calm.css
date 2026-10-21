@@ -1,9 +1,0 @@
-/* Spike tokens: Calm Fintech, from docs/DESIGN.md §1. */
-[data-skin="calm"] {
-  --ground: #eef2f6; --surface: #ffffff; --ink: #101828; --muted: #475467;
-  --line: #e4e8ee; --grid: #eef1f5; --accent: #0b6bcb; --accent-ink: #0b4f99;
-  --area-alpha: 0.1; --stroke: 3; --radius: 24px; --tip-bg: #ffffff; --tip-ink: #101828;
-  --font-ui: "Figtree", system-ui, sans-serif; --font-mono: "Geist Mono", ui-monospace, monospace;
-  --s1: #0b6bcb; --s2: #1b9aaa; --s3: #7fb2e5; --s4: #3e4c6b; --s5: #9aa7bd; --s6: #14866d; --s7: #c5d3e3;
-  --bad: #9a1b3a;
-}

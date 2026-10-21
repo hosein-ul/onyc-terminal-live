@@ -1,0 +1,102 @@
+/* Calm Fintech tokens. Source: docs/DESIGN.md §1 and .design/direction.md. Components use these and nothing else. */
+:root {
+  --ground: #eef2f6;
+  --surface: #ffffff;
+  --ink: #101828;
+  --muted: #475467;
+  --line: #e4e8ee;
+  --accent: #0b6bcb;
+  --accent-soft: #e8f1fb;
+  --accent-ink: #0b4f99;
+  --good: #0b5c3e;
+  --good-soft: #ddf3e8;
+  --bad: #9a1b3a;
+  --bad-soft: #fde7ec;
+
+  --font-ui: "Figtree", ui-sans-serif, sans-serif;
+
+  /* type scale */
+  --fs-display: 60px;
+  --fs-h1: 34px;
+  --fs-h2: 22px;
+  --fs-body: 15px;
+  --fs-small: 13px;
+  --fs-label: 12px;
+  --tracking-display: -0.025em;
+
+  /* space and shape */
+  --gap: 20px;
+  --radius-card: 24px;
+  --radius-control: 12px;
+  --radius-pill: 999px;
+
+  /* motion */
+  --dur-fast: 150ms;
+  --dur-base: 220ms;
+  --ease: cubic-bezier(0.2, 0, 0, 1);
+
+  /* chart skin (read by @onyc/charts-echarts readTokens and by the Recharts adapters) */
+  --chart-ground: #eef2f6;
+  --chart-surface: #ffffff;
+  --chart-ink: #101828;
+  --chart-muted: #475467;
+  --chart-line: #e4e8ee;
+  --chart-grid: #edf0f4;
+  --chart-accent: #0b6bcb;
+  --chart-primary: #0b6bcb;
+  --chart-good: #0b5c3e;
+  --chart-bad: #9a1b3a;
+  --chart-s1: #0b6bcb;
+  --chart-s2: #1b9aaa;
+  --chart-s3: #7fb2e5;
+  --chart-s4: #3e4c6b;
+  --chart-s5: #9aa7bd;
+  --chart-s6: #14866d;
+  --chart-s7: #c5d3e3;
+  --chart-s8: #5b8def;
+  --chart-font-ui: "Figtree", ui-sans-serif, sans-serif;
+  --chart-font-mono: "Figtree", ui-sans-serif, sans-serif;
+  --chart-stroke: 3;
+  --chart-radius: 8;
+  --chart-tooltip-bg: #ffffff;
+  --chart-tooltip-ink: #101828;
+  --chart-marker: circle;
+  --chart-area-alpha: 0.1;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  color-scheme: light;
+}
+
+body {
+  margin: 0;
+  background: var(--ground);
+  color: var(--ink);
+  font-family: var(--font-ui);
+  font-size: var(--fs-body);
+  line-height: 1.45;
+  font-variant-numeric: tabular-nums;
+  -webkit-font-smoothing: antialiased;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
