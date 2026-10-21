@@ -101,7 +101,8 @@ export function TimeSeriesChart({ spec, height = 300 }: { spec: TimeSeriesSpec; 
           />
           <YAxis
             hide={compact}
-            domain={[lo, hi]}
+            domain={spec.logScale === true ? ["auto", "auto"] : [lo, hi]}
+            scale={spec.logScale === true ? "log" : "auto"}
             allowDataOverflow
             tick={tick}
             tickLine={false}

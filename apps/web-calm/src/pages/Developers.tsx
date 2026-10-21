@@ -177,9 +177,24 @@ export function DevelopersPage() {
 
       <Card title="MCP server" subtitle="For AI assistants">
         <p>
-          A Model Context Protocol server exposes the same data as tools an assistant can call.
-          Setup instructions arrive with the server itself; see the deployment guide in the
-          repository.
+          The Model Context Protocol server gives an assistant the same data as tools: {"one"}{" "}
+          read-only tool per endpoint, named <code className="mono">get_overview</code>,{" "}
+          <code className="mono">get_nav</code>, <code className="mono">get_wallet</code> and so on.
+          It cannot write, sign or move anything. Build the repository once, then add the server to
+          your assistant's configuration:
+        </p>
+        <pre className="code">{`{
+  "mcpServers": {
+    "onyc-terminal": {
+      "command": "node",
+      "args": ["/path/to/repo/packages/mcp/dist/main.js"],
+      "env": { "API_PUBLIC_URL": "${base()}" }
+    }
+  }
+}`}</pre>
+        <p className="tone-neutral small">
+          Every answer is <code className="mono">{"{ data, meta }"}</code>, so the assistant can
+          quote each number's source and age.
         </p>
       </Card>
     </>

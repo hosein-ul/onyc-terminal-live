@@ -13,6 +13,8 @@ const pg = new EmbeddedPostgres({
   password: "onyc_dev_only",
   port,
   persistent: true,
+  // UTF-8 from the start: the Windows default (WIN1252) cannot store the minus sign used in event titles.
+  initdbFlags: ["--encoding=UTF8", "--locale=C"],
   onLog: () => {},
   onError: (message) => console.error("[postgres]", String(message).trim()),
 });
@@ -21,6 +23,17 @@ const fresh = !existsSync(resolve(databaseDir, "PG_VERSION"));
 if (fresh) await pg.initialise();
 await pg.start();
 if (fresh) await pg.createDatabase("onyc");
+const client = pg.getPgClient("postgres");
+await client.connect();
+const { rows } = await client.query(
+  "select pg_encoding_to_char(encoding) as enc from pg_database where datname = 'onyc'",
+);
+await client.end();
+if (rows[0] && rows[0].enc !== "UTF8") {
+  console.warn(
+    `[db] database "onyc" is ${rows[0].enc}, which cannot store some characters in alerts. Run: pnpm db:utf8`,
+  );
+}
 console.log(
   `Postgres 16 ready on localhost:${port} (database "onyc", user "onyc"). Ctrl+C to stop.`,
 );

@@ -22,7 +22,8 @@
     "lint": "eslint .",
     "test": "vitest run --passWithNoTests",
     "generate": "drizzle-kit generate",
-    "migrate": "node --env-file-if-exists=../../.env dist/migrate-cli.js"
+    "migrate": "node --env-file-if-exists=../../.env dist/migrate-cli.js",
+    "db:utf8": "node --env-file-if-exists=../../.env scripts/utf8.mjs"
   },
   "dependencies": {
     "drizzle-orm": "^0.45.4",

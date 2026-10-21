@@ -1,0 +1,9 @@
+.git
+.pgdata
+.env
+**/node_modules
+**/dist
+**/.turbo
+docs/shots
+docs/spike
+apps/web-*

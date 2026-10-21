@@ -120,7 +120,7 @@ export function HealthPage() {
             ? "Is the data behind ONyc Terminal healthy"
             : down === 0
               ? `All ${d.sources.length} source endpoints are answering`
-              : `${down} of ${d.sources.length} source endpoints are having trouble`
+              : `${down} of ${d.sources.length} source endpoints ${down === 1 ? "is" : "are"} having trouble`
         }
         right={
           d !== undefined ? (

@@ -3,6 +3,7 @@
     "nav": {
       "value": 1.157827091,
       "change": 0.008340509615457403,
+      "changeMode": "relative",
       "period": "30d",
       "sparkline": [
         1.1482501, 1.148579018, 1.148908031, 1.149237138, 1.14956634, 1.149895635, 1.150225025,
@@ -15,46 +16,48 @@
     },
     "apy": {
       "value": 0.1102,
-      "change": null,
+      "change": 0,
+      "changeMode": "absolute",
       "period": "30d",
       "sparkline": [
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
+        0.1102,
+        0.1102,
+        0.1102,
+        0.1102,
+        0.1102,
+        0.1102,
+        0.1102,
+        0.1102,
+        0.1102,
+        0.1102,
+        0.1102,
+        0.1102,
+        0.1102,
+        0.1102,
+        0.1102,
+        0.1102,
+        0.1102,
+        0.1102,
+        0.1102,
+        0.1102,
+        0.1102,
+        0.1102,
+        0.1102,
+        0.1102,
+        0.1102,
+        0.1102,
+        0.1102,
+        0.1102,
+        0.1102,
         null
       ],
       "historySince": null,
-      "reported": null
+      "reported": 0.1102
     },
     "aum": {
-      "value": 282830450.24326223,
-      "change": -0.060237309296338526,
+      "value": 283040865.65518516,
+      "change": -0.05953816055367622,
+      "changeMode": "relative",
       "period": "30d",
       "sparkline": [
         300959436.9313477, 298925009.5102759, 296991711.3140383, 293169794.77289027,
@@ -64,13 +67,14 @@
         287996074.01628447, 287627405.60182303, 286583927.5078437, 286286642.2618925,
         286396014.5141642, 285285543.4576687, 285591621.1015499, 283924614.8488606,
         282973153.84481204, 283109553.79767054, 283386850.63021183, 283500346.0198589,
-        282467518.0434298, 282830450.24326223
+        282467518.0434298, 283040865.65518516
       ],
       "historySince": null
     },
     "circulatingSupply": {
-      "value": 244276932.57633597,
-      "change": -0.0680105760483124,
+      "value": 244458665.59464118,
+      "change": -0.06731721032909799,
+      "changeMode": "relative",
       "period": "30d",
       "sparkline": [
         262102687.32512867, 260256373.1581904, 258499116.81402314, 255099478.6707722,
@@ -80,30 +84,33 @@
         249666278.5568374, 249275271.39393228, 248299804.30369288, 247971200.81921217,
         247994896.56995475, 246962578.98278964, 247156742.03772244, 245643716.02889392,
         244750429.150535, 244798281.70658374, 244967882.35188103, 244995811.55313915,
-        244033356.66240534, 244276932.57633597
+        244033356.66240534, 244458665.59464118
       ],
       "historySince": null
     },
     "premiumBps": {
-      "value": -17.549557506219003,
+      "value": 0.14776178783648675,
       "change": 0,
+      "changeMode": "absolute",
       "period": "30d",
-      "sparkline": [-17.549557506219003],
+      "sparkline": [0.14776178783648675],
       "historySince": "2026-10-21"
     },
     "collateralRatio": {
       "value": 1.001993,
       "change": 0,
+      "changeMode": "absolute",
       "period": "30d",
       "sparkline": [1.001993],
       "historySince": "2026-10-21"
     },
     "liquidityCoverage": {
-      "value": 0.2377336614999141,
-      "change": 0.0006648306926820002,
+      "value": 0.23755692791695016,
+      "change": 0.00048809710971806086,
+      "changeMode": "absolute",
       "period": "30d",
       "sparkline": [0.2370688308072321],
-      "historySince": "2026-10-21"
+      "historySince": "2026-10-22"
     },
     "navSeries": [
       { "date": "2025-10-21", "nav": 1.0407500089542 },
@@ -488,19 +495,19 @@
       "attribution": {
         "date": "2026-10-21",
         "navEffect": 80913.40796846461,
-        "flowEffect": 282018.79186396155,
-        "deltaAum": 362932.1998324394,
-        "residual": 1.3271346688270569e-8
+        "flowEffect": 492434.20378693525,
+        "deltaAum": 573347.6117553711,
+        "residual": -2.87545844912529e-8
       },
       "events": [
         {
           "id": 11,
-          "ts": "2026-10-21T15:28:30.018Z",
+          "ts": "2026-10-21T23:17:21.898Z",
           "kind": "solvency_stale",
           "severity": "watch",
           "title": "Proof of solvency is stale: retrieved 6 d ago",
           "body": "Accountable's last retrieval was 2026-10-15T05:43:01.026Z. Threshold 24 h.",
-          "data": { "ageHours": 153.75804916666667, "retrievedAt": "2026-10-15T05:43:01.026Z" }
+          "data": { "ageHours": 161.57246138888888, "retrievedAt": "2026-10-15T05:43:01.026Z" }
         }
       ]
     },
@@ -508,10 +515,10 @@
       "stack": {
         "boundUsd": 152722725,
         "offeredUsd": 0,
-        "availableUsd": 87683157.7067729,
-        "liquidityLayerUsd": 42424567.53648933,
-        "sumUsd": 282830450.24326223,
-        "aumUsd": 282830450.24326223,
+        "availableUsd": 87862010.80690739,
+        "liquidityLayerUsd": 42456129.84827777,
+        "sumUsd": 283040865.65518516,
+        "aumUsd": 283040865.65518516,
         "difference": 0,
         "sumsToAum": true,
         "measuredLiquidityLayerUsd": 67238318.52,
@@ -525,12 +532,12 @@
         }
       },
       "distribution": [
-        { "protocol": "kamino", "capitalUsd": 154580429.940972, "share": 0.546548 },
-        { "protocol": "loopscale", "capitalUsd": 64770859.30210627, "share": 0.229009 },
-        { "protocol": "exponent", "capitalUsd": 33490610.84721432, "share": 0.118412 },
-        { "protocol": "wallet", "capitalUsd": 11966705.243990427, "share": 0.042311 },
-        { "protocol": "orca", "capitalUsd": 10929324.71870567, "share": 0.038643 },
-        { "protocol": "elemental", "capitalUsd": 6976857.4451526515, "share": 0.024668 },
+        { "protocol": "kamino", "capitalUsd": 154823499.29167512, "share": 0.547001 },
+        { "protocol": "loopscale", "capitalUsd": 64773933.11897845, "share": 0.22885 },
+        { "protocol": "exponent", "capitalUsd": 33487666.06132976, "share": 0.118314 },
+        { "protocol": "wallet", "capitalUsd": 11932676.620894514, "share": 0.042159 },
+        { "protocol": "orca", "capitalUsd": 10930570.372033823, "share": 0.038618 },
+        { "protocol": "elemental", "capitalUsd": 6976857.4451526515, "share": 0.02465 },
         { "protocol": "carrot", "capitalUsd": 115662.74512087554, "share": 0.000409 }
       ],
       "asOfDate": "2026-10-21"
@@ -540,20 +547,20 @@
         {
           "id": "core-live",
           "label": "OnRe live TVL",
-          "aumUsd": 282830454.10296124,
-          "asOf": "2026-10-21T15:43:00.000Z"
+          "aumUsd": 283040865.65518516,
+          "asOf": "2026-10-21T23:18:00.000Z"
         },
         {
           "id": "core-nav",
           "label": "OnRe daily NAV (AUM)",
-          "aumUsd": 282830450.24326223,
+          "aumUsd": 283040865.65518516,
           "asOf": "2026-10-21"
         },
         {
           "id": "core-settings",
           "label": "OnRe settings (TVL value)",
-          "aumUsd": 282830450.24326223,
-          "asOf": "2026-10-21T15:37:00.990Z"
+          "aumUsd": 283040865.65518516,
+          "asOf": "2026-10-21T23:16:38.065Z"
         },
         { "id": "sheet-nav", "label": "OnRe NAV sheet", "aumUsd": 282467518, "asOf": "2026-10-20" },
         {
@@ -562,7 +569,7 @@
           "aumUsd": 283623613.83,
           "asOf": "2026-10-20"
         },
-        { "id": "defillama", "label": "DefiLlama TVL", "aumUsd": 294234011, "asOf": "2026-10-21" },
+        { "id": "defillama", "label": "DefiLlama TVL", "aumUsd": 294533308, "asOf": "2026-10-21" },
         {
           "id": "accountable",
           "label": "Accountable total supply",
@@ -570,68 +577,68 @@
           "asOf": "2026-10-15T05:43:01.026Z"
         }
       ],
-      "spread": 0.04165609229447755
+      "spread": 0.042715672532655596
     }
   },
   "meta": {
     "nav": {
       "source": "OnRe core API (live)",
-      "fetchedAt": "2026-10-21T15:43:00.613Z",
-      "stale": true
+      "fetchedAt": "2026-10-21T23:18:00.655Z",
+      "stale": false
     },
     "apy": {
       "source": "OnRe core API (live)",
-      "fetchedAt": "2026-10-21T15:43:00.613Z",
-      "stale": true
+      "fetchedAt": "2026-10-21T23:18:00.655Z",
+      "stale": false
     },
     "aum": {
       "source": "OnRe core API (live)",
-      "fetchedAt": "2026-10-21T15:43:00.613Z",
-      "stale": true
+      "fetchedAt": "2026-10-21T23:18:00.655Z",
+      "stale": false
     },
     "circulatingSupply": {
       "source": "OnRe core API (/data/nav)",
-      "fetchedAt": "2026-10-21T15:28:03.815Z",
+      "fetchedAt": "2026-10-21T23:16:37.883Z",
       "stale": false
     },
     "premiumBps": {
       "source": "Jupiter price API",
-      "fetchedAt": "2026-10-21T15:43:00.866Z",
-      "stale": true
+      "fetchedAt": "2026-10-21T23:18:00.848Z",
+      "stale": false
     },
     "collateralRatio": {
       "source": "Accountable proof of solvency",
-      "fetchedAt": "2026-10-21T15:31:02.087Z",
-      "stale": true
+      "fetchedAt": "2026-10-21T23:16:40.538Z",
+      "stale": false
     },
     "liquidityCoverage": {
       "source": "OnRe published sheet: collateral",
-      "fetchedAt": "2026-10-21T15:33:08.780Z",
-      "stale": true
+      "fetchedAt": "2026-10-21T23:16:47.654Z",
+      "stale": false
     },
     "navSeries": {
       "source": "OnRe core API (/data/nav)",
-      "fetchedAt": "2026-10-21T15:28:03.815Z",
+      "fetchedAt": "2026-10-21T23:16:37.883Z",
       "stale": false
     },
     "navEvents": {
       "source": "OnRe core API (/data/nav)",
-      "fetchedAt": "2026-10-21T15:28:03.815Z",
+      "fetchedAt": "2026-10-21T23:16:37.883Z",
       "stale": false
     },
     "whatChanged": {
       "source": "OnRe core API (/data/nav)",
-      "fetchedAt": "2026-10-21T15:28:03.815Z",
+      "fetchedAt": "2026-10-21T23:16:37.883Z",
       "stale": false
     },
     "capital": {
       "source": "OnRe rewards API (capital)",
-      "fetchedAt": "2026-10-21T15:28:16.174Z",
+      "fetchedAt": "2026-10-21T23:16:47.137Z",
       "stale": false
     },
     "sourceCheck": {
       "source": "Computed from stored data",
-      "fetchedAt": "2026-10-21T18:02:23.893Z",
+      "fetchedAt": "2026-10-21T23:18:56.468Z",
       "stale": false
     }
   }

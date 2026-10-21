@@ -88,9 +88,9 @@ describe("optionFor", () => {
   });
 
   it("refuses kinds that belong to the app's main library", () => {
-    const bars = { ...specs[0], kind: "bars" } as unknown as ChartSpec;
-    expect(isEchartsKind("bars")).toBe(false);
-    expect(() => optionFor(bars, { tokens, motion: true })).toThrow(/main chart library/);
+    const bars = { ...specs[0], kind: "stackbar" } as unknown as ChartSpec;
+    expect(isEchartsKind("stackbar")).toBe(false);
+    expect(() => optionFor(bars, { tokens, motion: true })).toThrow(/draw it as SVG/);
   });
 
   it("draws one Gantt bar per layer and one scatter series per group", () => {

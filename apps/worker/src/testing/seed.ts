@@ -3,7 +3,7 @@
  * tests use this so they exercise real rows, not hand-written ones. Exported as `@onyc/worker/testing`.
  */
 import { readFileSync } from "node:fs";
-import type { DbHandle } from "@onyc/db";
+import { schema, type DbHandle } from "@onyc/db";
 import pino from "pino";
 import { loadConfig } from "../config.js";
 import type { Ctx } from "../context.js";
@@ -111,5 +111,37 @@ export async function seedFromFixtures(
     await job.run(ctx);
   }
   await crawlLeaderboard(ctx, true);
+  await evaluatorJob.run(ctx);
+}
+
+/**
+ * Simulate a peg breach for the alert tests: write a fresh live tick at `premiumBps` and run the real evaluator, which
+ * records the `discount_breach` (or `premium_breach`) event exactly as it would in production.
+ */
+export async function simulatePegBreach(
+  handle: DbHandle,
+  databaseUrl: string,
+  now: Date,
+  premiumBps: number,
+): Promise<void> {
+  const nav = 1.157827;
+  await handle.db
+    .insert(schema.liveTicks)
+    .values({
+      ts: now,
+      nav,
+      apy: 0.1102,
+      tvl: 283_000_000,
+      marketPrice: nav * (1 + premiumBps / 10_000),
+      premiumBps,
+    })
+    .onConflictDoNothing();
+  const ctx: Ctx = {
+    handle,
+    log: pino({ level: "silent" }),
+    config: loadConfig({ DATABASE_URL: databaseUrl }),
+    now: () => now,
+    fetchOptions: { fetchImpl: fixtureFetch(), retries: 0 },
+  };
   await evaluatorJob.run(ctx);
 }

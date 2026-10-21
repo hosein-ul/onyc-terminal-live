@@ -94,5 +94,29 @@ observations. Never marketing language.
 
 ## Files
 
-Tokens: `apps/web-*/src/tokens.css` (one per app, created when the app is built). Spike tokens:
+Tokens: see the last section. Spike tokens (deleted after Phase 3):
 `spike/tokens/calm.css`, `spike/tokens/platinum.css`. Directions archive: `design/refs/`.
+
+## Colour, measured for the other three apps
+
+| App    | Pair                                                         | Contrast                                |
+| ------ | ------------------------------------------------------------ | --------------------------------------- |
+| Cobalt | white on field #1535E8 / on deep #0E24B8                     | 7.8 / 10.7                              |
+| Cobalt | muted #BFCBFF on field / on deep                             | 4.9 / 6.7                               |
+| Cobalt | #0A1FA8 on white (inverse card)                              | 11.8                                    |
+| Matrix | ink #0C0D10 on ground #E6E9EE                                | 16.0                                    |
+| Matrix | muted #4B525C on ground / on panel                           | 6.5 / 7.4                               |
+| Matrix | signal #3DDCC4 on screen #0C0D10                             | 11.3                                    |
+| Matrix | screen-muted #9AA2AF on screen                               | 7.6                                     |
+| Pastel | ink #101426 on white / on sky / mint / rose / lilac / butter | 18.3 / 14.0 / 14.8 / 13.6 / 13.5 / 15.2 |
+| Pastel | muted #44506B on block #F3F5F9                               | 7.4                                     |
+| Pastel | negative #9A1B3A on rose; #14523A on mint; #5C4A00 on butter | 6.0 / 7.4 / 7.2                         |
+
+Cobalt shows up and down with the glyphs ▲ and ▼ and with dashed or solid capsules, never with red and green. Matrix uses the
+dot-matrix face only for the wordmark and the largest figures, because its full stop reads as a comma below about 40 px.
+Pastel's colour is topic only: each page sets one topic (`apps/web-pastel/src/layout/topic.ts`) and its blocks take that colour.
+
+## Files (all five apps)
+
+Tokens: `apps/web-<app>/src/tokens.css`, with the chart skin as `--chart-*` variables. Skin overrides: `shell.css` (shared markup and
+class names) plus `cobalt.css`, `matrix.css`, `pastel.css`, and the Platinum block at the end of its `shell.css`.

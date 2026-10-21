@@ -19,6 +19,10 @@ interface Props {
   onRange?: (r: RangeKey) => void;
   /** Heights of the skeleton, to match the final chart. */
   height?: number;
+  /** Draw without the card, for a chart that sits inside a card of its own (the hero). */
+  plain?: boolean;
+  /** Hide the title when the surrounding card already names the chart. */
+  hideTitle?: boolean;
   children: ReactNode;
 }
 
@@ -84,6 +88,8 @@ export function ChartFrame({
   range,
   onRange,
   height = 300,
+  plain = false,
+  hideTitle = false,
   children,
 }: Props) {
   const [asTable, setAsTable] = useState(false);
@@ -116,11 +122,15 @@ export function ChartFrame({
   const showEmpty = spec?.empty !== undefined;
 
   return (
-    <section className="ch-frame" aria-busy={status === "loading"} aria-label={title}>
+    <section
+      className={`ch-frame ${plain ? "ch-plain" : ""}`}
+      aria-busy={status === "loading"}
+      aria-label={title}
+    >
       <header className="ch-head">
         <div>
-          <h3 className="ch-title">{title}</h3>
-          {spec?.subtitle !== undefined && <p className="ch-sub">{spec.subtitle}</p>}
+          <h3 className={hideTitle ? "sr-only" : "ch-title"}>{title}</h3>
+          {!hideTitle && spec?.subtitle !== undefined && <p className="ch-sub">{spec.subtitle}</p>}
         </div>
         <div className="ch-actions">
           {range !== undefined && onRange !== undefined && (

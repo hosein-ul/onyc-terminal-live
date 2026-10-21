@@ -149,3 +149,22 @@ Decisions made while building the worker, where the sections above left room:
 - **`redemption_requests` is keyed by the request PDA**, because the log's own `id` repeats.
 - **Events are idempotent** through `events.dedup_key`. Historical facts carry their own timestamp (for example a price vector's start time).
 - **Our thresholds** (discount 50 bps, solvency stale 24 h, opportunity APY event 50 bps) are environment settings, not data, and live in `apps/worker/src/config.ts`.
+
+## Phase 6 implementation notes
+
+- **Alert rules live in `@onyc/sdk` (`ALERT_RULES`)**: one list used by the bot to parse commands and by the Activity pages to document them. A test checks that
+  every example parses and every usage line has the same number of arguments as its example.
+- **Delivery is event-driven.** The worker only records facts as `events`; the bot matches them against `alert_rules` and sends. `alert_deliveries` has a
+  unique index on `(rule_id, event_id)` and the row is written before the send, so a restart or a second bot process cannot send an alert twice. A rule only sees
+  events from after it was created. Failed and skipped sends are recorded with a short reason and are not retried.
+- **Two rule kinds have no worker event**: a wallet's rank and a large redemption. The bot derives them from the public API once a minute and writes them as ordinary
+  events, with the same dedup guarantee.
+- **Webhooks** are registered from Telegram, https only, no credentials, port 443, host must resolve only to public addresses at delivery, redirects not followed,
+  bodies signed with HMAC-SHA256 when a secret is set.
+- **MCP**: `packages/mcp` builds one tool per entry of the SDK's `endpoints` map (names in `TOOL_NAMES`), takes its input schema from the same zod objects the API
+  validates with, and calls the API through the SDK client, so a tool cannot return a shape the contract does not allow.
+- **Database encoding**: a Postgres cluster created on Windows with defaults is WIN1252 and cannot store the true minus sign (U+2212) that the formatters put in event
+  titles. The bot's end-to-end test found it (an event insert failed). `pnpm db:local` now creates a UTF-8 cluster, `pnpm db:utf8` recreates an old local database, and the
+  integration tests create their databases with `encoding 'UTF8'`.
+- **Fixtures follow the contract**: the saved API responses in `packages/chart-specs/fixtures` are real, so when the contract changed (`Kpi.changeMode`) the MCP test, which
+  validates responses through the SDK, failed until the overview fixture was refreshed from the running API.

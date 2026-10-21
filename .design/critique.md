@@ -48,7 +48,7 @@ Transparency, Data Health, Activity & Alerts, Developers, plus the shell (sideba
 **Not run, and why**
 
 - The blind-critic subagent and the 15-line rubric score: this session does not spawn subagents unless asked; the owner should score the
-  screenshots in `docs/shots/calm-desktop` and `docs/shots/calm-mobile`.
+  screenshots in `docs/screens/` (overview, NAV and risk of every app on desktop and phone; regenerate all pages with `scripts/sweep-pages.mjs`).
 - The stepped-scroll contact sheets and throttled-CPU timing from `mobile-verification.md`. Bundle: about 230 KB gzip initial, ECharts loads on demand.
 - A side-by-side with a peer product.
 
@@ -58,3 +58,30 @@ Transparency, Data Health, Activity & Alerts, Developers, plus the shell (sideba
   but the rhythm is still close to a dashboard kit. The next pass should give Overview a stronger single moment (a larger NAV figure treatment).
 - Risk shows 12 equal cards; severity does not change their size.
 - Tables on phones hide the "wide" columns and scroll the rest; the Reinsurance table is the densest.
+
+## 2026-10-22, Phase 5: Platinum, Cobalt, Pastel, Matrix (eleven pages each)
+
+Scope: the four remaining directions against their references in `design/refs/`, plus a recheck of Calm.
+
+**What was run**
+
+- Desktop (1440 px) and phone (390 px, touch, dpr 2) sweep of all 12 routes in all five apps with reduced motion: no console errors, no horizontal
+  overflow, no skeleton left. The phone menu (open, Escape, tap to navigate) and the skip link were checked on all five.
+- Read in full by eye: Platinum Overview, Cobalt Overview, Pastel Overview and Developers, Matrix Overview, NAV and Capital. Fixed while looking: Platinum
+  and Pastel `shell.css` not imported, headline highlight regex that lost its backslashes (highlighted the letter d), Pastel bar-list colour, Cobalt duplicate APY
+  figures and unit text on white, Matrix dot-matrix full stop reading as a comma below 40 px (smaller figures moved to the mono face), ECharts decal not applied
+  (moved to the series `itemStyle`), end labels of the stacked area overlapping.
+- Contrast of text pairs measured for all five (table in `.design/direction.md`).
+
+**Not run**
+
+- The 15-line rubric and the blind critic for any app; a peer comparison; throttled-CPU timing; Lighthouse.
+- Cobalt, Pastel and Matrix inner pages (Reinsurance, Points, Risk, Health) were checked through the sweep metrics and a few screenshots, not read one by one.
+
+**Known weaknesses**
+
+- Four of the five apps share one page structure (the derived page code), so the directions differ most on Overview and in type, colour, shell and chart skin;
+  the inner pages differ less in composition than the references would allow.
+- Cobalt: with only white and light blues, the eight chart series are told apart by lightness alone; the stacked area on a phone is the weakest case.
+- Matrix: Tremor-style rings and bars do not apply; the dotted fills are ECharts decals, so their dot size does not scale with the chart.
+- Pastel: Tremor's bar list puts the label inside the bar, so very short bars show text over the page colour.

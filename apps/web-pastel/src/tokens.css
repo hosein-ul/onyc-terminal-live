@@ -1,0 +1,117 @@
+/* Pastel Blocks tokens. Source: docs/DESIGN.md §5 and .design/direction.md. Colour is topic, and only topic. */
+:root {
+  --page: #ffffff;
+  --ink: #101426;
+  --muted: #44506b;
+  --block: #f3f5f9;
+  --chip: #eef1f6;
+
+  /* topic colours: NAV = sky, yield = mint, capital = rose, points = lilac, fees and costs = butter */
+  --sky: #cfe3ff;
+  --mint: #cdefe0;
+  --rose: #fad4e4;
+  --lilac: #e1d9ff;
+  --butter: #ffe9a8;
+  --dark: #101426;
+  --dark-muted: #b7c0da;
+  --negative: #9a1b3a;
+
+  /* semantic names shared by the page and UI-kit CSS (a block is neutral unless a topic is set) */
+  --ground: #ffffff;
+  --surface: #f3f5f9;
+  --line: #dfe3ec;
+  --accent: #101426;
+  --accent-soft: #eef1f6;
+  --accent-ink: #101426;
+  --good: #1f6b4d;
+  --good-soft: #cdefe0;
+  --bad: #9a1b3a;
+  --bad-soft: #fad4e4;
+  --watch: #5c4a00;
+  --watch-soft: #ffe9a8;
+  --topic: #cfe3ff;
+
+  --font-ui: "Onest", ui-sans-serif, sans-serif;
+  --font-mono: "Onest", ui-monospace, sans-serif;
+
+  --fs-display: 72px;
+  --fs-h1: 58px;
+  --fs-body: 15px;
+  --fs-small: 13px;
+  --fs-label: 12px;
+  --tracking-display: -0.04em;
+
+  --gap: 16px;
+  --radius-card: 30px;
+  --radius-control: 14px;
+  --radius-pill: 999px;
+
+  --dur-fast: 150ms;
+  --dur-base: 220ms;
+  --ease: cubic-bezier(0.2, 0, 0, 1);
+
+  /* chart skin: thick ink lines, ink bars with rounded tops, no grid, direct labels */
+  --chart-ground: #ffffff;
+  --chart-surface: #ffffff;
+  --chart-ink: #101426;
+  --chart-muted: #44506b;
+  --chart-line: #101426;
+  --chart-grid: transparent;
+  --chart-accent: #101426;
+  --chart-primary: #101426;
+  --chart-good: #101426;
+  --chart-bad: #9a1b3a;
+  --chart-s1: #101426;
+  --chart-s2: #44506b;
+  --chart-s3: #5b7fc4;
+  --chart-s4: #3f8f72;
+  --chart-s5: #b9568a;
+  --chart-s6: #7a63c8;
+  --chart-s7: #8a7a2b;
+  --chart-s8: #8fa3d6;
+  --chart-font-ui: "Onest", ui-sans-serif, sans-serif;
+  --chart-font-mono: "Onest", ui-sans-serif, sans-serif;
+  --chart-stroke: 3.5;
+  --chart-radius: 10;
+  --chart-tooltip-bg: #ffffff;
+  --chart-tooltip-ink: #101426;
+  --chart-marker: circle;
+  --chart-area-alpha: 0;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  color-scheme: light;
+}
+
+body {
+  margin: 0;
+  background: var(--page);
+  color: var(--ink);
+  font-family: var(--font-ui);
+  font-size: var(--fs-body);
+  line-height: 1.45;
+  font-variant-numeric: tabular-nums;
+  -webkit-font-smoothing: antialiased;
+}
+
+:focus-visible {
+  outline: 3px solid var(--ink);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -47,7 +47,9 @@ describe.skipIf(baseUrl === undefined)("API over a database seeded from fixtures
     testUrl.pathname = "/onyc_test";
     admin = postgres(adminUrl.href, { max: 1, onnotice: () => {} });
     await admin.unsafe("drop database if exists onyc_test with (force)");
-    await admin.unsafe("create database onyc_test");
+    await admin.unsafe(
+      "create database onyc_test encoding 'UTF8' lc_collate 'C' lc_ctype 'C' template template0",
+    );
     handle = connect(testUrl.href, { max: 4 });
     await runMigrations(handle.db, migrationsFolder);
     await seedFromFixtures(handle, testUrl.href, NOW);

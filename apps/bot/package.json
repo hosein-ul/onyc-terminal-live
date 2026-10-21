@@ -2,23 +2,26 @@
   "name": "@onyc/bot",
   "version": "0.0.0",
   "private": true,
-  "description": "Telegram alerts bot (Phase 6).",
+  "description": "Telegram and webhook alert delivery, driven by the events the worker writes.",
   "type": "module",
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "default": "./dist/index.js"
-    }
-  },
-  "files": [
-    "dist"
-  ],
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
     "typecheck": "tsc --noEmit",
     "lint": "eslint .",
-    "test": "vitest run --passWithNoTests"
+    "test": "vitest run --passWithNoTests",
+    "start": "node --env-file-if-exists=../../.env dist/main.js",
+    "dev": "pnpm build && pnpm start"
+  },
+  "dependencies": {
+    "@onyc/db": "workspace:*",
+    "@onyc/format": "workspace:*",
+    "@onyc/sdk": "workspace:*",
+    "pino": "^10.4.0",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@onyc/worker": "workspace:*",
+    "postgres": "^3.4.9",
+    "pino-pretty": "^13.2.0"
   }
 }

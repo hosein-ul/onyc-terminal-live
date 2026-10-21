@@ -57,3 +57,38 @@ placeholder packages and five placeholder apps. Docs contradictions resolved and
   skip link. See `.design/critique.md` for what was and was not run.
 - Open: the Helius-backed on-chain balance shows "not configured"; the MCP section of Developers waits for Phase 6; the 15-line rubric and blind
   critic were not run.
+
+## Phase 5: the other four directions (done)
+
+- `apps/web-platinum`, `web-cobalt`, `web-pastel`, `web-matrix`: each has its own tokens, shell, UI kit, chart adapters and all eleven pages plus its
+  `/_charts` gallery where it has one. They share only `@onyc/sdk`, `@onyc/chart-specs`, `@onyc/charts-echarts` and `@onyc/format`; the page code was derived
+  from Calm's and then restyled and, where the direction asks, recomposed:
+  - **Platinum Rail**: 76 px icon rail with names on hover, breadcrumb header, thin silver numerals (flat fill), progress rings for the two single ratios
+    (collateral ratio, liquidity coverage), Tremor for simple bars and bar lists, Recharts for annotated charts.
+  - **Cobalt Field**: top navigation, a 220 px NAV numeral as a layout element, filled and outlined capsules, one inverse white card, deep panels; up and down
+    shown with ▲ and ▼ and dashed or solid capsules, never red and green.
+  - **Pastel Blocks**: wordmark and rounded chips, a headline sentence whose numbers sit in topic-coloured pills, a three-column masonry on Overview;
+    colour is topic only (sky NAV and market, mint yield, rose capital and book, lilac points and wallet, butter costs, dark for Developers).
+  - **Dot Matrix**: dotted ground, square ink-bordered panels, segmented square navigation, one black "screen" with the NAV in dot-matrix numerals, dashed
+    row dividers. Every chart is ECharts: step lines for daily data, square markers, dotted fills, direct labels. This needed `@onyc/charts-echarts` to
+    draw time series, stacked areas and bars as well (19 tests now).
+- Verified in a real browser on every app: all 12 routes on desktop and on a 390 px touch phone with no console errors, no horizontal overflow and no
+  skeleton left on screen (Calm, Platinum, Cobalt, Pastel and Matrix; screenshots in `docs/screens/`). Contrast of text pairs was measured for all five
+  (≥ 4.5:1); see `.design/direction.md`.
+- Open: the per-page critique (15-line rubric, blind critic) was not run for any app; Cobalt and Matrix chart skins were checked on Overview, NAV and Capital
+  only by eye; Pastel's Tremor bar lists use a periwinkle that is lighter than the ink bars in the reference.
+
+## Phase 6: alerts bot, MCP server, deploy notes (done)
+
+- `apps/bot`: Telegram long-polling and webhook delivery without a bot SDK (a thin `fetch` client), the seven rules of `ALERT_RULES`, per-chat rule management
+  (`/subscribe`, `/list`, `/unsubscribe`, `/webhook`), delivery that fires each (rule, event) pair once, derived wallet-rank and large-redemption events, SSRF-safe signed
+  webhooks. 29 tests, 8 of them end to end over a real Postgres: a simulated peg breach goes through the worker's real evaluator, becomes an event and is delivered to the
+  matching chats and webhook only, once.
+- `packages/mcp`: a read-only MCP server with 21 tools, one per `/v1` read endpoint; 8 tests through a real MCP client (the server lists its tools and answers `get_overview`
+  with the API's own data and sources; bad arguments, unknown tools and API errors come back as sentences). Also run over stdio against the live API.
+- `DEPLOY.md` (Neon, three container recipes, five Vercel projects with `vercel.json`, bot setup, MCP configuration, verification and operating notes), a root `README.md`,
+  a `Dockerfile` recipe, and favicons and social images for all five apps.
+- Found and fixed by these checks: a WIN1252 database could not store the minus sign in event titles (see ARCHITECTURE.md), two usage lines of `ALERT_RULES` whose argument
+  count did not match their examples, and a stale API fixture.
+- Open: the `Dockerfile` has not been built (no Docker in this environment; the `pnpm deploy` step it relies on was run and the result served `/healthz`); no real Telegram
+  message was sent (no token); GitHub Actions has not run; the web apps have no CSP; wallet-rank and redemption rules poll the public API once a minute.

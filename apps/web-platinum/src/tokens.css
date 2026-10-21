@@ -30,6 +30,21 @@
   --dur-base: 220ms;
   --ease: cubic-bezier(0.2, 0, 0, 1);
 
+  /* semantic names shared by the page and UI-kit CSS */
+  --surface: #1a1f27;
+  --ink: #f1f4f8;
+  --line: #232933;
+  --accent-soft: #232933;
+  --accent-ink: #8fb4ff;
+  --good: #8fb4ff;
+  --good-soft: #1f2c47;
+  --bad: #ff8fa3;
+  --bad-soft: #3a222a;
+  --watch: #c9d1db;
+  --watch-soft: #2a303b;
+  --radius-card: 22px;
+  --tracking-display: -0.03em;
+
   /* chart skin (read by @onyc/charts-echarts readTokens and by the Recharts and Tremor adapters) */
   --chart-ground: #12151b;
   --chart-surface: #1a1f27;

@@ -11,6 +11,7 @@ import {
 } from "@onyc/chart-specs";
 import { formatDate, formatPercent } from "@onyc/format";
 import type { EChartsCoreOption } from "echarts/core";
+import { barsOption, stackedOption, timeSeriesOption } from "./options-series.js";
 import { alpha, onColor, ramp, type ChartTokens } from "./tokens.js";
 
 export interface OptionContext {
@@ -28,6 +29,9 @@ export const ECHARTS_KINDS = [
   "treemap",
   "sankey",
   "waterfall",
+  "timeseries",
+  "stacked",
+  "bars",
 ] as const;
 export type EchartsKind = (typeof ECHARTS_KINDS)[number];
 export const isEchartsKind = (kind: ChartSpec["kind"]): kind is EchartsKind =>
@@ -651,9 +655,13 @@ export function optionFor(spec: ChartSpec, ctx: OptionContext): EChartsCoreOptio
       return sankeyOption(spec, ctx);
     case "waterfall":
       return waterfallOption(spec, ctx);
+    case "timeseries":
+      return timeSeriesOption(spec, ctx);
+    case "stacked":
+      return stackedOption(spec, ctx);
+    case "bars":
+      return barsOption(spec, ctx);
     default:
-      throw new Error(
-        `charts-echarts does not draw "${spec.kind}"; use the app's main chart library`,
-      );
+      throw new Error(`charts-echarts does not draw "${spec.kind}"; draw it as SVG in the app`);
   }
 }

@@ -1,5 +1,6 @@
 import type { ChartSpec } from "@onyc/chart-specs";
 import {
+  BarChart,
   CustomChart,
   HeatmapChart,
   LineChart,
@@ -14,6 +15,7 @@ import {
   GridComponent,
   LegendComponent,
   MarkLineComponent,
+  MarkPointComponent,
   TooltipComponent,
   VisualMapComponent,
 } from "echarts/components";
@@ -24,6 +26,7 @@ import { makeTheme } from "./theme.js";
 import type { ChartTokens } from "./tokens.js";
 
 echarts.use([
+  BarChart,
   CustomChart,
   HeatmapChart,
   LineChart,
@@ -36,6 +39,7 @@ echarts.use([
   GridComponent,
   LegendComponent,
   MarkLineComponent,
+  MarkPointComponent,
   TooltipComponent,
   VisualMapComponent,
   CanvasRenderer,
@@ -96,6 +100,9 @@ export function createEchart(el: HTMLElement, spec: ChartSpec, tokens: ChartToke
       chart?.dispose();
       renderer = want;
       chart = echarts.init(el, makeTheme(currentTokens), { renderer });
+      // Charts on one page share their crosshair.
+      chart.group = "onyc";
+      echarts.connect("onyc");
     }
     const option = optionFor(current, { tokens: currentTokens, motion: !reducedMotion() });
     chart.setOption(

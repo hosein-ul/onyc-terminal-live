@@ -18,7 +18,8 @@
     "format:check": "prettier --check .",
     "db:local": "node scripts/local-db.mjs",
     "db:generate": "pnpm --filter @onyc/db generate",
-    "db:migrate": "pnpm --filter @onyc/db migrate"
+    "db:migrate": "pnpm --filter @onyc/db migrate",
+    "db:utf8": "pnpm --filter @onyc/db db:utf8"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
