@@ -521,3 +521,16 @@ a:hover {
 .navhero {
   padding: 22px 26px 16px;
 }
+
+.fallback {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+  padding: 10px 16px;
+  border-radius: var(--radius-pill);
+  background: var(--watch-soft);
+  color: var(--ink);
+  font-size: 13px;
+  font-weight: 500;
+}

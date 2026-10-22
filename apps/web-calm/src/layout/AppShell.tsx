@@ -1,6 +1,7 @@
 import { Menu, Moon, PanelLeftClose, PanelLeftOpen, Sun, X } from "lucide-react";
 import { Fragment, useEffect, useRef, useState, type ReactNode } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
+import { FallbackBanner } from "../lib/offline";
 import { setTheme, useTheme } from "../lib/theme";
 import { GlossProvider } from "../ui/Term";
 import { WalletDialog, WalletSearch } from "../ui/WalletDialog";
@@ -198,6 +199,7 @@ export function AppShell({ children }: { children: ReactNode }) {
             <WalletSearch />
           </div>
         )}
+        <FallbackBanner />
         <main id="main" className="main" tabIndex={-1}>
           <GlossProvider key={location.pathname}>{children}</GlossProvider>
         </main>
