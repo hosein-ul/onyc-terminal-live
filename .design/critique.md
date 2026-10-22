@@ -85,3 +85,8 @@ Scope: the four remaining directions against their references in `design/refs/`,
 - Cobalt: with only white and light blues, the eight chart series are told apart by lightness alone; the stacked area on a phone is the weakest case.
 - Matrix: Tremor-style rings and bars do not apply; the dotted fills are ECharts decals, so their dot size does not scale with the chart.
 - Pastel: Tremor's bar list puts the label inside the bar, so very short bars show text over the page colour.
+
+## Overview pass 2 (22 Oct 2026, owner review of the live Calm and Pastel screenshots)
+- Fixed: unexplained rings on the NAV line now have a key with counts; waterfall is tonal with dashed links, narrower bars and the total in the accent; the repeated 'Collecting since ... no 30d change yet' note is now 'Tracked since <date>'; the minus sign in tabular figures no longer floats away from its number.
+- Added: Overview shows the collateral Sankey beside capital by protocol; the capital stack bar is a slim full-width row.
+- slop-check: same single FAIL no-asset (charts and the computed brand mark are the visuals). Not done: Pastel digit spacing, Pastel nav wrap, the other four apps' Overview layouts, blind critic.

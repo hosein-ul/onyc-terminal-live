@@ -317,6 +317,11 @@
   letter-spacing: -0.02em;
   line-height: 1.1;
 }
+/* The minus sign in tabular figures is as wide as a digit; pull the number back under it. */
+.sign {
+  margin-right: -0.1em;
+  font-variant-numeric: proportional-nums;
+}
 .kpi-suffix {
   font-size: 15px;
   color: var(--muted);

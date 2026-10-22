@@ -540,7 +540,8 @@ function waterfallOption(spec: WaterfallSpec, ctx: OptionContext): EChartsCoreOp
     const from = s.type === "total" ? 0 : running;
     const to = s.type === "total" ? s.value : running + s.value;
     if (s.type === "delta") running += s.value;
-    const color = s.type === "total" ? t.ink : s.value >= 0 ? t.good : t.bad;
+    // Deltas are tonal (soft good and bad); the total is the one accent-coloured bar.
+    const color = s.type === "total" ? t.accent : alpha(s.value >= 0 ? t.good : t.bad, 0.82);
     return { value: [i, from, to] as [number, number, number], step: s, itemStyle: { color } };
   });
   const lo = Math.min(0, ...bars.flatMap((b) => [b.value[1], b.value[2]]));
@@ -596,11 +597,23 @@ function waterfallOption(spec: WaterfallSpec, ctx: OptionContext): EChartsCoreOp
           const i = api.value(0);
           const a = api.coord([i, api.value(1)]);
           const b = api.coord([i, api.value(2)]);
-          const width = Math.min(72, api.size([1, 0])[0] * 0.55);
+          const width = Math.min(44, api.size([1, 0])[0] * 0.4);
           const top = Math.min(a[1], b[1]);
+          const next = api.coord([i + 1, api.value(2)]);
+          const delta = api.value(2) - api.value(1);
           return {
             type: "group",
             children: [
+              // A thin dashed link carries the running level into the next bar.
+              ...(i < spec.steps.length - 1
+                ? [
+                    {
+                      type: "line",
+                      shape: { x1: a[0] + width / 2, y1: b[1], x2: next[0] - width / 2, y2: b[1] },
+                      style: { stroke: t.muted, lineWidth: 1, lineDash: [3, 3], opacity: 0.6 },
+                    },
+                  ]
+                : []),
               {
                 type: "rect",
                 shape: {
@@ -617,13 +630,10 @@ function waterfallOption(spec: WaterfallSpec, ctx: OptionContext): EChartsCoreOp
                 style: {
                   x: a[0],
                   y: top - 8,
-                  text: formatValue(
-                    api.value(2) - api.value(1) === 0 ? api.value(2) : api.value(2) - api.value(1),
-                    spec.unit,
-                  ),
+                  text: formatValue(delta === 0 ? api.value(2) : delta, spec.unit),
                   textAlign: "center",
                   textVerticalAlign: "bottom",
-                  fill: t.ink,
+                  fill: delta === 0 ? t.muted : t.ink,
                   font: `600 12px ${t.fontUi}`,
                 },
               },
