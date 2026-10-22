@@ -444,3 +444,35 @@ a:hover {
     width: 100%;
   }
 }
+
+/* Soft, rounder corners and a smooth open and close */
+.sidebar {
+  border-radius: 32px;
+  cursor: pointer;
+}
+.sidebar a,
+.sidebar button {
+  cursor: pointer;
+}
+.nav-item {
+  border-radius: 18px;
+}
+.theme-toggle,
+.collapse-btn {
+  border-radius: 14px;
+}
+.shell {
+  transition: grid-template-columns var(--dur-base) var(--ease);
+}
+@media (max-width: 900px) {
+  .sidebar {
+    cursor: default;
+  }
+}
+.shell-collapsed .nav-item {
+  width: 48px;
+  margin-inline: auto;
+}
+.shell-collapsed .collapse-btn {
+  display: none;
+}

@@ -110,7 +110,14 @@ export function AppShell({ children }: { children: ReactNode }) {
       <a className="skip" href="#main">
         Skip to content
       </a>
-      <aside className="sidebar">
+      <aside
+        className="sidebar"
+        onClick={(e) => {
+          // A click on the sidebar's own surface (not on a link or a button) opens or closes it.
+          if (e.target instanceof Element && e.target.closest("a, button") === null)
+            toggleSidebar();
+        }}
+      >
         <div className="sidebar-head">
           <Logo />
           <button
