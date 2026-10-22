@@ -1,4 +1,3 @@
-export * from "./headline.js";
 export * from "./vitals.js";
 export * from "./safety.js";
 export * from "./strategies.js";

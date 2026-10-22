@@ -75,13 +75,7 @@ export function RiskPage() {
     <>
       <PageHeader
         eyebrow="Risk & Transparency"
-        title={
-          r === undefined
-            ? "Independent risk signals"
-            : alerts + watches === 0
-              ? "All independent signals read fine"
-              : `${alerts} alert${alerts === 1 ? "" : "s"} and ${watches} to watch among ${r.signals.length} signals`
-        }
+        title="Independent risk signals"
         right={
           r !== undefined ? (
             <Pill tone={alerts > 0 ? "bad" : watches > 0 ? "watch" : "good"}>

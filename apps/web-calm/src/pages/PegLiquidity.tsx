@@ -220,19 +220,11 @@ export function PegLiquidityPage() {
     [marketQ.data],
   );
 
-  const bps = m?.premiumBps ?? null;
-  const title =
-    bps === null
-      ? "How close ONyc trades to its price"
-      : Math.abs(bps) < 1
-        ? "ONyc trades at its NAV"
-        : `ONyc trades ${formatBps(Math.abs(bps))} ${bps < 0 ? "below" : "above"} its NAV`;
-
   return (
     <>
       <PageHeader
         eyebrow="Peg & Liquidity"
-        title={title}
+        title="How close ONyc trades to its price"
         right={
           m !== undefined && m.liquidityCoverage !== null ? (
             <Pill tone="accent">

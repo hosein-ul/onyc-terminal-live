@@ -141,25 +141,17 @@ export function Headline({ m }: { m: OverviewModel }) {
     timeZone: "UTC",
   });
   const spread = m.q.overview.data?.data.sourceCheck.spread ?? null;
-  const h = m.headline;
   return (
     <div className="headline">
       <div className="eyebrow">{today}</div>
-      {h === null ? (
-        <Skeleton height={44} width="70%" />
-      ) : (
-        <h1 className={`headline-text tone-head-${h.tone}`}>{h.text}</h1>
-      )}
-      <div className="headline-meta">
-        {spread !== null && (
+      <h1 className="headline-text">Overview</h1>
+      {spread !== null && (
+        <div className="headline-meta">
           <Link className="badge-link" to="/risk#sources">
             Sources differ by {formatPercent(Math.abs(spread), 1)} · see Risk &amp; Reinsurance
           </Link>
-        )}
-        <span className="tone-neutral">
-          Written from the live numbers below; nothing here is a forecast or advice.
-        </span>
-      </div>
+        </div>
+      )}
     </div>
   );
 }

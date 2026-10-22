@@ -156,17 +156,12 @@ export function PointsPage() {
   const concQ = useConcentration();
   const c = concQ.data?.data;
   const multiplier = growthQ.data?.data.activeMultiplier ?? null;
-  const top10 = c?.topShares.find((t) => t.top === 10);
 
   return (
     <>
       <PageHeader
         eyebrow="Points & Leaderboard"
-        title={
-          c === undefined || top10 === undefined
-            ? "Who earns ONyc points"
-            : `${formatCompact(c.wallets)} wallets earn points, and the top 10 hold ${formatPercent(top10.share, 0)} of them`
-        }
+        title="Who earns ONyc points"
         right={
           multiplier !== null ? (
             <Pill tone="accent">Global multiplier {multiplier.value}×</Pill>

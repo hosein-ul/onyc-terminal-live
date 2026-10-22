@@ -25,17 +25,12 @@ export function ActivityPage() {
     () => (q.data?.data.events ?? []).filter((e) => GROUP[filter](e.kind)),
     [q.data, filter],
   );
-  const total = q.data?.data.events.length ?? 0;
 
   return (
     <>
       <PageHeader
         eyebrow="Activity & Alerts"
-        title={
-          total === 0 && q.data !== undefined
-            ? "Nothing has happened yet"
-            : "What changed, as it happened"
-        }
+        title="Events and alerts"
       />
 
       <Card

@@ -108,20 +108,13 @@ function ConflictCard({ c }: { c: Conflict }) {
 export function HealthPage() {
   const q = useSourceHealth();
   const d = q.data?.data;
-  const down = d?.sources.filter((s) => s.status === "down" || s.status === "degraded").length ?? 0;
   const conflicts = d?.conflicts.filter((c) => c.state === "conflict").length ?? 0;
 
   return (
     <>
       <PageHeader
         eyebrow="Data Health"
-        title={
-          d === undefined
-            ? "Is the data behind ONyc Terminal healthy"
-            : down === 0
-              ? `All ${d.sources.length} source endpoints are answering`
-              : `${down} of ${d.sources.length} source endpoints ${down === 1 ? "is" : "are"} having trouble`
-        }
+        title="The data behind ONyc Terminal"
         right={
           d !== undefined ? (
             <Pill tone={conflicts > 0 ? "watch" : "good"}>{conflicts} live conflicts</Pill>

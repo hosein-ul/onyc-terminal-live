@@ -26,7 +26,7 @@ const ORDER: Record<Persona, SectionId[]> = {
   analyst: ["now", "safety", "capital", "flows", "best", "points", "changes"],
 };
 
-/** Every section exactly once; "now" always stays first because it holds the headline. */
+/** Every section exactly once; "now" always stays first because it holds the NAV and the vitals. */
 export function sectionOrder(persona: Persona): SectionId[] {
   return ORDER[persona];
 }

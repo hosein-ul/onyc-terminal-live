@@ -2,7 +2,6 @@ import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import type { EndpointResponse } from "@onyc/sdk";
 import {
-  buildHeadline,
   buildPointsPulse,
   buildSafetyBoard,
   estimatePointsPerUsdPerDay,
@@ -10,7 +9,6 @@ import {
   riskKind,
   sectionOrder,
   SECTIONS,
-  type HeadlineInput,
   type Persona,
 } from "./index.js";
 
@@ -21,58 +19,6 @@ const risk = fixture<EndpointResponse<"risk">>("risk");
 const opps = fixture<EndpointResponse<"defiOpportunities">>("opportunities");
 const concentration = fixture<EndpointResponse<"concentration">>("concentration");
 const growth = fixture<EndpointResponse<"pointsGrowth">>("growth");
-
-const calm: HeadlineInput = {
-  navDownticks30d: 0,
-  navReturn30d: 0.0086,
-  netFlow30dUsd: -1_000_000,
-  aumUsd: 283_000_000,
-  premiumBps: -5,
-  solvencyAgeHours: 10,
-  topProtocol: { name: "Kamino", share: 0.3 },
-};
-
-describe("buildHeadline", () => {
-  it("names the outflow behind a rising NAV", () => {
-    const h = buildHeadline({ ...calm, netFlow30dUsd: -21_595_174 });
-    expect(h.text).toBe("NAV keeps rising with no down-ticks, but $21.6M left in 30 days");
-    expect(h.concern).toBe("outflow");
-    expect(h.tone).toBe("watch");
-  });
-
-  it("says nothing else is flagged when nothing is", () => {
-    const h = buildHeadline(calm);
-    expect(h.text).toBe("NAV keeps rising with no down-ticks, and nothing else is flagged");
-    expect(h.tone).toBe("good");
-  });
-
-  it("puts a NAV fall first and marks the tone bad", () => {
-    const h = buildHeadline({ ...calm, navDownticks30d: 2 });
-    expect(h.text).toBe("NAV fell on 2 days in the last 30");
-    expect(h.tone).toBe("bad");
-  });
-
-  it("falls back to the next concern in order", () => {
-    expect(buildHeadline({ ...calm, premiumBps: -40 }).text).toContain("40 bps below NAV");
-    expect(buildHeadline({ ...calm, solvencyAgeHours: 175 }).text).toContain("7 days old");
-    expect(buildHeadline({ ...calm, topProtocol: { name: "Kamino", share: 0.55 } }).text).toContain(
-      "55% of capital sits in Kamino",
-    );
-  });
-
-  it("does not invent a sentence without data", () => {
-    const h = buildHeadline({
-      navDownticks30d: null,
-      navReturn30d: null,
-      netFlow30dUsd: null,
-      aumUsd: null,
-      premiumBps: null,
-      solvencyAgeHours: null,
-      topProtocol: null,
-    });
-    expect(h.text).toBe("ONyc at a glance");
-  });
-});
 
 describe("buildSafetyBoard", () => {
   it("returns the six lights with value, limit and source", () => {
@@ -168,7 +114,7 @@ describe("points estimates", () => {
 
 describe("personas", () => {
   const personas: Persona[] = ["default", "holder", "hunter", "analyst"];
-  it("always lists every section exactly once and starts with the headline", () => {
+  it("always lists every section exactly once and starts with the Now section", () => {
     for (const p of personas) {
       const order = sectionOrder(p);
       expect([...order].sort()).toEqual(SECTIONS.map((s) => s.id).sort());

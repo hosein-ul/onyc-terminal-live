@@ -151,11 +151,7 @@ export function ReinsurancePage() {
     <>
       <PageHeader
         eyebrow="Reinsurance Book"
-        title={
-          s === undefined
-            ? "What the reinsurance book holds"
-            : `${s.totals.layers} layers hold ${formatUsdCompact(s.totals.capital)} of bound capital`
-        }
+        title="What the reinsurance book holds"
         right={
           topPeril !== undefined && s !== undefined ? (
             <Pill tone="accent">

@@ -177,11 +177,7 @@ export function NavYieldPage() {
     <>
       <PageHeader
         eyebrow="NAV & Yield"
-        title={
-          thirty === undefined
-            ? "How ONyc earns and how its price moves"
-            : `Over the last 30 days ONyc compounded at ${formatPercent(thirty.annualized, 2)} a year`
-        }
+        title="How ONyc earns and how its price moves"
         right={
           reported !== null ? (
             <Pill tone="good">Reported APY {formatPercent(reported, 2)}</Pill>

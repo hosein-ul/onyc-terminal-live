@@ -113,11 +113,7 @@ export function CapitalDefiPage() {
     <>
       <PageHeader
         eyebrow="Capital & DeFi Map"
-        title={
-          d?.topProtocol == null
-            ? "Where ONyc's capital sits"
-            : `${d.topProtocol.protocol[0]?.toUpperCase() ?? ""}${d.topProtocol.protocol.slice(1)} holds ${formatPercent(d.topProtocol.share, 0)} of ONyc's capital`
-        }
+        title="Where ONyc's capital sits"
         right={
           looping !== null ? (
             <Pill tone="watch">Looping {formatPercent(looping, 0)} of capital</Pill>
