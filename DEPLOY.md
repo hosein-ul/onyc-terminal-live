@@ -106,6 +106,7 @@ commands, the single-page rewrite and basic security headers, so nothing else ne
 | Dot Matrix    | `apps/web-matrix`   |
 | Platinum Rail | `apps/web-platinum` |
 | Pastel Blocks | `apps/web-pastel`   |
+| Emerald Light | `apps/web-emerald`  |
 
 Set `VITE_API_URL` (build-time) to the public URL of the API, for example `https://api.example.com`, and put the five web origins in the
 API's `CORS_ORIGINS` if you do not want `*`. Locally the apps proxy `/v1` to `localhost:4000`, so they run with no variable set.
