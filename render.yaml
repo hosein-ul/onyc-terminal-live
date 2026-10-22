@@ -1,0 +1,29 @@
+# Render Blueprint: the API and the worker, built from the repository Dockerfile.
+# The database is Neon; set DATABASE_URL for both services in the Render dashboard (it is not stored here).
+# The alerts bot is optional and not part of this blueprint; add a third worker service with APP=bot when you want it.
+services:
+  - type: web
+    name: onyc-api
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /healthz
+    envVars:
+      - key: APP
+        value: api
+      - key: DATABASE_URL
+        sync: false
+      - key: CORS_ORIGINS
+        value: "*"
+  - type: worker
+    name: onyc-worker
+    runtime: docker
+    plan: starter
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    envVars:
+      - key: APP
+        value: worker
+      - key: DATABASE_URL
+        sync: false
