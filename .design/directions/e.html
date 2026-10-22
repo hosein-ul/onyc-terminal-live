@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ONyc Terminal, mono on white</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.5.1/dist/echarts.min.js"></script>
+<style>
+  :root { --bg: #ffffff; --ink: #0a0a0a; --muted: #77797f; --faint: #c8c9cd; --line: #e8e8ea; --wash: #f4f4f5; --ui: "Geist", ui-sans-serif, sans-serif; --mono: "Geist Mono", ui-monospace, monospace; }
+  :root[data-theme="dark"] { --bg: #0b0b0c; --ink: #f5f5f6; --muted: #9a9ca3; --faint: #4a4c52; --line: #232427; --wash: #141416; }
+  * { box-sizing: border-box; border-radius: 0 !important; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 400 16px/1.6 var(--ui); font-variant-numeric: tabular-nums; -webkit-font-smoothing: antialiased; }
+  .wrap { max-width: 1320px; margin: 0 auto; padding: 0 48px; }
+  :focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+  /* header */
+  header .wrap { display: flex; align-items: center; justify-content: space-between; gap: 32px; height: 88px; }
+  .brand { font: 700 20px/1 var(--ui); letter-spacing: -.02em; } .brand span { font-weight: 300; }
+  nav { display: flex; gap: 32px; flex-wrap: wrap; }
+  nav a { color: var(--muted); text-decoration: none; font-size: 14px; padding: 6px 0; border-bottom: 2px solid transparent; transition: color .15s, border-color .15s; }
+  nav a:hover { color: var(--ink); } nav a[aria-current] { color: var(--ink); border-bottom-color: var(--ink); }
+  .tbtn { font: 500 12px var(--mono); letter-spacing: .06em; background: none; border: 1px solid var(--ink); color: var(--ink); padding: 8px 14px; cursor: pointer; }
+  .tbtn:hover { background: var(--ink); color: var(--bg); }
+  /* hero */
+  .hero { padding: 72px 0 40px; border-top: 1px solid var(--ink); }
+  .label { font: 500 11.5px var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+  h1 { font: 300 clamp(30px, 3.6vw, 52px)/1.1 var(--ui); letter-spacing: -.03em; margin: 18px 0 0; max-width: 20ch; }
+  .numrow { display: flex; align-items: flex-end; justify-content: space-between; gap: 40px; margin-top: 56px; flex-wrap: wrap; }
+  .num { font: 200 clamp(120px, 19vw, 280px)/.8 var(--ui); letter-spacing: -.06em; margin-left: -.04em; }
+  .num small { font: 400 15px var(--mono); letter-spacing: .06em; color: var(--muted); margin-left: 14px; }
+  .tags { display: flex; flex-direction: column; gap: 10px; align-items: flex-start; padding-bottom: 14px; }
+  .tag { font: 500 12.5px var(--mono); border: 1px solid var(--ink); padding: 6px 12px; }
+  .tag.solid { background: var(--ink); color: var(--bg); }
+  /* chart blocks */
+  .fig { display: grid; grid-template-columns: 230px minmax(0, 1fr); gap: 56px; padding: 88px 0 0; }
+  .fig h2 { font: 500 20px/1.25 var(--ui); letter-spacing: -.01em; margin: 0 0 10px; }
+  .fig p { color: var(--muted); font-size: 14px; line-height: 1.55; margin: 0 0 20px; }
+  .fig .meta { font: 400 11.5px/1.6 var(--mono); color: var(--muted); }
+  .fig .big { font: 300 44px/1 var(--ui); letter-spacing: -.03em; color: var(--ink); margin: 6px 0 18px; display: block; }
+  .ctl { display: flex; gap: 22px; margin-bottom: 8px; }
+  .ctl button { font: 500 12px var(--mono); background: none; border: 0; border-bottom: 2px solid transparent; color: var(--muted); padding: 4px 0; cursor: pointer; letter-spacing: .04em; }
+  .ctl button[aria-pressed="true"] { color: var(--ink); border-bottom-color: var(--ink); }
+  .chart { width: 100%; }
+  .rule { border-top: 1px solid var(--line); margin-top: 88px; }
+  /* protocol list */
+  .plist { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--ink); }
+  .plist li { display: grid; grid-template-columns: 150px 1fr 170px; gap: 24px; align-items: center; padding: 16px 0; border-bottom: 1px solid var(--line); }
+  .plist .n { font-size: 16px; } .plist .v { font: 400 13px var(--mono); text-align: right; }
+  .plist .track { height: 8px; background: var(--wash); } .plist .track i { display: block; height: 100%; background: var(--ink); }
+  .plist li:not(:first-child) .track i { background: var(--muted); }
+  footer { margin-top: 120px; border-top: 1px solid var(--ink); padding: 28px 0 72px; color: var(--muted); font-size: 13px; display: flex; justify-content: space-between; gap: 32px; flex-wrap: wrap; }
+  footer strong { color: var(--ink); font-weight: 600; }
+  @media (max-width: 900px) { .wrap { padding: 0 20px; } header .wrap { height: auto; padding-top: 18px; padding-bottom: 14px; flex-wrap: wrap; } .fig { grid-template-columns: 1fr; gap: 20px; padding-top: 64px; } .plist li { grid-template-columns: 100px 1fr 80px; } nav { gap: 18px; } }
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <div class="brand">ONyc<span> Terminal</span></div>
+  <nav aria-label="Pages" id="nav"></nav>
+  <button class="tbtn" id="theme" type="button" aria-label="Switch theme">DARK</button>
+</div></header>
+
+<main class="wrap">
+  <section class="hero">
+    <div class="label" id="today"></div>
+    <h1 id="headline">Reading the live API</h1>
+    <div class="numrow">
+      <div class="num" id="num">-.----<small>USDC</small></div>
+      <div class="tags" id="tags"></div>
+    </div>
+  </section>
+
+  <section class="fig" style="padding-top:56px">
+    <div><h2>NAV per ONyc</h2><p>Net asset value of one ONyc token in USDC. The squares under the line mark days when the price vector changed.</p><div class="meta" id="navMeta"></div></div>
+    <div><div class="ctl" id="range" role="group" aria-label="Range"></div><div class="chart" id="cNav" style="height:420px" role="img" aria-label="NAV per ONyc over time"></div></div>
+  </section>
+
+  <div class="rule"></div>
+  <section class="fig" style="padding-top:56px">
+    <div><h2>Market against NAV</h2><p>How far the traded price sits from NAV, in basis points, over the last session.</p><span class="big" id="premBig">-</span><div class="meta" id="premMeta"></div></div>
+    <div class="chart" id="cPrem" style="height:300px" role="img" aria-label="Premium and discount over the last session"></div>
+  </section>
+
+  <div class="rule"></div>
+  <section class="fig" style="padding-top:56px">
+    <div><h2>What moved AUM</h2><p>Last month, split into the effect of NAV, the effect of flows, and what is left over.</p><span class="big" id="flowBig">-</span><div class="meta" id="flowMeta"></div></div>
+    <div class="chart" id="cFlow" style="height:320px" role="img" aria-label="AUM change split"></div>
+  </section>
+
+  <div class="rule"></div>
+  <section class="fig" style="padding-top:56px">
+    <div><h2>Capital by protocol</h2><p>Where the capital sits today.</p><span class="big" id="distBig">-</span><div class="meta" id="distMeta"></div></div>
+    <ul class="plist" id="plist"></ul>
+  </section>
+
+  <div class="rule"></div>
+  <section class="fig" style="padding-top:56px">
+    <div><h2>Daily NAV increment</h2><p>One square per day. The darker the square, the larger the day's increment in parts per million.</p><div class="meta" id="calMeta"></div></div>
+    <div class="chart" id="cCal" style="height:230px" role="img" aria-label="Calendar of daily increments"></div>
+  </section>
+
+  <footer><div><strong>Independent community tool. Not affiliated with OnRe. Not investment advice.</strong></div><div>Every number shows where it came from and how old it is. This site is read-only.</div></footer>
+</main>
+
+<script src="data.js"></script>
+<script>
+const $ = (id) => document.getElementById(id);
+$("nav").innerHTML = PAGES.map((p, i) => `<a href="#" ${i === 0 ? 'aria-current="page"' : ""}>${p}</a>`).join("");
+const css = (n) => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const rootEl = document.documentElement;
+$("theme").onclick = () => { rootEl.dataset.theme = rootEl.dataset.theme === "dark" ? "light" : "dark"; $("theme").textContent = rootEl.dataset.theme === "dark" ? "LIGHT" : "DARK"; draw(); };
+if (new URLSearchParams(location.search).get("theme") === "dark") { rootEl.dataset.theme = "dark"; $("theme").textContent = "LIGHT"; }
+
+let D = null, range = "ALL"; const charts = {};
+const chart = (id) => charts[id] || (charts[id] = echarts.init($(id)));
+const txt = () => ({ fontFamily: css("--mono"), fontSize: 11.5, color: css("--muted") });
+const tip = () => ({ backgroundColor: css("--bg"), borderColor: css("--ink"), borderWidth: 1, padding: [10, 12], textStyle: { color: css("--ink"), fontFamily: css("--mono"), fontSize: 12 }, extraCssText: "border-radius:0;box-shadow:none;" });
+const ax = () => ({ axisLine: { lineStyle: { color: css("--ink") } }, axisTick: { show: false }, axisLabel: txt(), splitLine: { lineStyle: { color: css("--line") } } });
+const anim = { animationDuration: reduced ? 0 : 600, animationEasing: "cubicOut" };
+const slice = (pts) => pts.slice(-({ "1M": 31, "3M": 92, "1Y": 366, ALL: pts.length }[range] || pts.length));
+
+function draw() {
+  if (!D) return;
+  const ink = css("--ink"), muted = css("--muted"), faint = css("--faint"), bg = css("--bg"), wash = css("--wash");
+  /* NAV: a single black line; squares below mark price-vector days */
+  const pts = slice(D.nav.points), ys = pts.map((p) => p.nav), min = Math.min(...ys), max = Math.max(...ys), pad = (max - min) * 0.14 || 0.001, lo = min - pad;
+  const idx = new Map(pts.map((p, i) => [p.d, i])), ev = D.nav.events.filter((e) => idx.has(e.date));
+  chart("cNav").setOption({ ...anim, grid: { left: 54, right: 70, top: 14, bottom: 34 },
+    tooltip: { ...tip(), trigger: "axis", axisPointer: { type: "line", lineStyle: { color: ink, width: 1 } }, formatter: (a) => { const p = pts[a[0].dataIndex]; const e = ev.find((x) => x.date === p.d); return `${fmt.date(p.d)}<br><b>${fmt.nav(p.nav)}</b>${e ? `<br>${String(e.reason).replace("_", " ")}` : ""}`; } },
+    xAxis: { type: "category", data: pts.map((p) => p.d), boundaryGap: false, ...ax(), splitLine: { show: false }, axisLabel: { ...txt(), hideOverlap: true, formatter: (v) => new Date(v).toLocaleDateString("en-GB", { month: "short", year: "2-digit", timeZone: "UTC" }) } },
+    yAxis: { type: "value", min: Math.floor(lo * 50) / 50, max: Math.ceil((max + pad) * 50) / 50, splitNumber: 5, ...ax(), axisLine: { show: false }, axisLabel: { ...txt(), formatter: (v) => v.toFixed(2) } },
+    series: [
+      { type: "line", data: ys, showSymbol: false, lineStyle: { color: ink, width: 1.6 }, z: 3,
+        markPoint: { symbol: "rect", symbolSize: 9, itemStyle: { color: ink }, label: { show: true, position: "right", offset: [8, 0], formatter: (p) => fmt.nav(p.value), color: ink, fontFamily: css("--mono"), fontWeight: 500, fontSize: 12 }, data: [{ coord: [pts.length - 1, ys[ys.length - 1]], value: ys[ys.length - 1] }] } },
+      { type: "scatter", symbol: "rect", symbolSize: [5, 5], itemStyle: { color: ink }, data: ev.map((e) => [idx.get(e.date), lo + pad * 0.18]), z: 2, silent: true },
+    ] }, true);
+  /* premium: stepped line over a pale wash, zero line in ink */
+  const mp = D.market.points, top = Math.max(2, ...mp.map((p) => p.bps)), bot = Math.min(-2, ...mp.map((p) => p.bps));
+  chart("cPrem").setOption({ ...anim, grid: { left: 54, right: 12, top: 14, bottom: 34 },
+    tooltip: { ...tip(), trigger: "axis", axisPointer: { type: "line", lineStyle: { color: ink } }, formatter: (a) => { const p = mp[a[0].dataIndex]; return `${new Date(p.t).toISOString().slice(11, 16)} UTC<br><b>${fmt.bps(p.bps)}</b>`; } },
+    xAxis: { type: "category", data: mp.map((p) => p.t), boundaryGap: false, ...ax(), splitLine: { show: false }, axisLabel: { ...txt(), hideOverlap: true, formatter: (v) => new Date(v).toISOString().slice(11, 16) } },
+    yAxis: { type: "value", min: Math.floor(bot / 5) * 5, max: Math.ceil(top / 5) * 5 || 5, interval: 5, ...ax(), axisLine: { show: false }, axisLabel: { ...txt(), formatter: (v) => `${v < 0 ? "−" : v > 0 ? "+" : ""}${Math.abs(v).toFixed(0)}` } },
+    series: [{ type: "line", step: "middle", data: mp.map((p) => p.bps), showSymbol: false, lineStyle: { color: ink, width: 1.6 }, areaStyle: { color: ink, opacity: 0.07, origin: 0 },
+      markLine: { symbol: "none", silent: true, lineStyle: { color: ink, width: 1 }, label: { show: false }, data: [{ yAxis: 0 }] } }] }, true);
+  /* waterfall: grey, outline, black */
+  let run = 0; const bl = D.flows.steps.map((s) => { const a = run, b = run + s.v; run = b; return { label: s.label, a, b, v: s.v }; }); bl.push({ label: "Change in AUM", a: 0, b: run, v: run, total: true });
+  const lo2 = Math.min(0, ...bl.flatMap((b) => [b.a, b.b])), hi2 = Math.max(0, ...bl.flatMap((b) => [b.a, b.b])), pd = (hi2 - lo2) * 0.14;
+  chart("cFlow").setOption({ ...anim, grid: { left: 70, right: 12, top: 30, bottom: 36 }, tooltip: { ...tip(), trigger: "item", formatter: (p) => `${p.data.label}<br><b>${fmt.usd(p.data.v)}</b>` },
+    xAxis: { type: "category", data: bl.map((b) => b.label), ...ax(), splitLine: { show: false }, axisLabel: { ...txt(), color: ink, interval: 0 } },
+    yAxis: { type: "value", min: Math.floor((lo2 - pd) / 5e6) * 5e6, max: Math.ceil((hi2 + pd) / 5e6) * 5e6, interval: 5e6, ...ax(), axisLine: { show: false }, axisLabel: { ...txt(), formatter: (v) => fmt.usd(v) } },
+    series: [{ type: "custom", data: bl.map((b, i) => ({ value: [i, b.a, b.b], label: b.label, v: b.v })), encode: { x: 0, y: [1, 2] },
+      renderItem: (_p, api) => { const i = api.value(0), a = api.coord([i, api.value(1)]), b = api.coord([i, api.value(2)]), w = Math.min(72, api.size([1, 0])[0] * 0.46), d = bl[i], t = Math.min(a[1], b[1]), h = Math.max(2, Math.abs(a[1] - b[1])), next = api.coord([i + 1, api.value(2)]);
+        const style = d.total ? { fill: ink } : d.v >= 0 ? { fill: faint } : { fill: bg, stroke: ink, lineWidth: 1.5 };
+        return { type: "group", children: [{ type: "rect", shape: { x: a[0] - w / 2, y: t, width: w, height: h }, style },
+          ...(i < bl.length - 1 ? [{ type: "line", shape: { x1: a[0] + w / 2, y1: b[1], x2: next[0] - w / 2, y2: b[1] }, style: { stroke: muted, lineWidth: 1, lineDash: [2, 3] } }] : []),
+          { type: "text", style: { x: a[0], y: t - 9, text: fmt.usd(d.v), textAlign: "center", textVerticalAlign: "bottom", fill: ink, font: `500 12px ${css("--mono")}` } }] }; } }] }, true);
+  /* calendar */
+  const cp = D.nav.points.filter((p) => p.inc != null).slice(-371), srt = cp.map((p) => p.inc).sort((a, b) => a - b), q = (f) => srt[Math.floor(f * (srt.length - 1))];
+  chart("cCal").setOption({ ...anim, tooltip: { ...tip(), formatter: (p) => `${fmt.date(p.value[0])}<br><b>+${Math.round(p.value[1])} ppm</b>` },
+    visualMap: { type: "piecewise", show: false, dimension: 1, pieces: [{ max: q(0.2), color: wash }, { min: q(0.2), max: q(0.4), color: css("--line") }, { min: q(0.4), max: q(0.6), color: faint }, { min: q(0.6), max: q(0.85), color: muted }, { min: q(0.85), color: ink }] },
+    calendar: { left: 36, right: 6, top: 26, bottom: 6, range: [cp[0].d, cp[cp.length - 1].d], cellSize: ["auto", 22], itemStyle: { borderWidth: 4, borderColor: bg, color: "transparent" }, splitLine: { show: false }, yearLabel: { show: false }, monthLabel: { ...txt(), nameMap: "en" }, dayLabel: { ...txt(), firstDay: 1, nameMap: ["", "Mon", "", "Wed", "", "Fri", ""] } },
+    series: [{ type: "heatmap", coordinateSystem: "calendar", data: cp.map((p) => [p.d, p.inc]) }] }, true);
+}
+
+loadAll().then((d) => {
+  D = d; const last = d.nav.last, first = d.nav.first, ret = (last.nav / first.nav - 1) * 100;
+  $("today").textContent = new Date().toLocaleDateString("en-GB", { weekday: "long", day: "numeric", month: "long", year: "numeric", timeZone: "UTC" });
+  $("headline").textContent = `ONyc is up ${ret.toFixed(1)}% since launch.`;
+  $("num").innerHTML = `${fmt.nav(last.nav)}<small>USDC</small>`;
+  $("tags").innerHTML = `<span class="tag solid">+${ret.toFixed(1)}% since ${fmt.date(first.d)}</span><span class="tag">${fmt.bps(d.market.bps)} to market</span><span class="tag">AUM ${fmt.usd(d.dist.total)}</span>`;
+  $("navMeta").textContent = `${d.nav.src}\n${d.nav.points.length} daily points`; $("navMeta").style.whiteSpace = "pre-line";
+  $("premBig").textContent = fmt.bps(d.market.bps); $("premMeta").textContent = d.market.src;
+  $("flowBig").textContent = fmt.usd(d.flows.delta); $("flowMeta").textContent = d.flows.src;
+  $("distBig").textContent = fmt.usd(d.dist.total); $("distMeta").textContent = d.dist.src; $("calMeta").textContent = d.nav.src;
+  const mx = d.dist.rows[0].usd; $("plist").innerHTML = d.dist.rows.slice(0, 7).map((r) => `<li><span class="n">${r.name}</span><span class="track"><i style="width:${(r.usd / mx * 100).toFixed(1)}%"></i></span><span class="v">${fmt.usd(r.usd)} · ${fmt.pct(r.share)}</span></li>`).join("");
+  $("range").innerHTML = ["1M", "3M", "1Y", "ALL"].map((r) => `<button type="button" data-r="${r}" aria-pressed="${r === range}">${r}</button>`).join("");
+  $("range").onclick = (e) => { const b = e.target.closest("button"); if (!b) return; range = b.dataset.r; [...$("range").children].forEach((x) => x.setAttribute("aria-pressed", x === b)); draw(); };
+  draw(); addEventListener("resize", () => Object.values(charts).forEach((c) => c.resize()));
+}).catch((e) => { $("headline").textContent = "The API could not be reached. Nothing here is invented while it is down."; console.error(e); });
+</script>
+</body>
+</html>
