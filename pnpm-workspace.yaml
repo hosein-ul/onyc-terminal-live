@@ -3,6 +3,7 @@ packages:
   - "packages/*"
 allowBuilds:
   "@embedded-postgres/windows-x64": true
+  "@embedded-postgres/linux-x64": false
   esbuild: true
 minimumReleaseAgeExclude:
   - "@turbo/darwin-64@2.11.10"
