@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ONyc Terminal, Platinum high contrast</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/apexcharts@3.54.1/dist/apexcharts.min.js"></script>
+<script src="https://unpkg.com/lucide@0.469.0/dist/umd/lucide.min.js"></script>
+<style>
+  :root { --bg: #04060a; --rail: #000000; --card: #0b0e14; --line: #2e3643; --ink: #ffffff; --muted: #b3bccb; --accent: #9ec5ff; --bad: #ff8fa3; --track: #1a202b;
+    --ui: "Outfit", ui-sans-serif, sans-serif; --mono: "Geist Mono", ui-monospace, monospace; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 400 15px/1.55 var(--ui); font-variant-numeric: tabular-nums; -webkit-font-smoothing: antialiased; }
+  .shell { display: grid; grid-template-columns: 76px minmax(0, 1fr); min-height: 100vh; }
+  .rail { background: var(--rail); border-right: 1px solid var(--line); display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 18px 0; position: sticky; top: 0; height: 100vh; }
+  .rail .logo { width: 40px; height: 40px; border: 1.5px solid var(--ink); display: grid; place-items: center; border-radius: 12px; margin-bottom: 18px; }
+  .rail a { width: 46px; height: 46px; display: grid; place-items: center; color: var(--muted); border-radius: 14px; border: 1px solid transparent; transition: color .15s, border-color .15s, background .15s; }
+  .rail a:hover { color: var(--ink); border-color: var(--line); } .rail a[aria-current] { color: #000; background: var(--ink); }
+  .rail svg { width: 20px; height: 20px; stroke-width: 1.6; }
+  main { padding: 28px 36px 56px; max-width: 1480px; width: 100%; }
+  header { display: flex; justify-content: space-between; align-items: flex-end; gap: 20px; flex-wrap: wrap; margin-bottom: 26px; }
+  h1 { font: 300 34px/1.1 var(--ui); margin: 0; letter-spacing: -.01em; } h1 span { color: var(--muted); }
+  .sub { color: var(--muted); margin-top: 4px; font-size: 15px; }
+  .meta { display: flex; gap: 10px; align-items: center; font: 500 12px var(--mono); }
+  .pill { border: 1px solid var(--line); padding: 6px 12px; border-radius: 999px; color: var(--muted); }
+  .pill.live { color: var(--ink); border-color: var(--accent); }
+  .grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 20px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 22px; padding: 24px 26px 18px; min-width: 0; }
+  .s8 { grid-column: span 8; } .s4 { grid-column: span 4; } .s7 { grid-column: span 7; } .s5 { grid-column: span 5; } .s12 { grid-column: span 12; }
+  .label { font: 400 14px var(--ui); color: var(--muted); }
+  .big { font: 200 clamp(84px, 9vw, 132px)/.9 var(--ui); letter-spacing: -.03em; margin: 8px 0 4px; }
+  .big small { font: 400 16px var(--mono); color: var(--muted); letter-spacing: 0; margin-left: 10px; }
+  .row { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .seg { display: inline-flex; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+  .seg button { font: 500 12px var(--mono); background: none; border: 0; color: var(--muted); padding: 7px 12px; cursor: pointer; }
+  .seg button[aria-pressed="true"] { background: var(--ink); color: #000; }
+  .badge { display: inline-flex; align-items: center; gap: 4px; font: 500 12.5px var(--mono); padding: 3px 9px; border-radius: 8px; border: 1px solid; }
+  .badge.up { color: var(--accent); border-color: color-mix(in srgb, var(--accent) 55%, transparent); background: color-mix(in srgb, var(--accent) 12%, transparent); }
+  .badge.down { color: var(--bad); border-color: color-mix(in srgb, var(--bad) 55%, transparent); background: color-mix(in srgb, var(--bad) 12%, transparent); }
+  .kpi .v { font: 300 40px/1.1 var(--ui); margin: 6px 0 8px; letter-spacing: -.02em; }
+  .src { font: 400 11.5px var(--mono); color: var(--muted); border-top: 1px solid var(--line); margin-top: 8px; padding-top: 10px; }
+  h2 { font: 500 17px var(--ui); margin: 0 0 2px; } .hint { color: var(--muted); font-size: 13.5px; margin: 0 0 12px; }
+  /* Tremor-style BarList and CategoryBar */
+  .barlist { list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 10px; }
+  .barlist li { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 12px; align-items: center; }
+  .barlist .bar { grid-column: 1 / -1; height: 34px; background: var(--track); border-radius: 8px; position: relative; overflow: hidden; }
+  .barlist .bar i { position: absolute; inset: 0 auto 0 0; background: var(--accent); border-radius: 8px; }
+  .barlist .bar span { position: relative; z-index: 1; display: flex; align-items: center; height: 100%; padding-left: 12px; color: #000; font-weight: 500; text-transform: capitalize; }
+  .barlist li:nth-child(n+2) .bar i { background: color-mix(in srgb, var(--accent) 55%, #fff 0%); }
+  .barlist li:nth-child(n+4) .bar i { background: #5e6b82; } .barlist li:nth-child(n+4) .bar span { color: var(--ink); }
+  .barlist .v { display: none; }
+  .barlist .bar b { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); z-index: 1; font: 500 12.5px var(--mono); color: var(--ink); }
+  .cat { display: flex; height: 14px; gap: 3px; margin: 14px 0 12px; } .cat i { display: block; height: 100%; border-radius: 4px; }
+  .legend { display: flex; gap: 8px 18px; flex-wrap: wrap; font-size: 13px; color: var(--muted); } .legend b { display: inline-block; width: 9px; height: 9px; border-radius: 3px; margin-right: 7px; }
+  .apexcharts-tooltip { border-radius: 10px !important; border: 1px solid var(--ink) !important; box-shadow: none !important; }
+  footer { margin-top: 36px; color: var(--muted); font-size: 13px; } footer strong { color: var(--ink); font-weight: 500; }
+  :focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+  @media (max-width: 1000px) { .shell { grid-template-columns: 1fr; } .rail { position: static; flex-direction: row; height: auto; padding: 10px; overflow-x: auto; border-right: 0; border-bottom: 1px solid var(--line); } .rail .logo { margin: 0 8px 0 0; }
+    main { padding: 18px 16px 40px; } .s8, .s4, .s7, .s5 { grid-column: span 12; } }
+</style>
+</head>
+<body>
+<div class="shell">
+  <aside class="rail" aria-label="Pages" id="rail"></aside>
+  <main>
+    <header>
+      <div><h1 id="title">Overview <span>/ ONyc</span></h1><div class="sub" id="headline">Reading the live API</div></div>
+      <div class="meta"><span class="pill" id="today"></span><span class="pill">Solana mainnet</span><span class="pill live" id="apyPill">Live</span></div>
+    </header>
+
+    <div class="grid">
+      <section class="card s8">
+        <div class="row"><span class="label">NAV per ONyc</span><div class="seg" id="range" role="group" aria-label="Range"></div></div>
+        <div class="big" id="big">-.----<small>USDC</small></div>
+        <div id="navChart" style="min-height:300px"></div>
+        <div class="src" id="navSrc"></div>
+      </section>
+      <div class="s4" style="display:grid; gap:20px; grid-template-rows: 1fr 1fr;">
+        <section class="card kpi"><div class="row"><span class="label">Assets under management</span><span class="badge" id="aumBadge"></span></div><div class="v" id="aum">-</div><div id="aumSpark" style="height:64px"></div><div class="src" id="aumSrc"></div></section>
+        <section class="card kpi"><div class="row"><span class="label">Market premium</span><span class="badge" id="premBadge"></span></div><div class="v" id="prem">-</div><div id="premSpark" style="height:64px"></div><div class="src" id="premSrc"></div></section>
+      </div>
+    </div>
+
+    <div class="grid" style="margin-top:20px">
+      <section class="card s7"><h2>Market against NAV</h2><p class="hint">Premium or discount in basis points over the last session.</p><div id="premChart"></div><div class="src" id="premSrc2"></div></section>
+      <section class="card s5"><h2>What moved AUM</h2><p class="hint">Last month: NAV effect, net flows, what is left.</p><div id="flowChart"></div><div class="src" id="flowSrc"></div></section>
+    </div>
+
+    <div class="grid" style="margin-top:20px">
+      <section class="card s5"><h2>Capital by protocol</h2><p class="hint">Where the capital sits today.</p><ul class="barlist" id="barlist"></ul><div class="cat" id="cat"></div><div class="legend" id="legend"></div><div class="src" id="distSrc"></div></section>
+      <section class="card s7"><h2>Daily NAV increment</h2><p class="hint">Each square is a day. Brighter means a larger increment, in parts per million.</p><div id="calChart"></div><div class="src" id="calSrc"></div></section>
+    </div>
+
+    <footer><strong>Independent community tool. Not affiliated with OnRe. Not investment advice.</strong> Every number shows where it came from and how old it is. This site is read-only.</footer>
+  </main>
+</div>
+<script src="data.js"></script>
+<script>
+const $ = (id) => document.getElementById(id);
+const ICONS = [["layout-grid", "Overview"], ["trending-up", "NAV & Peg"], ["layers", "Book"], ["trophy", "Points & Wallets"], ["shield-check", "Risk & Health"], ["bell", "Alerts & API"]];
+$("rail").innerHTML = `<div class="logo"><i data-lucide="trending-up"></i></div>` + ICONS.map(([i, t], k) => `<a href="#" title="${t}" aria-label="${t}" ${k === 0 ? 'aria-current="page"' : ""}><i data-lucide="${i}"></i></a>`).join("");
+lucide.createIcons();
+
+const C = { ink: "#ffffff", muted: "#b3bccb", accent: "#9ec5ff", bad: "#ff8fa3", grid: "#232a36", card: "#0b0e14" };
+const base = { chart: { background: "transparent", fontFamily: "Geist Mono, monospace", foreColor: C.muted, toolbar: { show: false }, zoom: { enabled: false }, animations: { enabled: !reduced, speed: 500 } },
+  grid: { borderColor: C.grid, strokeDashArray: 0, xaxis: { lines: { show: false } } }, tooltip: { theme: "dark", style: { fontFamily: "Geist Mono, monospace", fontSize: "12px" } }, dataLabels: { enabled: false }, legend: { show: false } };
+let D, range = "ALL", navChart;
+const slice = (a) => a.slice(-({ "1M": 31, "3M": 92, "1Y": 366, ALL: a.length }[range] || a.length));
+const spark = (el, data, color) => new ApexCharts($(el), { ...base, chart: { ...base.chart, type: "area", sparkline: { enabled: true }, height: 64 }, series: [{ data }], stroke: { width: 2, curve: "straight", colors: [color] }, colors: [color], fill: { type: "gradient", gradient: { shadeIntensity: 0, opacityFrom: 0.28, opacityTo: 0, stops: [0, 100] } }, tooltip: { enabled: false } }).render();
+
+loadAll().then((d) => {
+  D = d; const last = d.nav.last, first = d.nav.first, ret = (last.nav / first.nav - 1) * 100, daily = d.flows.daily;
+  $("today").textContent = new Date().toLocaleDateString("en-GB", { day: "2-digit", month: "2-digit", year: "numeric", timeZone: "UTC" });
+  $("headline").textContent = `ONyc is up ${ret.toFixed(1)}% since launch`;
+  $("big").innerHTML = `${fmt.nav(last.nav)}<small>USDC</small>`; $("apyPill").textContent = `${fmt.pct(ret / 100, 1)} since ${fmt.date(first.d)}`;
+  $("navSrc").textContent = d.nav.src; $("premSrc").textContent = d.market.src; $("premSrc2").textContent = d.market.src; $("flowSrc").textContent = d.flows.src; $("distSrc").textContent = d.dist.src; $("calSrc").textContent = d.nav.src; $("aumSrc").textContent = d.dist.src;
+  $("aum").textContent = fmt.usd(d.dist.total); const dl = d.flows.delta; $("aumBadge").className = "badge " + (dl >= 0 ? "up" : "down"); $("aumBadge").textContent = `${dl >= 0 ? "+" : ""}${fmt.usd(dl)} 30d`;
+  $("prem").textContent = fmt.bps(d.market.bps); $("premBadge").className = "badge " + (d.market.bps >= 0 ? "up" : "down"); $("premBadge").textContent = d.market.bps >= 0 ? "premium" : "discount";
+  spark("aumSpark", daily.map((r) => r.aum), C.accent); spark("premSpark", d.market.points.map((p) => p.bps), C.ink);
+
+  /* NAV: area, events as small marker annotations */
+  const draw = () => {
+    const pts = slice(d.nav.points), set = new Set(pts.map((p) => p.d)), evs = d.nav.events.filter((e) => set.has(e.date));
+    const opts = { ...base, chart: { ...base.chart, type: "area", height: 300, id: "nav" }, series: [{ name: "NAV", data: pts.map((p) => [new Date(p.d).getTime(), p.nav]) }], colors: [C.accent],
+      stroke: { width: 2.2, curve: "straight" }, fill: { type: "gradient", gradient: { shadeIntensity: 0, opacityFrom: 0.32, opacityTo: 0, stops: [0, 100] } }, markers: { size: 0, hover: { size: 5 } },
+      xaxis: { type: "datetime", labels: { style: { colors: C.muted }, datetimeUTC: true }, axisBorder: { show: false }, axisTicks: { show: false }, crosshairs: { stroke: { color: C.ink, dashArray: 3 } } },
+      yaxis: { labels: { formatter: (v) => v.toFixed(3), style: { colors: C.muted } }, tickAmount: 5 },
+      tooltip: { ...base.tooltip, x: { format: "dd MMM yyyy" }, y: { formatter: (v) => fmt.nav(v) } },
+      annotations: { points: evs.map((e) => { const p = pts.find((q) => q.d === e.date); return { x: new Date(e.date).getTime(), y: p.nav, marker: { size: 4, fillColor: e.reason === "downtick" ? C.bad : C.ink, strokeColor: C.card, strokeWidth: 2, radius: 2 } }; }) } };
+    if (navChart) navChart.updateOptions(opts, true, !reduced); else { navChart = new ApexCharts($("navChart"), opts); navChart.render(); }
+  };
+  draw();
+  $("range").innerHTML = ["1M", "3M", "1Y", "ALL"].map((r) => `<button type="button" data-r="${r}" aria-pressed="${r === range}">${r}</button>`).join("");
+  $("range").onclick = (e) => { const b = e.target.closest("button"); if (!b) return; range = b.dataset.r; [...$("range").children].forEach((x) => x.setAttribute("aria-pressed", x === b)); draw(); };
+
+  /* premium columns, below zero in pink */
+  new ApexCharts($("premChart"), { ...base, chart: { ...base.chart, type: "bar", height: 270 }, series: [{ name: "Premium", data: d.market.points.map((p) => ({ x: new Date(p.t).getTime(), y: +p.bps.toFixed(2) })) }],
+    plotOptions: { bar: { columnWidth: "70%", borderRadius: 1, colors: { ranges: [{ from: -1000, to: -0.0001, color: C.bad }, { from: 0, to: 1000, color: C.accent }] } } }, stroke: { width: 0 },
+    xaxis: { type: "datetime", labels: { datetimeUTC: true, datetimeFormatter: { hour: "HH:mm", minute: "HH:mm" } }, axisBorder: { show: false }, axisTicks: { show: false } },
+    yaxis: { labels: { formatter: (v) => `${v > 0 ? "+" : v < 0 ? "−" : ""}${Math.abs(v).toFixed(0)}` } }, tooltip: { ...base.tooltip, x: { format: "HH:mm 'UTC'" }, y: { formatter: (v) => fmt.bps(v) } } }).render();
+
+  /* waterfall as rangeBar columns */
+  let run = 0; const bl = d.flows.steps.map((s) => { const a = run, b = run + s.v; run = b; return { x: [s.label, `${s.v >= 0 ? "+" : "\u2212"}${fmt.usd(Math.abs(s.v)).replace("\u2212", "")}`], y: [Math.min(a, b), Math.max(a, b)], v: s.v }; }); bl.push({ x: ["Change in AUM", fmt.usd(run)], y: [Math.min(0, run), Math.max(0, run) || 1], v: run });
+  new ApexCharts($("flowChart"), { ...base, chart: { ...base.chart, type: "rangeBar", height: 270 }, series: [{ data: bl }], colors: [C.accent, C.bad, "#5e6b82", "#e6edf7"], fill: { opacity: 1 },
+    plotOptions: { bar: { distributed: true, columnWidth: "46%", borderRadius: 3, dataLabels: { hideOverflowingLabels: false } } }, dataLabels: { enabled: false },
+    xaxis: { labels: { style: { colors: C.ink, fontSize: "11px" }, trim: false }, axisBorder: { show: false }, axisTicks: { show: false } }, yaxis: { labels: { formatter: (v) => fmt.usd(v) } },
+    tooltip: { ...base.tooltip, custom: ({ dataPointIndex }) => `<div style="padding:8px 10px;font-family:Geist Mono,monospace">${bl[dataPointIndex].x[0]}<br><b>${fmt.usd(bl[dataPointIndex].v)}</b></div>` }, legend: { show: false } }).render();
+
+  /* Tremor-style BarList and CategoryBar */
+  const rows = d.dist.rows.slice(0, 6), mx = rows[0].usd, shades = [C.accent, "#7fa9e6", "#5e86c4", "#5e6b82", "#47536a", "#333d50"];
+  $("barlist").innerHTML = rows.map((r) => `<li><div class="bar"><i style="width:${(r.usd / mx * 100).toFixed(1)}%"></i><span>${r.name}</span><b>${fmt.usd(r.usd)}</b></div></li>`).join("");
+  $("cat").innerHTML = rows.map((r, i) => `<i style="width:${(r.share * 100).toFixed(2)}%;background:${shades[i]}" title="${r.name} ${fmt.pct(r.share)}"></i>`).join("");
+  $("legend").innerHTML = rows.slice(0, 4).map((r, i) => `<span><b style="background:${shades[i]}"></b>${r.name} ${fmt.pct(r.share)}</span>`).join("");
+
+  /* calendar heatmap: rows are weekdays, columns weeks */
+  const cp = d.nav.points.filter((p) => p.inc != null).slice(-371), srt = cp.map((p) => p.inc).sort((a, b) => a - b), q = (f) => srt[Math.floor(f * (srt.length - 1))], day0 = new Date(cp[0].d + "T00:00:00Z").getUTCDay();
+  const weeks = Math.ceil((cp.length + day0) / 7), names = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"], ser = names.map((n) => ({ name: n, data: Array.from({ length: weeks }, (_, w) => ({ x: `w${w}`, y: null })) }));
+  cp.forEach((p, i) => { const k = i + day0; ser[k % 7].data[Math.floor(k / 7)] = { x: p.d, y: Math.round(p.inc) }; });
+  new ApexCharts($("calChart"), { ...base, chart: { ...base.chart, type: "heatmap", height: 250 }, series: ser.reverse(), dataLabels: { enabled: false }, stroke: { width: 3, colors: [C.card] },
+    plotOptions: { heatmap: { radius: 2, enableShades: false, colorScale: { ranges: [{ from: 0, to: q(0.2), color: "#1b222d" }, { from: q(0.2) + 0.0001, to: q(0.4), color: "#2f3b4d" }, { from: q(0.4) + 0.0001, to: q(0.6), color: "#4f6486" }, { from: q(0.6) + 0.0001, to: q(0.85), color: "#7fa9e6" }, { from: q(0.85) + 0.0001, to: 1e9, color: "#ffffff" }] } } },
+    xaxis: { labels: { show: false }, axisBorder: { show: false }, axisTicks: { show: false }, tooltip: { enabled: false } }, yaxis: { labels: { style: { colors: C.muted } } }, tooltip: { ...base.tooltip, custom: ({ seriesIndex, dataPointIndex }) => { const p = ser[seriesIndex].data[dataPointIndex]; return `<div style="padding:8px 10px;font-family:Geist Mono,monospace">${p.y == null ? "" : fmt.date(p.x) + "<br><b>+" + p.y + " ppm</b>"}</div>`; } } }).render();
+}).catch((e) => { $("headline").textContent = "The API could not be reached. Nothing here is invented while it is down."; console.error(e); });
+</script>
+</body>
+</html>

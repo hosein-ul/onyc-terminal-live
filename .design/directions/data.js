@@ -39,6 +39,7 @@ async function loadAll() {
       src: source(market.meta, "history"),
     },
     flows: {
+      daily: fl.map((r) => ({ d: r.date, delta: r.deltaAum, supply: r.supply, nav: r.nav, aum: r.supply * r.nav })),
       steps: [
         { label: "NAV effect", v: sum("navEffect") },
         { label: "Flow effect", v: sum("flowEffect") },
