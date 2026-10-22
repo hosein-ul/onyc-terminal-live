@@ -326,7 +326,7 @@ export class SolanaRpc {
   async getTransaction(signature: string): Promise<ParsedTransaction | null> {
     const r = (await this.call("getTransaction", [
       signature,
-      { encoding: "json", maxSupportedTransactionVersion: 0, commitment: "finalized" },
+      { encoding: "json", maxSupportedTransactionVersion: 1, commitment: "finalized" },
     ])) as RawTransaction | null;
     return r === null ? null : parseTransaction(signature, r);
   }

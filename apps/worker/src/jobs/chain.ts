@@ -190,8 +190,12 @@ export const chainActivityJob: Job = {
   startDelayMs: 8_000,
   async run(ctx) {
     const rpc = chainRpc(ctx);
-    const cursorRow = await latestSnapshot(ctx, "cursor");
-    const cursors = (cursorRow?.data ?? {}) as { program?: string; mint?: string };
+    const cursorRow = await latestSnapshot(ctx, "cursor-v2");
+    const cursors = (cursorRow?.data ?? {}) as {
+      program?: string;
+      mint?: string;
+      retries?: number;
+    };
     const first = cursors.program === undefined;
 
     const programSigs = await timed(ctx, "getSignaturesForAddress(program)", () =>
@@ -214,9 +218,13 @@ export const chainActivityJob: Job = {
     }
     const batch = [...wanted.entries()].sort((a, b) => a[1].slot - b[1].slot).slice(0, 40);
     let stored = 0;
+    let failed = 0;
     for (const [signature, meta] of batch) {
       const tx = await timed(ctx, "getTransaction", () => rpc.getTransaction(signature));
-      if (tx === null) continue;
+      if (tx === null) {
+        failed += 1;
+        continue;
+      }
       const c = classify(tx, ctx.config.CHAIN_LARGE_TRANSFER_ONYC);
       if (c === null) continue;
       const ts = new Date(
@@ -256,14 +264,17 @@ export const chainActivityJob: Job = {
     // The next run starts after the newest signature we looked at, so nothing is read twice and nothing is skipped.
     const newest = (list: { signature: string }[] | null): string | undefined =>
       list?.[0]?.signature;
-    const processedAll = wanted.size <= batch.length;
-    await snapshot(ctx, "cursor", {
+    // A transaction that could not be fetched is tried again on the next runs; after five tries it is given up.
+    const retries = failed > 0 ? (cursors.retries ?? 0) + 1 : 0;
+    const processedAll = wanted.size <= batch.length && (failed === 0 || retries > 5);
+    await snapshot(ctx, "cursor-v2", {
+      retries: processedAll ? 0 : retries,
       program: processedAll
         ? (newest(programSigs) ?? cursors.program)
         : (cursors.program ?? newest(programSigs)),
       mint: processedAll ? (newest(mintSigs) ?? cursors.mint) : (cursors.mint ?? newest(mintSigs)),
     });
-    ctx.log.info({ looked: batch.length, stored }, "chain activity");
+    ctx.log.info({ looked: batch.length, stored, failed }, "chain activity");
   },
 };
 
