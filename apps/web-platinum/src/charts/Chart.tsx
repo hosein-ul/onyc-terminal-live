@@ -5,9 +5,11 @@ import { RingChart } from "./RingChart";
 import { StackBarChart } from "./StackBarChart";
 import { StackedChart } from "./StackedChart";
 import { TimeSeriesChart } from "./TimeSeriesChart";
+import { drawsWithApex } from "./ApexChart";
 import { TremorBars } from "./TremorCharts";
 
-// ECharts is the heaviest dependency; it loads only when a page shows a complex chart.
+// ApexCharts and ECharts are the heavy dependencies; each loads only when a page shows a chart that needs it.
+const ApexChart = lazy(() => import("./ApexChart").then((m) => ({ default: m.ApexChart })));
 const EchartsChart = lazy(() =>
   import("./EchartsChart").then((m) => ({ default: m.EchartsChart })),
 );
@@ -27,6 +29,17 @@ const MIN_WIDTH: Partial<Record<ChartSpec["kind"], number>> = {
 
 export function Chart({ spec, height }: { spec: ChartSpec; height?: number }) {
   const h = height !== undefined ? { height } : {};
+  if (drawsWithApex(spec)) {
+    return (
+      <Suspense
+        fallback={
+          <div className="ch-skeleton" style={{ height: height ?? 300 }} aria-hidden="true" />
+        }
+      >
+        <ApexChart spec={spec} {...h} />
+      </Suspense>
+    );
+  }
   switch (spec.kind) {
     case "timeseries":
       return <TimeSeriesChart spec={spec} {...h} />;

@@ -1,14 +1,14 @@
 /* Platinum Rail tokens. Source: docs/DESIGN.md §4 and .design/direction.md. Components use these and nothing else. */
 :root {
-  --ground: #12151b;
-  --rail: #0d1015;
-  --panel: #1a1f27;
-  --border: #232933;
-  --chip-border: #2f3744;
-  --text: #f1f4f8;
-  --muted: #8c97a8;
-  --silver: #c9d1db;
-  --accent: #8fb4ff;
+  --ground: #04060a;
+  --rail: #000000;
+  --panel: #0b0e14;
+  --border: #2e3643;
+  --chip-border: #3b4455;
+  --text: #ffffff;
+  --muted: #b3bccb;
+  --silver: #e6ebf3;
+  --accent: #9ec5ff;
   --alert: #ff8fa3;
 
   --font-ui: "Outfit", ui-sans-serif, sans-serif;
@@ -31,30 +31,30 @@
   --ease: cubic-bezier(0.2, 0, 0, 1);
 
   /* semantic names shared by the page and UI-kit CSS */
-  --surface: #1a1f27;
-  --ink: #f1f4f8;
+  --surface: #0b0e14;
+  --ink: #ffffff;
   --line: #232933;
-  --accent-soft: #232933;
-  --accent-ink: #8fb4ff;
-  --good: #8fb4ff;
-  --good-soft: #1f2c47;
+  --accent-soft: #1a202b;
+  --accent-ink: #9ec5ff;
+  --good: #9ec5ff;
+  --good-soft: #1b2d4a;
   --bad: #ff8fa3;
   --bad-soft: #3a222a;
-  --watch: #c9d1db;
-  --watch-soft: #2a303b;
+  --watch: #e6ebf3;
+  --watch-soft: #2a313d;
   --radius-card: 22px;
   --tracking-display: -0.03em;
 
   /* chart skin (read by @onyc/charts-echarts readTokens and by the Recharts and Tremor adapters) */
-  --chart-ground: #12151b;
-  --chart-surface: #1a1f27;
-  --chart-ink: #f1f4f8;
-  --chart-muted: #8c97a8;
-  --chart-line: #232933;
-  --chart-grid: #232933;
-  --chart-accent: #8fb4ff;
-  --chart-primary: #c9d1db;
-  --chart-good: #8fb4ff;
+  --chart-ground: #04060a;
+  --chart-surface: #0b0e14;
+  --chart-ink: #ffffff;
+  --chart-muted: #b3bccb;
+  --chart-line: #2e3643;
+  --chart-grid: #232a36;
+  --chart-accent: #9ec5ff;
+  --chart-primary: #9ec5ff;
+  --chart-good: #9ec5ff;
   --chart-bad: #ff8fa3;
   --chart-s1: #8fb4ff;
   --chart-s2: #c9d1db;
@@ -68,10 +68,10 @@
   --chart-font-mono: "Geist Mono", ui-monospace, monospace;
   --chart-stroke: 2.5;
   --chart-radius: 6;
-  --chart-tooltip-bg: #0d1015;
-  --chart-tooltip-ink: #f1f4f8;
+  --chart-tooltip-bg: #000000;
+  --chart-tooltip-ink: #ffffff;
   --chart-marker: circle;
-  --chart-area-alpha: 0.1;
+  --chart-area-alpha: 0.18;
 }
 
 *,
