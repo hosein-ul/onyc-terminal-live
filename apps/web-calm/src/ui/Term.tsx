@@ -1,4 +1,4 @@
-import { BASIS_LABEL, splitByTerms, TERM_BY_ID } from "@onyc/glossary";
+import { splitByTerms, TERM_BY_ID } from "@onyc/glossary";
 import {
   createContext,
   Fragment,
@@ -27,20 +27,25 @@ export function TermHint({ id, label }: { id: string; label?: string }) {
   const [pos, setPos] = useState({ left: 8, top: 8 });
   const button = useRef<HTMLButtonElement>(null);
   const lastPointer = useRef<string>("mouse");
+  const timer = useRef<number | undefined>(undefined);
+  const later = (fn: () => void, ms: number): void => {
+    window.clearTimeout(timer.current);
+    timer.current = window.setTimeout(fn, ms);
+  };
   const uid = useId();
 
   const place = (): void => {
     const el = button.current;
     if (el === null) return;
     const r = el.getBoundingClientRect();
-    const width = Math.min(320, window.innerWidth - 16);
+    const width = Math.min(240, window.innerWidth - 16);
     const left = Math.min(
       Math.max(8, r.left + r.width / 2 - width / 2),
       window.innerWidth - width - 8,
     );
     const below = r.bottom + 8;
     // Open upwards when there is no room underneath.
-    const top = below + 200 > window.innerHeight && r.top > 220 ? r.top - 8 - 200 : below;
+    const top = below + 90 > window.innerHeight && r.top > 100 ? r.top - 8 - 76 : below;
     setPos({ left, top });
   };
 
@@ -94,10 +99,10 @@ export function TermHint({ id, label }: { id: string; label?: string }) {
           lastPointer.current = e.pointerType;
         }}
         onPointerEnter={(e) => {
-          if (e.pointerType === "mouse") show();
+          if (e.pointerType === "mouse") later(show, 350);
         }}
         onPointerLeave={(e) => {
-          if (e.pointerType === "mouse") setOpen(false);
+          if (e.pointerType === "mouse") later(() => setOpen(false), 120);
         }}
         onClick={() => {
           // A mouse click on an already hover-opened hint keeps it open; a tap or Enter toggles it.
@@ -115,24 +120,14 @@ export function TermHint({ id, label }: { id: string; label?: string }) {
             role="tooltip"
             className="term-pop"
             style={{ left: pos.left, top: pos.top }}
-            onPointerEnter={() => setOpen(true)}
+            onPointerEnter={() => window.clearTimeout(timer.current)}
             onPointerLeave={(e) => {
-              if (e.pointerType === "mouse") setOpen(false);
+              if (e.pointerType === "mouse") later(() => setOpen(false), 120);
             }}
           >
             <strong>{term.term}</strong>
-            <p>{term.short}</p>
-            <p className="term-why">{term.why}</p>
-            {term.note !== undefined && <p className="term-extra">{term.note}</p>}
-            <p className="term-foot">
-              <span>{BASIS_LABEL[term.basis]}</span>
-              {term.source !== undefined && (
-                <a href={term.source.url} target="_blank" rel="noopener noreferrer">
-                  {term.source.label}
-                </a>
-              )}
-              <Link to={`/glossary#${term.id}`}>All terms</Link>
-            </p>
+            <span>{term.tip}</span>
+            <Link to={`/glossary#${term.id}`}>More</Link>
           </div>,
           document.body,
         )}

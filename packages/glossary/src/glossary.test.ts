@@ -45,6 +45,7 @@ describe("glossary data", () => {
     expect(new Set(TERMS.map((t) => t.id)).size).toBe(TERMS.length);
     for (const t of TERMS) {
       expect(t.short.trim().length, t.id).toBeGreaterThan(20);
+      expect(t.tip.trim().split(/\s+/).length, `${t.id} tip`).toBeLessThanOrEqual(14);
       expect(t.why.trim().length, t.id).toBeGreaterThan(10);
     }
   });

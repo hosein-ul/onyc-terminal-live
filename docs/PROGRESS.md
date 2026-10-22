@@ -147,3 +147,12 @@ The workspace, turbo pipeline and CI are generic, so they now build one app. Cal
 - **Bug found and fixed**: since a network change Solana returns version-1 transactions, and the worker asked for versions up to 0, so every `getTransaction` failed and the cursor moved past them. The client now asks for version 1, an unfetched transaction is retried up to five times before it is given up, and the cursor key was renewed so the missed hours were read again.
 - **Source lines**: a dataset flagged as possibly behind now shows a quiet amber dot and "may be behind", not red text.
 - **No written commentary**: the generated Overview headline and every number-built page title were removed (the `buildHeadline` function and its tests too). Pages now carry plain fixed titles; numbers live in tiles and pills, not in sentences.
+
+## Phase 10: Overview rebuilt for the reader, Risk ledger, wallet popup (23 October 2026)
+
+- **Overview order**: NAV and safety, vitals and the live tile, capital (list with logos, share over time, where it sits, collateral by asset), best places (highest yield, most points, how points work), points (estimates and the top 10), activity with transaction and signer addresses, flows, changes. The second Safety section is gone.
+- **Risk Signals page**: one ledger sorted by state, each check with its value and a gauge that shows where the value sits between the watch and alert limits.
+- **Wallet**: no page; a search box on every page opens a popup (`?wallet=ADDRESS`, shareable).
+- **API & MCP page removed** from the app. There is no separate MCP service on Render; the API service is what the site itself reads, so it stays.
+- **Hints**: a few words each (`tip` in the glossary), shown after a short hover delay; the long text stays on the Glossary page.
+- **Sidebar** collapses to an icon rail; status shown with icons (check, triangle, octagon) instead of drawn shapes; the treemap borders follow the theme.

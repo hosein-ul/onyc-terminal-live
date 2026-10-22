@@ -1,12 +1,11 @@
 import { useEffect, type ReactNode } from "react";
-import { Navigate, Route, Routes, useLocation } from "react-router-dom";
+import { Navigate, Route, Routes, useLocation, useParams } from "react-router-dom";
 import { AppShell } from "./layout/AppShell";
 import { ActivityPage as AlertsPage } from "./pages/Activity";
 import { ActivityPage } from "./pages/ActivityLive";
 import { CapitalDefiPage } from "./pages/CapitalDefi";
 import { ChainPage } from "./pages/Chain";
 import { DataHealthPage } from "./pages/DataHealth";
-import { DevelopersPage } from "./pages/Developers";
 import { NavYieldPage } from "./pages/NavYield";
 import { PegLiquidityPage } from "./pages/PegLiquidity";
 import { PointsPage } from "./pages/Points";
@@ -14,7 +13,6 @@ import { ReinsurancePage } from "./pages/Reinsurance";
 import { RiskPage } from "./pages/Risk";
 import { GlossaryPage } from "./pages/Glossary";
 import { OverviewPage } from "./pages/Overview";
-import { WalletPage } from "./pages/Wallet";
 import { ChartsGallery } from "./routes/ChartsGallery";
 
 /** Addresses from the time pages were combined: each section anchor now has a page of its own. */
@@ -27,10 +25,15 @@ const ANCHORS: Record<string, string> = {
   "#reinsurance": "/reinsurance",
   "#chain": "/onchain",
   "#sources": "/health",
-  "#developers": "/developers",
   "#onchain": "/activity",
   "#activity": "/alerts",
 };
+
+/** The old wallet page address now opens the popup on the Overview. */
+function WalletRedirect() {
+  const { address = "" } = useParams();
+  return <Navigate to={`/?wallet=${address}`} replace />;
+}
 
 /** A page that used to be a combined page: an old section anchor sends the visitor to that section's own page. */
 function WithLegacyAnchor({ children }: { children: ReactNode }) {
@@ -92,8 +95,8 @@ export function App() {
                 <Route path="onchain" element={<ChainPage />} />
                 <Route path="health" element={<DataHealthPage />} />
                 <Route path="activity" element={<ActivityPage />} />
-                <Route path="wallet" element={<WalletPage />} />
-                <Route path="wallet/:address" element={<WalletPage />} />
+                <Route path="wallet/:address" element={<WalletRedirect />} />
+                <Route path="wallet" element={<Navigate to="/" replace />} />
                 <Route
                   path="alerts"
                   element={
@@ -102,7 +105,6 @@ export function App() {
                     </WithLegacyAnchor>
                   }
                 />
-                <Route path="developers" element={<DevelopersPage />} />
                 <Route path="glossary" element={<GlossaryPage />} />
                 {REDIRECTS.map(([from, to]) => (
                   <Route key={from} path={from} element={<Navigate to={to} replace />} />

@@ -1,7 +1,6 @@
 import {
   Activity,
   Bell,
-  Code2,
   Coins,
   HeartPulse,
   LayoutDashboard,
@@ -11,7 +10,6 @@ import {
   Sparkles,
   TrendingUp,
   Umbrella,
-  Wallet,
   type LucideIcon,
 } from "lucide-react";
 
@@ -22,7 +20,7 @@ export interface NavItem {
   /** One line shown under the label in the mobile menu. */
   hint: string;
   /** Sidebar group heading. */
-  group: "Returns" | "Risk" | "Live" | "Tools" | "";
+  group: "Returns" | "Risk" | "Live" | "";
 }
 
 /** One page per subject, in groups. The older combined addresses redirect (see App.tsx). */
@@ -92,12 +90,4 @@ export const NAV: NavItem[] = [
     group: "Live",
   },
   { to: "/alerts", label: "Alerts", icon: Bell, hint: "Events and Telegram alerts", group: "Live" },
-  { to: "/wallet", label: "Wallet", icon: Wallet, hint: "Look up any address", group: "Tools" },
-  {
-    to: "/developers",
-    label: "API & MCP",
-    icon: Code2,
-    hint: "Read the data from your code",
-    group: "Tools",
-  },
 ];

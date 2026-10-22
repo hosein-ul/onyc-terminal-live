@@ -7,14 +7,14 @@ import { Chart, ChartFrame } from "../charts";
 import { useRange } from "../lib/useRange";
 import { Notice } from "../ui/kit";
 import {
+  ActivitySection,
   BestPlaces,
   Capital,
   Changes,
   Flows,
   Headline,
   NavHero,
-  PointsPulse,
-  SafetyBoard,
+  PointsSection,
   SafetyGlance,
   SectionNav,
   Vitals,
@@ -59,12 +59,12 @@ export function OverviewPage() {
         <Vitals m={m} />
       </div>
     ),
-    safety: <SafetyBoard m={m} />,
+    capital: <Capital m={m} />,
     best: <BestPlaces m={m} />,
-    points: <PointsPulse pulse={m.pulse} m={m} />,
+    points: <PointsSection pulse={m.pulse} m={m} />,
+    activity: <ActivitySection />,
     flows: <Flows m={m} />,
     changes: <Changes m={m} />,
-    capital: <Capital m={m} />,
   };
 
   return (

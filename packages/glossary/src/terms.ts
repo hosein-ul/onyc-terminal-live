@@ -15,6 +15,8 @@ export interface Term {
   term: string;
   /** Other spellings that should also be recognised in text. Longest match wins. */
   aliases: string[];
+  /** A few words for the hover hint. */
+  tip: string;
   /** One sentence, no jargon. */
   short: string;
   /** One sentence on why a reader should care. */
@@ -31,6 +33,7 @@ export const TERMS: Term[] = [
   {
     id: "nav",
     term: "NAV",
+    tip: "Daily official price of one ONyc in USD.",
     aliases: ["net asset value"],
     short:
       "The official value of one ONyc in US dollars, published once a day by OnRe and so far moving up in small daily steps.",
@@ -45,6 +48,7 @@ export const TERMS: Term[] = [
   {
     id: "apy",
     term: "APY",
+    tip: "Yearly return if today's rate kept compounding.",
     aliases: ["annual percentage yield", "live APY", "reported APY", "realised APY"],
     short:
       "The yearly return you would get if today's rate carried on for a year and each day's gain earned more the next day.",
@@ -55,6 +59,7 @@ export const TERMS: Term[] = [
   {
     id: "aum",
     term: "AUM",
+    tip: "Total value of ONyc in circulation.",
     aliases: ["assets under management", "TVL"],
     short: "The total dollar value of the assets behind all ONyc in circulation.",
     why: "A shrinking AUM means people are taking money out; it also sets how much any single exit weighs.",
@@ -64,6 +69,7 @@ export const TERMS: Term[] = [
   {
     id: "circulating-supply",
     term: "Circulating supply",
+    tip: "ONyc held by users, without the OnRe treasury wallet.",
     aliases: ["supply"],
     short: "How many ONyc tokens exist right now.",
     why: "When it falls, holders are redeeming; when it grows, new money is coming in.",
@@ -72,6 +78,7 @@ export const TERMS: Term[] = [
   {
     id: "premium-discount",
     term: "Premium / discount",
+    tip: "Market price above (premium) or below (discount) NAV.",
     aliases: ["premium", "discount", "peg"],
     short:
       "How far the price on the open market is above (premium) or below (discount) the official NAV.",
@@ -82,6 +89,7 @@ export const TERMS: Term[] = [
   {
     id: "bps",
     term: "bps",
+    tip: "Basis points: 100 bps is 1%.",
     aliases: ["basis points", "basis point", "bp"],
     short: "A basis point is one hundredth of one percent, so 100 bps is 1%.",
     why: "Small differences such as fees and discounts are easier to compare in bps than in decimals.",
@@ -90,6 +98,7 @@ export const TERMS: Term[] = [
   {
     id: "liquidity-layer",
     term: "Liquidity layer",
+    tip: "Reserve kept unallocated so holders can exit.",
     aliases: ["liquidity layer coverage", "liquid collateral"],
     short:
       "A part of the money that OnRe keeps unallocated so that people can exit and the price can be supported.",
@@ -101,6 +110,7 @@ export const TERMS: Term[] = [
   {
     id: "collateral-ratio",
     term: "Collateral ratio",
+    tip: "Reserves divided by tokens issued. Above 1 means fully backed.",
     aliases: ["collateralization", "collateralisation"],
     short:
       "Assets held divided by tokens issued; above 100% there is more behind the tokens than the tokens are worth.",
@@ -111,6 +121,7 @@ export const TERMS: Term[] = [
   {
     id: "proof-of-solvency",
     term: "Proof of solvency",
+    tip: "A published check that reserves cover the tokens.",
     aliases: ["solvency"],
     short:
       "A report by an independent firm (Accountable) listing the reserves held and the tokens issued at a point in time.",
@@ -124,6 +135,7 @@ export const TERMS: Term[] = [
   {
     id: "bound-capital",
     term: "Bound capital",
+    tip: "Capital already committed to an insurance layer.",
     aliases: ["bound"],
     short: "Money that is already committed to reinsurance contracts.",
     why: "It is the part of the fund that earns insurance premium, and the part at risk if a disaster happens.",
@@ -133,6 +145,7 @@ export const TERMS: Term[] = [
   {
     id: "offered-capital",
     term: "Offered capital",
+    tip: "Capital OnRe offers to a layer, not yet committed.",
     aliases: ["offered"],
     short: "Money offered to reinsurance contracts that are not yet agreed.",
     why: "It shows how much new insurance business is in the pipeline; it is often zero.",
@@ -142,6 +155,7 @@ export const TERMS: Term[] = [
   {
     id: "available-capital",
     term: "Available capital",
+    tip: "Capital not yet placed in any layer.",
     aliases: ["available"],
     short: "The rest of the fund: not committed to insurance and not part of the liquidity layer.",
     why: "It sits in collateral assets earning ordinary yield and can be moved into new layers.",
@@ -151,6 +165,7 @@ export const TERMS: Term[] = [
   {
     id: "reinsurance-layer",
     term: "Reinsurance layer",
+    tip: "One slice of the insurance book with its own limit and risk.",
     aliases: ["layer", "layers", "reinsurance book"],
     short:
       "One reinsurance contract: ONyc's capital agrees to pay part of the losses from certain disasters, and in return receives a premium.",
@@ -164,6 +179,7 @@ export const TERMS: Term[] = [
   {
     id: "ilw",
     term: "ILW",
+    tip: "Insurance-linked warrant: pays out after an insured event.",
     aliases: ["industry loss warranty"],
     short:
       "A contract that pays out only when total losses across the whole industry from one event pass a set size.",
@@ -174,6 +190,7 @@ export const TERMS: Term[] = [
   {
     id: "quota-share",
     term: "Quota share",
+    tip: "The insurer passes a fixed share of premiums and losses.",
     aliases: ["quota"],
     short:
       "A contract where the reinsurer takes a fixed percentage of an insurer's policies, with that percentage of premiums and of losses.",
@@ -184,6 +201,7 @@ export const TERMS: Term[] = [
   {
     id: "per-occurrence",
     term: "Per occurrence",
+    tip: "Cover applies to each separate loss event.",
     aliases: ["per-occ", "1st event per occ", "2nd event per occ", "first event"],
     short: "A contract that pays for the losses of a single event, once they pass a set size.",
     why: "One big disaster can trigger it, so concentration in one region matters.",
@@ -193,6 +211,7 @@ export const TERMS: Term[] = [
   {
     id: "aggregate",
     term: "Aggregate",
+    tip: "Cover applies to total losses over the whole period.",
     aliases: ["1st-3rd event aggregate"],
     short:
       "A contract that pays when the losses from several events in a period add up past a set size.",
@@ -203,6 +222,7 @@ export const TERMS: Term[] = [
   {
     id: "expected-loss",
     term: "Expected loss",
+    tip: "Average yearly loss the layer is priced to bear.",
     aliases: ["EL"],
     short:
       "The average yearly loss a layer is modelled to suffer, as listed in OnRe's reinsurance sheet.",
@@ -213,6 +233,7 @@ export const TERMS: Term[] = [
   {
     id: "expected-yield",
     term: "Expected yield",
+    tip: "Return OnRe expects the layer to earn.",
     aliases: ["book yield"],
     short: "The return the sheet expects on a layer's capital if losses match the model.",
     why: "It is where the high end of ONyc's yield comes from, and it assumes losses behave as modelled.",
@@ -221,6 +242,7 @@ export const TERMS: Term[] = [
   {
     id: "renewal",
     term: "Renewal",
+    tip: "When a layer's cover ends and is re-priced.",
     aliases: ["renewal date", "renewals"],
     short: "The date a reinsurance contract ends and has to be agreed again, often at a new price.",
     why: "When many layers renew in the same month, the yield of the book can change at once.",
@@ -229,6 +251,7 @@ export const TERMS: Term[] = [
   {
     id: "looping",
     term: "Looping",
+    tip: "Borrowing against ONyc to buy more ONyc, again and again.",
     aliases: ["loop", "leveraged"],
     short:
       "Depositing ONyc, borrowing against it, buying more ONyc with the loan and repeating, to hold more ONyc than you put in.",
@@ -242,6 +265,7 @@ export const TERMS: Term[] = [
   {
     id: "ltv-liquidation",
     term: "LTV and liquidation",
+    tip: "Loan-to-value: the loan is sold off if it climbs too high.",
     aliases: ["LTV", "loan-to-value", "liquidation", "liquidated"],
     short:
       "LTV is how much you borrowed compared with what you put up; if it climbs past the lender's limit your position is sold to repay the loan, which is liquidation.",
@@ -251,6 +275,7 @@ export const TERMS: Term[] = [
   {
     id: "pt",
     term: "PT",
+    tip: "Principal token: the fixed-rate part of a split asset.",
     aliases: ["principal token", "PT-ONyc", "PT-srONyc"],
     short:
       "A token that trades below its face value and is worth exactly its face value on a set date.",
@@ -261,6 +286,7 @@ export const TERMS: Term[] = [
   {
     id: "yt",
     term: "YT",
+    tip: "Yield token: the variable-yield part of a split asset.",
     aliases: ["yield token"],
     short:
       "A token that receives the yield of the underlying asset until a set date, but not the asset itself.",
@@ -274,6 +300,7 @@ export const TERMS: Term[] = [
   {
     id: "sr-ronyc",
     term: "srONyc",
+    tip: "Senior ONyc tranche: paid first, lower return.",
     aliases: ["senior tranche", "senior"],
     short:
       "The protected share of ONyc on Exponent: lower yield, and it is paid back after the junior share has taken losses.",
@@ -287,6 +314,7 @@ export const TERMS: Term[] = [
   {
     id: "jr-ronyc",
     term: "jrONyc",
+    tip: "Junior ONyc tranche: paid last, higher return.",
     aliases: ["junior tranche", "junior", "tranche", "tranches", "tranching"],
     short:
       "The first-loss share of ONyc on Exponent: it earns more, and it loses first when losses happen.",
@@ -300,6 +328,7 @@ export const TERMS: Term[] = [
   {
     id: "points-multiplier",
     term: "Points multiplier",
+    tip: "How many points one ONyc earns per day at a venue.",
     aliases: ["multiplier", "multipliers", "global multiplier", "points"],
     short:
       "OnRe's points formula is balance × days × 1 point per ONyc per day × a multiplier for where the ONyc is used (for example 1x in a wallet, 6x in a loop).",
@@ -311,6 +340,7 @@ export const TERMS: Term[] = [
   {
     id: "rank-change",
     term: "Rank change",
+    tip: "How many places a wallet moved on the leaderboard.",
     aliases: ["rankChange"],
     short: "How many places a wallet has moved on the points leaderboard, as reported by OnRe.",
     why: "It shows whether a wallet is gaining or losing ground against others.",
@@ -320,6 +350,7 @@ export const TERMS: Term[] = [
   {
     id: "price-vector",
     term: "Price vector",
+    tip: "OnRe's schedule of future NAV steps.",
     aliases: ["price vectors"],
     short:
       "The schedule that sets NAV: a starting price, a yearly rate and a start date, from which the price grows a little every day.",
@@ -330,6 +361,7 @@ export const TERMS: Term[] = [
   {
     id: "down-tick",
     term: "Down-tick",
+    tip: "A day when NAV fell instead of rising.",
     aliases: ["down-ticks", "downtick", "downticks"],
     short: "A day on which NAV was lower than the day before.",
     why: "NAV is meant to rise steadily, so any fall is worth knowing about.",
@@ -339,6 +371,7 @@ export const TERMS: Term[] = [
   {
     id: "redemption-fee",
     term: "Redemption fee",
+    tip: "Fee charged when you exchange ONyc back to USDC.",
     aliases: ["exit fee", "redemption"],
     short:
       "A small fee taken when you turn ONyc back into dollars with OnRe instead of selling it on the market.",
@@ -353,6 +386,7 @@ export const TERMS: Term[] = [
   {
     id: "propamm",
     term: "PropAMM",
+    tip: "OnRe's own market maker that buys and sells ONyc.",
     aliases: ["prop amm", "prop-amm"],
     short:
       "One of OnRe's own ways to sell ONyc for dollars directly, with its own fee shown per offer.",
@@ -363,6 +397,7 @@ export const TERMS: Term[] = [
   {
     id: "net-flow",
     term: "Net flow",
+    tip: "Minted minus redeemed ONyc over a period.",
     aliases: ["net flows", "flow effect"],
     short:
       "Money that came in minus money that went out over a period, estimated from the change in the number of tokens.",

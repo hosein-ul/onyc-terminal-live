@@ -64,7 +64,7 @@ const amount = (n: number | null): string =>
         Math.abs(n),
       );
 
-/** One transaction as a line: what it was, how much ONyc moved, who signed, when, and a link to the block explorer. */
+/** One transaction as a line: what it was, how much ONyc moved, the transaction and signer addresses, and when. */
 function Row({ e }: { e: Event }) {
   const Icon = KIND_ICON[e.kind];
   const moved = e.onyc !== null && e.onyc > 0 ? `${amount(e.onyc)} ONyc` : "";
@@ -80,17 +80,39 @@ function Row({ e }: { e: Event }) {
           {e.instruction !== null && <span className="chain-ins">{e.instruction}</span>}
         </div>
         <div className="chain-sub">
-          {formatRelativeAge(e.ts)}
-          {e.signer !== null && <> · signer {shortAddress(e.signer)}</>}
+          <a
+            className="mono"
+            href={solscanTx(e.signature)}
+            target="_blank"
+            rel="noopener noreferrer"
+            title={e.signature}
+          >
+            {shortAddress(e.signature)}
+          </a>
+          {e.signer !== null && (
+            <>
+              {" · signer "}
+              <a
+                className="mono"
+                href={solscanAccount(e.signer)}
+                target="_blank"
+                rel="noopener noreferrer"
+                title={e.signer}
+              >
+                {shortAddress(e.signer)}
+              </a>
+            </>
+          )}
         </div>
       </div>
+      <span className="chain-age">{formatRelativeAge(e.ts)}</span>
       <a
         className="chain-link"
         href={solscanTx(e.signature)}
         target="_blank"
         rel="noopener noreferrer"
       >
-        Solscan<span className="sr-only"> transaction {shortAddress(e.signature)}</span>
+        View<span className="sr-only"> transaction {shortAddress(e.signature)} on Solscan</span>
       </a>
     </li>
   );

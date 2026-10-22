@@ -476,7 +476,7 @@ function treemapOption(spec: TreemapSpec, ctx: OptionContext): EChartsCoreOption
             ? [
                 {
                   colorSaturation: [0.55, 0.8],
-                  itemStyle: { gapWidth: 1, borderColorSaturation: 0.6 },
+                  itemStyle: { gapWidth: 1, borderColor: t.surface, borderWidth: 2 },
                 },
               ]
             : []),

@@ -1,8 +1,9 @@
-import { Menu, Moon, Sun, X } from "lucide-react";
+import { Menu, Moon, PanelLeftClose, PanelLeftOpen, Sun, X } from "lucide-react";
 import { Fragment, useEffect, useRef, useState, type ReactNode } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { setTheme, useTheme } from "../lib/theme";
 import { GlossProvider } from "../ui/Term";
+import { WalletDialog, WalletSearch } from "../ui/WalletDialog";
 import { Logo } from "./Logo";
 import { NAV } from "./nav";
 
@@ -16,7 +17,7 @@ function NavList({ onNavigate }: { onNavigate?: () => void }) {
               {group}
             </div>
           )}
-          <NavLink to={to} end={to === "/"} className="nav-item" onClick={onNavigate}>
+          <NavLink to={to} end={to === "/"} className="nav-item" title={label} onClick={onNavigate}>
             <Icon size={18} strokeWidth={1.75} aria-hidden="true" />
             <span className="nav-text">
               <span>{label}</span>
@@ -67,6 +68,23 @@ export function Footer() {
 /** Left sidebar on desktop; a top bar and a slide-over menu on phones. */
 export function AppShell({ children }: { children: ReactNode }) {
   const [open, setOpen] = useState(false);
+  const [collapsed, setCollapsed] = useState(() => {
+    try {
+      return localStorage.getItem("onyc-sidebar") === "collapsed";
+    } catch {
+      return false;
+    }
+  });
+  const toggleSidebar = (): void => {
+    setCollapsed((c) => {
+      try {
+        localStorage.setItem("onyc-sidebar", c ? "open" : "collapsed");
+      } catch {
+        /* the choice then lasts for this visit */
+      }
+      return !c;
+    });
+  };
   const location = useLocation();
   const menuButton = useRef<HTMLButtonElement>(null);
 
@@ -88,13 +106,29 @@ export function AppShell({ children }: { children: ReactNode }) {
   }, [open]);
 
   return (
-    <div className="shell">
+    <div className={`shell ${collapsed ? "shell-collapsed" : ""}`}>
       <a className="skip" href="#main">
         Skip to content
       </a>
       <aside className="sidebar">
         <div className="sidebar-head">
           <Logo />
+          <button
+            type="button"
+            className="collapse-btn"
+            onClick={toggleSidebar}
+            aria-pressed={collapsed}
+            title={collapsed ? "Expand the sidebar" : "Collapse the sidebar"}
+          >
+            {collapsed ? (
+              <PanelLeftOpen size={18} strokeWidth={1.75} aria-hidden="true" />
+            ) : (
+              <PanelLeftClose size={18} strokeWidth={1.75} aria-hidden="true" />
+            )}
+            <span className="sr-only">
+              {collapsed ? "Expand the sidebar" : "Collapse the sidebar"}
+            </span>
+          </button>
         </div>
         <NavList />
         <div className="sidebar-foot">
@@ -152,11 +186,15 @@ export function AppShell({ children }: { children: ReactNode }) {
       )}
 
       <div className="main-col">
+        <div className="topline">
+          <WalletSearch />
+        </div>
         <main id="main" className="main" tabIndex={-1}>
           <GlossProvider key={location.pathname}>{children}</GlossProvider>
         </main>
         <Footer />
       </div>
+      <WalletDialog />
     </div>
   );
 }

@@ -12,9 +12,8 @@ import type { EndpointResponse } from "@onyc/sdk";
 import { useConcentration, useLeaderboard, usePointsGrowth } from "@onyc/sdk/react";
 import { Search } from "lucide-react";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import { Panel } from "../charts";
-import { shortAddress } from "../lib/format";
+import { WalletLink } from "../lib/wallet";
 import { DataTable, type Column } from "../ui/DataTable";
 import { Card, Notice, PageHeader, Pill, Stat } from "../ui/kit";
 import { Provenance } from "../ui/Provenance";
@@ -37,11 +36,7 @@ const columns: Column<Row>[] = [
   {
     key: "who",
     header: "Wallet",
-    cell: (r) => (
-      <Link to={`/wallet/${r.address}`} className="mono">
-        {shortAddress(r.address)}
-      </Link>
-    ),
+    cell: (r) => <WalletLink address={r.address} />,
   },
   { key: "points", header: "Points", align: "right", cell: (r) => formatCompact(r.totalPoints) },
   {

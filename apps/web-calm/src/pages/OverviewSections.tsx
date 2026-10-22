@@ -1,7 +1,7 @@
 import { Named } from "../ui/Badge";
 import {
-  capitalStackBarSpec,
-  protocolBarsSpec,
+  capitalStackedSpec,
+  collateralBarsSpec,
   sparklineSpec,
   waterfallSpec,
   type ChartSpec,
@@ -18,28 +18,26 @@ import {
   FILTER_RULE,
   MIN_TVL_USD,
   pickStrategies,
-  RISK_KIND_LABEL,
-  RISK_KIND_NOTE,
   SECTIONS,
   estimatePointsPerUsdPerDay,
-  type Light,
   type PointsPulse,
   type SectionId,
   type Strategy,
-  type StrategyFilter,
   type Vital,
 } from "@onyc/insights";
 import type { OverviewModel } from "@onyc/insights/react";
 import type { EndpointResponse, Meta } from "@onyc/sdk";
-import { useChainActivity, useWallet } from "@onyc/sdk/react";
-import { ArrowUpRight, Search } from "lucide-react";
-import { useEffect, useMemo, useState, type FormEvent, type ReactNode } from "react";
+import { useChainActivity, useLeaderboard, useYieldComposition } from "@onyc/sdk/react";
+import { TriangleAlert } from "lucide-react";
+import { useEffect, useMemo, useState, type ReactNode } from "react";
 import { Link } from "react-router-dom";
 import { Chart, Panel } from "../charts";
 import { shortAddress } from "../lib/format";
-import { Card, EmptyState, ExternalLink, Notice, Pill, Segmented, Skeleton } from "../ui/kit";
+import { Card, EmptyState, ExternalLink, Notice, Pill, Skeleton } from "../ui/kit";
 import { Provenance } from "../ui/Provenance";
-import { ChainTicker, KIND_LABEL, solscanTx } from "../ui/ChainFeed";
+import { ChainFeed, KIND_LABEL, solscanTx } from "../ui/ChainFeed";
+import { StatusIcon } from "../ui/Status";
+import { WalletLink } from "../lib/wallet";
 import { Gloss, TermHint, TermNote } from "../ui/Term";
 
 const SEVERITY = { info: "neutral", watch: "watch", alert: "bad" } as const;
@@ -48,10 +46,6 @@ const LIGHT_WORD = { ok: "OK", watch: "Watch", alert: "Alert", unavailable: "No 
 const LIGHT_TONE = { ok: "good", watch: "watch", alert: "bad", unavailable: "neutral" } as const;
 
 const flowsBuild = (d: EndpointResponse<"flows">): ChartSpec => waterfallSpec(d);
-const stackBuild = (d: EndpointResponse<"capitalStack">): ChartSpec | null =>
-  capitalStackBarSpec(d);
-const protocolBuild = (d: EndpointResponse<"capitalDistribution">): ChartSpec =>
-  protocolBarsSpec(d);
 
 // ---------------------------------------------------------------------------------------------
 // Sticky section nav and persona switch
@@ -129,6 +123,7 @@ export function Headline({ m }: { m: OverviewModel }) {
       {spread !== null && (
         <div className="headline-meta">
           <Link className="badge-link" to="/health">
+            <TriangleAlert size={14} strokeWidth={2} aria-hidden="true" />
             Sources differ by {formatPercent(Math.abs(spread), 1)} · see Data Health
           </Link>
         </div>
@@ -166,22 +161,14 @@ export function NavHero({ m, children }: { m: OverviewModel; children: ReactNode
   );
 }
 
-/** Six lights in one short list, next to the chart. The full board with its limits is a section below. */
+/** Six lights in one short list, next to the chart. The twelve checks with their limits are on the Risk Signals page. */
 export function SafetyGlance({ m }: { m: OverviewModel }) {
   const ok = m.safety.filter((l) => l.state === "ok").length;
   return (
     <aside className="glance" aria-label="Safety at a glance">
       <div className="glance-head">
         <h2>Safety</h2>
-        <a
-          href="#safety"
-          onClick={(e) => {
-            e.preventDefault();
-            document.getElementById("safety")?.scrollIntoView({ behavior: "smooth" });
-          }}
-        >
-          Limits and sources
-        </a>
+        <Link to="/risk">All twelve checks</Link>
       </div>
       {m.q.risk.isError ? (
         <p className="glance-count">The risk signals could not be loaded.</p>
@@ -196,7 +183,7 @@ export function SafetyGlance({ m }: { m: OverviewModel }) {
           <ul>
             {m.safety.map((l) => (
               <li key={l.id} className={`light light-${LIGHT_TONE[l.state]}`}>
-                <span className="light-dot" aria-hidden="true" />
+                <StatusIcon state={LIGHT_TONE[l.state]} />
                 <span>{l.label}</span>
                 <span className="light-value">
                   {l.value} <span className="light-word">{LIGHT_WORD[l.state]}</span>
@@ -227,6 +214,7 @@ function VitalCard({ v }: { v: Vital }) {
   return (
     <article className={`vital vital-${TONE[v.tone]}`} data-vital={v.id}>
       <div className="vital-label">
+        <StatusIcon state={TONE[v.tone]} />
         {v.label}
         <TermHint id={v.termId} />
       </div>
@@ -309,328 +297,6 @@ export function Vitals({ m }: { m: OverviewModel }) {
 const SECTION_PLACEHOLDERS = ["a", "b", "c", "d", "e"];
 
 // ---------------------------------------------------------------------------------------------
-// Safety board
-// ---------------------------------------------------------------------------------------------
-
-function SafetyRow({ l }: { l: Light }) {
-  const asOf = l.asOf === null ? "" : ` · ${formatRelativeAge(l.asOf)}`;
-  return (
-    <li className={`light light-${LIGHT_TONE[l.state]}`}>
-      <span className="light-dot" aria-hidden="true" />
-      <div className="light-body">
-        <div className="light-head">
-          <span className="light-label">
-            {l.label}
-            {l.termId !== null && <TermHint id={l.termId} />}
-          </span>
-          <span className="light-value">
-            {l.value} <span className="light-word">{LIGHT_WORD[l.state]}</span>
-          </span>
-        </div>
-        <div className="light-sub">
-          {l.threshold}
-          {l.note !== null && l.id === "top_protocol" ? ` · ${l.note}` : ""}
-        </div>
-        <div className="light-src">
-          {l.source}
-          {asOf}
-        </div>
-      </div>
-    </li>
-  );
-}
-
-export function SafetyBoard({ m }: { m: OverviewModel }) {
-  return (
-    <Card
-      title="Safety board"
-      subtitle="Six checks, each with its own limit. Limits are this tool's settings, not OnRe's."
-      className="safety"
-    >
-      {m.q.risk.isError ? (
-        <Notice tone="bad" title="The risk signals could not be loaded">
-          Nothing is shown as safe while they are missing.
-        </Notice>
-      ) : (
-        <ul className="lights">
-          {m.safety.map((l) => (
-            <SafetyRow key={l.id} l={l} />
-          ))}
-        </ul>
-      )}
-      <p className="card-foot">
-        <Link to="/risk">All twelve signals and the reasoning on Risk Signals</Link>
-      </p>
-    </Card>
-  );
-}
-
-// ---------------------------------------------------------------------------------------------
-// Best places for ONyc now
-// ---------------------------------------------------------------------------------------------
-
-const FILTERS: { value: StrategyFilter; label: string }[] = [
-  { value: "yield", label: "Yield" },
-  { value: "points", label: "Points" },
-  { value: "conservative", label: "Conservative" },
-];
-
-function StrategyRow({
-  s,
-  i,
-  nav,
-  maxApy,
-}: {
-  s: Strategy;
-  i: number;
-  nav: number | null;
-  maxApy: number;
-}) {
-  const pts = estimatePointsPerUsdPerDay(s.pointsMultiplier, nav);
-  return (
-    <li className="place">
-      <span className="place-rank">{String(i + 1).padStart(2, "0")}</span>
-      <div className="place-main">
-        <div className="place-name">
-          <Named name={s.protocol} size={24}>
-            <strong>{s.protocol}</strong>
-          </Named>{" "}
-          · {s.strategy}
-          {s.isNew && <Pill tone="accent">new</Pill>}
-        </div>
-        <div className="place-sub">
-          {s.assets} ·{" "}
-          <span title={RISK_KIND_NOTE[s.kind]} className="place-kind">
-            {RISK_KIND_LABEL[s.kind]}
-          </span>
-        </div>
-      </div>
-      <div className="place-nums">
-        <div>
-          <b>{formatPercent(s.apy, 1)}</b>
-          <span className="place-bar" aria-hidden="true">
-            <i
-              style={{ width: `${maxApy > 0 ? Math.max(4, ((s.apy ?? 0) / maxApy) * 100) : 0}%` }}
-            />
-          </span>
-          <small>APY</small>
-        </div>
-        <div>
-          <b>{formatUsdCompact(s.tvl)}</b>
-          <small>TVL</small>
-        </div>
-        <div>
-          <b>{s.pointsMultiplier === null ? "—" : `${s.pointsMultiplier}x`}</b>
-          <small>points{pts === null ? "" : ` · ≈${formatNumber(pts, 1)}/$ a day`}</small>
-        </div>
-      </div>
-      {s.link !== "" && (
-        <ExternalLink href={s.link}>
-          <span className="sr-only">
-            Open {s.protocol} {s.strategy}
-          </span>
-        </ExternalLink>
-      )}
-    </li>
-  );
-}
-
-export function BestPlaces({ m }: { m: OverviewModel }) {
-  const [filter, setFilter] = useState<StrategyFilter>("yield");
-  const opp = m.q.opportunities.data;
-  const nav = m.q.overview.data?.data.nav.value ?? null;
-  const picks = useMemo(
-    () => (opp === undefined ? [] : pickStrategies(opp.data.opportunities, filter)),
-    [opp, filter],
-  );
-  return (
-    <Card
-      title="Best places for ONyc now"
-      subtitle="Five venues from OnRe's own list of where ONyc can be used"
-      actions={<Segmented label="Sort by" value={filter} onChange={setFilter} options={FILTERS} />}
-      className="best"
-    >
-      <p className="rule">
-        {FILTER_RULE[filter]} Venues under {formatUsdCompact(MIN_TVL_USD)} of TVL or marked coming
-        soon are left out. Risk labels are this tool's reading, not OnRe's rating.
-      </p>
-      {opp === undefined ? (
-        <Skeleton height={220} />
-      ) : picks.length === 0 ? (
-        <EmptyState title="No venue matches">
-          The list has nothing that fits this filter.
-        </EmptyState>
-      ) : (
-        <ol className="places">
-          {picks.map((s, i) => (
-            <StrategyRow
-              key={s.key}
-              s={s}
-              i={i}
-              nav={nav}
-              maxApy={Math.max(0, ...picks.map((p) => p.apy ?? 0))}
-            />
-          ))}
-        </ol>
-      )}
-      <Provenance meta={m.q.opportunities.data?.meta["opportunities"]} />
-    </Card>
-  );
-}
-
-// ---------------------------------------------------------------------------------------------
-// Points pulse and wallet lookup
-// ---------------------------------------------------------------------------------------------
-
-const SOLANA = /^[1-9A-HJ-NP-Za-km-z]{32,44}$/;
-
-function WalletBox() {
-  const [text, setText] = useState("");
-  const [address, setAddress] = useState<string | undefined>(undefined);
-  const wallet = useWallet(address);
-  const submit = (e: FormEvent): void => {
-    e.preventDefault();
-    const t = text.trim();
-    setAddress(SOLANA.test(t) ? t : undefined);
-  };
-  const bad = text.trim() !== "" && !SOLANA.test(text.trim());
-  const w = wallet.data?.data;
-  return (
-    <div className="walletbox">
-      <h3>Look up a wallet</h3>
-      <form onSubmit={submit} className="walletbox-form">
-        <label className="field">
-          <span>Solana address</span>
-          <input
-            value={text}
-            onChange={(e) => setText(e.target.value)}
-            placeholder="Paste an address"
-            spellCheck={false}
-            autoComplete="off"
-            aria-invalid={bad}
-          />
-        </label>
-        <button type="submit" className="btn" disabled={!SOLANA.test(text.trim())}>
-          <Search size={16} aria-hidden="true" /> Look up
-        </button>
-      </form>
-      {bad && <p className="tone-bad">That is not a Solana address.</p>}
-      {wallet.isLoading && address !== undefined && <Skeleton height={60} />}
-      {wallet.isError && <p className="tone-bad">The lookup failed; try again.</p>}
-      {w !== undefined && !w.found && (
-        <p className="tone-neutral">No points recorded for this wallet.</p>
-      )}
-      {w !== undefined && w.found && (
-        <dl className="walletbox-result">
-          <div>
-            <dt>Rank</dt>
-            <dd>
-              {w.rank === null ? "—" : `#${formatNumber(w.rank, 0)}`}
-              {w.totalUsers !== null && <small> of {formatCompact(w.totalUsers)}</small>}
-            </dd>
-          </div>
-          <div>
-            <dt>
-              Rank change <TermHint id="rank-change" />
-            </dt>
-            <dd>
-              {w.rankChangePerOnre === null
-                ? "—"
-                : `${w.rankChangePerOnre > 0 ? "+" : w.rankChangePerOnre < 0 ? "−" : ""}${Math.abs(w.rankChangePerOnre)}`}
-              <small> per OnRe</small>
-            </dd>
-          </div>
-          <div>
-            <dt>Points</dt>
-            <dd>{formatCompact(w.points)}</dd>
-          </div>
-        </dl>
-      )}
-      {address !== undefined && (
-        <p className="card-foot">
-          <Link to={`/wallet/${address}`}>
-            Full breakdown on Wallet <ArrowUpRight size={14} aria-hidden="true" />
-          </Link>{" "}
-          · {shortAddress(address)}
-        </p>
-      )}
-    </div>
-  );
-}
-
-export function PointsPulse({ pulse, m }: { pulse: PointsPulse; m: OverviewModel }) {
-  const g = pulse.globalMultiplier;
-  return (
-    <Card
-      title="Points pulse"
-      subtitle="What points are worth right now, and where they come from"
-      className="pulse"
-    >
-      <TermNote id="points-multiplier" />
-      <div className="pulse-grid">
-        <div>
-          <div className="pulse-stats">
-            <div>
-              <span className="stat-label">Points handed out per day</span>
-              <b className="pulse-big">
-                {pulse.dailyEmission === null ? "—" : formatCompact(pulse.dailyEmission.value)}
-              </b>
-              <small className="tone-neutral">
-                {pulse.dailyEmission === null
-                  ? ""
-                  : `on ${formatDate(pulse.dailyEmission.date)}, all wallets`}
-              </small>
-            </div>
-            <div>
-              <span className="stat-label">
-                Global multiplier
-                <TermHint id="points-multiplier" />
-              </span>
-              <b className="pulse-big">{g === null ? "—" : String(g.value)}</b>
-              <small className="tone-neutral">
-                {g === null
-                  ? ""
-                  : `since ${formatDate(g.since)}, as reported. OnRe does not explain it.`}
-              </small>
-            </div>
-          </div>
-          <h3>Estimated points per $1 a day, by venue</h3>
-          <table className="mini">
-            <thead>
-              <tr>
-                <th>Venue</th>
-                <th className="num">Multiplier</th>
-                <th className="num">Our estimate</th>
-              </tr>
-            </thead>
-            <tbody>
-              {pulse.venues.map((v) => (
-                <tr key={`${v.protocol}-${v.strategy}`}>
-                  <td>
-                    <Named name={v.protocol} size={18} /> · {v.strategy}
-                  </td>
-                  <td className="num">{v.multiplier}x</td>
-                  <td className="num">
-                    {v.perUsd === null ? "—" : `≈ ${formatNumber(v.perUsd, 2)}`}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-          <p className="rule">
-            Our estimate, not OnRe's figure. Formula: {pulse.formula}. OnRe's docs give the
-            multipliers and the base rate; your own personal multiplier is not visible and is not
-            included.
-          </p>
-          <Provenance meta={m.q.concentration.data?.meta["multipliers"]} />
-        </div>
-        <WalletBox />
-      </div>
-    </Card>
-  );
-}
-
-// ---------------------------------------------------------------------------------------------
 // Flows
 // ---------------------------------------------------------------------------------------------
 
@@ -693,7 +359,6 @@ export function Changes({ m }: { m: OverviewModel }) {
   const events = (o?.data.whatChanged.events ?? []).filter((e) => !e.kind.startsWith("source_"));
   return (
     <>
-      <ChainTicker />
       <Card title="What changed since yesterday" subtitle="From the event feed">
         {o === undefined ? (
           <Skeleton height={120} />
@@ -724,27 +389,314 @@ export function Changes({ m }: { m: OverviewModel }) {
   );
 }
 
-export function Capital({ m }: { m: OverviewModel }) {
+// ---------------------------------------------------------------------------------------------
+// Capital: who holds it, where it sits, what backs it
+// ---------------------------------------------------------------------------------------------
+
+const stackedAbs = (d: EndpointResponse<"capitalDistribution">): ChartSpec =>
+  capitalStackedSpec(d, "absolute");
+const stackedPct = (d: EndpointResponse<"capitalDistribution">): ChartSpec =>
+  capitalStackedSpec(d, "percent");
+const collateralBuild = (d: EndpointResponse<"yieldComposition">): ChartSpec =>
+  collateralBarsSpec(d);
+
+/** Capital by protocol today as a ranked list with each logo, so the name and the number sit together. */
+function ProtocolShares({ m }: { m: OverviewModel }) {
+  const d = m.q.capitalDistribution.data;
+  const rows = [...(d?.data.distribution ?? [])].sort((a, b) => (b.share ?? 0) - (a.share ?? 0));
+  const top = rows[0]?.share ?? 0;
   return (
-    <>
-      <div className="grid">
-        <Panel
-          q={m.q.capitalStack}
-          build={stackBuild}
-          title="Capital stack"
-          span={12}
-          height={150}
-        />
+    <Card
+      title="Capital by protocol"
+      subtitle={
+        d?.data.totalAumUsd == null ? "Today" : `${formatUsdCompact(d.data.totalAumUsd)} in total`
+      }
+      className="protocols"
+    >
+      {d === undefined ? (
+        <Skeleton height={220} />
+      ) : (
+        <ul className="pshare">
+          {rows.map((r) => (
+            <li key={r.protocol}>
+              <Named name={r.protocol} size={26}>
+                <span className="pshare-name">{r.protocol}</span>
+              </Named>
+              <span className="pshare-bar" aria-hidden="true">
+                <i
+                  style={{ width: `${top > 0 ? Math.max(2, ((r.share ?? 0) / top) * 100) : 0}%` }}
+                />
+              </span>
+              <b>{formatPercent(r.share, 1)}</b>
+              <small>{formatUsdCompact(r.capitalUsd)}</small>
+            </li>
+          ))}
+        </ul>
+      )}
+      <Provenance meta={m.q.capitalDistribution.data?.meta["distribution"]} />
+    </Card>
+  );
+}
+
+export function Capital({ m }: { m: OverviewModel }) {
+  const yieldQ = useYieldComposition();
+  return (
+    <div className="grid">
+      <div className="span-5">
+        <ProtocolShares m={m} />
       </div>
-      <div className="grid">
-        <Panel
-          q={m.q.capitalDistribution}
-          build={protocolBuild}
-          title="Capital by protocol"
-          span={12}
-          height={300}
-        />
+      <Panel
+        q={m.q.capitalDistribution}
+        build={stackedPct}
+        title="Share of capital by protocol"
+        span={7}
+        height={300}
+      />
+      <Panel
+        q={m.q.capitalDistribution}
+        build={stackedAbs}
+        title="Where the capital sits"
+        span={6}
+        height={300}
+      />
+      <Panel q={yieldQ} build={collateralBuild} title="Collateral by asset" span={6} height={300} />
+    </div>
+  );
+}
+
+// ---------------------------------------------------------------------------------------------
+// Best places: the highest yield, the most points, and how points work
+// ---------------------------------------------------------------------------------------------
+
+function PlaceRow({
+  s,
+  i,
+  by,
+  nav,
+}: {
+  s: Strategy;
+  i: number;
+  by: "yield" | "points";
+  nav: number | null;
+}) {
+  const pts = estimatePointsPerUsdPerDay(s.pointsMultiplier, nav);
+  return (
+    <li className="pl">
+      <span className="place-rank">{String(i + 1).padStart(2, "0")}</span>
+      <div className="pl-main">
+        <Named name={s.protocol} size={24}>
+          <strong>{s.protocol}</strong>
+        </Named>
+        <span className="place-sub">
+          {s.strategy} · {s.assets}
+        </span>
       </div>
-    </>
+      <div className="pl-num">
+        <b>
+          {by === "yield"
+            ? formatPercent(s.apy, 1)
+            : s.pointsMultiplier === null
+              ? "—"
+              : `${s.pointsMultiplier}x`}
+        </b>
+        <small>
+          {by === "yield"
+            ? `${formatUsdCompact(s.tvl)} TVL`
+            : `${formatPercent(s.apy, 1)} APY${pts === null ? "" : ` · ≈${formatNumber(pts, 1)} pts/$ a day`}`}
+        </small>
+      </div>
+      {s.link !== "" && (
+        <ExternalLink href={s.link}>
+          <span className="sr-only">
+            Open {s.protocol} {s.strategy}
+          </span>
+        </ExternalLink>
+      )}
+    </li>
+  );
+}
+
+export function BestPlaces({ m }: { m: OverviewModel }) {
+  const opp = m.q.opportunities.data;
+  const nav = m.q.overview.data?.data.nav.value ?? null;
+  const yieldPicks = useMemo(
+    () => (opp === undefined ? [] : pickStrategies(opp.data.opportunities, "yield")),
+    [opp],
+  );
+  const pointPicks = useMemo(
+    () => (opp === undefined ? [] : pickStrategies(opp.data.opportunities, "points")),
+    [opp],
+  );
+  const pulse = m.pulse;
+  const g = pulse.globalMultiplier;
+  return (
+    <div className="grid">
+      <div className="span-6">
+        <Card
+          title="Highest yield"
+          subtitle={`${FILTER_RULE.yield} Venues under ${formatUsdCompact(MIN_TVL_USD)} of TVL are left out.`}
+        >
+          {opp === undefined ? (
+            <Skeleton height={260} />
+          ) : (
+            <ol className="places">
+              {yieldPicks.map((s, i) => (
+                <PlaceRow key={s.key} s={s} i={i} by="yield" nav={nav} />
+              ))}
+            </ol>
+          )}
+          <Provenance meta={opp?.meta["opportunities"]} />
+        </Card>
+      </div>
+      <div className="span-6">
+        <Card title="Most points" subtitle="Highest points multiplier first, then APY.">
+          {opp === undefined ? (
+            <Skeleton height={260} />
+          ) : (
+            <ol className="places">
+              {pointPicks.map((s, i) => (
+                <PlaceRow key={s.key} s={s} i={i} by="points" nav={nav} />
+              ))}
+            </ol>
+          )}
+          <Provenance meta={opp?.meta["opportunities"]} />
+        </Card>
+      </div>
+      <div className="span-12">
+        <Card title="How points work" className="howpoints">
+          <div className="howpoints-grid">
+            <div>
+              <p className="formula">
+                points = ONyc balance × days held × 1 point per ONyc a day × venue multiplier
+              </p>
+              <p className="tone-neutral">
+                That is OnRe's formula. Where you hold ONyc sets the multiplier, so the same balance
+                earns more in some venues than in others. The estimate per $1 a day is this tool's
+                arithmetic: multiplier divided by NAV.
+              </p>
+            </div>
+            <dl className="howpoints-stats">
+              <div>
+                <dt>
+                  Handed out per day <TermHint id="points-multiplier" />
+                </dt>
+                <dd>
+                  {pulse.dailyEmission === null ? "—" : formatCompact(pulse.dailyEmission.value)}
+                </dd>
+              </div>
+              <div>
+                <dt>Global multiplier</dt>
+                <dd>{g === null ? "—" : String(g.value)}</dd>
+              </div>
+            </dl>
+          </div>
+          <Provenance meta={m.q.concentration.data?.meta["multipliers"]} />
+        </Card>
+      </div>
+    </div>
+  );
+}
+
+// ---------------------------------------------------------------------------------------------
+// Points: estimates by venue and the leaderboard
+// ---------------------------------------------------------------------------------------------
+
+function LeaderboardTop() {
+  const q = useLeaderboard({ query: { page: 0, size: 10 } });
+  const d = q.data?.data;
+  return (
+    <Card
+      title="Leaderboard"
+      subtitle={
+        d?.snapshotDate
+          ? `Top 10 of ${formatCompact(d.totalRows)} wallets · crawl of ${d.snapshotDate}`
+          : "Latest daily crawl"
+      }
+      actions={<Link to="/points">Full leaderboard</Link>}
+    >
+      {q.isError ? (
+        <Notice tone="bad">The leaderboard could not be loaded.</Notice>
+      ) : d === undefined ? (
+        <Skeleton height={260} />
+      ) : (
+        <table className="mini lb">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Wallet</th>
+              <th className="num">Points</th>
+            </tr>
+          </thead>
+          <tbody>
+            {d.rows.map((r) => (
+              <tr key={r.address}>
+                <td>{r.rank}</td>
+                <td>
+                  <WalletLink address={r.address} />
+                </td>
+                <td className="num">{formatCompact(r.totalPoints)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
+      <Provenance meta={q.data?.meta["rows"]} />
+    </Card>
+  );
+}
+
+export function PointsSection({ pulse, m }: { pulse: PointsPulse; m: OverviewModel }) {
+  return (
+    <div className="grid">
+      <div className="span-5">
+        <Card
+          title="Points per $1 a day, by venue"
+          subtitle="Our estimate from OnRe's multipliers, not OnRe's figure"
+        >
+          <table className="mini">
+            <thead>
+              <tr>
+                <th>Venue</th>
+                <th className="num">Multiplier</th>
+                <th className="num">Estimate</th>
+              </tr>
+            </thead>
+            <tbody>
+              {pulse.venues.map((v) => (
+                <tr key={`${v.protocol}-${v.strategy}`}>
+                  <td>
+                    <Named name={v.protocol} size={18} /> · {v.strategy}
+                  </td>
+                  <td className="num">{v.multiplier}x</td>
+                  <td className="num">
+                    {v.perUsd === null ? "—" : `≈ ${formatNumber(v.perUsd, 2)}`}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <Provenance meta={m.q.concentration.data?.meta["multipliers"]} />
+        </Card>
+      </div>
+      <div className="span-7">
+        <LeaderboardTop />
+      </div>
+    </div>
+  );
+}
+
+// ---------------------------------------------------------------------------------------------
+// Activity: the newest transactions, with their addresses
+// ---------------------------------------------------------------------------------------------
+
+export function ActivitySection() {
+  return (
+    <Card
+      title="Live on chain"
+      subtitle="The newest transactions of the OnRe program, from Solana"
+      actions={<Link to="/activity">All transactions</Link>}
+    >
+      <ChainFeed limit={8} />
+    </Card>
   );
 }
