@@ -42,8 +42,6 @@ import { Gloss, TermHint, TermNote } from "../ui/Term";
 
 const SEVERITY = { info: "neutral", watch: "watch", alert: "bad" } as const;
 const TONE = { good: "good", watch: "watch", bad: "bad", neutral: "neutral" } as const;
-const LIGHT_WORD = { ok: "OK", watch: "Watch", alert: "Alert", unavailable: "No data" } as const;
-const LIGHT_TONE = { ok: "good", watch: "watch", alert: "bad", unavailable: "neutral" } as const;
 
 const flowsBuild = (d: EndpointResponse<"flows">): ChartSpec => waterfallSpec(d);
 
@@ -158,42 +156,6 @@ export function NavHero({ m, children }: { m: OverviewModel; children: ReactNode
       </div>
       {children}
     </div>
-  );
-}
-
-/** Six lights in one short list, next to the chart. The twelve checks with their limits are on the Risk Signals page. */
-export function SafetyGlance({ m }: { m: OverviewModel }) {
-  const ok = m.safety.filter((l) => l.state === "ok").length;
-  return (
-    <aside className="glance" aria-label="Safety at a glance">
-      <div className="glance-head">
-        <h2>Safety</h2>
-        <Link to="/risk">All twelve checks</Link>
-      </div>
-      {m.q.risk.isError ? (
-        <p className="glance-count">The risk signals could not be loaded.</p>
-      ) : (
-        <>
-          <p className="glance-count">
-            <b>
-              {ok} of {m.safety.length}
-            </b>{" "}
-            checks inside their limit
-          </p>
-          <ul>
-            {m.safety.map((l) => (
-              <li key={l.id} className={`light light-${LIGHT_TONE[l.state]}`}>
-                <StatusIcon state={LIGHT_TONE[l.state]} />
-                <span>{l.label}</span>
-                <span className="light-value">
-                  {l.value} <span className="light-word">{LIGHT_WORD[l.state]}</span>
-                </span>
-              </li>
-            ))}
-          </ul>
-        </>
-      )}
-    </aside>
   );
 }
 
@@ -450,16 +412,22 @@ export function Capital({ m }: { m: OverviewModel }) {
         build={stackedPct}
         title="Share of capital by protocol"
         span={7}
-        height={300}
+        height={380}
       />
       <Panel
         q={m.q.capitalDistribution}
         build={stackedAbs}
         title="Where the capital sits"
-        span={6}
-        height={300}
+        span={12}
+        height={380}
       />
-      <Panel q={yieldQ} build={collateralBuild} title="Collateral by asset" span={6} height={300} />
+      <Panel
+        q={yieldQ}
+        build={collateralBuild}
+        title="Collateral by asset"
+        span={12}
+        height={380}
+      />
     </div>
   );
 }

@@ -15,7 +15,6 @@ import {
   Headline,
   NavHero,
   PointsSection,
-  SafetyGlance,
   SectionNav,
   Vitals,
 } from "./OverviewSections";
@@ -44,16 +43,13 @@ export function OverviewPage() {
                 error="NAV history could not be loaded."
                 range={range}
                 onRange={setRange}
-                height={300}
+                height={340}
                 plain
                 hideTitle
               >
-                {hero !== null && <Chart spec={hero} height={300} />}
+                {hero !== null && <Chart spec={hero} height={340} />}
               </ChartFrame>
             </NavHero>
-          </div>
-          <div className="tile-safety">
-            <SafetyGlance m={m} />
           </div>
         </div>
         <Vitals m={m} />

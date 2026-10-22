@@ -148,10 +148,7 @@
   min-width: 0;
 }
 .tile-nav {
-  grid-column: span 8;
-}
-.tile-safety {
-  grid-column: span 4;
+  grid-column: span 12;
 }
 
 /* The NAV tile is dark in both themes; the chart is yellow on it */
@@ -227,47 +224,6 @@
 .navhero .ch-legend,
 .navhero .ch-foot {
   color: var(--muted);
-}
-
-.glance-head {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  gap: 12px;
-}
-.glance-head h2 {
-  margin: 0;
-  font-size: 17px;
-  font-weight: 800;
-}
-.glance-head a {
-  font-size: 13px;
-  font-weight: 600;
-}
-.glance-count {
-  margin: 6px 0 0;
-  font-size: 13px;
-  color: var(--muted);
-}
-.glance-count b {
-  color: var(--ink);
-}
-.glance ul {
-  list-style: none;
-  margin: 10px 0 0;
-  padding: 0;
-}
-.glance li {
-  display: grid;
-  grid-template-columns: 16px minmax(0, 1fr) auto;
-  gap: 12px;
-  align-items: center;
-  padding: 12px 0;
-  border-top: 1px solid var(--line-soft);
-  font-size: 14px;
-}
-.glance .light-value {
-  font-weight: 700;
 }
 
 /* Vitals tiles: 3 + 6 + 3, then 3 + 3 + 6 */
@@ -379,10 +335,6 @@
 }
 
 @media (max-width: 1180px) {
-  .tile-nav,
-  .tile-safety {
-    grid-column: span 12;
-  }
   .vitals > *,
   .vitals > :nth-child(2),
   .vitals > :nth-child(6) {
