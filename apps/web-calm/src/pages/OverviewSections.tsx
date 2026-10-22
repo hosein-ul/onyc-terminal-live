@@ -35,7 +35,7 @@ import type { OverviewModel } from "@onyc/insights/react";
 import type { EndpointResponse, Meta } from "@onyc/sdk";
 import { useWallet } from "@onyc/sdk/react";
 import { ArrowUpRight, Search } from "lucide-react";
-import { useEffect, useMemo, useState, type FormEvent } from "react";
+import { useEffect, useMemo, useState, type FormEvent, type ReactNode } from "react";
 import { Link } from "react-router-dom";
 import { Chart, Panel } from "../charts";
 import { shortAddress } from "../lib/format";
@@ -164,6 +164,79 @@ export function Headline({ m }: { m: OverviewModel }) {
   );
 }
 
+/** The NAV figure and its chart: the first thing on the page. */
+export function NavHero({ m, children }: { m: OverviewModel; children: ReactNode }) {
+  const v = m.vitals.find((x) => x.id === "nav");
+  const delta = v?.detail.match(/^[+−-][\d.,]+%/)?.[0] ?? null;
+  return (
+    <div className="navhero">
+      <div className="navhero-top">
+        <div className="navhero-label">
+          NAV per ONyc <TermHint id="nav" />
+        </div>
+        {v === undefined ? (
+          <Skeleton height={56} width={260} />
+        ) : (
+          <>
+            <span className="navhero-number">{v.value}</span>
+            <span className="navhero-unit">USDC</span>
+            {delta !== null && (
+              <span className="navhero-delta">
+                {delta} <span className="tone-neutral">in 30 days</span>
+              </span>
+            )}
+          </>
+        )}
+      </div>
+      {children}
+    </div>
+  );
+}
+
+/** Six lights in one short list, next to the chart. The full board with its limits is a section below. */
+export function SafetyGlance({ m }: { m: OverviewModel }) {
+  const ok = m.safety.filter((l) => l.state === "ok").length;
+  return (
+    <aside className="glance" aria-label="Safety at a glance">
+      <div className="glance-head">
+        <h2>Safety</h2>
+        <a
+          href="#safety"
+          onClick={(e) => {
+            e.preventDefault();
+            document.getElementById("safety")?.scrollIntoView({ behavior: "smooth" });
+          }}
+        >
+          Limits and sources
+        </a>
+      </div>
+      {m.q.risk.isError ? (
+        <p className="glance-count">The risk signals could not be loaded.</p>
+      ) : (
+        <>
+          <p className="glance-count">
+            <b>
+              {ok} of {m.safety.length}
+            </b>{" "}
+            checks inside their limit
+          </p>
+          <ul>
+            {m.safety.map((l) => (
+              <li key={l.id} className={`light light-${LIGHT_TONE[l.state]}`}>
+                <span className="light-dot" aria-hidden="true" />
+                <span>{l.label}</span>
+                <span className="light-value">
+                  {l.value} <span className="light-word">{LIGHT_WORD[l.state]}</span>
+                </span>
+              </li>
+            ))}
+          </ul>
+        </>
+      )}
+    </aside>
+  );
+}
+
 function VitalCard({ v }: { v: Vital }) {
   const meta: Meta = { source: v.source, fetchedAt: v.fetchedAt, stale: false };
   const spark = useMemo(
@@ -198,7 +271,7 @@ function VitalCard({ v }: { v: Vital }) {
       <div className="vital-detail">{v.detail}</div>
       {spark !== null && spark.empty === undefined ? (
         <div className="vital-spark">
-          <Chart spec={spark} height={44} />
+          <Chart spec={spark} height={36} />
         </div>
       ) : v.collecting !== null ? (
         <div className="kpi-note">Collecting history since {formatDate(v.collecting)}</div>
@@ -210,19 +283,19 @@ function VitalCard({ v }: { v: Vital }) {
 
 export function Vitals({ m }: { m: OverviewModel }) {
   return (
-    <section className="vitals" aria-label="Six numbers that matter">
+    <section className="vitals" aria-label="Five more numbers that matter">
       {m.q.overview.data === undefined
         ? SECTION_PLACEHOLDERS.map((k) => (
-            <Card key={k}>
+            <div key={k} className="vital">
               <Skeleton height={110} />
-            </Card>
+            </div>
           ))
-        : m.vitals.map((v) => <VitalCard key={v.id} v={v} />)}
+        : m.vitals.filter((v) => v.id !== "nav").map((v) => <VitalCard key={v.id} v={v} />)}
     </section>
   );
 }
 
-const SECTION_PLACEHOLDERS = ["a", "b", "c", "d", "e", "f"];
+const SECTION_PLACEHOLDERS = ["a", "b", "c", "d", "e"];
 
 // ---------------------------------------------------------------------------------------------
 // Safety board
@@ -291,11 +364,21 @@ const FILTERS: { value: StrategyFilter; label: string }[] = [
   { value: "conservative", label: "Conservative" },
 ];
 
-function StrategyRow({ s, i, nav }: { s: Strategy; i: number; nav: number | null }) {
+function StrategyRow({
+  s,
+  i,
+  nav,
+  maxApy,
+}: {
+  s: Strategy;
+  i: number;
+  nav: number | null;
+  maxApy: number;
+}) {
   const pts = estimatePointsPerUsdPerDay(s.pointsMultiplier, nav);
   return (
     <li className="place">
-      <span className="place-rank">{i + 1}</span>
+      <span className="place-rank">{String(i + 1).padStart(2, "0")}</span>
       <div className="place-main">
         <div className="place-name">
           <Named name={s.protocol} size={24}>
@@ -314,6 +397,9 @@ function StrategyRow({ s, i, nav }: { s: Strategy; i: number; nav: number | null
       <div className="place-nums">
         <div>
           <b>{formatPercent(s.apy, 1)}</b>
+          <span className="place-bar" aria-hidden="true">
+            <i style={{ width: `${maxApy > 0 ? Math.max(4, ((s.apy ?? 0) / maxApy) * 100) : 0}%` }} />
+          </span>
           <small>APY</small>
         </div>
         <div>
@@ -364,7 +450,13 @@ export function BestPlaces({ m }: { m: OverviewModel }) {
       ) : (
         <ol className="places">
           {picks.map((s, i) => (
-            <StrategyRow key={s.key} s={s} i={i} nav={nav} />
+            <StrategyRow
+              key={s.key}
+              s={s}
+              i={i}
+              nav={nav}
+              maxApy={Math.max(0, ...picks.map((p) => p.apy ?? 0))}
+            />
           ))}
         </ol>
       )}

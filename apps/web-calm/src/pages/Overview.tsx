@@ -1,21 +1,21 @@
 import { navSpec } from "@onyc/chart-specs";
-import { formatNav } from "@onyc/format";
 import { sectionOrder, SECTIONS, type SectionId } from "@onyc/insights";
 import { useOverviewModel, usePersona } from "@onyc/insights/react";
 import { useNav } from "@onyc/sdk/react";
 import { useMemo, type ReactNode } from "react";
 import { Chart, ChartFrame } from "../charts";
 import { useRange } from "../lib/useRange";
-import { Notice, Skeleton } from "../ui/kit";
-import { TermHint } from "../ui/Term";
+import { Notice } from "../ui/kit";
 import {
   BestPlaces,
   Capital,
   Changes,
   Flows,
   Headline,
+  NavHero,
   PointsPulse,
   SafetyBoard,
+  SafetyGlance,
   SectionNav,
   Vitals,
 } from "./OverviewSections";
@@ -27,33 +27,16 @@ export function OverviewPage() {
   const [range, setRange] = useRange("all");
   const order = sectionOrder(persona);
 
-  const o = m.q.overview.data;
   // The hero chart has its own range selector, so it loads its own history.
   const heroQ = useNav({ query: { range } });
   const hero = useMemo(() => (heroQ.data === undefined ? null : navSpec(heroQ.data)), [heroQ.data]);
 
   const blocks: Record<SectionId, ReactNode> = {
     now: (
-      <>
+      <div className="now">
         <Headline m={m} />
-        <Vitals m={m} />
-      </>
-    ),
-    safety: (
-      <div className="grid">
-        <div className="span-7">
-          <section className="hero" aria-label="NAV per ONyc">
-            <div className="hero-label">
-              NAV per ONyc <TermHint id="nav" />
-            </div>
-            <div className="hero-number">
-              {o === undefined ? (
-                <Skeleton height={56} width={260} />
-              ) : (
-                formatNav(o.data.nav.value, 4)
-              )}
-              {o !== undefined && <span className="hero-unit"> USDC</span>}
-            </div>
+        <div className="nowgrid">
+          <NavHero m={m}>
             <ChartFrame
               spec={hero}
               status={heroQ.isError ? "error" : heroQ.isLoading ? "loading" : "ready"}
@@ -61,19 +44,19 @@ export function OverviewPage() {
               error="NAV history could not be loaded."
               range={range}
               onRange={setRange}
-              height={260}
+              height={300}
               plain
               hideTitle
             >
-              {hero !== null && <Chart spec={hero} height={260} />}
+              {hero !== null && <Chart spec={hero} height={300} />}
             </ChartFrame>
-          </section>
+          </NavHero>
+          <SafetyGlance m={m} />
         </div>
-        <div className="span-5">
-          <SafetyBoard m={m} />
-        </div>
+        <Vitals m={m} />
       </div>
     ),
+    safety: <SafetyBoard m={m} />,
     best: <BestPlaces m={m} />,
     points: <PointsPulse pulse={m.pulse} m={m} />,
     flows: <Flows m={m} />,

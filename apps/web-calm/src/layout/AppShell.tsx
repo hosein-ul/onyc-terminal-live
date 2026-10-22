@@ -1,5 +1,5 @@
 import { Menu, X } from "lucide-react";
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { Fragment, useEffect, useRef, useState, type ReactNode } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { GlossProvider } from "../ui/Term";
 import { Logo } from "./Logo";
@@ -8,14 +8,21 @@ import { NAV } from "./nav";
 function NavList({ onNavigate }: { onNavigate?: () => void }) {
   return (
     <nav aria-label="Pages" className="nav">
-      {NAV.map(({ to, label, icon: Icon, hint }) => (
-        <NavLink key={to} to={to} end={to === "/"} className="nav-item" onClick={onNavigate}>
-          <Icon size={18} strokeWidth={1.75} aria-hidden="true" />
-          <span className="nav-text">
-            <span>{label}</span>
-            <small>{hint}</small>
-          </span>
-        </NavLink>
+      {NAV.map(({ to, label, icon: Icon, hint, group }, i) => (
+        <Fragment key={to}>
+          {NAV[i - 1]?.group !== group && (
+            <div className="nav-group" aria-hidden="true">
+              {group}
+            </div>
+          )}
+          <NavLink to={to} end={to === "/"} className="nav-item" onClick={onNavigate}>
+            <Icon size={18} strokeWidth={1.75} aria-hidden="true" />
+            <span className="nav-text">
+              <span>{label}</span>
+              <small>{hint}</small>
+            </span>
+          </NavLink>
+        </Fragment>
       ))}
     </nav>
   );
@@ -69,6 +76,9 @@ export function AppShell({ children }: { children: ReactNode }) {
           <Logo />
         </div>
         <NavList />
+        <div className="sidebar-foot">
+          Read-only and independent. <Link to="/glossary">Glossary</Link>
+        </div>
       </aside>
 
       <header className="topbar">

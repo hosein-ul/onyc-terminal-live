@@ -5,6 +5,8 @@
   --ink: #111111;
   --muted: #55554f;
   --line: #dadad5;
+  --line-soft: #e8e8e3;
+  --line-strong: #111111;
   --accent: #111111;
   --brand: #f4d64e;
   --accent-soft: #faf1c4;
@@ -19,7 +21,7 @@
   --font-ui: "Figtree", ui-sans-serif, sans-serif;
 
   /* type scale */
-  --fs-display: 60px;
+  --fs-display: 64px;
   --fs-h1: 34px;
   --fs-h2: 22px;
   --fs-body: 15px;
@@ -28,9 +30,9 @@
   --tracking-display: -0.025em;
 
   /* space and shape */
-  --gap: 20px;
-  --radius-card: 24px;
-  --radius-control: 12px;
+  --gap: 32px;
+  --radius-card: 14px;
+  --radius-control: 10px;
   --radius-pill: 999px;
 
   /* motion */
@@ -46,7 +48,7 @@
   --chart-line: #dadad5;
   --chart-grid: #ebebe6;
   --chart-accent: #f4d64e;
-  --chart-primary: #111111;
+  --chart-primary: #e2b100;
   --chart-good: #0d5c38;
   --chart-bad: #a3201c;
   --chart-s1: #111111;
@@ -59,12 +61,12 @@
   --chart-s8: #6b6b66;
   --chart-font-ui: "Figtree", ui-sans-serif, sans-serif;
   --chart-font-mono: "Figtree", ui-sans-serif, sans-serif;
-  --chart-stroke: 3;
+  --chart-stroke: 2.5;
   --chart-radius: 8;
   --chart-tooltip-bg: #ffffff;
   --chart-tooltip-ink: #111111;
   --chart-marker: circle;
-  --chart-area-alpha: 0.14;
+  --chart-area-alpha: 0.22;
 }
 
 *,
