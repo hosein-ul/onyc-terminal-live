@@ -236,7 +236,7 @@ export function PegLiquidityPage() {
         right={
           m !== undefined && m.liquidityCoverage !== null ? (
             <Pill tone="accent">
-              Liquidity layer {formatPercent(m.liquidityCoverage, 1)} of AUM
+              Liquid collateral {formatPercent(m.liquidityCoverage, 1)} of AUM
             </Pill>
           ) : undefined
         }
@@ -293,7 +293,12 @@ export function PegLiquidityPage() {
             </>
           )}
         </Card>
-        <Panel q={marketQ} build={coverageBuild} title="Liquidity layer coverage" height={110} />
+        <Panel
+          q={marketQ}
+          build={coverageBuild}
+          title="Liquid collateral vs 15% target"
+          height={110}
+        />
       </div>
 
       <h2 className="section-title">Redemptions</h2>

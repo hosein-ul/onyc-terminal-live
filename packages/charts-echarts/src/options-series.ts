@@ -274,7 +274,9 @@ export function timeSeriesOption(spec: TimeSeriesSpec, ctx: OptionContext): ECha
       type: spec.logScale === true ? "log" : "value",
       show: !compact,
       scale: !spec.zeroBased,
-      ...(spec.zeroBased || spec.logScale === true ? {} : { min: lo - pad, max: hi + pad }),
+      ...(spec.zeroBased || spec.logScale === true
+        ? {}
+        : { min: Math.max(spec.floor ?? Number.NEGATIVE_INFINITY, lo - pad), max: hi + pad }),
       splitNumber: 4,
       axisLabel: {
         color: t.muted,

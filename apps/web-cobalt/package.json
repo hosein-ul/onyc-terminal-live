@@ -13,18 +13,20 @@
     "test": "vitest run --passWithNoTests"
   },
   "dependencies": {
+    "@fontsource/bricolage-grotesque": "^5.2.0",
+    "@fontsource/geist-mono": "^5.2.0",
     "@onyc/chart-specs": "workspace:*",
     "@onyc/charts-echarts": "workspace:*",
     "@onyc/format": "workspace:*",
+    "@onyc/glossary": "workspace:*",
+    "@onyc/insights": "workspace:*",
     "@onyc/sdk": "workspace:*",
     "@tanstack/react-query": "^5.104.5",
     "lucide-react": "^1.60.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^7.18.4",
-    "recharts": "^3.10.1",
-    "@fontsource/bricolage-grotesque": "^5.2.0",
-    "@fontsource/geist-mono": "^5.2.0"
+    "recharts": "^3.10.1"
   },
   "devDependencies": {
     "@types/react": "^18.3.12",

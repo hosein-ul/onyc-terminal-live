@@ -93,6 +93,8 @@ export function navSpec(
     annotations,
     smooth: false,
     zeroBased: false,
+    // NAV started above 1 and has not been under it; the axis starts at 1 so it does not suggest a fall below par.
+    ...(points.length > 0 && points.every((p) => p.y !== null && p.y >= 1) ? { floor: 1 } : {}),
     ...(options.log === true ? { logScale: true } : {}),
   };
 }
@@ -277,7 +279,7 @@ export function capitalStackBarSpec(res: EndpointResponse<"capitalStack">): Stac
     { key: "available", label: "Available", value: s.availableUsd, basis: s.basis.available },
     {
       key: "liquidity",
-      label: "Liquidity layer",
+      label: "Liquidity layer (15% of AUM)",
       value: s.liquidityLayerUsd,
       basis: s.basis.liquidityLayer,
     },
@@ -290,7 +292,7 @@ export function capitalStackBarSpec(res: EndpointResponse<"capitalStack">): Stac
     subtitle: "Bound, available and liquidity layer add up to AUM",
     provenance: provenanceFrom(res.meta, "stack"),
     summary: `${parts.map((p) => `${p.label} ${formatUsdCompact(p.value)}`).join(", ")}; total ${formatUsdCompact(s.aumUsd)}.`,
-    note: "The liquidity layer is the policy share of AUM, not a measured balance.",
+    note: "The liquidity layer here is the 15% policy share of AUM. The measured balance of liquid collateral is a different figure.",
     unit: "usd",
     parts,
     total: { label: "AUM", value: s.aumUsd },
@@ -357,7 +359,7 @@ export function collateralSankeySpec(res: EndpointResponse<"yieldComposition">):
   const sum = (xs: typeof assets): number => xs.reduce((a, x) => a + x.amountUsd, 0);
   const nodes = [
     { id: "total", label: "Collateral sheet" },
-    { id: "liquid", label: "Liquidity layer rows" },
+    { id: "liquid", label: "Liquid collateral rows" },
     { id: "other", label: "Other rows" },
     ...assets.map((a) => ({ id: `a:${a.asset}`, label: a.asset })),
   ];
@@ -373,7 +375,7 @@ export function collateralSankeySpec(res: EndpointResponse<"yieldComposition">):
     title: "Collateral by asset",
     subtitle: "Rows of the collateral sheet, split by liquidity-layer flag",
     provenance: provenanceFrom(res.meta, "collateral"),
-    summary: `${assets.length} collateral rows totalling ${formatUsdCompact(sum(assets))}, of which ${formatUsdCompact(sum(liquid))} flagged as the liquidity layer.`,
+    summary: `${assets.length} collateral rows totalling ${formatUsdCompact(sum(assets))}, of which ${formatUsdCompact(sum(liquid))} flagged as liquid collateral.`,
     note: "The sheet total can differ from AUM; see the source conflicts.",
     unit: "usd",
     nodes,
@@ -648,13 +650,13 @@ export function coverageBulletSpec(res: EndpointResponse<"market">): BulletSpec 
   return {
     kind: "bullet",
     id: "liquidity-coverage",
-    title: "Liquidity coverage",
-    subtitle: "Measured liquidity-layer balance against AUM",
+    title: "Liquid collateral vs 15% target",
+    subtitle: "Measured balance of collateral flagged as liquid, against AUM",
     provenance: provenanceFrom(res.meta, "liquidityCoverage", "liquidityLayerUsd", "aumUsd"),
     summary:
       v === null
-        ? "Liquidity coverage is not available."
-        : `Liquidity coverage ${formatPercent(v, 1)} of AUM against a ${formatPercent(target, 0)} target.`,
+        ? "Liquid collateral share is not available."
+        : `Liquid collateral ${formatPercent(v, 1)} of AUM against a ${formatPercent(target, 0)} target.`,
     unit: "pct",
     value: v,
     target: { value: target, label: `${formatPercent(target, 0)} target` },

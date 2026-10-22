@@ -64,7 +64,11 @@ export function TimeSeriesChart({ spec, height = 300 }: { spec: TimeSeriesSpec; 
       return row;
     });
     const pad = (max - min) * 0.08 || Math.abs(max) * 0.01 || 1;
-    return { rows: built, lo: spec.zeroBased ? 0 : min - pad, hi: max + pad };
+    return {
+      rows: built,
+      lo: spec.zeroBased ? 0 : Math.max(spec.floor ?? Number.NEGATIVE_INFINITY, min - pad),
+      hi: max + pad,
+    };
   }, [spec]);
 
   const fmtX = useMemo(() => axisFormatter(rows.map((r) => r.x)), [rows]);

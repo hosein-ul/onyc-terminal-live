@@ -1,5 +1,7 @@
 import { ArrowUpRight, CircleAlert, CircleCheck, Info, TriangleAlert } from "lucide-react";
 import type { ReactNode } from "react";
+import { useEmbedded } from "../lib/embedded";
+import { Gloss } from "./Term";
 
 /** The white card of the Calm direction: radius 24, no border, no shadow. */
 export function Card({
@@ -22,7 +24,11 @@ export function Card({
       {(title !== undefined || actions !== undefined) && (
         <header className="card-head">
           <div>
-            {title !== undefined && <h2 className="card-title">{title}</h2>}
+            {title !== undefined && (
+              <h2 className="card-title">
+                <Gloss text={title} />
+              </h2>
+            )}
             {subtitle !== undefined && <p className="card-sub">{subtitle}</p>}
           </div>
           {actions}
@@ -82,7 +88,9 @@ export function Stat({
 }) {
   return (
     <div className="stat">
-      <div className="stat-label">{label}</div>
+      <div className="stat-label">
+        <Gloss text={label} />
+      </div>
       <div className={`stat-value ${tone ? `tone-${tone}` : ""}`}>{value}</div>
       {note !== undefined && <div className="stat-note">{note}</div>}
     </div>
@@ -141,6 +149,18 @@ export function PageHeader({
   title: string;
   right?: ReactNode;
 }) {
+  const embedded = useEmbedded();
+  if (embedded) {
+    return (
+      <div className="sub-head">
+        <div>
+          {eyebrow !== undefined && <div className="eyebrow">{eyebrow}</div>}
+          <h2>{title}</h2>
+        </div>
+        {right}
+      </div>
+    );
+  }
   return (
     <div className="page-head">
       <div>

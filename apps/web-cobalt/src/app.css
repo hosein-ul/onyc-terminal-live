@@ -1,6 +1,8 @@
 @import "./charts/charts.css";
 @import "./shell.css";
 @import "./cobalt.css";
+@import "./pages/overview.css";
+@import "./pages/overview-skin.css";
 
 .sr-only {
   position: absolute;

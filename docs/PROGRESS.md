@@ -92,3 +92,36 @@ placeholder packages and five placeholder apps. Docs contradictions resolved and
   count did not match their examples, and a stale API fixture.
 - Open: the `Dockerfile` has not been built (no Docker in this environment; the `pnpm deploy` step it relies on was run and the result served `/healthz`); no real Telegram
   message was sent (no token); GitHub Actions has not run; the web apps have no CSP; wallet-rank and redemption rules poll the public API once a minute.
+
+## Phase 7: five pages, a real Overview and a glossary (done, 22 October 2026)
+
+Decisions, in the order they were made:
+
+- **Five pages in every app** (Calm, Cobalt, Matrix, Platinum, Pastel): Overview, Yield & Points, Risk & Reinsurance, Wallet, Alerts & API. The eleven older pages were not
+  rewritten; each now sits whole under an anchor of a combined page, so no detail was lost: Yield & Points = NAV & Yield (`#nav`) + Capital & DeFi (`#capital`) + Points
+  (`#points`); Risk & Reinsurance = Risk (`#risk`) + Peg & Liquidity (`#market`) + Reinsurance Book (`#reinsurance`) + Data Health with the 7-source check and the collateral
+  Sankey moved off the Overview (`#sources`); Alerts & API = Activity (`#activity`) + Developers (`#developers`). The old addresses redirect (`/nav`, `/points`, `/capital`,
+  `/market`, `/reinsurance`, `/health`, `/activity`, `/developers`); verified in a browser on all four ported apps. Peg & Liquidity went to Risk because exits are a risk question,
+  and Capital & DeFi to Yield because its venues are where yield is chosen.
+- **Overview is one long page** with a sticky section bar (anchors Now, Safety, Best places, Points, Flows, Changes, Capital) and a Holder / Hunter / Analyst switch that
+  reorders the sections and is remembered in the browser. The shared logic is headless, in the new `@onyc/insights` package (headline sentence, six vitals, safety board,
+  best places, points estimates, personas; 17 tests on live fixtures). Each app draws it in its own skin.
+- **Headline** is generated from data: NAV behaviour over 30 days, then the biggest concern in a fixed order (30-day outflow of at least 3% of AUM, discount of at least 25 bps,
+  solvency report older than 72 h, one protocol holding at least half of capital). Live result: "NAV keeps rising with no down-ticks, but $21.6M left in 30 days".
+- **Safety board** uses six of the twelve risk signals with their own limits and sources. Limits are this tool's settings, not OnRe's; state is shown by shape and word as well
+  as colour.
+- **Best places**: top five venues from OnRe's opportunities sheet, filters Yield, Points, Conservative. Conservative = lending, fixed-rate, protected tranche and managed
+  vaults; no leverage and no first-loss share. Venues under $100K of TVL or coming soon are left out. Risk labels are this tool's reading and say so.
+- **Points estimate**: OnRe's points page gives the formula (balance x days x 1 point per ONyc per day x venue multiplier x personal multiplier), so the estimate is
+  `multiplier / NAV` points per $1 a day, labelled "our estimate" with the formula printed. The global multiplier (0.0001) is shown exactly as reported and marked as not explained
+  by OnRe. The daily emission is the latest day of the points history.
+- **Glossary**: `@onyc/glossary` holds 33 terms with one plain sentence, why it matters, the basis (stated by OnRe, this tool's method, or general meaning) and a source link.
+  Definitions were checked against OnRe's public docs; where the docs do not define a term (price vector, PropAMM, ILW, quota share, per occurrence, aggregate, liquidity layer) the entry
+  says so. `docs/GLOSSARY.md` is generated from it (`scripts/gen-glossary.mjs`). In the apps, "?" hints (hover, keyboard, tap) appear on card titles, KPI and stat labels, table
+  headers and the Overview text, the first use of a term on the Overview prints a one-line explanation, and `/glossary` lists everything.
+- **Fixes from the live Calm site**: (a) two numbers shared the name "liquidity layer coverage": the KPI was the measured balance of collateral flagged liquid (23.7% of AUM) and
+  the capital stack was the 15% policy share. They are now "Liquid collateral" (measured) and "Liquidity layer (15% of AUM)" (policy), each explained; (b) the NAV axis started at
+  0.9970 because of padding; `TimeSeriesSpec.floor` now stops it at 1.0000 for NAV, in every chart adapter; (c) KPIs with under a week of history say "Collecting history since ..."
+  and hide the sparkline; (d) Sankey labels were cut off, the right margin now follows the longest label.
+- **Open**: `web-emerald` (a light Warm White and Emerald variant of Calm, added earlier today) keeps the eleven pages and the old Overview; the "?" hints cover the labels
+  listed above, not every sentence on the older pages; the combined pages show each old page in full, so Risk & Reinsurance is long; the per-page critique and blind review were not run.

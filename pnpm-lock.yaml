@@ -291,6 +291,12 @@ importers:
       '@onyc/format':
         specifier: workspace:*
         version: link:../../packages/format
+      '@onyc/glossary':
+        specifier: workspace:*
+        version: link:../../packages/glossary
+      '@onyc/insights':
+        specifier: workspace:*
+        version: link:../../packages/insights
       '@onyc/sdk':
         specifier: workspace:*
         version: link:../../packages/sdk
@@ -343,6 +349,12 @@ importers:
       '@onyc/format':
         specifier: workspace:*
         version: link:../../packages/format
+      '@onyc/glossary':
+        specifier: workspace:*
+        version: link:../../packages/glossary
+      '@onyc/insights':
+        specifier: workspace:*
+        version: link:../../packages/insights
       '@onyc/sdk':
         specifier: workspace:*
         version: link:../../packages/sdk
@@ -447,6 +459,12 @@ importers:
       '@onyc/format':
         specifier: workspace:*
         version: link:../../packages/format
+      '@onyc/glossary':
+        specifier: workspace:*
+        version: link:../../packages/glossary
+      '@onyc/insights':
+        specifier: workspace:*
+        version: link:../../packages/insights
       '@onyc/sdk':
         specifier: workspace:*
         version: link:../../packages/sdk
@@ -493,6 +511,12 @@ importers:
       '@onyc/format':
         specifier: workspace:*
         version: link:../../packages/format
+      '@onyc/glossary':
+        specifier: workspace:*
+        version: link:../../packages/glossary
+      '@onyc/insights':
+        specifier: workspace:*
+        version: link:../../packages/insights
       '@onyc/sdk':
         specifier: workspace:*
         version: link:../../packages/sdk
@@ -557,6 +581,12 @@ importers:
       '@onyc/format':
         specifier: workspace:*
         version: link:../../packages/format
+      '@onyc/glossary':
+        specifier: workspace:*
+        version: link:../../packages/glossary
+      '@onyc/insights':
+        specifier: workspace:*
+        version: link:../../packages/insights
       '@onyc/sdk':
         specifier: workspace:*
         version: link:../../packages/sdk
@@ -674,6 +704,27 @@ importers:
         version: 0.31.11
 
   packages/format: {}
+
+  packages/glossary: {}
+
+  packages/insights:
+    dependencies:
+      '@onyc/format':
+        specifier: workspace:*
+        version: link:../format
+      '@onyc/sdk':
+        specifier: workspace:*
+        version: link:../sdk
+    devDependencies:
+      '@tanstack/react-query':
+        specifier: ^5.104.5
+        version: 5.104.5(@types/react@18.3.31)(react@18.3.1)
+      '@types/react':
+        specifier: ^18.3.12
+        version: 18.3.31
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
 
   packages/mcp:
     dependencies:

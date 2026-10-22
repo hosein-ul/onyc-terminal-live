@@ -104,7 +104,7 @@ function timeSeries(
     yaxis: {
       show: !compact,
       tickAmount: 5,
-      ...(spec.zeroBased ? { min: 0 } : {}),
+      ...(spec.zeroBased ? { min: 0 } : spec.floor !== undefined ? { min: spec.floor } : {}),
       ...(spec.logScale === true ? { logarithmic: true } : {}),
       labels: { formatter: (v: number) => formatValue(v, spec.unit) },
     },

@@ -1,5 +1,6 @@
 import { ChevronDown, ChevronUp, Search } from "lucide-react";
 import { Fragment, useMemo, useState, type ReactNode } from "react";
+import { Gloss, GlossHints } from "./Term";
 
 export interface Column<R> {
   key: string;
@@ -133,8 +134,9 @@ export function DataTable<R>({
                         ))}
                     </button>
                   ) : (
-                    c.header
+                    <Gloss text={c.header} />
                   )}
+                  {c.sort !== undefined && <GlossHints text={c.header} />}
                 </th>
               ))}
             </tr>

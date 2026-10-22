@@ -1,0 +1,165 @@
+/* Dot Matrix skin for the Overview: square ink-bordered panels, mono type, dot numerals, state by shape and word. */
+.sectionbar {
+  background: var(--ground);
+  border: 2px solid var(--ink);
+  border-radius: 0;
+}
+.sectionbar-links a {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  border: 2px solid transparent;
+  border-radius: 0;
+}
+.sectionbar-links a:hover {
+  background: transparent;
+  border-color: var(--ink);
+}
+.sectionbar-links a[aria-current="true"] {
+  background: var(--ink);
+  color: var(--panel);
+}
+.ov-title {
+  font-family: var(--font-mono);
+  color: var(--ink);
+  border-bottom: 2px solid var(--ink);
+  padding-bottom: 6px;
+  margin: 12px 0 0;
+}
+.headline-text {
+  font-family: var(--font-dot);
+  font-weight: 700;
+  letter-spacing: 0;
+  font-size: clamp(30px, 4.6vw, 64px);
+  line-height: 1.05;
+  max-width: 26ch;
+}
+.badge-link {
+  background: var(--panel);
+  border: 2px solid var(--ink);
+  border-radius: 0;
+  color: var(--ink);
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+.vital {
+  border: 2px solid var(--ink);
+  border-radius: 0;
+  background: var(--panel);
+}
+.vital-value {
+  font-family: var(--font-dot);
+  font-weight: 700;
+  letter-spacing: 0;
+  font-size: 40px;
+}
+.vital-label,
+.vital-unit,
+.light-src,
+.light-sub,
+.place-sub,
+.rule {
+  font-family: var(--font-mono);
+}
+.vital[data-vital="nav"] {
+  background: var(--screen);
+  color: var(--signal);
+}
+.vital[data-vital="nav"] .vital-label,
+.vital[data-vital="nav"] .vital-unit,
+.vital[data-vital="nav"] .vital-detail,
+.vital[data-vital="nav"] .prov,
+.vital[data-vital="nav"] .term-btn {
+  color: var(--screen-muted);
+  border-color: var(--screen-muted);
+}
+.vital-watch {
+  border-style: dashed;
+}
+.vital-bad {
+  border-width: 5px;
+}
+.light {
+  border-top: 2px dashed var(--ink);
+}
+.light:first-child {
+  border-top: 0;
+}
+.light-dot {
+  background: var(--ink) !important;
+}
+.light-good .light-dot {
+  border-radius: 0;
+}
+.light-neutral .light-dot {
+  background: transparent !important;
+  border: 2px solid var(--ink);
+  border-radius: 0;
+}
+.light-word {
+  border: 2px solid var(--ink);
+  background: transparent !important;
+  color: var(--ink) !important;
+  border-radius: 0;
+  font-family: var(--font-mono);
+}
+.light-bad .light-word {
+  background: var(--ink) !important;
+  color: var(--panel) !important;
+}
+.place {
+  border-top: 2px dashed var(--ink);
+}
+.place:first-child {
+  border-top: 0;
+}
+.place-rank {
+  border-radius: 0;
+  background: var(--ink);
+  color: var(--panel);
+  font-family: var(--font-mono);
+}
+.place-kind {
+  border-bottom-style: dashed;
+}
+.mini th,
+.mini td {
+  border-bottom: 1px dashed var(--ink);
+  font-family: var(--font-mono);
+}
+.walletbox {
+  background: var(--ground);
+  border: 2px solid var(--ink);
+  border-radius: 0;
+}
+.term-btn {
+  border-radius: 0;
+  border: 2px solid var(--ink);
+  color: var(--ink);
+  font-family: var(--font-mono);
+}
+.term-btn:hover,
+.term-btn[aria-expanded="true"] {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--panel);
+}
+.term-pop {
+  background: var(--panel);
+  border: 2px solid var(--ink);
+  border-radius: 0;
+  box-shadow: 6px 6px 0 var(--ink);
+}
+.term-note {
+  border-radius: 0;
+  background: transparent;
+  border: 2px dashed var(--ink);
+  color: var(--ink);
+}
+.term-extra {
+  border-left-color: var(--ink);
+}
+.gloss-term {
+  font-family: var(--font-dot);
+}

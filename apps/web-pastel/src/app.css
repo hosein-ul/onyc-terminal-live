@@ -1,6 +1,8 @@
 @import "./charts/charts.css";
 @import "./shell.css";
 @import "./pastel.css";
+@import "./pages/overview.css";
+@import "./pages/overview-skin.css";
 
 @tailwind base;
 @tailwind components;

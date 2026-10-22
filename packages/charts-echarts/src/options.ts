@@ -490,6 +490,9 @@ function treemapOption(spec: TreemapSpec, ctx: OptionContext): EChartsCoreOption
 
 function sankeyOption(spec: SankeySpec, ctx: OptionContext): EChartsCoreOption {
   const t = ctx.tokens;
+  // Room on the right for the longest node label, so none is cut off (12 px text is about 6.6 px per character).
+  const longest = Math.max(0, ...spec.nodes.map((n) => n.label.length));
+  const right = Math.min(300, Math.max(120, Math.round(longest * 6.6) + 40));
   return {
     ...base(spec, ctx),
     tooltip: {
@@ -508,7 +511,7 @@ function sankeyOption(spec: SankeySpec, ctx: OptionContext): EChartsCoreOption {
       {
         type: "sankey",
         left: 8,
-        right: 120,
+        right,
         top: 8,
         bottom: 8,
         nodeAlign: "left",
@@ -525,7 +528,7 @@ function sankeyOption(spec: SankeySpec, ctx: OptionContext): EChartsCoreOption {
           value: l.value,
         })),
         lineStyle: { color: "source", opacity: 0.28, curveness: 0.5 },
-        label: { color: t.ink, fontFamily: t.fontUi, fontSize: 12 },
+        label: { color: t.ink, fontFamily: t.fontUi, fontSize: 12, overflow: "none" },
       },
     ],
   };

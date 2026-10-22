@@ -65,6 +65,8 @@ export interface TimeSeriesSpec extends ChartBase {
   compact?: boolean;
   /** Logarithmic y axis. */
   logScale?: boolean;
+  /** The y axis never goes below this value, for series that cannot (NAV never falls under 1). */
+  floor?: number;
 }
 
 export interface StackedSpec extends ChartBase {

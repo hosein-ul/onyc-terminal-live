@@ -78,7 +78,7 @@ const assetColumns: Column<Asset>[] = [
   },
   {
     key: "layer",
-    header: "Liquidity layer",
+    header: "Counts as liquid collateral",
     wide: true,
     sort: (a) => (a.liquidityLayer ? 1 : 0),
     cell: (a) =>

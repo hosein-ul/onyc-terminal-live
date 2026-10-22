@@ -1,6 +1,7 @@
 import { Menu, X } from "lucide-react";
 import { useEffect, useRef, useState, type ReactNode } from "react";
-import { NavLink, useLocation } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
+import { GlossProvider } from "../ui/Term";
 import { Logo } from "./Logo";
 import { NAV } from "./nav";
 
@@ -11,6 +12,9 @@ function Footer() {
       <p>
         Every number shows where it came from and how old it is. This site is read-only: it never
         asks you to sign or send anything.
+      </p>
+      <p>
+        <Link to="/glossary">Glossary</Link>: every technical term on this site in plain words.
       </p>
     </footer>
   );
@@ -111,7 +115,7 @@ export function AppShell({ children }: { children: ReactNode }) {
 
       <div className="main-col">
         <main id="main" className="main" tabIndex={-1}>
-          {children}
+          <GlossProvider key={location.pathname}>{children}</GlossProvider>
         </main>
         <Footer />
       </div>

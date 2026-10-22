@@ -17,6 +17,8 @@
     "@onyc/chart-specs": "workspace:*",
     "@onyc/charts-echarts": "workspace:*",
     "@onyc/format": "workspace:*",
+    "@onyc/glossary": "workspace:*",
+    "@onyc/insights": "workspace:*",
     "@onyc/sdk": "workspace:*",
     "@tanstack/react-query": "^5.104.5",
     "lucide-react": "^1.60.0",

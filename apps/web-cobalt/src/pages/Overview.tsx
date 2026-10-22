@@ -1,292 +1,107 @@
-import {
-  capitalStackBarSpec,
-  collateralSankeySpec,
-  navSpec,
-  protocolBarsSpec,
-  provenanceFrom,
-  sparklineSpec,
-  waterfallSpec,
-  type ChartSpec,
-} from "@onyc/chart-specs";
-import {
-  formatDate,
-  formatNav,
-  formatPercent,
-  formatRelativeAge,
-  formatUsdCompact,
-} from "@onyc/format";
-import type { EndpointResponse } from "@onyc/sdk";
-import {
-  useCapitalDistribution,
-  useCapitalStack,
-  useFlows,
-  useNav,
-  useOverview,
-  useYieldComposition,
-} from "@onyc/sdk/react";
-import { useMemo } from "react";
-import { Chart, ChartFrame, Panel } from "../charts";
+import { navSpec } from "@onyc/chart-specs";
+import { formatNav } from "@onyc/format";
+import { sectionOrder, SECTIONS, type SectionId } from "@onyc/insights";
+import { useOverviewModel, usePersona } from "@onyc/insights/react";
+import { useNav } from "@onyc/sdk/react";
+import { useMemo, type ReactNode } from "react";
+import { Chart, ChartFrame } from "../charts";
 import { useRange } from "../lib/useRange";
-import { Card, Notice, PageHeader, Pill, Skeleton } from "../ui/kit";
-import { KpiCard } from "../ui/Kpi";
-import { Provenance } from "../ui/Provenance";
-import { signedPct } from "../lib/format";
+import { Notice, Skeleton } from "../ui/kit";
+import { TermHint } from "../ui/Term";
+import {
+  BestPlaces,
+  Capital,
+  Changes,
+  Flows,
+  Headline,
+  PointsPulse,
+  SafetyBoard,
+  SectionNav,
+  Vitals,
+} from "./OverviewSections";
 
-type Overview = EndpointResponse<"overview">;
-
-const sparkOf =
-  (
-    title: string,
-    key:
-      "nav" | "aum" | "circulatingSupply" | "premiumBps" | "collateralRatio" | "liquidityCoverage",
-    unit: "nav" | "usd" | "bps" | "pct",
-  ) =>
-  (o: Overview): ChartSpec =>
-    sparklineSpec(`spark-${key}`, title, o.data[key], unit, provenanceFrom(o.meta, key));
-
-const sparks = {
-  aum: sparkOf("AUM", "aum", "usd"),
-  supply: sparkOf("Circulating supply", "circulatingSupply", "usd"),
-  premium: sparkOf("Premium", "premiumBps", "bps"),
-  collateral: sparkOf("Collateral ratio", "collateralRatio", "pct"),
-  coverage: sparkOf("Liquidity coverage", "liquidityCoverage", "pct"),
-};
-
-const flowsBuild = (d: EndpointResponse<"flows">): ChartSpec => waterfallSpec(d);
-const stackBuild = (d: EndpointResponse<"capitalStack">): ChartSpec | null =>
-  capitalStackBarSpec(d);
-const protocolBuild = (d: EndpointResponse<"capitalDistribution">): ChartSpec =>
-  protocolBarsSpec(d);
-
-const SEVERITY = { info: "neutral", watch: "watch", alert: "bad" } as const;
-
+/** The Overview is one long page; the sticky bar jumps between its sections and the persona switch reorders them. */
 export function OverviewPage() {
-  const overview = useOverview();
+  const m = useOverviewModel();
+  const [persona, setPersona] = usePersona();
   const [range, setRange] = useRange("all");
-  const navQ = useNav({ query: { range } });
-  const flowsQ = useFlows({ query: { range: "1m" } });
-  const stackQ = useCapitalStack();
-  const distQ = useCapitalDistribution();
-  const yieldQ = useYieldComposition();
+  const order = sectionOrder(persona);
 
-  const o = overview.data;
-  const navHero = useMemo(() => (navQ.data === undefined ? null : navSpec(navQ.data)), [navQ.data]);
+  const o = m.q.overview.data;
+  // The hero chart has its own range selector, so it loads its own history.
+  const heroQ = useNav({ query: { range } });
+  const hero = useMemo(() => (heroQ.data === undefined ? null : navSpec(heroQ.data)), [heroQ.data]);
 
-  // Return since launch comes from the NAV endpoint, which measures it from the first NAV on record.
-  const sinceLaunch = navQ.data?.data.returns.find((w) => w.window === "inception")?.return ?? null;
-  // Source outages belong on Data Health; the morning view lists changes to ONyc itself.
-  const events = (o?.data.whatChanged.events ?? []).filter((e) => !e.kind.startsWith("source_"));
-  const sheetSpread = o?.data.sourceCheck.spread ?? null;
-  const today = new Date().toLocaleDateString("en-GB", {
-    weekday: "long",
-    day: "numeric",
-    month: "long",
-    timeZone: "UTC",
-  });
+  const blocks: Record<SectionId, ReactNode> = {
+    now: (
+      <>
+        <Headline m={m} />
+        <Vitals m={m} />
+      </>
+    ),
+    safety: (
+      <div className="grid">
+        <div className="span-7">
+          <section className="hero" aria-label="NAV per ONyc">
+            <div className="hero-label">
+              NAV per ONyc <TermHint id="nav" />
+            </div>
+            <div className="hero-number">
+              {o === undefined ? (
+                <Skeleton height={56} width={260} />
+              ) : (
+                formatNav(o.data.nav.value, 4)
+              )}
+              {o !== undefined && <span className="hero-unit"> USDC</span>}
+            </div>
+            <ChartFrame
+              spec={hero}
+              status={heroQ.isError ? "error" : heroQ.isLoading ? "loading" : "ready"}
+              loadingTitle="NAV per ONyc"
+              error="NAV history could not be loaded."
+              range={range}
+              onRange={setRange}
+              height={260}
+              plain
+              hideTitle
+            >
+              {hero !== null && <Chart spec={hero} height={260} />}
+            </ChartFrame>
+          </section>
+        </div>
+        <div className="span-5">
+          <SafetyBoard m={m} />
+        </div>
+      </div>
+    ),
+    best: <BestPlaces m={m} />,
+    points: <PointsPulse pulse={m.pulse} m={m} />,
+    flows: <Flows m={m} />,
+    changes: <Changes m={m} />,
+    capital: <Capital m={m} />,
+  };
 
   return (
     <>
-      <PageHeader
-        eyebrow={today}
-        title={
-          sinceLaunch === null
-            ? "ONyc at a glance"
-            : `ONyc is up ${formatPercent(sinceLaunch, 1)} since launch`
-        }
-      />
-
-      {overview.isError && (
+      <SectionNav order={order} persona={persona} onPersona={setPersona} />
+      {m.q.overview.isError && (
         <Notice tone="bad" title="The overview could not be loaded">
-          {overview.error instanceof Error ? overview.error.message : "The API did not answer."}{" "}
+          {m.q.overview.error instanceof Error
+            ? m.q.overview.error.message
+            : "The API did not answer."}{" "}
           Nothing below is invented while it is down.
         </Notice>
       )}
-
-      <div className="hero-row">
-        <section aria-label="NAV per ONyc">
-          <div className="hero-label">NAV per ONyc{o === undefined ? "" : ` · ${today}`}</div>
-          <div className="hero-number">
-            {o === undefined ? (
-              <Skeleton height={120} width={420} />
-            ) : (
-              formatNav(o.data.nav.value, 4)
-            )}
-          </div>
+      {order.map((id) => (
+        <section key={id} id={id} className={`ov-section ov-${id}`} aria-labelledby={`${id}-title`}>
+          {id !== "now" && (
+            <h2 id={`${id}-title`} className="ov-title">
+              {SECTIONS.find((s) => s.id === id)?.label}
+            </h2>
+          )}
+          {blocks[id]}
         </section>
-        <div className="capsules">
-          {o !== undefined && (
-            <>
-              <div className="capsule capsule-fill">
-                <span>Live APY</span>
-                <span>{formatPercent(o.data.apy.value, 2)}</span>
-              </div>
-              <div className="capsule">
-                <span>AUM</span>
-                <span>{formatUsdCompact(o.data.aum.value)}</span>
-              </div>
-            </>
-          )}
-        </div>
-      </div>
-
-      <div className="grid">
-        <div className="span-8">
-          <ChartFrame
-            spec={navHero}
-            status={navQ.isError ? "error" : navQ.isLoading ? "loading" : "ready"}
-            loadingTitle="Growth since launch"
-            error="NAV history could not be loaded."
-            range={range}
-            onRange={setRange}
-            height={300}
-          >
-            {navHero !== null && <Chart spec={navHero} height={300} />}
-          </ChartFrame>
-        </div>
-        <div className="span-4 stack">
-          {o === undefined ? (
-            <Card>
-              <Skeleton height={140} />
-            </Card>
-          ) : (
-            <>
-              <KpiCard
-                inverse
-                label="Circulating supply"
-                kind="count"
-                kpi={o.data.circulatingSupply}
-                meta={o.meta["circulatingSupply"]}
-                spark={sparks.supply(o)}
-                suffix="ONyc"
-              />
-              <KpiCard
-                label="Assets under management"
-                kind="usd"
-                kpi={o.data.aum}
-                meta={o.meta["aum"]}
-                spark={sparks.aum(o)}
-              />
-            </>
-          )}
-        </div>
-      </div>
-
-      <div className="kpis">
-        {o === undefined ? (
-          <Card>
-            <Skeleton height={120} />
-          </Card>
-        ) : (
-          <>
-            <KpiCard
-              label="Market premium / discount"
-              kind="bps"
-              kpi={o.data.premiumBps}
-              meta={o.meta["premiumBps"]}
-              spark={sparks.premium(o)}
-              neutralChange
-            />
-            <KpiCard
-              label="Collateral ratio"
-              kind="pct"
-              kpi={o.data.collateralRatio}
-              meta={o.meta["collateralRatio"]}
-              spark={sparks.collateral(o)}
-            />
-            <KpiCard
-              label="Liquidity layer coverage"
-              kind="pct"
-              kpi={o.data.liquidityCoverage}
-              meta={o.meta["liquidityCoverage"]}
-              spark={sparks.coverage(o)}
-            />
-          </>
-        )}
-      </div>
-
-      <div className="grid">
-        <Panel
-          q={flowsQ}
-          build={flowsBuild}
-          title="What moved AUM this month"
-          span={5}
-          height={280}
-        />
-        <div className="span-7 stack">
-          <Card title="New since yesterday" subtitle="From the event feed">
-            {o === undefined ? (
-              <Skeleton height={120} />
-            ) : events.length === 0 ? (
-              <p className="tone-neutral">
-                Nothing new: no re-pricing, down-tick or layer change was detected.
-              </p>
-            ) : (
-              <ul className="feed">
-                {events.slice(0, 6).map((e) => (
-                  <li key={e.id}>
-                    <Pill tone={SEVERITY[e.severity]}>{e.severity}</Pill>
-                    <div>
-                      <strong>{e.title}</strong>
-                      <div className="tone-neutral">
-                        {formatRelativeAge(e.ts)} · {formatDate(e.ts)}
-                      </div>
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            )}
-            {o !== undefined && <Provenance meta={o.meta["whatChanged"]} />}
-          </Card>
-          <Card
-            title="Data check"
-            subtitle={
-              sheetSpread === null
-                ? "Sources that report ONyc's size"
-                : `${o?.data.sourceCheck.sources.length ?? 0} sources report a ${formatPercent(sheetSpread, 1)} spread on size`
-            }
-            className="source-check"
-          >
-            {o === undefined ? (
-              <Skeleton height={100} />
-            ) : (
-              <div className="rows">
-                {o.data.sourceCheck.sources.map((s) => (
-                  <div key={s.id}>
-                    <span>{s.label}</span>
-                    <b>
-                      {formatUsdCompact(s.aumUsd)}
-                      {s.asOf !== null && (
-                        <span className="tone-neutral"> · {formatDate(s.asOf)}</span>
-                      )}
-                    </b>
-                  </div>
-                ))}
-              </div>
-            )}
-            {sheetSpread !== null && Math.abs(sheetSpread) > 0.02 && (
-              <Notice tone="watch">
-                A spread of {signedPct(sheetSpread, 1)} between sources is normal for sources that
-                measure different things; the Data Health page explains each one.
-              </Notice>
-            )}
-            {o !== undefined && <Provenance meta={o.meta["sourceCheck"]} />}
-          </Card>
-        </div>
-      </div>
-
-      <div className="grid">
-        <Panel
-          q={yieldQ}
-          build={collateralSankeySpec}
-          title="Where the collateral sits"
-          span={7}
-          height={340}
-        />
-        <Panel q={distQ} build={protocolBuild} title="Capital by protocol" span={5} height={340} />
-      </div>
-      <div className="grid">
-        <Panel q={stackQ} build={stackBuild} title="Capital stack" span={12} height={150} />
-      </div>
+      ))}
     </>
   );
 }

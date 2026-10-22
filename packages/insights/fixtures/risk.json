@@ -1,0 +1,167 @@
+{
+  "data": {
+    "signals": [
+      {
+        "id": "discount",
+        "label": "Market discount vs NAV",
+        "state": "ok",
+        "value": 9.933259104516479,
+        "unit": "bps",
+        "threshold": { "watch": 25, "alert": 50, "worse": "high" },
+        "note": "Size of the discount; a premium reads 0.",
+        "source": "Jupiter price vs OnRe NAV",
+        "asOf": "2026-10-22T12:54:00.000Z"
+      },
+      {
+        "id": "liquidity_coverage",
+        "label": "Liquidity layer coverage",
+        "state": "ok",
+        "value": 0.23712987930707827,
+        "unit": "fraction",
+        "threshold": { "watch": 0.15, "alert": 0.1, "worse": "low" },
+        "note": "Target 15% of AUM.",
+        "source": "OnRe collateral sheet / live TVL",
+        "asOf": "2026-10-22T07:45:06.996Z"
+      },
+      {
+        "id": "collateralization",
+        "label": "Collateralization (Accountable)",
+        "state": "ok",
+        "value": 1.001993,
+        "unit": "ratio",
+        "threshold": { "watch": 1, "alert": 0.99, "worse": "low" },
+        "source": "Accountable",
+        "asOf": "2026-10-15T05:43:01.026Z"
+      },
+      {
+        "id": "solvency_age",
+        "label": "Solvency data age",
+        "state": "alert",
+        "value": 175.18831527777778,
+        "unit": "hours",
+        "threshold": { "watch": 24, "alert": 72, "worse": "high" },
+        "source": "Accountable",
+        "asOf": "2026-10-15T05:43:01.026Z"
+      },
+      {
+        "id": "top_protocol",
+        "label": "Top protocol share of capital",
+        "state": "watch",
+        "value": 0.546437,
+        "unit": "fraction",
+        "threshold": { "watch": 0.5, "alert": 0.7, "worse": "high" },
+        "note": "kamino",
+        "source": "OnRe rewards API (capital distribution)",
+        "asOf": "2026-10-22"
+      },
+      {
+        "id": "looping_share",
+        "label": "Looping share of capital",
+        "state": "alert",
+        "value": 0.7749598008512725,
+        "unit": "fraction",
+        "threshold": { "watch": 0.5, "alert": 0.75, "worse": "high" },
+        "note": "Kamino + Loopscale.",
+        "source": "OnRe rewards API (capital distribution)",
+        "asOf": "2026-10-22"
+      },
+      {
+        "id": "peril_concentration",
+        "label": "Top peril family share of bound capital",
+        "state": "watch",
+        "value": 0.4121034967127518,
+        "unit": "fraction",
+        "threshold": { "watch": 0.4, "alert": 0.6, "worse": "high" },
+        "note": "US",
+        "source": "OnRe reinsurance sheet",
+        "asOf": "2026-10-22T12:47:59.677Z"
+      },
+      {
+        "id": "supply_trend",
+        "label": "30-day change in circulating supply",
+        "state": "ok",
+        "value": -0.06590513402780251,
+        "unit": "fraction",
+        "threshold": { "watch": -0.1, "alert": -0.25, "worse": "low" },
+        "source": "OnRe core API (/data/nav)",
+        "asOf": "2026-10-22"
+      },
+      {
+        "id": "data_divergence",
+        "label": "Spread between AUM sources",
+        "state": "watch",
+        "value": 0.042377729697567174,
+        "unit": "fraction",
+        "threshold": { "watch": 0.02, "alert": 0.05, "worse": "high" },
+        "source": "Seven AUM sources, see /v1/overview",
+        "asOf": "2026-10-22T12:54:00.000Z"
+      },
+      {
+        "id": "nav_anomalies",
+        "label": "NAV anomalies in the last 30 days",
+        "state": "ok",
+        "value": 0,
+        "unit": "count",
+        "threshold": { "watch": 1, "alert": 3, "worse": "high" },
+        "source": "OnRe core API (/data/nav)",
+        "asOf": "2026-10-22"
+      },
+      {
+        "id": "aum_derived",
+        "label": "AUM derived from bound capital vs reported",
+        "state": "alert",
+        "value": 0.3663430904940114,
+        "unit": "fraction",
+        "threshold": { "watch": 0.01, "alert": 0.05, "worse": "high" },
+        "source": "Bound capital divided by (1 - liquidity share) vs live TVL",
+        "asOf": "2026-10-22T12:54:00.000Z"
+      },
+      {
+        "id": "past_renewal",
+        "label": "Bound layers past their renewal month",
+        "state": "watch",
+        "value": 1,
+        "unit": "count",
+        "threshold": { "watch": 1, "alert": 5, "worse": "high" },
+        "source": "OnRe reinsurance sheet",
+        "asOf": "2026-10-22T12:47:59.677Z"
+      }
+    ],
+    "note": "Each signal has its own value and threshold. There is no blended risk score. Thresholds are this tool's settings, not OnRe's.",
+    "links": [
+      {
+        "label": "Allez risk assessment",
+        "url": "https://allez.xyz/reports/onre/ONyc_Asset_Risk_Assessment_260731.pdf"
+      },
+      {
+        "label": "Independent attestations",
+        "url": "https://docs.onre.finance/legal/security-and-verification/independent-attestations"
+      },
+      {
+        "label": "Independent audits",
+        "url": "https://docs.onre.finance/legal/security-and-verification/independent-audits"
+      },
+      {
+        "label": "OnRe program on Solscan",
+        "url": "https://solscan.io/account/onreuGhHHgVzMWSkj2oQDLDtvvGvoepBPkqyaubFcwe"
+      }
+    ]
+  },
+  "meta": {
+    "signals": {
+      "source": "Computed from stored data",
+      "fetchedAt": "2026-10-22T12:54:21.189Z",
+      "stale": false
+    },
+    "note": {
+      "source": "Computed from stored data",
+      "fetchedAt": "2026-10-22T12:54:21.189Z",
+      "stale": false
+    },
+    "links": {
+      "source": "Computed from stored data",
+      "fetchedAt": "2026-10-22T12:54:21.189Z",
+      "stale": false
+    }
+  }
+}

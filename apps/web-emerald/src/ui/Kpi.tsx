@@ -59,6 +59,8 @@ export function KpiCard({ label, kind, kpi, meta, spark, suffix, neutralChange =
         ? signedPct(change, 2)
         : ABSOLUTE[kind](change);
   const valueText = VALUE[kind](kpi.value);
+  // A sparkline with only a few points says nothing; hide it until a week of history exists.
+  const hasHistory = kpi.sparkline.filter((v) => v !== null).length >= 7;
   return (
     <article className="kpi">
       <div className="kpi-label">{label}</div>
@@ -81,13 +83,13 @@ export function KpiCard({ label, kind, kpi, meta, spark, suffix, neutralChange =
           <span className="kpi-period">over {kpi.period}</span>
         </div>
       )}
-      {spark !== null && spark.empty === undefined && (
+      {spark !== null && spark.empty === undefined && hasHistory && (
         <div className="kpi-spark">
           <Chart spec={spark} height={64} />
         </div>
       )}
       {kpi.historySince !== null && (
-        <div className="kpi-note">Tracked since {formatDate(kpi.historySince)}</div>
+        <div className="kpi-note">Collecting history since {formatDate(kpi.historySince)}</div>
       )}
       <Provenance meta={meta} />
     </article>

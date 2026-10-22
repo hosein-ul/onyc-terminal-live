@@ -1,14 +1,8 @@
 import {
-  Activity,
   Bell,
-  Code2,
-  Droplets,
   LayoutDashboard,
-  Network,
   ShieldAlert,
-  Trophy,
   TrendingUp,
-  Umbrella,
   Wallet,
   type LucideIcon,
 } from "lucide-react";
@@ -21,27 +15,16 @@ export interface NavItem {
   hint: string;
 }
 
-/** The eleven pages of docs/SPEC.md, in order. */
+/** The five pages. The older eleven pages live inside these and their old addresses redirect (see App.tsx). */
 export const NAV: NavItem[] = [
-  { to: "/", label: "Overview", icon: LayoutDashboard, hint: "The morning view" },
-  { to: "/nav", label: "NAV & Yield", icon: TrendingUp, hint: "Price, returns, yield sources" },
+  { to: "/", label: "Overview", icon: LayoutDashboard, hint: "The whole picture, top to bottom" },
+  { to: "/yield", label: "Yield & Points", icon: TrendingUp, hint: "Returns, DeFi venues, points" },
   {
-    to: "/market",
-    label: "Peg & Liquidity",
-    icon: Droplets,
-    hint: "Market price, pools, redemptions",
+    to: "/risk",
+    label: "Risk & Reinsurance",
+    icon: ShieldAlert,
+    hint: "Signals, exits, the insurance book, data health",
   },
-  {
-    to: "/reinsurance",
-    label: "Reinsurance Book",
-    icon: Umbrella,
-    hint: "Layers, exposure, renewals",
-  },
-  { to: "/capital", label: "Capital & DeFi", icon: Network, hint: "Where the capital sits" },
-  { to: "/points", label: "Points", icon: Trophy, hint: "Emission, leaderboard, concentration" },
-  { to: "/wallet", label: "Wallet Lab", icon: Wallet, hint: "Look up any address" },
-  { to: "/risk", label: "Risk & Transparency", icon: ShieldAlert, hint: "Independent signals" },
-  { to: "/health", label: "Data Health", icon: Activity, hint: "Sources and conflicts" },
-  { to: "/activity", label: "Activity & Alerts", icon: Bell, hint: "Events and the Telegram bot" },
-  { to: "/developers", label: "Developers", icon: Code2, hint: "API and MCP" },
+  { to: "/wallet", label: "Wallet", icon: Wallet, hint: "Look up any address" },
+  { to: "/alerts", label: "Alerts & API", icon: Bell, hint: "Events, Telegram, API and MCP" },
 ];
