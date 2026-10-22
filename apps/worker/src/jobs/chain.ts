@@ -347,11 +347,12 @@ export const chainStateJob: Job = {
       excludedHeld: supplyOnyc - circulating,
       excludedOwners: excluded,
       impliedAumUsd: supplyOnyc * nav,
+      impliedCirculatingUsd: circulating * nav,
     });
     await snapshot(ctx, "market_stats", {
       nav,
       apy: Number(stats.apy) / 1e6,
-      tvlUsd: Number(stats.tvl) / 1e6,
+      tvlUsd: Number(stats.tvl) / 1e9,
       circulatingSupply: circulating,
       updatedAt: new Date(Number(stats.lastUpdatedAt) * 1000).toISOString(),
       updatedSlot: Number(stats.lastUpdatedSlot),
@@ -407,19 +408,43 @@ export const chainStateJob: Job = {
     });
     await snapshot(ctx, "vault_balances", { authorities, balances: custody });
 
-    // Independent check: supply on chain times NAV on chain against the AUM the API reports.
+    // Check 1: the AUM the API reports is circulating supply times NAV (the live TVL is built that way), so it must
+    // agree with the chain. A gap means one of the two feeds is wrong or late.
     const api = await latestApiAum(ctx);
+    const impliedCirculating = circulating * nav;
     if (api !== null) {
-      const implied = supplyOnyc * nav;
-      const gap = (api - implied) / implied;
+      const gap = (api - impliedCirculating) / impliedCirculating;
       if (Math.abs(gap) >= ctx.config.CHAIN_AUM_GAP_ALERT) {
         await emitEvent(ctx, {
           kind: "chain_aum_gap",
           severity: "watch",
-          title: `AUM reported by the API differs from on-chain supply times NAV by ${(gap * 100).toFixed(1)}%`,
-          body: `API ${formatUsdCompact(api)} against ${formatUsdCompact(implied)} (supply ${fmt(supplyOnyc)} ONyc at NAV ${nav.toFixed(6)}). Threshold ${(ctx.config.CHAIN_AUM_GAP_ALERT * 100).toFixed(1)}%.`,
-          data: { api, implied, gap },
+          title: `AUM reported by the API differs from on-chain circulating supply times NAV by ${(gap * 100).toFixed(1)}%`,
+          body: `API ${formatUsdCompact(api)} against ${formatUsdCompact(impliedCirculating)} (circulating supply ${fmt(circulating)} ONyc at NAV ${nav.toFixed(6)}). Threshold ${(ctx.config.CHAIN_AUM_GAP_ALERT * 100).toFixed(1)}%.`,
+          data: { api, implied: impliedCirculating, gap },
           dedupKey: `chain_aum_gap:${now.toISOString().slice(0, 13)}`,
+        });
+      }
+    }
+
+    // Check 2, the independent one: reserves that Accountable attests against what all holders are owed at NAV.
+    const solv = (
+      await ctx.handle.db
+        .select()
+        .from(schema.solvencySnap)
+        .orderBy(desc(schema.solvencySnap.ts))
+        .limit(1)
+    )[0];
+    if (solv?.reservesUsd != null) {
+      const owed = supplyOnyc * nav;
+      const gap = (solv.reservesUsd - owed) / owed;
+      if (gap <= -ctx.config.CHAIN_AUM_GAP_ALERT) {
+        await emitEvent(ctx, {
+          kind: "chain_reserves_gap",
+          severity: "alert",
+          title: `Reserves reported by Accountable are ${(Math.abs(gap) * 100).toFixed(1)}% below what on-chain supply is worth at NAV`,
+          body: `Reserves ${formatUsdCompact(solv.reservesUsd)} against ${formatUsdCompact(owed)} (total supply ${fmt(supplyOnyc)} ONyc at NAV ${nav.toFixed(6)}). The attestation was retrieved ${solv.retrievedAt.toISOString()}. Threshold ${(ctx.config.CHAIN_AUM_GAP_ALERT * 100).toFixed(1)}%.`,
+          data: { reserves: solv.reservesUsd, owed, gap },
+          dedupKey: `chain_reserves_gap:${now.toISOString().slice(0, 13)}`,
         });
       }
     }

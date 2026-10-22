@@ -24,6 +24,10 @@ export const TOOL_NAMES = {
   risk: "get_risk",
   healthSources: "get_source_health",
   events: "get_events",
+  chainState: "get_chain_state",
+  chainActivity: "get_chain_activity",
+  chainFlows: "get_chain_flows",
+  chainHolders: "get_chain_holders",
 } as const satisfies Record<EndpointName, string>;
 
 export interface ToolDef {

@@ -684,3 +684,31 @@ export function collateralBulletSpec(res: EndpointResponse<"solvency">): BulletS
     valueLabel: v === null ? "—" : formatPercent(v, 2),
   };
 }
+
+/** Daily net ONyc flow in dollars from program transactions (mints minus burns, valued at that day's NAV). */
+export function chainFlowsSpec(res: EndpointResponse<"chainFlows">): BarsSpec {
+  const days = res.data.series.filter((s) => s.netUsd !== null);
+  const net = res.data.totals.netUsd;
+  return {
+    kind: "bars",
+    id: "chain-flows",
+    title: "Net flow from transactions",
+    subtitle: "ONyc minted minus burned each day, at NAV",
+    provenance: provenanceFrom(res.meta, "series"),
+    summary:
+      net === null
+        ? "No on-chain flow has been recorded yet."
+        : `Net ${formatUsdCompact(net)} over ${days.length} days: ${formatCompact(res.data.totals.minted)} ONyc minted and ${formatCompact(res.data.totals.burned)} burned.`,
+    ...(res.data.since !== null ? { note: `Collecting since ${formatDate(res.data.since)}` } : {}),
+    ...(days.length === 0 ? { empty: "No program transactions have been recorded yet." } : {}),
+    unit: "usd",
+    orientation: "vertical",
+    diverging: true,
+    bars: days.map((s) => ({
+      label: s.date,
+      value: s.netUsd,
+      tone: (s.netUsd ?? 0) >= 0 ? "good" : "bad",
+    })),
+    thresholds: [],
+  };
+}

@@ -641,7 +641,10 @@ export const chainStateSchema = z.object({
     .nullable(),
   /** Independent solvency: supply times NAV on chain against the AUM sources and the reserves. */
   solvency: z.object({
+    /** Total supply on chain times NAV: what all holders, including the boss wallet, are owed at NAV. */
     impliedAumUsd: nn,
+    /** Circulating supply times NAV, which is how the live TVL is built. */
+    impliedCirculatingUsd: nn,
     apiAumUsd: nn,
     accountableReservesUsd: nn,
     accountableSupplyUsd: nn,

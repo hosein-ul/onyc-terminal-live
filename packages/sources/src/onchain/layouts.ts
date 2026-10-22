@@ -207,6 +207,7 @@ export interface MarketStatsAccount {
   /** Scale 1e9. */
   nav: bigint;
   navAdjustment: bigint;
+  /** Scale 1e9 (dollars): 283_547_009_181_578_000 on 22 October 2026 is $283.5M. */
   tvl: bigint;
   lastUpdatedAt: bigint;
   lastUpdatedSlot: bigint;

@@ -186,7 +186,12 @@ function Result({ address }: { address: string }) {
                 <Stat label="Value" value={formatUsd(w.onchain.valueUsd, 0)} />
               </div>
             ) : (
-              <Notice tone="info" title="Not configured">
+              <Notice
+                tone="watch"
+                title={
+                  w.onchain.status === "unavailable" ? "Unavailable right now" : "Not configured"
+                }
+              >
                 {w.onchain.note}
               </Notice>
             )}

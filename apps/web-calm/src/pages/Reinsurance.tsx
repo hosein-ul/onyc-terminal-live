@@ -12,6 +12,8 @@ import { useReinsuranceLayers, useReinsuranceSummary } from "@onyc/sdk/react";
 import { Panel } from "../charts";
 import { DataTable, type Column } from "../ui/DataTable";
 import { Card, Notice, PageHeader, Pill, Stat } from "../ui/kit";
+import { ExposureMap } from "../ui/ExposureMap";
+import { PerilIcons } from "../ui/Peril";
 import { Provenance } from "../ui/Provenance";
 
 type Layer = EndpointResponse<"reinsuranceLayers">["data"]["layers"][number];
@@ -43,7 +45,12 @@ const columns: Column<Layer>[] = [
     key: "peril",
     header: "Perils",
     sort: (l) => l.perilFamily,
-    cell: (l) => <span title={l.perils}>{l.perilFamily}</span>,
+    cell: (l) => (
+      <span className="peril-cell" title={l.perils}>
+        <PerilIcons text={l.perils} />
+        {l.perilFamily}
+      </span>
+    ),
   },
   {
     key: "structure",
@@ -233,6 +240,18 @@ export function ReinsurancePage() {
             <Provenance meta={layersQ.data?.meta["layers"]} />
           </>
         )}
+      </Card>
+
+      <Card
+        title="Where the book is exposed"
+        subtitle="Countries named in OnRe's layers, shaded by their share of bound capital"
+      >
+        {layers === undefined ? (
+          <p className="tone-neutral">Loading…</p>
+        ) : (
+          <ExposureMap layers={layers} />
+        )}
+        <Provenance meta={layersQ.data?.meta["layers"]} />
       </Card>
 
       <Panel q={layersQ} build={ganttBuild} title="Exposure timeline" height={620} />

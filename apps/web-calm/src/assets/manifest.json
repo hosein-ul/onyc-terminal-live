@@ -1,0 +1,20 @@
+{
+  "tokens": {
+    "onyc": "/assets/tokens/onyc.png",
+    "usdc": "/assets/tokens/usdc.png",
+    "usdg": "/assets/tokens/usdg.png",
+    "usdt": "/assets/tokens/usdt.svg",
+    "pt-sronyc": "/assets/tokens/pt-sronyc.svg"
+  },
+  "protocols": {
+    "kamino": "/assets/protocols/kamino.jpg",
+    "exponent": "/assets/protocols/exponent.png",
+    "loopscale": "/assets/protocols/loopscale.jpg",
+    "orca": "/assets/protocols/orca.jpg",
+    "carrot": "/assets/protocols/carrot.jpg",
+    "jupiter": "/assets/protocols/jupiter.jpg",
+    "accountable": "/assets/protocols/accountable.jpg",
+    "raydium": "/assets/protocols/raydium.jpg",
+    "ratex": "/assets/protocols/ratex.jpg"
+  }
+}

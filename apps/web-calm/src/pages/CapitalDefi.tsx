@@ -1,3 +1,4 @@
+import { Named } from "../ui/Badge";
 import {
   capitalStackBarSpec,
   capitalStackedSpec,
@@ -39,7 +40,11 @@ const columns: Column<Opp>[] = [
     key: "protocol",
     header: "Protocol",
     sort: (o) => o.protocol,
-    cell: (o) => <strong>{o.protocol}</strong>,
+    cell: (o) => (
+      <Named name={o.protocol}>
+        <strong>{o.protocol}</strong>
+      </Named>
+    ),
   },
   { key: "strategy", header: "Strategy", sort: (o) => o.strategy, cell: (o) => o.strategy },
   {

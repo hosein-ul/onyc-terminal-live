@@ -537,3 +537,188 @@
 .pulse .card-head {
   flex-wrap: wrap;
 }
+
+/* On-chain feed and ticker */
+.chain-feed {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.chain-row {
+  display: grid;
+  grid-template-columns: 32px minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: center;
+  padding: 10px 0;
+  border-top: 1px solid var(--line);
+}
+.chain-row:first-child {
+  border-top: 0;
+}
+.chain-icon {
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  border-radius: 10px;
+  background: var(--ground);
+}
+.chain-what {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 10px;
+  align-items: center;
+}
+.chain-ins {
+  font-size: var(--fs-label);
+  color: var(--muted);
+}
+.chain-sub {
+  font-size: var(--fs-label);
+  color: var(--muted);
+}
+.chain-link {
+  font-weight: 600;
+  font-size: var(--fs-small);
+}
+.ticker {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 8px 14px;
+  background: var(--ink);
+  color: #f8f8f6;
+  border-radius: var(--radius-control);
+  font-size: var(--fs-small);
+  overflow: hidden;
+}
+.ticker-live {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.ticker-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--brand);
+}
+.ticker ul {
+  display: flex;
+  gap: 20px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+  white-space: nowrap;
+}
+.ticker a {
+  color: #f8f8f6;
+  text-decoration: none;
+}
+.ticker a:hover {
+  text-decoration: underline;
+}
+.ticker-age {
+  color: #c9c9c3;
+}
+.holder {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Logo badges: rounded chips on white cards */
+.badge {
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 0 0 1px var(--line);
+  vertical-align: middle;
+}
+.badge img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.badge-mono {
+  font-weight: 700;
+  color: var(--ink);
+  box-shadow: none;
+}
+.named {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Exposure map and peril icons */
+.exposure {
+  margin: 0;
+  display: grid;
+  gap: 14px;
+}
+.exposure-map {
+  width: 100%;
+  height: auto;
+  display: block;
+  background: var(--ground);
+  border-radius: var(--radius-control);
+}
+.exposure-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+  align-items: flex-start;
+  font-size: var(--fs-small);
+  color: var(--muted);
+}
+.exposure-legend ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.exposure-legend li {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.exposure-legend p {
+  margin: 0;
+  max-width: 70ch;
+}
+.swatch {
+  width: 14px;
+  height: 14px;
+  border-radius: 4px;
+  box-shadow: 0 0 0 1px var(--line);
+}
+.perils {
+  display: inline-flex;
+  gap: 4px;
+  margin-right: 6px;
+  vertical-align: middle;
+}
+.peril {
+  display: inline-grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 8px;
+  background: var(--accent-soft);
+  color: var(--ink);
+}
+.peril-cell {
+  display: inline-flex;
+  align-items: center;
+}

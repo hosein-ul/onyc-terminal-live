@@ -74,12 +74,8 @@
           "name": "alert_deliveries_rule_id_alert_rules_id_fk",
           "tableFrom": "alert_deliveries",
           "tableTo": "alert_rules",
-          "columnsFrom": [
-            "rule_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["rule_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -87,12 +83,8 @@
           "name": "alert_deliveries_event_id_events_id_fk",
           "tableFrom": "alert_deliveries",
           "tableTo": "events",
-          "columnsFrom": [
-            "event_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["event_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -207,10 +199,7 @@
       "compositePrimaryKeys": {
         "capital_distribution_snap_as_of_date_protocol_pk": {
           "name": "capital_distribution_snap_as_of_date_protocol_pk",
-          "columns": [
-            "as_of_date",
-            "protocol"
-          ]
+          "columns": ["as_of_date", "protocol"]
         }
       },
       "uniqueConstraints": {},
@@ -435,10 +424,7 @@
       "compositePrimaryKeys": {
         "chain_holders_scan_ts_rank_pk": {
           "name": "chain_holders_scan_ts_rank_pk",
-          "columns": [
-            "scan_ts",
-            "rank"
-          ]
+          "columns": ["scan_ts", "rank"]
         }
       },
       "uniqueConstraints": {},
@@ -612,10 +598,7 @@
       "compositePrimaryKeys": {
         "collateral_assets_snap_ts_row_index_pk": {
           "name": "collateral_assets_snap_ts_row_index_pk",
-          "columns": [
-            "ts",
-            "row_index"
-          ]
+          "columns": ["ts", "row_index"]
         }
       },
       "uniqueConstraints": {},
@@ -770,10 +753,7 @@
       "compositePrimaryKeys": {
         "defi_opportunities_snap_ts_opp_key_pk": {
           "name": "defi_opportunities_snap_ts_opp_key_pk",
-          "columns": [
-            "ts",
-            "opp_key"
-          ]
+          "columns": ["ts", "opp_key"]
         }
       },
       "uniqueConstraints": {},
@@ -1052,10 +1032,7 @@
       "compositePrimaryKeys": {
         "leaderboard_snap_date_address_pk": {
           "name": "leaderboard_snap_date_address_pk",
-          "columns": [
-            "date",
-            "address"
-          ]
+          "columns": ["date", "address"]
         }
       },
       "uniqueConstraints": {},
@@ -1103,10 +1080,7 @@
       "compositePrimaryKeys": {
         "leaderboard_top_snap_ts_rank_pk": {
           "name": "leaderboard_top_snap_ts_rank_pk",
-          "columns": [
-            "ts",
-            "rank"
-          ]
+          "columns": ["ts", "rank"]
         }
       },
       "uniqueConstraints": {},
@@ -1142,10 +1116,7 @@
       "compositePrimaryKeys": {
         "leaderboard_venue_daily_date_venue_pk": {
           "name": "leaderboard_venue_daily_date_venue_pk",
-          "columns": [
-            "date",
-            "venue"
-          ]
+          "columns": ["date", "venue"]
         }
       },
       "uniqueConstraints": {},
@@ -1260,10 +1231,7 @@
       "compositePrimaryKeys": {
         "llama_pools_snap_ts_pool_pk": {
           "name": "llama_pools_snap_ts_pool_pk",
-          "columns": [
-            "ts",
-            "pool"
-          ]
+          "columns": ["ts", "pool"]
         }
       },
       "uniqueConstraints": {},
@@ -1354,10 +1322,7 @@
       "compositePrimaryKeys": {
         "market_pools_snap_ts_pool_pk": {
           "name": "market_pools_snap_ts_pool_pk",
-          "columns": [
-            "ts",
-            "pool"
-          ]
+          "columns": ["ts", "pool"]
         }
       },
       "uniqueConstraints": {},
@@ -1757,10 +1722,7 @@
       "compositePrimaryKeys": {
         "protocol_aum_daily_date_protocol_pk": {
           "name": "protocol_aum_daily_date_protocol_pk",
-          "columns": [
-            "date",
-            "protocol"
-          ]
+          "columns": ["date", "protocol"]
         }
       },
       "uniqueConstraints": {},
@@ -2013,10 +1975,7 @@
       "compositePrimaryKeys": {
         "redemption_offers_snap_ts_offer_pk": {
           "name": "redemption_offers_snap_ts_offer_pk",
-          "columns": [
-            "ts",
-            "offer"
-          ]
+          "columns": ["ts", "offer"]
         }
       },
       "uniqueConstraints": {},
@@ -2577,10 +2536,7 @@
       "compositePrimaryKeys": {
         "source_health_source_endpoint_pk": {
           "name": "source_health_source_endpoint_pk",
-          "columns": [
-            "source",
-            "endpoint"
-          ]
+          "columns": ["source", "endpoint"]
         }
       },
       "uniqueConstraints": {},

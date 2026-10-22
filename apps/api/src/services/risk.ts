@@ -478,13 +478,14 @@ export async function conflictsService(deps: Deps) {
       observedAt: chainSupply.ts.toISOString(),
     });
     const apiAum = (await latestTickValue(deps, "tvl"))?.value ?? null;
+    const impliedCirculating = chainSupply.data.circulatingSupply * (chainStats?.data.nav ?? 0);
     const gap =
-      apiAum === null
+      apiAum === null || impliedCirculating === 0
         ? null
-        : (apiAum - chainSupply.data.impliedAumUsd) / chainSupply.data.impliedAumUsd;
+        : (apiAum - impliedCirculating) / impliedCirculating;
     list.push({
       id: 14,
-      title: "AUM: API vs on-chain supply times NAV",
+      title: "AUM: API vs on-chain circulating supply times NAV",
       kind: "computed",
       state:
         gap === null
@@ -493,9 +494,10 @@ export async function conflictsService(deps: Deps) {
             ? "conflict"
             : "consistent",
       detail:
-        "Total ONyc supply on chain times the program's NAV is what holders are owed at NAV. The API's AUM is live TVL from OnRe. They measure different things (the first includes the boss wallet's ONyc), so a gap is expected; it is shown, and an alert fires above the configured threshold.",
+        "The API's AUM is live TVL from OnRe, which is built as circulating supply times NAV. The chain gives the same product from the mint and the program's own NAV, so the two should agree; a gap means a feed is wrong or late, and an alert fires above the configured threshold.",
       values: {
-        impliedAumUsd: chainSupply.data.impliedAumUsd,
+        impliedCirculatingUsd: impliedCirculating,
+        impliedTotalUsd: chainSupply.data.impliedAumUsd,
         apiAumUsd: apiAum,
         gap,
         threshold: deps.config.CHAIN_AUM_GAP_ALERT,

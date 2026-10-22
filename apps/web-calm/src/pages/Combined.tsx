@@ -8,6 +8,7 @@ import { Embedded } from "../lib/embedded";
 import { signedPct } from "../lib/format";
 import { Card, Notice, PageHeader, Skeleton } from "../ui/kit";
 import { Provenance } from "../ui/Provenance";
+import { ChainPage, OnchainActivity } from "./Chain";
 import { ActivityPage } from "./Activity";
 import { CapitalDefiPage } from "./CapitalDefi";
 import { DevelopersPage } from "./Developers";
@@ -159,6 +160,7 @@ export function RiskReinsurancePage() {
       parts={[
         { id: "risk", label: "Risk signals", node: <RiskPage /> },
         { id: "market", label: "Peg & exits", node: <PegLiquidityPage /> },
+        { id: "chain", label: "On chain", node: <ChainPage /> },
         { id: "reinsurance", label: "Reinsurance book", node: <ReinsurancePage /> },
         {
           id: "sources",
@@ -181,6 +183,7 @@ export function AlertsApiPage() {
       title="Alerts & API"
       lede="What changed, how to get alerts in Telegram, and how to read the data yourself."
       parts={[
+        { id: "onchain", label: "On-chain activity", node: <OnchainActivity /> },
         { id: "activity", label: "Activity & alerts", node: <ActivityPage /> },
         { id: "developers", label: "API & MCP", node: <DevelopersPage /> },
       ]}

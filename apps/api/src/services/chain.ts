@@ -117,29 +117,34 @@ export async function chainStateService(deps: Deps): Promise<ServiceResult<Out<"
 
   const nav = stats?.data.nav ?? null;
   const impliedAum = supply === null || nav === null ? null : supply.data.totalSupply * nav;
+  const impliedCirculating =
+    supply === null || nav === null ? null : supply.data.circulatingSupply * nav;
   const apiAum = apiTvl?.value ?? null;
   const gap = (a: number | null, b: number | null): number | null =>
     a === null || b === null || b === 0 ? null : (a - b) / b;
 
-  const vaultRows = (vaults?.data.balances ?? []).map((b) => {
-    const decimals = DECIMALS[b.mint] ?? 0;
-    const amount = decimals === 0 ? b.amount : b.amount / 10 ** decimals;
-    const stable =
-      b.mint === CONSTANTS.usdcMint ||
-      b.mint === CONSTANTS.usdgMint ||
-      b.mint === CONSTANTS.usdtMint;
-    return {
-      holder: b.holder,
-      mint: b.mint,
-      symbol: MINT_SYMBOL[b.mint] ?? null,
-      amount,
-      valueUsd: stable
-        ? amount
-        : b.mint === CONSTANTS.onycMint && nav !== null
-          ? amount * nav
-          : null,
-    };
-  });
+  // The boss wallet holds many unrelated tokens; only the mints this tool prices are listed.
+  const vaultRows = (vaults?.data.balances ?? [])
+    .filter((b) => b.mint in MINT_SYMBOL)
+    .map((b) => {
+      const decimals = DECIMALS[b.mint] ?? 0;
+      const amount = decimals === 0 ? b.amount : b.amount / 10 ** decimals;
+      const stable =
+        b.mint === CONSTANTS.usdcMint ||
+        b.mint === CONSTANTS.usdgMint ||
+        b.mint === CONSTANTS.usdtMint;
+      return {
+        holder: b.holder,
+        mint: b.mint,
+        symbol: MINT_SYMBOL[b.mint] ?? null,
+        amount,
+        valueUsd: stable
+          ? amount
+          : b.mint === CONSTANTS.onycMint && nav !== null
+            ? amount * nav
+            : null,
+      };
+    });
   const custodyVisible = vaultRows.reduce((sum, v) => sum + (v.valueUsd ?? 0), 0);
   const stableOf = (mint: string): string | null => MINT_SYMBOL[mint] ?? null;
 
@@ -183,14 +188,15 @@ export async function chainStateService(deps: Deps): Promise<ServiceResult<Out<"
             },
       solvency: {
         impliedAumUsd: impliedAum,
+        impliedCirculatingUsd: impliedCirculating,
         apiAumUsd: apiAum,
         accountableReservesUsd: solv?.reservesUsd ?? null,
         accountableSupplyUsd: solv?.supplyUsd ?? null,
-        gapApi: gap(apiAum, impliedAum),
+        gapApi: gap(apiAum, impliedCirculating),
         gapAccountable: gap(solv?.reservesUsd ?? null, impliedAum),
         threshold,
         custodyVisibleUsd: vaults === null ? null : custodyVisible,
-        note: "On-chain supply times the program's own NAV is an independent measure of what holders are owed. Most reserves (T-bills, collateral) sit off chain, so the custody visible on chain is small by design; Accountable's attestation is what covers the rest.",
+        note: "The API's AUM is circulating supply times NAV, so it must match the chain. The independent check is Accountable's reserves against what all holders, including the boss wallet, are owed at NAV. Most reserves (T-bills, collateral) sit off chain, so the custody visible on chain is small by design.",
       },
       offers: (state?.data.offers ?? []).map((o) => ({
         address: o.address,

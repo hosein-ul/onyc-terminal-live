@@ -1,3 +1,4 @@
+import { Named } from "../ui/Badge";
 import {
   lorenzSpec,
   pointsCalendarSpec,
@@ -254,7 +255,11 @@ export function PointsPage() {
                       key: "p",
                       header: "Protocol",
                       sort: (m) => m.protocol,
-                      cell: (m: (typeof c.multipliers)[number]) => <strong>{m.protocol}</strong>,
+                      cell: (m: (typeof c.multipliers)[number]) => (
+                        <Named name={m.protocol}>
+                          <strong>{m.protocol}</strong>
+                        </Named>
+                      ),
                     },
                     {
                       key: "s",

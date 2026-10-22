@@ -91,7 +91,7 @@ describe("MCP server over a real client", () => {
     const mcp = await connect(client);
 
     const listed = await mcp.listTools();
-    expect(listed.tools).toHaveLength(21);
+    expect(listed.tools).toHaveLength(Object.keys(endpoints).length);
     expect(listed.tools.map((t) => t.name)).toContain("get_overview");
 
     const result = await mcp.callTool({ name: "get_overview", arguments: {} });

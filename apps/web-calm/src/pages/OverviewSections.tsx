@@ -1,3 +1,4 @@
+import { Named } from "../ui/Badge";
 import {
   capitalStackBarSpec,
   protocolBarsSpec,
@@ -40,6 +41,7 @@ import { Chart, Panel } from "../charts";
 import { shortAddress } from "../lib/format";
 import { Card, EmptyState, ExternalLink, Notice, Pill, Segmented, Skeleton } from "../ui/kit";
 import { Provenance } from "../ui/Provenance";
+import { ChainTicker } from "../ui/ChainFeed";
 import { Gloss, TermHint, TermNote } from "../ui/Term";
 
 const SEVERITY = { info: "neutral", watch: "watch", alert: "bad" } as const;
@@ -296,7 +298,10 @@ function StrategyRow({ s, i, nav }: { s: Strategy; i: number; nav: number | null
       <span className="place-rank">{i + 1}</span>
       <div className="place-main">
         <div className="place-name">
-          <strong>{s.protocol}</strong> · {s.strategy}
+          <Named name={s.protocol} size={24}>
+            <strong>{s.protocol}</strong>
+          </Named>{" "}
+          · {s.strategy}
           {s.isNew && <Pill tone="accent">new</Pill>}
         </div>
         <div className="place-sub">
@@ -497,7 +502,7 @@ export function PointsPulse({ pulse, m }: { pulse: PointsPulse; m: OverviewModel
               {pulse.venues.map((v) => (
                 <tr key={`${v.protocol}-${v.strategy}`}>
                   <td>
-                    {v.protocol} · {v.strategy}
+                    <Named name={v.protocol} size={18} /> · {v.strategy}
                   </td>
                   <td className="num">{v.multiplier}x</td>
                   <td className="num">
@@ -582,32 +587,35 @@ export function Changes({ m }: { m: OverviewModel }) {
   // Source outages belong on Data Health; this feed lists changes to ONyc itself.
   const events = (o?.data.whatChanged.events ?? []).filter((e) => !e.kind.startsWith("source_"));
   return (
-    <Card title="What changed since yesterday" subtitle="From the event feed">
-      {o === undefined ? (
-        <Skeleton height={120} />
-      ) : events.length === 0 ? (
-        <p className="tone-neutral">
-          Nothing new: no re-pricing, down-tick or layer change was detected.
-        </p>
-      ) : (
-        <ul className="feed">
-          {events.slice(0, 6).map((e) => (
-            <li key={e.id}>
-              <Pill tone={SEVERITY[e.severity]}>{e.severity}</Pill>
-              <div>
-                <strong>
-                  <Gloss text={e.title} />
-                </strong>
-                <div className="tone-neutral">
-                  {formatRelativeAge(e.ts)} · {formatDate(e.ts)}
+    <>
+      <ChainTicker />
+      <Card title="What changed since yesterday" subtitle="From the event feed">
+        {o === undefined ? (
+          <Skeleton height={120} />
+        ) : events.length === 0 ? (
+          <p className="tone-neutral">
+            Nothing new: no re-pricing, down-tick or layer change was detected.
+          </p>
+        ) : (
+          <ul className="feed">
+            {events.slice(0, 6).map((e) => (
+              <li key={e.id}>
+                <Pill tone={SEVERITY[e.severity]}>{e.severity}</Pill>
+                <div>
+                  <strong>
+                    <Gloss text={e.title} />
+                  </strong>
+                  <div className="tone-neutral">
+                    {formatRelativeAge(e.ts)} · {formatDate(e.ts)}
+                  </div>
                 </div>
-              </div>
-            </li>
-          ))}
-        </ul>
-      )}
-      {o !== undefined && <Provenance meta={o.meta["whatChanged"]} />}
-    </Card>
+              </li>
+            ))}
+          </ul>
+        )}
+        {o !== undefined && <Provenance meta={o.meta["whatChanged"]} />}
+      </Card>
+    </>
   );
 }
 

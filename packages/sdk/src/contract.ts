@@ -264,7 +264,7 @@ export const endpoints = {
     tag: "On-chain",
     params: none,
     query: z.object({
-      kind: z.string().trim().max(32).optional(),
+      kind: z.string().trim().max(240).optional(),
       limit: z.coerce.number().int().min(1).max(200).default(50),
     }),
     response: envelope(chainActivitySchema),
