@@ -4,7 +4,7 @@ An independent, community-built, read-only analytics terminal for OnRe's ONyc (t
 OnRe; not investment advice. It reads public data, shows where every number came from and how old it is, and never asks you to sign or
 send anything.
 
-Five separate front ends (Calm Fintech, Cobalt Field, Dot Matrix, Platinum Rail, Pastel Blocks) read one API with the same eleven pages:
+One front end (Calm, Black + Warm Brand Yellow) reads one API; it has five pages (Overview, Yield & Points, Risk & Reinsurance, Wallet, Alerts & API) plus a glossary:
 Overview, NAV & Yield, Peg & Liquidity, Reinsurance Book, Capital & DeFi, Points, Wallet Lab, Risk & Transparency, Data Health, Activity &
 Alerts, Developers.
 
@@ -19,7 +19,7 @@ pnpm db:local                   # terminal 1: an embedded Postgres 16, data in .
 pnpm db:migrate                 # once
 pnpm --filter @onyc/worker dev  # terminal 2: fills the database from the upstream sources (the first full crawl takes a few minutes)
 pnpm --filter @onyc/api dev     # terminal 3: the API on http://localhost:4000
-pnpm --filter @onyc/web-calm dev   # terminal 4: http://localhost:5173 (the other apps: web-cobalt, web-matrix, web-platinum, web-pastel)
+pnpm --filter @onyc/web-calm dev   # terminal 4: http://localhost:5173
 ```
 
 Each app proxies `/v1` to the API, so no variable is needed locally. Every chart type is on `/_charts` in Calm and Platinum.
@@ -34,7 +34,7 @@ Without them those features say "not configured".
 | `apps/worker`                                     | polls the upstream sources, writes data and events                              |
 | `apps/api`                                        | the `/v1` API, SSE stream, OpenAPI                                              |
 | `apps/bot`                                        | Telegram and webhook alerts                                                     |
-| `apps/web-*`                                      | the five front ends                                                             |
+| `apps/web-calm`                                   | the front end                                                                   |
 | `packages/sources`                                | clients and zod schemas for every upstream, tested on saved live responses      |
 | `packages/metrics`                                | every formula (NAV schedule, returns, attribution, concentration, risk signals) |
 | `packages/db`                                     | Drizzle schema and migration                                                    |

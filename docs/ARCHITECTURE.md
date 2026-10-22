@@ -10,11 +10,7 @@ onyc-terminal/
 │  ├─ api/              Hono on Node. REST /v1, SSE /v1/stream, OpenAPI at /v1/openapi.json
 │  ├─ worker/           ingestion scheduler (croner) + backfills + alert evaluator
 │  ├─ bot/              Telegram alerts bot (grammY)
-│  ├─ web-calm/         Next.js 15 (App Router) — direction 1
-│  ├─ web-cobalt/       direction 2
-│  ├─ web-matrix/       direction 3
-│  ├─ web-platinum/     direction 4
-│  └─ web-pastel/       direction 5
+│  └─ web-calm/         Vite + React, the only front end
 ├─ packages/
 │  ├─ sources/          one client per upstream source + zod schemas + fixtures
 │  ├─ db/               Drizzle schema, migrations, query helpers

@@ -13,16 +13,16 @@ export function Logo({ size = 30 }: { size?: number }) {
   return (
     <span className="logo">
       <svg width={size} height={size} viewBox="0 0 30 30" aria-hidden="true">
-        <rect width="30" height="30" rx="10" fill="var(--accent)" />
+        <rect width="30" height="30" rx="10" fill="var(--brand)" />
         <polyline
           points={POINTS}
           fill="none"
-          stroke="#fff"
+          stroke="#111111"
           strokeWidth="2.5"
           strokeLinecap="round"
           strokeLinejoin="round"
         />
-        <circle cx="23" cy="9" r="2.4" fill="#fff" />
+        <circle cx="23" cy="9" r="2.4" fill="#111111" />
       </svg>
       <span className="logo-text">ONyc Terminal</span>
     </span>

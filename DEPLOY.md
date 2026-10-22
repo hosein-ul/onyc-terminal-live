@@ -1,15 +1,15 @@
 # Deploying ONyc Terminal
 
-ONyc Terminal is independent and read-only. It has three long-running services, five static web apps and one local tool:
+ONyc Terminal is independent and read-only. It has three long-running services, one static web app and one local tool:
 
-| Piece          | What it is                                          | Where it runs                     |
-| -------------- | --------------------------------------------------- | --------------------------------- |
-| Postgres       | the only store                                      | Neon (or any Postgres 16)         |
-| `apps/worker`  | polls the upstream sources, writes data and events  | one container                     |
-| `apps/api`     | the `/v1` JSON API, SSE stream and OpenAPI document | one container                     |
-| `apps/bot`     | Telegram and webhook alert delivery                 | one container                     |
-| `apps/web-*`   | five separate Vite single-page apps                 | five Vercel projects              |
-| `packages/mcp` | read-only MCP server over stdio                     | on the machine of whoever uses it |
+| Piece           | What it is                                          | Where it runs                     |
+| --------------- | --------------------------------------------------- | --------------------------------- |
+| Postgres        | the only store                                      | Neon (or any Postgres 16)         |
+| `apps/worker`   | polls the upstream sources, writes data and events  | one container                     |
+| `apps/api`      | the `/v1` JSON API, SSE stream and OpenAPI document | one container                     |
+| `apps/bot`      | Telegram and webhook alert delivery                 | one container                     |
+| `apps/web-calm` | a Vite single-page app                              | one Vercel project                |
+| `packages/mcp`  | read-only MCP server over stdio                     | on the machine of whoever uses it |
 
 Nothing here sends transactions or holds keys. The only secrets are the database URL, the optional Telegram token, the optional
 Helius key and the optional webhook signing secret.
@@ -93,22 +93,11 @@ would double the load on the upstreams) and one bot. The API is stateless and ca
 - Worker: no port. Its health is `GET /v1/health/sources` on the API (every source, last success and error) and the Data Health page.
 - Bot: logs `alert bot starting`, then `alerts delivered` lines. A bot without a token says so once at start.
 
-## 3. The five web apps on Vercel
+## 3. The web app on Vercel
 
-Create **five projects** from the same repository, one per direction, with the root directory set to the app and "Include source
-files outside of the Root Directory" on (the apps use the shared packages). Each app has a `vercel.json` with the install and build
-commands, the single-page rewrite and basic security headers, so nothing else needs configuring in the dashboard except one variable:
+Create **one project** from the repository with the root directory set to `apps/web-calm` and "Include source files outside of the Root Directory" on (the app uses the shared packages). It has a `vercel.json` with the install and build commands, the single-page rewrite and basic security headers, so nothing else needs configuring in the dashboard except one variable:
 
-| Project       | Root directory      |
-| ------------- | ------------------- |
-| Calm Fintech  | `apps/web-calm`     |
-| Cobalt Field  | `apps/web-cobalt`   |
-| Dot Matrix    | `apps/web-matrix`   |
-| Platinum Rail | `apps/web-platinum` |
-| Pastel Blocks | `apps/web-pastel`   |
-| Emerald Light | `apps/web-emerald`  |
-
-Set `VITE_API_URL` (build-time) to the public URL of the API, for example `https://api.example.com`, and put the five web origins in the
+Set `VITE_API_URL` (build-time) to the public URL of the API, for example `https://api.example.com`, and put the web origin in the
 API's `CORS_ORIGINS` if you do not want `*`. Locally the apps proxy `/v1` to `localhost:4000`, so they run with no variable set.
 
 The apps do not set a Content-Security-Policy: Recharts, Tremor and ECharts write inline styles. A policy that allows `style-src

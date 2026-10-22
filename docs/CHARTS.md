@@ -1,3 +1,5 @@
+> **Single frontend (Phase 8).** Only `apps/web-calm` remains; the per-app rows below for the other four apps are history.
+
 # Chart system — libraries, specs and catalogue
 
 The owner wants a **modern, industry-standard fintech look**, not dated "government report" charts, and wants to use

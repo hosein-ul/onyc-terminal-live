@@ -1,6 +1,7 @@
-@import "./pages/overview.css";
 @import "./charts/charts.css";
 @import "./shell.css";
+@import "./pages/overview.css";
+@import "./brand.css";
 
 .sr-only {
   position: absolute;

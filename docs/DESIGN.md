@@ -1,3 +1,5 @@
+> **Single frontend (Phase 8).** Only Calm is built. Sections 2 to 5 are kept as history of the cancelled directions. Calm's palette is now Black + Warm Brand Yellow: black #111111, white #F8F8F6, warm yellow #F4D64E (used sparingly), border #DADAD5.
+
 # Design — five directions, five separate apps
 
 The owner picked these five from a larger set. Reference mockups (Market screen only) are in `design/refs/`.

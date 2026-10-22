@@ -1,19 +1,20 @@
-/* Calm Fintech tokens. Source: docs/DESIGN.md §1 and .design/direction.md. Components use these and nothing else. */
+/* Calm tokens: Black + Warm Brand Yellow. Black carries text and actions, yellow marks one thing at a time. */
 :root {
-  --ground: #eef2f6;
+  --ground: #f8f8f6;
   --surface: #ffffff;
-  --ink: #101828;
-  --muted: #475467;
-  --line: #e4e8ee;
-  --accent: #0b6bcb;
-  --accent-soft: #e8f1fb;
-  --accent-ink: #0b4f99;
-  --good: #0b5c3e;
-  --good-soft: #ddf3e8;
-  --bad: #9a1b3a;
-  --bad-soft: #fde7ec;
-  --watch: #6b5300;
-  --watch-soft: #fff3c4;
+  --ink: #111111;
+  --muted: #55554f;
+  --line: #dadad5;
+  --accent: #111111;
+  --brand: #f4d64e;
+  --accent-soft: #faf1c4;
+  --accent-ink: #111111;
+  --good: #0d5c38;
+  --good-soft: #dcf0e3;
+  --bad: #a3201c;
+  --bad-soft: #fbe4e1;
+  --watch: #5f4b00;
+  --watch-soft: #fbf0bb;
 
   --font-ui: "Figtree", ui-sans-serif, sans-serif;
 
@@ -38,32 +39,32 @@
   --ease: cubic-bezier(0.2, 0, 0, 1);
 
   /* chart skin (read by @onyc/charts-echarts readTokens and by the Recharts adapters) */
-  --chart-ground: #eef2f6;
+  --chart-ground: #f8f8f6;
   --chart-surface: #ffffff;
-  --chart-ink: #101828;
-  --chart-muted: #475467;
-  --chart-line: #e4e8ee;
-  --chart-grid: #edf0f4;
-  --chart-accent: #0b6bcb;
-  --chart-primary: #0b6bcb;
-  --chart-good: #0b5c3e;
-  --chart-bad: #9a1b3a;
-  --chart-s1: #0b6bcb;
-  --chart-s2: #1b9aaa;
-  --chart-s3: #7fb2e5;
-  --chart-s4: #3e4c6b;
-  --chart-s5: #9aa7bd;
-  --chart-s6: #14866d;
-  --chart-s7: #c5d3e3;
-  --chart-s8: #5b8def;
+  --chart-ink: #111111;
+  --chart-muted: #55554f;
+  --chart-line: #dadad5;
+  --chart-grid: #ebebe6;
+  --chart-accent: #f4d64e;
+  --chart-primary: #111111;
+  --chart-good: #0d5c38;
+  --chart-bad: #a3201c;
+  --chart-s1: #111111;
+  --chart-s2: #f4d64e;
+  --chart-s3: #8a8a84;
+  --chart-s4: #c9a91e;
+  --chart-s5: #3a3a36;
+  --chart-s6: #b8b8b1;
+  --chart-s7: #e6e6e1;
+  --chart-s8: #6b6b66;
   --chart-font-ui: "Figtree", ui-sans-serif, sans-serif;
   --chart-font-mono: "Figtree", ui-sans-serif, sans-serif;
   --chart-stroke: 3;
   --chart-radius: 8;
   --chart-tooltip-bg: #ffffff;
-  --chart-tooltip-ink: #101828;
+  --chart-tooltip-ink: #111111;
   --chart-marker: circle;
-  --chart-area-alpha: 0.1;
+  --chart-area-alpha: 0.14;
 }
 
 *,

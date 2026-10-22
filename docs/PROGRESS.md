@@ -125,3 +125,8 @@ Decisions, in the order they were made:
   and hide the sparkline; (d) Sankey labels were cut off, the right margin now follows the longest label.
 - **Open**: `web-emerald` (a light Warm White and Emerald variant of Calm, added earlier today) keeps the eleven pages and the old Overview; the "?" hints cover the labels
   listed above, not every sentence on the older pages; the combined pages show each old page in full, so Risk & Reinsurance is long; the per-page critique and blind review were not run.
+
+## Phase 8 plan: single frontend, on-chain layer, real visuals (scope change, 22 October 2026)
+
+Scope, by the owner: build only `apps/web-calm`; Cobalt, Dot Matrix, Platinum, Pastel (and the Emerald variant) are cancelled and deleted from the tree (last state in commit ec166f4).
+The workspace, turbo pipeline and CI are generic, so they now build one app. Calm is restyled Black + Warm Brand Yellow. Then: A) read-only on-chain layer, B) logos, maps and peril icons.

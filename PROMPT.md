@@ -6,7 +6,7 @@
 
 You are building **ONyc Terminal**: an unofficial, community-built, read-only analytics platform for OnRe's ONyc
 (tokenized reinsurance on Solana). It has a full backend (ingestion worker, Postgres, REST + SSE API, alerts bot,
-MCP server) and **five separate frontends**, each in a different visual direction, so the owner can pick one.
+MCP server) and **one frontend (Calm)**. The four other directions were cancelled; see docs/PROGRESS.md, Phase 8.
 
 Read `CLAUDE.md` and everything in `docs/` and `design/refs/` before writing code. Those files are the spec.
 The data sources in `docs/DATA_SOURCES.md` were verified live on 2026-10-21; re-verify each one before using it.

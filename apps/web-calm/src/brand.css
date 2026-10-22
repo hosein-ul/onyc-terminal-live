@@ -1,0 +1,175 @@
+/* Black + Warm Brand Yellow. Loaded last: black sidebar, black actions, one yellow highlight at a time. */
+
+/* Sidebar */
+.sidebar {
+  background: var(--ink);
+  color: #f8f8f6;
+}
+.sidebar .logo {
+  color: #f8f8f6;
+}
+.sidebar .nav-item {
+  color: #c9c9c3;
+}
+.sidebar .nav-item:hover {
+  background: #26261f;
+  color: #ffffff;
+}
+.sidebar .nav-item.active {
+  background: var(--brand);
+  color: var(--ink);
+}
+.shell {
+  background: var(--ground);
+}
+
+/* Phone */
+.topbar .logo {
+  color: var(--ink);
+}
+.icon-btn {
+  background: var(--ink);
+  color: #f8f8f6;
+}
+.icon-btn:hover {
+  background: #26261f;
+}
+.drawer .icon-btn {
+  background: var(--ink);
+}
+.drawer .nav-item.active {
+  background: var(--brand);
+  color: var(--ink);
+}
+
+/* Actions: black, yellow on hover */
+.btn {
+  background: var(--ink);
+  color: #f8f8f6;
+}
+.btn:hover {
+  background: var(--brand);
+  color: var(--ink);
+}
+.btn:disabled {
+  background: var(--line);
+  color: var(--muted);
+}
+.btn-quiet {
+  background: var(--ground);
+  color: var(--ink);
+}
+.btn-quiet:hover {
+  background: var(--brand);
+  color: var(--ink);
+}
+.seg button[aria-pressed="true"] {
+  background: var(--ink);
+  color: #f8f8f6;
+}
+.field input:focus,
+.field select:focus {
+  border-color: var(--ink);
+}
+a {
+  text-decoration-color: var(--brand);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+.ext {
+  text-decoration: none;
+}
+.ext:hover {
+  background: var(--brand);
+}
+:focus-visible {
+  outline: 3px solid var(--brand);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 1px var(--ink);
+}
+
+/* Overview */
+.sectionbar-links a[aria-current="true"] {
+  background: var(--brand);
+  color: var(--ink);
+}
+.sectionbar-links a:hover {
+  background: #ffffff;
+}
+.headline-text {
+  font-weight: 800;
+  letter-spacing: -0.035em;
+}
+.badge-link {
+  background: var(--brand);
+  color: var(--ink);
+}
+.vital {
+  border-top: 4px solid var(--ink);
+}
+.vital-good {
+  border-top-color: var(--good);
+}
+.vital-watch {
+  border-top-color: var(--brand);
+}
+.vital-bad {
+  border-top-color: var(--bad);
+}
+.vital[data-vital="nav"] {
+  background: var(--ink);
+  color: #f8f8f6;
+  border-top-color: var(--brand);
+}
+.vital[data-vital="nav"] .vital-value {
+  color: var(--brand);
+}
+.vital[data-vital="nav"] .vital-label,
+.vital[data-vital="nav"] .vital-unit,
+.vital[data-vital="nav"] .vital-detail,
+.vital[data-vital="nav"] .prov,
+.vital[data-vital="nav"] .kpi-note {
+  color: #c9c9c3;
+}
+.vital[data-vital="nav"] .term-btn {
+  color: #c9c9c3;
+  border-color: #c9c9c3;
+}
+.vital[data-vital="nav"] .vital-spark {
+  filter: invert(1);
+}
+.place-rank {
+  background: var(--brand);
+  color: var(--ink);
+}
+.term-btn:hover,
+.term-btn[aria-expanded="true"] {
+  background: var(--brand);
+  border-color: var(--ink);
+  color: var(--ink);
+}
+.term-extra {
+  border-left-color: var(--brand);
+}
+.term-note {
+  background: var(--accent-soft);
+  color: var(--ink);
+}
+.hero-unit {
+  color: var(--muted);
+}
+.pill-accent {
+  background: var(--brand);
+  color: var(--ink);
+}
+.notice {
+  background: var(--accent-soft);
+  color: var(--ink);
+}
+.ov-title {
+  color: var(--ink);
+  box-shadow: inset 0 -6px 0 var(--brand);
+  align-self: flex-start;
+  padding: 0 4px;
+  margin-left: 2px;
+}
