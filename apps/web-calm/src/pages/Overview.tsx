@@ -35,8 +35,9 @@ export function OverviewPage() {
     now: (
       <div className="now">
         <Headline m={m} />
-        <div className="nowgrid">
-          <NavHero m={m}>
+        <div className="bento">
+          <div className="tile-nav">
+            <NavHero m={m}>
             <ChartFrame
               spec={hero}
               status={heroQ.isError ? "error" : heroQ.isLoading ? "loading" : "ready"}
@@ -50,8 +51,11 @@ export function OverviewPage() {
             >
               {hero !== null && <Chart spec={hero} height={300} />}
             </ChartFrame>
-          </NavHero>
-          <SafetyGlance m={m} />
+            </NavHero>
+          </div>
+          <div className="tile-safety">
+            <SafetyGlance m={m} />
+          </div>
         </div>
         <Vitals m={m} />
       </div>

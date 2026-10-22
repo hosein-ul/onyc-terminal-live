@@ -1,6 +1,7 @@
-import { Menu, X } from "lucide-react";
+import { Menu, Moon, Sun, X } from "lucide-react";
 import { Fragment, useEffect, useRef, useState, type ReactNode } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
+import { setTheme, useTheme } from "../lib/theme";
 import { GlossProvider } from "../ui/Term";
 import { Logo } from "./Logo";
 import { NAV } from "./nav";
@@ -25,6 +26,26 @@ function NavList({ onNavigate }: { onNavigate?: () => void }) {
         </Fragment>
       ))}
     </nav>
+  );
+}
+
+function ThemeToggle() {
+  const theme = useTheme();
+  const next = theme === "dark" ? "light" : "dark";
+  return (
+    <button
+      type="button"
+      className="theme-toggle"
+      onClick={() => setTheme(next)}
+      title={`Switch to ${next} theme`}
+    >
+      {theme === "dark" ? (
+        <Sun size={18} strokeWidth={1.75} aria-hidden="true" />
+      ) : (
+        <Moon size={18} strokeWidth={1.75} aria-hidden="true" />
+      )}
+      <span className="sr-only">Switch to {next} theme</span>
+    </button>
   );
 }
 
@@ -77,7 +98,10 @@ export function AppShell({ children }: { children: ReactNode }) {
         </div>
         <NavList />
         <div className="sidebar-foot">
-          Read-only and independent. <Link to="/glossary">Glossary</Link>
+          <span>
+            Read-only and independent. <Link to="/glossary">Glossary</Link>
+          </span>
+          <ThemeToggle />
         </div>
       </aside>
 
@@ -119,6 +143,10 @@ export function AppShell({ children }: { children: ReactNode }) {
               </button>
             </div>
             <NavList onNavigate={() => setOpen(false)} />
+            <div className="sidebar-foot">
+              <span>Theme</span>
+              <ThemeToggle />
+            </div>
           </div>
         </div>
       )}

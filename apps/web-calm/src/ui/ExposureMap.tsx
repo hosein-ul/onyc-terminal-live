@@ -82,7 +82,7 @@ export function exposureOf(layers: Layer[]): Exposure {
 
 /** Five steps from pale yellow to black, so the largest exposure is the darkest. */
 const STEPS = [
-  { min: 0.25, fill: "#111111", ink: "#f8f8f6" },
+  { min: 0.25, fill: "#151514", ink: "#f8f8f6" },
   { min: 0.1, fill: "#c9a91e", ink: "#111111" },
   { min: 0.04, fill: "#f4d64e", ink: "#111111" },
   { min: 0.0001, fill: "#faf1c4", ink: "#111111" },
@@ -113,8 +113,8 @@ export function ExposureMap({ layers }: { layers: Layer[] }) {
             <path
               key={c.id}
               d={c.d}
-              fill={step?.fill ?? "#e6e6e1"}
-              stroke="#ffffff"
+              fill={step?.fill ?? "var(--fill-strong)"}
+              stroke="var(--surface)"
               strokeWidth={0.6}
             >
               <title>
@@ -129,7 +129,6 @@ export function ExposureMap({ layers }: { layers: Layer[] }) {
         {named.map(([code, share]) => {
           const a = W.anchors[code];
           if (a === undefined) return null;
-          const s = stepOf(share);
           return (
             <g key={code} transform={`translate(${a[0]} ${a[1]})`} aria-hidden="true">
               <rect
@@ -138,8 +137,8 @@ export function ExposureMap({ layers }: { layers: Layer[] }) {
                 width={48}
                 height={20}
                 rx={10}
-                fill="#ffffff"
-                stroke="#111111"
+                fill="var(--surface)"
+                stroke="var(--ink)"
                 strokeWidth={1}
               />
               <text
@@ -147,7 +146,7 @@ export function ExposureMap({ layers }: { layers: Layer[] }) {
                 y={4}
                 fontSize={11}
                 fontWeight={700}
-                fill={s?.ink === "#f8f8f6" ? "#111111" : "#111111"}
+                fill="var(--ink)"
               >
                 {code} {formatPercent(share, 0)}
               </text>

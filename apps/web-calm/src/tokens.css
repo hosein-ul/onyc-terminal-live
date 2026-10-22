@@ -1,13 +1,13 @@
 /* Calm tokens: Black + Warm Brand Yellow. Black carries text and actions, yellow marks one thing at a time. */
 :root {
-  --ground: #f8f8f6;
+  --ground: #f4f3ef;
   --surface: #ffffff;
-  --ink: #111111;
-  --muted: #55554f;
-  --line: #dadad5;
-  --line-soft: #e8e8e3;
+  --ink: #151514;
+  --muted: #5f5e58;
+  --line: #e6e4dd;
+  --line-soft: #eeece6;
   --line-strong: #111111;
-  --accent: #111111;
+  --accent: #151514;
   --brand: #f4d64e;
   --accent-soft: #faf1c4;
   --accent-ink: #111111;
@@ -18,6 +18,11 @@
   --watch: #5f4b00;
   --watch-soft: #fbf0bb;
 
+  --fill: #f0eee8;
+  --fill-strong: #e4e2da;
+  --shadow-soft: 0 1px 2px rgb(21 21 20 / 0.04), 0 10px 28px -12px rgb(21 21 20 / 0.12);
+  --shadow-lift: 0 2px 4px rgb(21 21 20 / 0.05), 0 18px 40px -14px rgb(21 21 20 / 0.2);
+  --radius-tile: 28px;
   --font-ui: "Figtree", ui-sans-serif, sans-serif;
 
   /* type scale */
@@ -30,9 +35,9 @@
   --tracking-display: -0.025em;
 
   /* space and shape */
-  --gap: 32px;
-  --radius-card: 14px;
-  --radius-control: 10px;
+  --gap: 16px;
+  --radius-card: 24px;
+  --radius-control: 14px;
   --radius-pill: 999px;
 
   /* motion */
@@ -41,17 +46,17 @@
   --ease: cubic-bezier(0.2, 0, 0, 1);
 
   /* chart skin (read by @onyc/charts-echarts readTokens and by the Recharts adapters) */
-  --chart-ground: #f8f8f6;
+  --chart-ground: #f4f3ef;
   --chart-surface: #ffffff;
-  --chart-ink: #111111;
-  --chart-muted: #55554f;
-  --chart-line: #dadad5;
-  --chart-grid: #ebebe6;
+  --chart-ink: #151514;
+  --chart-muted: #5f5e58;
+  --chart-line: #e6e4dd;
+  --chart-grid: #ebe9e2;
   --chart-accent: #f4d64e;
   --chart-primary: #e2b100;
   --chart-good: #0d5c38;
   --chart-bad: #a3201c;
-  --chart-s1: #111111;
+  --chart-s1: #151514;
   --chart-s2: #f4d64e;
   --chart-s3: #8a8a84;
   --chart-s4: #c9a91e;
@@ -67,6 +72,47 @@
   --chart-tooltip-ink: #111111;
   --chart-marker: circle;
   --chart-area-alpha: 0.22;
+}
+
+/* Dark theme: warm graphite, the same yellow. Applied by data-theme on <html>; "system" follows the OS. */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --ground: #121211;
+  --surface: #1b1b1a;
+  --ink: #f3f2ee;
+  --muted: #a5a49b;
+  --line: #2f2e2b;
+  --line-soft: #262624;
+  --accent: #f3f2ee;
+  --accent-soft: #3a3412;
+  --accent-ink: #f3f2ee;
+  --fill: #242422;
+  --fill-strong: #32312e;
+  --good: #5fcf96;
+  --good-soft: #17311f;
+  --bad: #f2827a;
+  --bad-soft: #3a1b19;
+  --watch: #ecc94b;
+  --watch-soft: #35300f;
+  --shadow-soft: 0 1px 2px rgb(0 0 0 / 0.3), 0 10px 28px -12px rgb(0 0 0 / 0.6);
+  --shadow-lift: 0 2px 4px rgb(0 0 0 / 0.35), 0 18px 40px -14px rgb(0 0 0 / 0.7);
+  --chart-ground: #121211;
+  --chart-surface: #1b1b1a;
+  --chart-ink: #f3f2ee;
+  --chart-muted: #a5a49b;
+  --chart-line: #2f2e2b;
+  --chart-grid: #2a2927;
+  --chart-primary: #f4d64e;
+  --chart-good: #5fcf96;
+  --chart-bad: #f2827a;
+  --chart-s1: #f3f2ee;
+  --chart-s3: #8d8c84;
+  --chart-s5: #cfcec6;
+  --chart-s6: #5b5a54;
+  --chart-s7: #3a3935;
+  --chart-s8: #a5a49b;
+  --chart-tooltip-bg: #242422;
+  --chart-tooltip-ink: #f3f2ee;
 }
 
 *,

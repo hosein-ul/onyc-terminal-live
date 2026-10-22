@@ -1,4 +1,5 @@
 import {
+  Activity,
   Bell,
   LayoutDashboard,
   ShieldAlert,
@@ -17,7 +18,7 @@ export interface NavItem {
   group: "Monitor" | "Tools";
 }
 
-/** The five pages. The older eleven pages live inside these and their old addresses redirect (see App.tsx). */
+/** The six pages. The older eleven pages live inside these and their old addresses redirect (see App.tsx). */
 export const NAV: NavItem[] = [
   { to: "/", label: "Overview", icon: LayoutDashboard, hint: "The whole picture, top to bottom", group: "Monitor" },
   { to: "/yield", label: "Yield & Points", icon: TrendingUp, hint: "Returns, DeFi venues, points", group: "Monitor" },
@@ -26,6 +27,13 @@ export const NAV: NavItem[] = [
     label: "Risk & Reinsurance",
     icon: ShieldAlert,
     hint: "Signals, exits, the insurance book, data health",
+    group: "Monitor",
+  },
+  {
+    to: "/activity",
+    label: "Activity",
+    icon: Activity,
+    hint: "Every live transaction of the OnRe program",
     group: "Monitor",
   },
   { to: "/wallet", label: "Wallet", icon: Wallet, hint: "Look up any address", group: "Tools" },

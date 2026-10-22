@@ -2,7 +2,7 @@ import { formatSourceFooter } from "@onyc/format";
 import type { Meta } from "@onyc/sdk";
 import { useNow } from "../lib/useNow";
 
-/** "Source: OnRe core API · updated 42 s ago", in red when the API marks the data stale. */
+/** "Source: OnRe core API · updated 42 s ago", with a quiet amber dot when the API marks the data as possibly behind. */
 export function Provenance({
   meta,
   className = "",
@@ -15,7 +15,7 @@ export function Provenance({
   return (
     <p className={`prov ${meta.stale ? "prov-stale" : ""} ${className}`}>
       {formatSourceFooter(meta.source, meta.fetchedAt, now)}
-      {meta.stale ? " · stale" : ""}
+      {meta.stale ? " · may be behind" : ""}
     </p>
   );
 }

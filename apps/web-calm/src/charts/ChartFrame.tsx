@@ -227,7 +227,7 @@ export function ChartFrame({
         <footer className="ch-foot">
           <span className={spec.provenance.stale ? "ch-stale" : undefined}>
             {footerText(spec.provenance, now)}
-            {spec.provenance.stale ? " · stale" : ""}
+            {spec.provenance.stale ? " · may be behind" : ""}
           </span>
           {spec.note !== undefined && <span className="ch-note">{spec.note}</span>}
         </footer>

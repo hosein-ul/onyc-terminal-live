@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import { AppShell } from "./layout/AppShell";
+import { ActivityPage } from "./pages/ActivityLive";
 import { AlertsApiPage, RiskReinsurancePage, YieldPointsPage } from "./pages/Combined";
 import { GlossaryPage } from "./pages/Glossary";
 import { OverviewPage } from "./pages/Overview";
@@ -15,7 +16,6 @@ const REDIRECTS: [string, string][] = [
   ["market", "/risk#market"],
   ["reinsurance", "/risk#reinsurance"],
   ["health", "/risk#sources"],
-  ["activity", "/alerts#activity"],
   ["developers", "/alerts#developers"],
 ];
 
@@ -57,6 +57,7 @@ export function App() {
                 <Route index element={<OverviewPage />} />
                 <Route path="yield" element={<YieldPointsPage />} />
                 <Route path="risk" element={<RiskReinsurancePage />} />
+                <Route path="activity" element={<ActivityPage />} />
                 <Route path="wallet" element={<WalletPage />} />
                 <Route path="wallet/:address" element={<WalletPage />} />
                 <Route path="alerts" element={<AlertsApiPage />} />

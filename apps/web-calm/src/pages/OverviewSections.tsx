@@ -33,7 +33,7 @@ import {
 } from "@onyc/insights";
 import type { OverviewModel } from "@onyc/insights/react";
 import type { EndpointResponse, Meta } from "@onyc/sdk";
-import { useWallet } from "@onyc/sdk/react";
+import { useChainActivity, useWallet } from "@onyc/sdk/react";
 import { ArrowUpRight, Search } from "lucide-react";
 import { useEffect, useMemo, useState, type FormEvent, type ReactNode } from "react";
 import { Link } from "react-router-dom";
@@ -41,7 +41,7 @@ import { Chart, Panel } from "../charts";
 import { shortAddress } from "../lib/format";
 import { Card, EmptyState, ExternalLink, Notice, Pill, Segmented, Skeleton } from "../ui/kit";
 import { Provenance } from "../ui/Provenance";
-import { ChainTicker } from "../ui/ChainFeed";
+import { ChainTicker, KIND_LABEL, solscanTx } from "../ui/ChainFeed";
 import { Gloss, TermHint, TermNote } from "../ui/Term";
 
 const SEVERITY = { info: "neutral", watch: "watch", alert: "bad" } as const;
@@ -281,9 +281,46 @@ function VitalCard({ v }: { v: Vital }) {
   );
 }
 
+/** The newest program transactions as a tile of the bento, linking to the Activity page. */
+function LiveTile() {
+  const q = useChainActivity({ query: { limit: 4 } });
+  const events = q.data?.data.events ?? [];
+  return (
+    <article className="vital live-tile">
+      <h3>
+        <span>
+          <span className="live-dot" aria-hidden="true" />
+          Live on chain
+        </span>
+        <Link to="/activity">All transactions</Link>
+      </h3>
+      {q.isLoading ? (
+        <Skeleton height={120} />
+      ) : events.length === 0 ? (
+        <p className="tone-neutral">No program transactions recorded yet.</p>
+      ) : (
+        <ul className="live-list">
+          {events.map((e) => (
+            <li key={`${e.signature}-${e.kind}`}>
+              <a href={solscanTx(e.signature)} target="_blank" rel="noopener noreferrer">
+                {KIND_LABEL[e.kind]}
+                {e.onyc !== null && e.onyc > 0
+                  ? ` · ${new Intl.NumberFormat("en-US", { maximumFractionDigits: 0 }).format(e.onyc)} ONyc`
+                  : ""}
+              </a>
+              <small>{formatRelativeAge(e.ts)}</small>
+            </li>
+          ))}
+        </ul>
+      )}
+      <Provenance meta={q.data?.meta["events"]} />
+    </article>
+  );
+}
+
 export function Vitals({ m }: { m: OverviewModel }) {
   return (
-    <section className="vitals" aria-label="Five more numbers that matter">
+    <section className="vitals" aria-label="More numbers that matter">
       {m.q.overview.data === undefined
         ? SECTION_PLACEHOLDERS.map((k) => (
             <div key={k} className="vital">
@@ -291,6 +328,7 @@ export function Vitals({ m }: { m: OverviewModel }) {
             </div>
           ))
         : m.vitals.filter((v) => v.id !== "nav").map((v) => <VitalCard key={v.id} v={v} />)}
+      {m.q.overview.data !== undefined && <LiveTile />}
     </section>
   );
 }
