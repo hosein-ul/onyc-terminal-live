@@ -27,7 +27,12 @@ export function OverviewPage() {
 
   // The hero chart has its own range selector, so it loads its own history.
   const heroQ = useNav({ query: { range } });
-  const hero = useMemo(() => (heroQ.data === undefined ? null : navSpec(heroQ.data)), [heroQ.data]);
+  const hero = useMemo(() => {
+    if (heroQ.data === undefined) return null;
+    const spec = navSpec(heroQ.data);
+    // The ring markers (price vectors, down-ticks) live on the NAV & Yield page; here the line stays clean.
+    return { ...spec, annotations: spec.annotations.filter((a) => a.kind !== "event") };
+  }, [heroQ.data]);
 
   const blocks: Record<SectionId, ReactNode> = {
     now: (
@@ -43,11 +48,11 @@ export function OverviewPage() {
                 error="NAV history could not be loaded."
                 range={range}
                 onRange={setRange}
-                height={340}
+                height={250}
                 plain
                 hideTitle
               >
-                {hero !== null && <Chart spec={hero} height={340} />}
+                {hero !== null && <Chart spec={hero} height={250} />}
               </ChartFrame>
             </NavHero>
           </div>

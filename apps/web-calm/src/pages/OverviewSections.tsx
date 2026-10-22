@@ -37,6 +37,7 @@ import { Card, EmptyState, ExternalLink, Notice, Pill, Skeleton } from "../ui/ki
 import { Provenance } from "../ui/Provenance";
 import { ChainFeed, KIND_LABEL, solscanTx } from "../ui/ChainFeed";
 import { StatusIcon } from "../ui/Status";
+import { WalletSearch } from "../ui/WalletDialog";
 import { WalletLink } from "../lib/wallet";
 import { Gloss, TermHint, TermNote } from "../ui/Term";
 
@@ -98,6 +99,7 @@ export function SectionNav({ order }: { order: SectionId[] }) {
           );
         })}
       </nav>
+      <WalletSearch />
     </div>
   );
 }
@@ -107,25 +109,14 @@ export function SectionNav({ order }: { order: SectionId[] }) {
 // ---------------------------------------------------------------------------------------------
 
 export function Headline({ m }: { m: OverviewModel }) {
-  const today = new Date().toLocaleDateString("en-GB", {
-    weekday: "long",
-    day: "numeric",
-    month: "long",
-    timeZone: "UTC",
-  });
   const spread = m.q.overview.data?.data.sourceCheck.spread ?? null;
+  if (spread === null) return null;
   return (
     <div className="headline">
-      <div className="eyebrow">{today}</div>
-      <h1 className="headline-text">Overview</h1>
-      {spread !== null && (
-        <div className="headline-meta">
-          <Link className="badge-link" to="/health">
-            <TriangleAlert size={14} strokeWidth={2} aria-hidden="true" />
-            Sources differ by {formatPercent(Math.abs(spread), 1)} · see Data Health
-          </Link>
-        </div>
-      )}
+      <Link className="badge-link" to="/health">
+        <TriangleAlert size={14} strokeWidth={2} aria-hidden="true" />
+        Sources differ by {formatPercent(Math.abs(spread), 1)} · see Data Health
+      </Link>
     </div>
   );
 }

@@ -193,9 +193,11 @@ export function AppShell({ children }: { children: ReactNode }) {
       )}
 
       <div className="main-col">
-        <div className="topline">
-          <WalletSearch />
-        </div>
+        {location.pathname !== "/" && (
+          <div className="topline">
+            <WalletSearch />
+          </div>
+        )}
         <main id="main" className="main" tabIndex={-1}>
           <GlossProvider key={location.pathname}>{children}</GlossProvider>
         </main>

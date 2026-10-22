@@ -475,3 +475,49 @@ a:hover {
 .shell-collapsed .collapse-btn {
   display: none;
 }
+
+/* ---------- Critique fixes: compact sidebar, quieter active item, a NAV tile that stands off the dark ground ---------- */
+.sidebar {
+  scrollbar-width: none;
+}
+.sidebar::-webkit-scrollbar {
+  display: none;
+}
+.sidebar-head {
+  padding: 0 8px 10px;
+}
+.nav-item {
+  padding: 7px 14px;
+  font-size: 14px;
+}
+.nav-group {
+  margin: 10px 0 3px;
+}
+.nav-item.active {
+  background: var(--fill-strong);
+  color: var(--ink);
+}
+:root[data-theme="dark"] .navhero {
+  background: #262624;
+  box-shadow:
+    inset 0 0 0 1px #3a3935,
+    var(--shadow-lift);
+  --chart-surface: #262624;
+}
+.sectionbar .wsearch {
+  width: min(320px, 100%);
+  box-shadow: none;
+  background: var(--fill);
+}
+.sectionbar .wsearch input {
+  padding: 9px 0;
+}
+.now {
+  padding-top: 4px;
+}
+.headline {
+  padding: 4px 4px 0;
+}
+.navhero {
+  padding: 22px 26px 16px;
+}
