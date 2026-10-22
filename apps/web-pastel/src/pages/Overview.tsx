@@ -1,5 +1,6 @@
 import {
   capitalStackBarSpec,
+  collateralSankeySpec,
   navSpec,
   protocolBarsSpec,
   provenanceFrom,
@@ -23,6 +24,7 @@ import {
   useFlows,
   useNav,
   useOverview,
+  useYieldComposition,
   useRedemptions,
 } from "@onyc/sdk/react";
 import { useMemo } from "react";
@@ -58,6 +60,7 @@ export function OverviewPage() {
   const flowsQ = useFlows({ query: { range: "1m" } });
   const stackQ = useCapitalStack();
   const distQ = useCapitalDistribution();
+  const yieldQ = useYieldComposition();
   const redemptionsQ = useRedemptions();
 
   const o = overview.data;
@@ -151,7 +154,7 @@ export function OverviewPage() {
           </div>
 
           <div data-topic="rose">
-            <Panel q={stackQ} build={stackBuild} title="Capital stack" height={190} />
+            <Panel q={stackQ} build={stackBuild} title="Capital stack" height={150} />
           </div>
           <div data-topic="rose">
             <Panel q={distQ} build={protocolBuild} title="Capital by protocol" height={260} />
@@ -241,6 +244,16 @@ export function OverviewPage() {
             {o !== undefined && <Provenance meta={o.meta["sourceCheck"]} />}
           </section>
         </div>
+      </div>
+
+      {/* The Sankey needs the page width; in a narrow column its labels would be clipped. */}
+      <div data-topic="lilac" className="wide-chart">
+        <Panel
+          q={yieldQ}
+          build={collateralSankeySpec}
+          title="Where the collateral sits"
+          height={360}
+        />
       </div>
     </>
   );

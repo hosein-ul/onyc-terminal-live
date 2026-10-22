@@ -323,3 +323,32 @@
 .ch-frame [class*="tremor-"] {
   font-family: var(--font-ui);
 }
+
+/* Key for the rings drawn on a time series */
+.chart-key {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+  margin: 8px 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: 12px;
+  color: inherit;
+  opacity: 0.82;
+}
+.chart-key li {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.chart-key i {
+  width: 9px;
+  height: 9px;
+  border: 2px solid;
+  border-radius: 50%;
+  background: var(--chart-surface);
+}
+.chart-key span {
+  font-variant-numeric: tabular-nums;
+  opacity: 0.7;
+}

@@ -58,14 +58,18 @@
 .sheet-chips {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 6px;
+}
+/* Eleven pages fit one row on a wide screen; a narrower one wraps evenly, never one chip alone. */
+.chips {
+  justify-content: flex-end;
 }
 .chip {
   background: var(--chip);
   color: var(--ink);
-  padding: 9px 16px;
+  padding: 8px 12px;
   border-radius: 14px;
-  font-size: 14px;
+  font-size: 13.5px;
   font-weight: 600;
   text-decoration: none;
   transition:
@@ -116,6 +120,14 @@
   letter-spacing: -0.035em;
   max-width: 22ch;
   text-wrap: balance;
+}
+/* Onest's tabular "1" is as wide as the other digits and opens gaps like "1 1.02%" in large type. */
+.page-head h1,
+.page-head mark,
+.kpi-value,
+.hero-number,
+.big {
+  font-variant-numeric: proportional-nums;
 }
 .page-head mark {
   background: var(--topic);
@@ -515,4 +527,8 @@ a {
 
 .duo .big {
   font-size: 30px;
+}
+
+.wide-chart {
+  margin-top: 20px;
 }

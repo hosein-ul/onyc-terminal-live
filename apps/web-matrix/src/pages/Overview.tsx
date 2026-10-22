@@ -1,5 +1,6 @@
 import {
   capitalStackBarSpec,
+  collateralSankeySpec,
   navSpec,
   protocolBarsSpec,
   provenanceFrom,
@@ -21,6 +22,7 @@ import {
   useFlows,
   useNav,
   useOverview,
+  useYieldComposition,
 } from "@onyc/sdk/react";
 import { useMemo } from "react";
 import { Chart, ChartFrame, Panel } from "../charts";
@@ -65,6 +67,7 @@ export function OverviewPage() {
   const flowsQ = useFlows({ query: { range: "1m" } });
   const stackQ = useCapitalStack();
   const distQ = useCapitalDistribution();
+  const yieldQ = useYieldComposition();
 
   const o = overview.data;
   const navHero = useMemo(() => (navQ.data === undefined ? null : navSpec(navQ.data)), [navQ.data]);
@@ -275,8 +278,17 @@ export function OverviewPage() {
       </div>
 
       <div className="grid">
-        <Panel q={stackQ} build={stackBuild} title="Capital stack" span={7} height={190} />
-        <Panel q={distQ} build={protocolBuild} title="Capital by protocol" span={5} height={280} />
+        <Panel
+          q={yieldQ}
+          build={collateralSankeySpec}
+          title="Where the collateral sits"
+          span={7}
+          height={340}
+        />
+        <Panel q={distQ} build={protocolBuild} title="Capital by protocol" span={5} height={340} />
+      </div>
+      <div className="grid">
+        <Panel q={stackQ} build={stackBuild} title="Capital stack" span={12} height={150} />
       </div>
     </>
   );

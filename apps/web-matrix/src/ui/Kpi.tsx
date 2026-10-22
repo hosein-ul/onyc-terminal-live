@@ -1,5 +1,12 @@
 import type { ChartSpec } from "@onyc/chart-specs";
-import { formatBps, formatCompact, formatNav, formatPercent, formatUsdCompact } from "@onyc/format";
+import {
+  formatBps,
+  formatCompact,
+  formatDate,
+  formatNav,
+  formatPercent,
+  formatUsdCompact,
+} from "@onyc/format";
 import type { Kpi as KpiData, Meta } from "@onyc/sdk";
 import { Chart } from "../charts";
 import { signedBps, signedPct, signedUsd } from "../lib/format";
@@ -62,11 +69,19 @@ export function KpiCard({
       : kpi.changeMode === "relative"
         ? signedPct(change, 2)
         : ABSOLUTE[kind](change);
+  const valueText = VALUE[kind](kpi.value);
   return (
     <article className={`kpi ${inverse ? "inverse" : ""}`}>
       <div className="kpi-label">{label}</div>
       <div className="kpi-value">
-        {VALUE[kind](kpi.value)}
+        {valueText.startsWith("−") ? (
+          <>
+            <span className="sign">−</span>
+            {valueText.slice(1)}
+          </>
+        ) : (
+          valueText
+        )}
         {suffix !== undefined && kpi.value !== null && (
           <span className="kpi-suffix"> {suffix}</span>
         )}
@@ -86,9 +101,7 @@ export function KpiCard({
         </div>
       )}
       {kpi.historySince !== null && (
-        <div className="kpi-note">
-          Collecting since {kpi.historySince.slice(0, 10)}; no {kpi.period} change yet
-        </div>
+        <div className="kpi-note">Tracked since {formatDate(kpi.historySince)}</div>
       )}
       <Provenance meta={meta} />
     </article>
