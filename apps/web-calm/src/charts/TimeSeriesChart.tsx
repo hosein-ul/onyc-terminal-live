@@ -98,8 +98,8 @@ export function TimeSeriesChart({ spec, height = 300 }: { spec: TimeSeriesSpec; 
           >
             <defs>
               <linearGradient id={`fill-${spec.id}`} x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="var(--chart-accent)" stopOpacity={0.22} />
-                <stop offset="100%" stopColor="var(--chart-accent)" stopOpacity={0} />
+                <stop offset="0%" stopColor="var(--chart-primary)" stopOpacity={0.09} />
+                <stop offset="100%" stopColor="var(--chart-primary)" stopOpacity={0} />
               </linearGradient>
             </defs>
             {!compact && <CartesianGrid vertical={false} stroke="var(--chart-grid)" />}
@@ -158,7 +158,7 @@ export function TimeSeriesChart({ spec, height = 300 }: { spec: TimeSeriesSpec; 
                   name={s.label}
                   type="linear"
                   stroke="var(--chart-primary)"
-                  strokeWidth={compact ? 2 : 3}
+                  strokeWidth={compact ? 1.6 : 1.8}
                   strokeLinecap="round"
                   strokeLinejoin="round"
                   fill={`url(#fill-${spec.id})`}
@@ -167,8 +167,8 @@ export function TimeSeriesChart({ spec, height = 300 }: { spec: TimeSeriesSpec; 
                   isAnimationActive={motion}
                   animationDuration={250}
                   activeDot={{
-                    r: 5,
-                    fill: "var(--chart-accent)",
+                    r: 4,
+                    fill: "var(--chart-ink)",
                     stroke: "var(--chart-surface)",
                     strokeWidth: 2,
                   }}
@@ -180,7 +180,7 @@ export function TimeSeriesChart({ spec, height = 300 }: { spec: TimeSeriesSpec; 
                   name={s.label}
                   type="linear"
                   stroke={s.role === "primary" ? "var(--chart-primary)" : "var(--chart-muted)"}
-                  strokeWidth={s.role === "primary" ? (compact ? 2 : 3) : 2}
+                  strokeWidth={s.role === "primary" ? (compact ? 1.6 : 1.8) : 1.4}
                   {...(s.role === "reference" ? { strokeDasharray: "5 4" } : {})}
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -189,8 +189,8 @@ export function TimeSeriesChart({ spec, height = 300 }: { spec: TimeSeriesSpec; 
                   isAnimationActive={motion}
                   animationDuration={250}
                   activeDot={{
-                    r: 5,
-                    fill: "var(--chart-accent)",
+                    r: 4,
+                    fill: "var(--chart-ink)",
                     stroke: "var(--chart-surface)",
                     strokeWidth: 2,
                   }}
@@ -219,11 +219,16 @@ export function TimeSeriesChart({ spec, height = 300 }: { spec: TimeSeriesSpec; 
                   <ReferenceDot
                     key={`e${i}`}
                     x={a.x}
-                    y={a.y}
-                    r={3.5}
-                    fill="var(--chart-surface)"
-                    stroke={tone[a.tone]}
-                    strokeWidth={2}
+                    y={lo + (hi - lo) * 0.035}
+                    shape={({ cx, cy }: { cx?: number; cy?: number }) => (
+                      <rect
+                        x={(cx ?? 0) - 3}
+                        y={(cy ?? 0) - 3}
+                        width={6}
+                        height={6}
+                        fill={a.tone === "bad" ? tone.bad : "var(--chart-ink)"}
+                      />
+                    )}
                   >
                     <title>{a.label}</title>
                   </ReferenceDot>
@@ -234,10 +239,15 @@ export function TimeSeriesChart({ spec, height = 300 }: { spec: TimeSeriesSpec; 
                   key={`end${i}`}
                   x={a.x}
                   y={a.y}
-                  r={6}
-                  fill="var(--chart-accent)"
-                  stroke="var(--chart-surface)"
-                  strokeWidth={2}
+                  shape={({ cx, cy }: { cx?: number; cy?: number }) => (
+                    <rect
+                      x={(cx ?? 0) - 4.5}
+                      y={(cy ?? 0) - 4.5}
+                      width={9}
+                      height={9}
+                      fill="var(--chart-ink)"
+                    />
+                  )}
                 >
                   <Label
                     value={a.label}
@@ -258,7 +268,10 @@ export function TimeSeriesChart({ spec, height = 300 }: { spec: TimeSeriesSpec; 
         <ul className="chart-key" aria-label="Markers on the line">
           {eventKinds.map((k) => (
             <li key={k.tone}>
-              <i style={{ borderColor: tone[k.tone] }} aria-hidden="true" />
+              <i
+                style={{ color: k.tone === "bad" ? tone.bad : "var(--chart-ink)" }}
+                aria-hidden="true"
+              />
               {k.label} <span>{k.count}</span>
             </li>
           ))}
