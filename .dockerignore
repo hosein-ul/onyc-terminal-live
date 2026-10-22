@@ -1,4 +1,4 @@
-.git
+﻿.git
 .pgdata
 .env
 **/node_modules
@@ -6,4 +6,3 @@
 **/.turbo
 docs/shots
 docs/spike
-apps/web-*
