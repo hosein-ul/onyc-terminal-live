@@ -14,6 +14,21 @@ ONyc Terminal is unofficial and read-only. It has three long-running services, f
 Nothing here sends transactions or holds keys. The only secrets are the database URL, the optional Telegram token, the optional
 Helius key and the optional webhook signing secret.
 
+## Current deployment (22 October 2026)
+
+| Piece       | Where                                                                                             |
+| ----------- | ------------------------------------------------------------------------------------------------- |
+| Postgres 16 | Neon project `onyc-terminal` (aws-us-east-2)                                                      |
+| API         | Render web service `onyc-api` (free plan): https://onyc-api.onrender.com                          |
+| Worker      | Render background worker `onyc-worker` (starter plan)                                             |
+| Web apps    | Vercel: `onyc-calm`, `onyc-platinum`, `onyc-cobalt`, `onyc-matrix`, `onyc-pastel` (`.vercel.app`) |
+| Bot, MCP    | not deployed                                                                                      |
+
+`render.yaml` describes the two Render services; `DATABASE_URL` is set in the Render dashboard, not in the repository. The Render build
+runs the repository `Dockerfile` and has been verified there (the images were never built locally: no Docker on the development
+machine). The web apps were built locally with `VITE_API_URL=https://onyc-api.onrender.com` and deployed as prebuilt static output, so a
+new API URL needs a rebuild and redeploy. The free API plan sleeps when idle; the first request after a pause can take about a minute.
+
 ## 1. Postgres on Neon
 
 1. Create a Neon project, Postgres 16, in the region closest to the containers. Use a UTF-8 database (Neon's default).
