@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dot Matrix C: receipt tape</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root { --ground: #c3c4c6; --tape: #ececea; --ink: #121212; --muted: #55575b; --font: "Courier Prime", "Courier New", monospace; }
+  :root[data-theme="dark"] { --ground: #161617; --tape: #232325; --ink: #e4e4e2; --muted: #96989c; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--ground); color: var(--ink); font: 400 14px/1.45 var(--font); font-variant-numeric: tabular-nums; }
+  .top { max-width: 760px; margin: 0 auto; padding: 22px 20px 0; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 20px; }
+  nav { display: flex; flex-wrap: wrap; gap: 4px 18px; }
+  nav a { color: var(--ink); text-decoration: none; padding: 4px 0; border-bottom: 2px solid transparent; font-size: 14px; }
+  nav a[aria-current] { border-bottom-color: var(--ink); font-weight: 700; }
+  nav a:hover:not([aria-current]) { border-bottom-color: var(--muted); }
+  button.theme { font: 700 12px var(--font); letter-spacing: .08em; padding: 5px 10px; background: transparent; color: var(--ink); border: 1px solid var(--ink); cursor: pointer; }
+  button.theme:hover { background: var(--ink); color: var(--tape); }
+  :focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+  .tape { --size: 13.5px; max-width: 700px; margin: 22px auto 60px; background: var(--tape); padding: 34px clamp(14px, 4vw, 40px) 40px; position: relative; font-size: var(--size);
+    box-shadow: 0 0 0 1px color-mix(in srgb, var(--ink) 12%, transparent); }
+  .tape::before, .tape::after { content: ""; position: absolute; left: 0; right: 0; height: 10px; background: radial-gradient(circle at 6px 0, var(--ground) 5px, transparent 5.5px) 0 0 / 12px 10px repeat-x; }
+  .tape::before { top: -1px; } .tape::after { bottom: -1px; transform: scaleY(-1); }
+  pre { margin: 0; font: inherit; white-space: pre; overflow-x: auto; line-height: 1.25; }
+  .rule { color: var(--muted); }
+  .g { display: inline-block; width: 1ch; overflow: hidden; vertical-align: top; text-align: center; line-height: 1.12; font-family: "DejaVu Sans Mono", "Segoe UI Symbol", monospace; }
+  .head { font-weight: 700; letter-spacing: .02em; }
+  .big { font: 700 clamp(60px, 14vw, 104px)/1 var(--font); letter-spacing: -.04em; margin: 10px 0 0; }
+  .muted { color: var(--muted); }
+  section { margin-top: 26px; }
+  .src { color: var(--muted); font-size: .86em; }
+  .brl { line-height: 1.12; letter-spacing: 0; }
+  footer { margin-top: 30px; color: var(--muted); font-size: .9em; }
+  footer strong { color: var(--ink); }
+  @media (max-width: 560px) { .tape { --size: 2.45vw; } .big { font-size: 17vw; } }
+</style>
+</head>
+<body>
+<div class="top">
+  <nav aria-label="Pages" id="nav"></nav>
+  <button class="theme" id="theme" type="button" aria-label="Switch light or dark">DARK</button>
+</div>
+<main class="tape" id="tape" aria-live="polite">
+  <pre class="head">ONYC TERMINAL</pre>
+  <pre class="rule" id="meta">Reading the live API...</pre>
+  <div class="big" id="big">-.----</div>
+  <pre id="headline" class="head"></pre>
+
+  <section aria-label="NAV per ONyc"><pre class="head">NAV PER ONYC, SINCE LAUNCH</pre><pre class="brl" id="nav-chart" role="img" aria-label="NAV per ONyc as a braille line plot"></pre><pre class="src" id="navSrc"></pre></section>
+  <section aria-label="Market against NAV"><pre class="head">MARKET VS NAV, LAST SESSION (BPS)</pre><pre id="prem" role="img" aria-label="Premium and discount per quarter hour"></pre><pre class="src" id="premSrc"></pre></section>
+  <section aria-label="What moved AUM"><pre class="head">WHAT MOVED AUM, LAST MONTH</pre><pre id="flow" role="img" aria-label="AUM change split"></pre><pre class="src" id="flowSrc"></pre></section>
+  <section aria-label="Capital by protocol"><pre class="head">CAPITAL BY PROTOCOL</pre><pre id="dist" role="img" aria-label="Capital by protocol"></pre><pre class="src" id="distSrc"></pre></section>
+  <section aria-label="Daily NAV increment"><pre class="head">DAILY NAV INCREMENT (PPM)</pre><pre id="cal" role="img" aria-label="Calendar of daily increments"></pre><pre class="src" id="calSrc"></pre></section>
+
+  <footer><strong>Independent community tool. Not affiliated with OnRe. Not investment advice.</strong><br>Every number shows where it came from and how old it is. This site is read-only: it never asks you to sign or send anything.</footer>
+</main>
+<script src="data.js"></script>
+<script>
+const $ = (id) => document.getElementById(id);
+$("nav").innerHTML = PAGES.map((p, i) => `<a href="#" ${i === 0 ? 'aria-current="page"' : ""}>${p}</a>`).join("");
+themeToggle($("theme"));
+const rep = (c, n) => c.repeat(Math.max(0, Math.round(n)));
+const pad = (s, n, left = false) => (left ? String(s).padStart(n) : String(s).padEnd(n));
+const resample = (arr, n) => Array.from({ length: n }, (_, i) => arr[Math.round(i / Math.max(1, n - 1) * (arr.length - 1))]);
+
+/* ---- braille plot: 2 x 4 dots per character --------------------------------------------------------------------- */
+const BIT = [[0x01, 0x02, 0x04, 0x40], [0x08, 0x10, 0x20, 0x80]];
+function braille(values, cols, rows, lo, hi, fillEvery = 3) {
+  const W = cols * 2, H = rows * 4, g = Array.from({ length: rows }, () => Array(cols).fill(0)), px = (x, y) => { if (x < 0 || x >= W || y < 0 || y >= H) return; g[(y / 4) | 0][(x / 2) | 0] |= BIT[x % 2][y % 4]; };
+  const ys = resample(values, W).map((v) => Math.round((hi - v) / (hi - lo) * (H - 1)));
+  ys.forEach((y, x) => { const a = x ? ys[x - 1] : y; for (let k = Math.min(a, y); k <= Math.max(a, y); k++) px(x, k); for (let k = y + 1; k < H; k++) if ((k + x) % fillEvery === 0 && x % 2 === 0) px(x, k); });
+  return { lines: g.map((r) => r.map((b) => String.fromCharCode(0x2800 + b)).join("")), ys, H };
+}
+/* typewriter: reveal the tape a few lines at a time */
+/* Block and braille glyphs are missing from the typewriter face, so the browser borrows another font whose advance differs.
+   Each one gets a fixed one-character cell, which keeps every column aligned. */
+const cellify = (s) => s.replace(/[&<>]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" })[c]).replace(/[─-▟⠀-⣿·]/g, (c) => `<span class="g">${c}</span>`);
+async function typeOut(el, text, delay = 14) { const lines = text.split("\n"); if (reduced) { el.innerHTML = cellify(text); return; } let shown = ""; for (let i = 0; i < lines.length; i++) { shown += (i ? "\n" : "") + lines[i]; el.innerHTML = cellify(shown); if (i % 2) await new Promise((r) => setTimeout(r, delay)); } }
+
+loadAll().then(async (D) => {
+  const last = D.nav.last, first = D.nav.first, now = new Date();
+  $("meta").textContent = `${now.toLocaleDateString("en-GB", { weekday: "long", day: "numeric", month: "long", timeZone: "UTC" })}\n${rep("-", 52)}\nNAV / ONYC / USDC`;
+  $("big").textContent = fmt.nav(last.nav);
+  $("headline").textContent = `ONyc is up ${((last.nav / first.nav - 1) * 100).toFixed(1)}% since launch\n${rep("=", 52)}`;
+  const out = [];
+
+  /* NAV */
+  {
+    const ys = D.nav.points.map((p) => p.nav), min = Math.min(...ys), max = Math.max(...ys), p = (max - min) * 0.06, lo = min - p, hi = max + p, cols = 56, rows = 12;
+    const b = braille(ys, cols, rows, lo, hi), lab = (r) => fmt.nav(hi - ((r * 4 + 2) / (rows * 4)) * (hi - lo));
+    const body = b.lines.map((l, r) => (r % 4 === 0 ? pad(lab(r), 7, true) : rep(" ", 7)) + " │" + l).join("\n");
+    const ds = resample(D.nav.points.map((q) => q.d), 3).map((d) => fmt.date(d));
+    const axis = rep(" ", 8) + "└" + rep("─", cols) + "\n" + rep(" ", 9) + pad(ds[0], 22) + pad(ds[1], 22) + ds[2].padStart(12);
+    out.push([$("nav-chart"), body + "\n" + axis + "\n" + rep(" ", 9) + `now ${fmt.nav(last.nav)}`], [$("navSrc"), D.nav.src]);
+  }
+  /* premium: diverging text bars, quarter-hour buckets */
+  {
+    const pts = D.market.points, buckets = new Map();
+    pts.forEach((q) => { const d = new Date(q.t), k = `${String(d.getUTCHours()).padStart(2, "0")}:${String(Math.floor(d.getUTCMinutes() / 15) * 15).padStart(2, "0")}`; (buckets.get(k) || buckets.set(k, []).get(k)).push(q.bps); });
+    const rows = [...buckets.entries()].map(([k, v]) => [k, v.reduce((a, c) => a + c, 0) / v.length]), top = Math.max(2, ...rows.map((r) => r[1])), bot = Math.min(-2, ...rows.map((r) => r[1])), tot = 44, wl = Math.round(tot * Math.abs(bot) / (top - bot)), wr = tot - wl;
+    const body = rows.map(([k, v]) => { const n = Math.max(v === 0 ? 0 : 1, Math.round(Math.abs(v) / m * half)); const neg = v < 0; return `${k} UTC ${neg ? rep(" ", half - n) + rep("█", n) : rep(" ", half)}│${neg ? "" : rep("█", n)}${rep(" ", neg ? half : half - n)} ${pad(fmt.bps(v), 11, true)}`; }).join("\n");
+    out.push([$("prem"), body + `\n${rep(" ", 12)}${pad(`−${m.toFixed(0)}`, half)}0${"+" + m.toFixed(0)}\nnow ${fmt.bps(D.market.bps)}`], [$("premSrc"), D.market.src]);
+  }
+  /* waterfall: positioned bars */
+  {
+    let run = 0; const bl = D.flows.steps.map((q) => { const a = run, b = run + q.v; run = b; return { ...q, a, b }; }); bl.push({ label: "Change in AUM", v: run, a: 0, b: run, total: true });
+    const lo = Math.min(0, ...bl.flatMap((q) => [q.a, q.b])), hi = Math.max(0, ...bl.flatMap((q) => [q.a, q.b])), w = 30, sc = (v) => Math.round((v - lo) / (hi - lo) * (w - 1));
+    const body = bl.map((q) => { const a = sc(Math.min(q.a, q.b)), b = Math.max(a, sc(Math.max(q.a, q.b))), ch = q.total ? "█" : q.v >= 0 ? "▓" : "░"; return `${pad(q.label, 14)}${rep(" ", a)}${rep(ch, b - a + 1)}${rep(" ", w - b - 1)} ${pad(fmt.usd(q.v), 9, true)}`; }).join("\n");
+    out.push([$("flow"), body + `\n${rep(" ", 14)}${rep("─", sc(0))}┼${rep("─", w - sc(0) - 1)}  zero line`], [$("flowSrc"), D.flows.src]);
+  }
+  /* protocols */
+  {
+    const rows = D.dist.rows.slice(0, 7), m = rows[0].usd;
+    out.push([$("dist"), rows.map((r) => `${pad(r.name, 11)}${pad(rep("█", r.usd / m * 26), 27)}${pad(fmt.usd(r.usd), 9, true)} ${pad(fmt.pct(r.share), 6, true)}`).join("\n") + `\n${rep("-", 52)}\n${pad("total", 11)}${rep(" ", 27)}${pad(fmt.usd(D.dist.total), 9, true)}`], [$("distSrc"), D.dist.src]);
+  }
+  /* calendar */
+  {
+    const pts = D.nav.points.filter((q) => q.inc != null).slice(-371), day0 = new Date(pts[0].d + "T00:00:00Z").getUTCDay(), srt = pts.map((q) => q.inc).sort((a, b) => a - b), qn = (f) => srt[Math.floor(f * (srt.length - 1))];
+    const sh = (v) => (v <= qn(0.2) ? "·" : v <= qn(0.4) ? "░" : v <= qn(0.6) ? "▒" : v <= qn(0.85) ? "▓" : "█");
+    const weeks = Math.ceil((pts.length + day0) / 7), grid = Array.from({ length: 7 }, () => Array(weeks).fill(" ")); pts.forEach((q, i) => { const k = i + day0; grid[k % 7][Math.floor(k / 7)] = sh(q.inc); });
+    let months = Array(weeks).fill(" "); pts.forEach((q, i) => { const k = i + day0, w = Math.floor(k / 7); if (new Date(q.d).getUTCDate() <= 7 && k % 7 === 0) { const m = new Date(q.d).toLocaleDateString("en-GB", { month: "short", timeZone: "UTC" }); for (let c = 0; c < 3; c++) months[w + c] = m[c] || " "; } });
+    out.push([$("cal"), `    ${months.join("")}\n` + grid.map((r, i) => (["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"][i].slice(0, 3) + " ").padEnd(4) + r.join("")).join("\n") + `\n    · lowest  ░ ▒ ▓  █ highest (quintiles of the shown days)`], [$("calSrc"), D.nav.src]);
+  }
+  for (const [el, text] of out) await typeOut(el, text);
+}).catch((e) => { $("meta").textContent = "The API could not be reached. Nothing here is invented while it is down."; console.error(e); });
+</script>
+</body>
+</html>
+

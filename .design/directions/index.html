@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dot Matrix chart directions</title>
+<style>
+  :root { --bg: #eceef1; --ink: #0a0b0d; --muted: #555b66; font-family: ui-monospace, "Geist Mono", monospace; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font-size: 14px; line-height: 1.5; padding: 28px 20px 60px; }
+  main { max-width: 1200px; margin: 0 auto; }
+  h1 { font-size: 22px; margin: 0 0 6px; }
+  p.lead { color: var(--muted); margin: 0 0 26px; max-width: 70ch; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 22px; }
+  a.card { display: block; color: inherit; text-decoration: none; border: 1px solid var(--ink); background: #fff; }
+  a.card:hover { box-shadow: 6px 6px 0 var(--ink); }
+  .frame { height: 360px; overflow: hidden; border-bottom: 1px solid var(--ink); position: relative; }
+  .frame iframe { width: 1280px; height: 1200px; border: 0; transform: scale(.37); transform-origin: 0 0; pointer-events: none; }
+  .meta { padding: 14px 16px 16px; }
+  .meta b { display: block; font-size: 16px; margin-bottom: 4px; }
+  .meta span { color: var(--muted); display: block; }
+  .pages { margin-top: 30px; border: 1px solid var(--ink); background: #fff; padding: 14px 16px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Dot Matrix: three chart and skin directions</h1>
+  <p class="lead">Same live data, three different ideas of what a dot-matrix chart is. Each has a light and a dark switch (monochrome both ways) and the six-page navigation proposed for this version. Open one to see it at full size.</p>
+  <div class="grid">
+    <a class="card" href="a.html"><div class="frame"><iframe src="a.html" title="A" loading="lazy"></iframe></div><div class="meta"><b>A. LED board</b><span>Values are lit dots on a grid; the unlit grid stays visible. Doto lettering, black screen.</span></div></a>
+    <a class="card" href="b.html"><div class="frame"><iframe src="b.html" title="B" loading="lazy"></iframe></div><div class="meta"><b>B. Dither print</b><span>Tone is the density of one-bit dots and stripes; lines become edges. Silkscreen lettering, white sheets.</span></div></a>
+    <a class="card" href="c.html"><div class="frame"><iframe src="c.html" title="C" loading="lazy"></iframe></div><div class="meta"><b>C. Receipt tape</b><span>Charts are typeset: braille lines, block bars, shade-character calendar. Courier Prime on a grey tape.</span></div></a>
+  </div>
+  <div class="pages"><b>Proposed pages (11 down to 6):</b> Overview · NAV &amp; Peg · Book · Points &amp; Wallets · Risk &amp; Health · Alerts &amp; API</div>
+</main>
+</body>
+</html>

@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dot Matrix B: dither print</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&family=Geist+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root { --paper: #fbfbfa; --ink: #0a0a0a; --muted: #5a5a5a; --rule: #0a0a0a; --font-px: "Silkscreen", monospace; --font-mono: "Geist Mono", ui-monospace, monospace; }
+  :root[data-theme="dark"] { --paper: #0a0a0a; --ink: #f4f4f2; --muted: #a2a2a2; --rule: #f4f4f2; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font: 13px/1.55 var(--font-mono); font-variant-numeric: tabular-nums; }
+  .wrap { max-width: 1240px; margin: 0 auto; padding: 24px 24px 56px; }
+  header { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px 24px; padding-bottom: 14px; border-bottom: 3px solid var(--rule); margin-bottom: 26px; }
+  .brand { font: 700 22px/1 var(--font-px); letter-spacing: .02em; }
+  nav { display: flex; flex-wrap: wrap; gap: 6px; }
+  nav a { font: 400 12px var(--font-px); text-transform: uppercase; letter-spacing: .04em; padding: 7px 10px 6px; color: var(--ink); text-decoration: none; border: 1px solid transparent; }
+  nav a[aria-current] { background: var(--ink); color: var(--paper); }
+  nav a:hover:not([aria-current]) { border-color: var(--ink); }
+  button.theme { font: 400 12px var(--font-px); text-transform: uppercase; padding: 7px 10px 6px; background: var(--paper); color: var(--ink); border: 1px solid var(--ink); cursor: pointer; }
+  button.theme:hover { background: var(--ink); color: var(--paper); }
+  :focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+  .eyebrow { font: 400 12px var(--font-px); text-transform: uppercase; color: var(--muted); }
+  h1 { font: 600 clamp(24px, 3.4vw, 40px)/1.12 var(--font-mono); margin: 8px 0 26px; max-width: 26ch; letter-spacing: -.01em; }
+  .sheet { position: relative; border: 1px solid var(--rule); padding: 20px 22px 14px; background: var(--paper); min-width: 0; }
+  .sheet::before, .sheet::after { content: ""; position: absolute; width: 12px; height: 12px; border: 0 solid var(--rule); }
+  .sheet::before { top: -7px; left: -7px; border-width: 0 1px 1px 0; } .sheet::after { bottom: -7px; right: -7px; border-width: 1px 0 0 1px; }
+  .sheet h2 { font: 700 15px/1 var(--font-px); text-transform: uppercase; margin: 0 0 4px; letter-spacing: .03em; }
+  .sheet .sub { color: var(--muted); margin: 0 0 14px; font-size: 12px; }
+  .hero { display: grid; grid-template-columns: minmax(0, 1fr); }
+  .big { font: 700 clamp(84px, 15vw, 176px)/.86 var(--font-px); letter-spacing: -.02em; margin: 6px 0 4px; }
+  .unit { font: 400 18px var(--font-px); color: var(--muted); margin-left: 10px; }
+  .stage { position: relative; width: 100%; }
+  .stage canvas { position: absolute; left: 0; top: 0; width: 100%; height: 100%; }
+  .stage .px { image-rendering: pixelated; }
+  .row { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 28px; margin-top: 28px; }
+  .c7 { grid-column: span 7; } .c5 { grid-column: span 5; } .c12 { grid-column: span 12; }
+  .src { color: var(--muted); font-size: 11.5px; border-top: 1px dashed var(--muted); margin-top: 10px; padding-top: 8px; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+  .hover { min-height: 20px; font-size: 12px; }
+  .key { display: flex; gap: 16px; flex-wrap: wrap; font-size: 12px; margin-top: 8px; }
+  .key i { display: inline-block; width: 22px; height: 10px; margin-right: 6px; vertical-align: -1px; border: 1px solid var(--ink); background-size: 4px 4px; }
+  footer { margin-top: 40px; border-top: 3px solid var(--rule); padding-top: 12px; font-size: 12px; color: var(--muted); max-width: 72ch; }
+  footer strong { color: var(--ink); }
+  @media (max-width: 860px) { .c7, .c5 { grid-column: span 12; } .wrap { padding: 16px 14px 40px; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand">ONYC TERMINAL</div>
+    <nav aria-label="Pages" id="nav"></nav>
+    <button class="theme" id="theme" type="button" aria-label="Switch light or dark">DARK</button>
+  </header>
+  <div class="eyebrow" id="today"></div>
+  <h1 id="headline">Reading the live API...</h1>
+
+  <section class="sheet hero" aria-label="NAV per ONyc">
+    <div class="eyebrow">NAV per ONyc in USDC</div>
+    <div><span class="big" id="big">-.----</span><span class="unit">USDC</span></div>
+    <div class="hover" id="navHover" aria-live="polite">&nbsp;</div>
+    <div class="stage" id="sNav" style="height:300px" role="img" aria-label="NAV per ONyc since launch, drawn as a dithered area"></div>
+    <div class="src"><span id="navSrc"></span><span id="navNote"></span></div>
+  </section>
+
+  <div class="row">
+    <section class="sheet c7"><h2>Market vs NAV</h2><p class="sub">Premium (dots) and discount (stripes), last session</p>
+      <div class="stage" id="sPrem" style="height:230px" role="img" aria-label="Premium and discount"></div>
+      <div class="key"><span><i style="background-image: radial-gradient(var(--ink) 1px, transparent 1.2px)"></i>premium</span><span><i style="background-image: repeating-linear-gradient(90deg, var(--ink) 0 1px, transparent 1px 3px)"></i>discount</span></div>
+      <div class="src"><span id="premSrc"></span></div></section>
+    <section class="sheet c5"><h2>What moved AUM</h2><p class="sub">Last month, by cause</p>
+      <div class="stage" id="sFlow" style="height:230px" role="img" aria-label="AUM change split"></div>
+      <div class="src"><span id="flowSrc"></span></div></section>
+  </div>
+  <div class="row">
+    <section class="sheet c12"><h2>Capital by protocol</h2><p class="sub">Tone follows size</p>
+      <div class="stage" id="sDist" style="height:250px" role="img" aria-label="Capital by protocol as a treemap"></div>
+      <div class="src"><span id="distSrc"></span></div></section>
+  </div>
+  <div class="row">
+    <section class="sheet c12"><h2>Daily NAV increment</h2><p class="sub">Darker cell, larger day. Parts per million</p>
+      <div class="stage" id="sCal" style="height:170px" role="img" aria-label="Calendar of daily increments"></div>
+      <div class="hover" id="calHover">&nbsp;</div>
+      <div class="src"><span id="calSrc"></span></div></section>
+  </div>
+  <footer><strong>Independent community tool. Not affiliated with OnRe. Not investment advice.</strong><br>Every number shows where it came from and how old it is. This site is read-only: it never asks you to sign or send anything.</footer>
+</div>
+<script src="data.js"></script>
+<script>
+const $ = (id) => document.getElementById(id);
+$("nav").innerHTML = PAGES.map((p, i) => `<a href="#" ${i === 0 ? 'aria-current="page"' : ""}>${p}</a>`).join("");
+themeToggle($("theme"));
+const css = (n) => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+
+/* ---- 1-bit ordered dither ---------------------------------------------------------------------------------------
+   Tone is density of two inks. 8x8 Bayer for "dots", a vertical-stripe matrix for "stripes". Logical pixel = 2 CSS px. */
+const S = 2;
+const BAYER = (() => { const m = [[0, 2], [3, 1]]; let b = m; while (b.length < 8) { const n = b.length, o = Array.from({ length: n * 2 }, () => Array(n * 2)); for (let y = 0; y < n; y++) for (let x = 0; x < n; x++) { const v = b[y][x] * 4; o[y][x] = v; o[y][x + n] = v + 2; o[y + n][x] = v + 3; o[y + n][x + n] = v + 1; } b = o; } return b.map((r) => r.map((v) => (v + 0.5) / 64)); })();
+const STRIPE = [0, 4, 2, 6, 1, 5, 3, 7].map((v) => (v + 0.5) / 8);
+const thr = (kind, x, y) => (kind === "stripe" ? STRIPE[x & 7] : BAYER[y & 7][x & 7]);
+
+class Stage {
+  constructor(el) {
+    this.el = el; el.innerHTML = ""; this.dpr = Math.min(2, devicePixelRatio || 1);
+    this.W = el.clientWidth; this.H = el.clientHeight; this.w = Math.ceil(this.W / S); this.h = Math.ceil(this.H / S);
+    this.px = document.createElement("canvas"); this.px.className = "px"; this.px.width = this.w; this.px.height = this.h;
+    this.tx = document.createElement("canvas"); this.tx.width = this.W * this.dpr; this.tx.height = this.H * this.dpr;
+    el.append(this.px, this.tx);
+    this.tone = new Float32Array(this.w * this.h); this.kind = new Uint8Array(this.w * this.h);   // kind 1 = stripe
+    this.texts = []; this.solid = new Uint8Array(this.w * this.h);                               // solid = forced ink
+  }
+  fill(x0, y0, x1, y1, tone, kind = 0) { for (let y = Math.max(0, y0 | 0); y < Math.min(this.h, y1 | 0); y++) for (let x = Math.max(0, x0 | 0); x < Math.min(this.w, x1 | 0); x++) { const i = y * this.w + x; this.tone[i] = tone; this.kind[i] = kind; } }
+  ink(x0, y0, x1, y1) { for (let y = Math.max(0, y0 | 0); y < Math.min(this.h, y1 | 0); y++) for (let x = Math.max(0, x0 | 0); x < Math.min(this.w, x1 | 0); x++) this.solid[y * this.w + x] = 1; }
+  text(s, x, y, o = {}) { this.texts.push({ s, x, y, ...o }); }
+  render(k = 1) {
+    const ctx = this.px.getContext("2d"), img = ctx.createImageData(this.w, this.h), ink = css("--ink"), paper = css("--paper");
+    const hx = (c) => [1, 3, 5].map((i) => parseInt(c.slice(i, i + 2), 16)), I = hx(ink), P = hx(paper);
+    for (let y = 0; y < this.h; y++) for (let x = 0; x < this.w; x++) {
+      const i = y * this.w + x, on = this.solid[i] || this.tone[i] * k > thr(this.kind[i] ? "stripe" : "dot", x, y), c = on ? I : P;
+      img.data.set([c[0], c[1], c[2], 255], i * 4);
+    }
+    ctx.putImageData(img, 0, 0);
+    const t = this.tx.getContext("2d"), d = this.dpr; t.setTransform(d, 0, 0, d, 0, 0); t.clearRect(0, 0, this.W, this.H); t.textBaseline = "middle";
+    for (const q of this.texts) {
+      t.font = `${q.px ? "400 11px " + css("--font-px") : "12px " + css("--font-mono")}`; t.textAlign = q.align || "left";
+      const w = t.measureText(q.s).width, bx = q.align === "right" ? q.x - w : q.align === "center" ? q.x - w / 2 : q.x;
+      if (q.plate) { t.fillStyle = css("--paper"); t.fillRect(bx - 4, q.y - 9, w + 8, 18); t.strokeStyle = ink; t.lineWidth = 1; t.strokeRect(bx - 3.5, q.y - 8.5, w + 7, 17); }
+      t.fillStyle = q.strong || q.plate ? ink : css("--muted"); t.fillText(q.s, q.x, q.y);
+    }
+  }
+  sweep(ms = 800) { if (reduced) return this.render(1); const t0 = performance.now(); const f = () => { const p = Math.min(1, (performance.now() - t0) / ms); this.render(Math.min(1, 0.05 + p * 1.1)); if (p < 1) requestAnimationFrame(f); }; f(); }
+}
+const resample = (arr, n) => Array.from({ length: n }, (_, i) => arr[Math.round(i / Math.max(1, n - 1) * (arr.length - 1))]);
+const builders = [];
+
+loadAll().then((D) => {
+  const last = D.nav.last, first = D.nav.first;
+  $("today").textContent = new Date().toLocaleDateString("en-GB", { weekday: "long", day: "numeric", month: "long", timeZone: "UTC" });
+  $("headline").textContent = `ONyc is up ${((last.nav / first.nav - 1) * 100).toFixed(1)}% since launch`;
+  $("big").textContent = fmt.nav(last.nav);
+  $("navSrc").textContent = D.nav.src; $("navNote").textContent = `${D.nav.points.length} daily points`;
+  $("premSrc").textContent = D.market.src; $("flowSrc").textContent = D.flows.src; $("distSrc").textContent = D.dist.src; $("calSrc").textContent = D.nav.src;
+
+  builders.push(() => { /* NAV: the area is tone; its top edge is the line */
+    const s = new Stage($("sNav")), pl = 50, pr = 70, pb = 22, pt = 6, w = s.w, h = s.h, x0 = pl / S, x1 = w - pr / S, y0 = pt / S, y1 = h - pb / S;
+    const ys = D.nav.points.map((p) => p.nav), min = Math.min(...ys), max = Math.max(...ys), pad = (max - min) * 0.06, lo = min - pad, hi = max + pad;
+    const cols = resample(ys, Math.floor(x1 - x0)), row = (v) => y0 + (hi - v) / (hi - lo) * (y1 - y0);
+    cols.forEach((v, i) => { const x = x0 + i, top = row(v); s.ink(x, top, x + 1, top + 1.2); s.fill(x, top, x + 1, y1, 0.9); for (let y = Math.ceil(top); y < y1; y++) s.tone[(y | 0) * w + (x | 0)] = Math.max(0.1, 0.92 - ((y - top) / (y1 - y0)) * 0.84); });
+    [lo + pad, (min + max) / 2, hi - pad].forEach((t) => s.text(fmt.nav(t), 0, row(t) * S));
+    resample(D.nav.points.map((p) => p.d), 4).forEach((d, i) => s.text(fmt.date(d), x0 * S + (i / 3) * (x1 - x0) * S, s.H - 8, { align: i === 0 ? "left" : i === 3 ? "right" : "center" }));
+    s.text(fmt.nav(last.nav), x1 * S + 8, row(cols[cols.length - 1]) * S, { strong: true });
+    s.sweep(); s.pts = D.nav.points; s.geom = { x0, x1 }; return s;
+  });
+  builders.push(() => { /* premium: dots above zero, stripes below */
+    const s = new Stage($("sPrem")), pl = 58, w = s.w, h = s.h, x0 = pl / S, x1 = w - 4;
+    const vs = resample(D.market.points.map((p) => p.bps), Math.floor(x1 - x0)), top = Math.max(2, ...vs) + 1, bot = Math.min(-2, ...vs) - 1, hh = h - 18 / S - 4;
+    const yy = (v) => 2 + ((top - v) / (top - bot)) * hh, z = yy(0);
+    s.ink(x0, z, x1, z + 1);
+    vs.forEach((v, i) => { const x = x0 + i; if (v >= 0) s.fill(x, yy(v), x + 1, z, 0.78, 0); else s.fill(x, z + 1, x + 1, yy(v), 0.62, 1); });
+    [...(top >= 6 ? [[top, `+${top.toFixed(0)} bps`]] : []), [0, "0"], [bot, `−${Math.abs(bot).toFixed(0)} bps`]].forEach(([t, l]) => s.text(l, 0, yy(t) * S));
+    s.text(fmt.bps(D.market.bps), s.W - 4, s.H - 8, { align: "right", strong: true }); s.text("last session", pl, s.H - 8);
+    s.sweep(); return s;
+  });
+  builders.push(() => { /* waterfall: four densities */
+    const s = new Stage($("sFlow")), w = s.w, h = s.h, top = 24 / S, bot = h - 30 / S;
+    let run = 0; const bl = D.flows.steps.map((q) => { const a = run, b = run + q.v; run = b; return { ...q, a, b }; }); bl.push({ label: "Change", v: run, a: 0, b: run, total: true });
+    const lo = Math.min(0, ...bl.flatMap((q) => [q.a, q.b])), hi = Math.max(0, ...bl.flatMap((q) => [q.a, q.b])), row = (v) => top + (hi - v) / (hi - lo) * (bot - top), bw = Math.floor(w / 4) - 8;
+    bl.forEach((q, i) => { const x = 4 + i * (bw + 8), a = row(Math.max(q.a, q.b)), b = Math.max(a + 1, row(Math.min(q.a, q.b)));
+      if (q.total) { s.ink(x, a, x + bw, b); } else s.fill(x, a, x + bw, b, q.v >= 0 ? 0.5 : 0.85, q.v >= 0 ? 0 : 1);
+      s.ink(x, a, x + bw, a + 0.6); s.ink(x, b - 0.6, x + bw, b);
+      s.text(fmt.usd(q.v), (x + bw / 2) * S, a * S - 11, { align: "center", strong: true }); s.text(q.label, (x + bw / 2) * S, s.H - 12, { align: "center" }); });
+    s.ink(0, row(0), w, row(0) + 0.5);
+    s.sweep(); return s;
+  });
+  builders.push(() => { /* treemap, tone by size */
+    const s = new Stage($("sDist")), rows = D.dist.rows.slice(0, 8);
+    const lay = (items, x, y, w, h, out) => { if (items.length === 1) return out.push({ it: items[0], x, y, w, h }); const tot = items.reduce((a, r) => a + r.usd, 0); let acc = 0, k = 0;
+      while (k < items.length - 1 && acc + items[k].usd < tot / 2) { acc += items[k].usd; k++; } if (k === 0) { acc = items[0].usd; k = 1; }
+      const a = items.slice(0, k), b = items.slice(k), f = acc / tot;
+      if (w >= h) { lay(a, x, y, w * f, h, out); lay(b, x + w * f, y, w * (1 - f), h, out); } else { lay(a, x, y, w, h * f, out); lay(b, x, y + h * f, w, h * (1 - f), out); } };
+    const out = []; lay(rows, 0, 0, s.w, s.h, out);
+    out.forEach(({ it, x, y, w, h }, i) => { const g = 2; s.fill(x + g, y + g, x + w - g, y + h - g, Math.max(0.12, 0.95 - i * 0.11), i % 2 ? 0 : 0); s.ink(x + g, y + g, x + w - g, y + g + 0.7);
+      if (w * S > 62 && h * S > 28) s.text(`${it.name}  ${fmt.usd(it.usd)}`, (x + g + 5) * S, (y + g + 12) * S / 1, { plate: true }); });
+    s.sweep(); return s;
+  });
+  builders.push(() => { /* calendar: each day a dithered cell */
+    const s = new Stage($("sCal")), pts = D.nav.points.filter((p) => p.inc != null).slice(-371), cell = Math.min(10, Math.floor((s.W - 30) / S / 54)), day0 = new Date(pts[0].d + "T00:00:00Z").getUTCDay(), ox = 28 / S, cells = [];
+    const sorted = pts.map((p) => p.inc).sort((a, b) => a - b), rank = (v) => sorted.indexOf(v) / (sorted.length - 1), B4 = [0, 8, 2, 10, 12, 4, 14, 6, 3, 11, 1, 9, 15, 7, 13, 5].map((v) => (v + 0.5) / 16);
+    pts.forEach((p, i) => { const k = i + day0, x = ox + Math.floor(k / 7) * cell, y = 4 + (k % 7) * cell, t = 0.04 + 0.96 * rank(p.inc);
+      for (let dy = 0; dy < cell - 1; dy++) for (let dx = 0; dx < cell - 1; dx++) if (t > B4[(dy & 3) * 4 + (dx & 3)]) s.solid[((y + dy) | 0) * s.w + ((x + dx) | 0)] = 1;
+      cells.push({ x: x * S, y: y * S, p }); });
+    ["Mon", "Wed", "Fri"].forEach((l, i) => s.text(l, 0, (4 + [1, 3, 5][i] * cell + cell / 2) * S));
+    s.sweep(); s.cells = cells; s.cell = cell * S; return s;
+  });
+  let live = builders.map((f) => f());
+  const hook = () => {
+    const n = live[0]; $("sNav").onmousemove = (e) => { const b = $("sNav").getBoundingClientRect(), x = (e.clientX - b.left) / S - n.geom.x0; if (x < 0 || x > n.geom.x1 - n.geom.x0) return; const p = n.pts[Math.round(x / (n.geom.x1 - n.geom.x0) * (n.pts.length - 1))]; $("navHover").textContent = `${fmt.date(p.d)} · NAV ${fmt.nav(p.nav)}`; };
+    $("sNav").onmouseleave = () => { $("navHover").innerHTML = "&nbsp;"; };
+    const c = live[4]; $("sCal").onmousemove = (e) => { const b = $("sCal").getBoundingClientRect(), mx = e.clientX - b.left, my = e.clientY - b.top; const k = c.cells.find((q) => mx >= q.x && mx < q.x + c.cell && my >= q.y && my < q.y + c.cell); $("calHover").textContent = k ? `${fmt.date(k.p.d)} · +${Math.round(k.p.inc)} ppm` : " "; };
+  };
+  hook();
+  addEventListener("resize", () => { clearTimeout(window.__t); window.__t = setTimeout(() => { live = builders.map((f) => f()); hook(); }, 150); });
+  document.addEventListener("themechange", () => live.forEach((s) => s.render(1)));
+}).catch((e) => { $("headline").textContent = "The API could not be reached. Nothing here is invented while it is down."; console.error(e); });
+</script>
+</body>
+</html>
+

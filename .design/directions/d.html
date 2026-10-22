@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dot Matrix D: mono ink on white</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Doto:wght@400..900&family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.5.1/dist/echarts.min.js"></script>
+<style>
+  :root {
+    --bg: #ffffff; --soft: #f5f5f6; --ink: #0b0b0c; --muted: #6a6d74; --faint: #b9bbc1; --line: #e3e4e7;
+    --font-ui: "Geist", ui-sans-serif, system-ui, sans-serif; --font-mono: "Geist Mono", ui-monospace, monospace; --font-dot: "Doto", "Geist Mono", monospace;
+  }
+  :root[data-theme="dark"] { --bg: #0b0b0c; --soft: #141416; --ink: #f4f4f5; --muted: #9b9ea6; --faint: #4a4c52; --line: #26272b; }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 400 15px/1.55 var(--font-ui); font-variant-numeric: tabular-nums; -webkit-font-smoothing: antialiased; }
+  .wrap { max-width: 1280px; margin: 0 auto; padding: 0 32px; }
+  /* top bar */
+  .bar { border-bottom: 1px solid var(--line); }
+  .bar .wrap { display: flex; align-items: center; gap: 28px; height: 64px; }
+  .brand { font: 800 26px/1 var(--font-dot); letter-spacing: .04em; white-space: nowrap; }
+  nav { display: flex; gap: 4px; margin-left: 12px; flex: 1; overflow-x: auto; scrollbar-width: none; }
+  nav a { padding: 8px 12px; color: var(--muted); text-decoration: none; font-size: 14px; font-weight: 500; white-space: nowrap; border-radius: 0; position: relative; transition: color .15s; }
+  nav a:hover { color: var(--ink); }
+  nav a[aria-current] { color: var(--ink); }
+  nav a[aria-current]::after { content: ""; position: absolute; left: 12px; right: 12px; bottom: -13px; height: 2px; background: var(--ink); }
+  .theme { display: inline-flex; border: 1px solid var(--line); }
+  .theme button { font: 500 12px var(--font-mono); background: transparent; color: var(--muted); border: 0; padding: 7px 12px; cursor: pointer; letter-spacing: .04em; }
+  .theme button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
+  :focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+  /* hero */
+  .hero { display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 6fr); gap: 48px; padding: 56px 0 44px; align-items: end; }
+  .eyebrow { font: 500 12px var(--font-mono); color: var(--muted); letter-spacing: .06em; text-transform: uppercase; }
+  h1 { font: 600 clamp(28px, 3.2vw, 42px)/1.12 var(--font-ui); letter-spacing: -.02em; margin: 12px 0 0; max-width: 18ch; }
+  .nav-read { margin-top: 36px; }
+  .big { font: 700 clamp(76px, 8.6vw, 124px)/.84 var(--font-dot); letter-spacing: 0; margin: 10px 0 0; display: block; }
+  .big small { font: 500 14px var(--font-mono); color: var(--muted); letter-spacing: .06em; margin-left: 8px; vertical-align: baseline; }
+  .chips { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 22px; }
+  .chip { font: 500 12.5px var(--font-mono); border: 1px solid var(--ink); padding: 4px 10px; }
+  .chip.solid { background: var(--ink); color: var(--bg); }
+  .ctl { display: flex; gap: 0; justify-content: flex-end; margin-bottom: 10px; }
+  .ctl button { font: 500 12px var(--font-mono); background: transparent; color: var(--muted); border: 1px solid var(--line); border-left-width: 0; padding: 6px 11px; cursor: pointer; }
+  .ctl button:first-child { border-left-width: 1px; }
+  .ctl button[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+  .chart { width: 100%; }
+  .src { font: 400 11.5px var(--font-mono); color: var(--muted); margin-top: 10px; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+  /* key reads */
+  .reads { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .read { padding: 22px 24px 20px 0; border-right: 1px solid var(--line); }
+  .read + .read { padding-left: 24px; } .read:last-child { border-right: 0; }
+  .read .v { font: 600 30px/1.1 var(--font-ui); letter-spacing: -.02em; margin-top: 6px; }
+  .read .s { font: 400 11.5px var(--font-mono); color: var(--muted); margin-top: 6px; }
+  /* sections */
+  .sec { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 0 56px; padding: 52px 0 0; }
+  .col7 { grid-column: span 7; } .col5 { grid-column: span 5; } .col12 { grid-column: span 12; }
+  h2 { font: 600 20px/1.2 var(--font-ui); letter-spacing: -.01em; margin: 0; }
+  .sub { color: var(--muted); font-size: 13.5px; margin: 4px 0 18px; max-width: 52ch; }
+  .hover { font: 400 12px var(--font-mono); min-height: 18px; color: var(--ink); }
+  footer { margin-top: 72px; border-top: 1px solid var(--line); padding: 22px 0 56px; color: var(--muted); font-size: 13px; }
+  footer strong { color: var(--ink); font-weight: 600; }
+  @media (max-width: 960px) {
+    .wrap { padding: 0 18px; } .hero { grid-template-columns: 1fr; gap: 28px; padding: 32px 0; }
+    .reads { grid-template-columns: repeat(2, minmax(0, 1fr)); } .read:nth-child(2) { border-right: 0; } .read:nth-child(3) { padding-left: 0; border-top: 1px solid var(--line); } .read:nth-child(4) { border-top: 1px solid var(--line); }
+    .sec { gap: 40px; } .col7, .col5 { grid-column: span 12; }
+  }
+</style>
+</head>
+<body>
+<div class="bar"><div class="wrap">
+  <div class="brand">ONYC.TERMINAL</div>
+  <nav aria-label="Pages" id="nav"></nav>
+  <div class="theme" role="group" aria-label="Theme"><button type="button" id="tl" aria-pressed="true">LIGHT</button><button type="button" id="td" aria-pressed="false">DARK</button></div>
+</div></div>
+
+<main class="wrap">
+  <section class="hero">
+    <div>
+      <div class="eyebrow" id="today"></div>
+      <h1 id="headline">Reading the live API...</h1>
+      <div class="nav-read">
+        <div class="eyebrow">NAV per ONyc</div>
+        <span class="big" id="big">-.----<small>USDC</small></span>
+        <div class="chips" id="chips"></div>
+      </div>
+    </div>
+    <div>
+      <div class="ctl" id="range" role="group" aria-label="Range"></div>
+      <div class="chart" id="cNav" style="height:340px" role="img" aria-label="NAV per ONyc over time"></div>
+      <div class="hover" id="navHover">&nbsp;</div>
+      <div class="src"><span id="navSrc"></span><span id="navNote"></span></div>
+    </div>
+  </section>
+
+  <section class="reads" id="reads" aria-label="Key reads"></section>
+
+  <section class="sec">
+    <div class="col7"><h2>Market against NAV</h2><p class="sub">Premium or discount of the traded price, in basis points, over the last session.</p>
+      <div class="chart" id="cPrem" style="height:260px" role="img" aria-label="Premium and discount over the last session"></div><div class="src"><span id="premSrc"></span></div></div>
+    <div class="col5"><h2>What moved AUM</h2><p class="sub">Last month, split into the NAV effect, net flows and what is left.</p>
+      <div class="chart" id="cFlow" style="height:260px" role="img" aria-label="AUM change split"></div><div class="src"><span id="flowSrc"></span></div></div>
+  </section>
+
+  <section class="sec">
+    <div class="col5"><h2>Capital by protocol</h2><p class="sub">Where the capital sits today.</p>
+      <div class="chart" id="cDist" style="height:290px" role="img" aria-label="Capital by protocol"></div><div class="src"><span id="distSrc"></span></div></div>
+    <div class="col7"><h2>Daily NAV increment</h2><p class="sub">Each square is a day; darker means a larger increment, in parts per million.</p>
+      <div class="chart" id="cCal" style="height:220px" role="img" aria-label="Calendar of daily increments"></div><div class="src"><span id="calSrc"></span></div></div>
+  </section>
+
+  <footer><strong>Independent community tool. Not affiliated with OnRe. Not investment advice.</strong><br>Every number shows where it came from and how old it is. This site is read-only: it never asks you to sign or send anything.</footer>
+</main>
+
+<script src="data.js"></script>
+<script>
+const $ = (id) => document.getElementById(id);
+$("nav").innerHTML = PAGES.map((p, i) => `<a href="#" ${i === 0 ? 'aria-current="page"' : ""}>${p}</a>`).join("");
+const css = (n) => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const root = document.documentElement;
+function setTheme(t) { root.dataset.theme = t; $("tl").setAttribute("aria-pressed", t === "light"); $("td").setAttribute("aria-pressed", t === "dark"); try { localStorage.setItem("lab-theme-d", t); } catch {} draw(); }
+$("tl").onclick = () => setTheme("light"); $("td").onclick = () => setTheme("dark");
+try { const s = new URLSearchParams(location.search).get("theme") || localStorage.getItem("lab-theme-d"); if (s) { root.dataset.theme = s; $("tl").setAttribute("aria-pressed", s === "light"); $("td").setAttribute("aria-pressed", s === "dark"); } } catch {}
+
+let D = null, range = "ALL";
+const charts = {};
+const chart = (id) => charts[id] || (charts[id] = echarts.init($(id), null, { renderer: "canvas" }));
+const baseText = () => ({ fontFamily: css("--font-mono"), fontSize: 11.5, color: css("--muted") });
+const tip = () => ({ backgroundColor: css("--bg"), borderColor: css("--ink"), borderWidth: 1, padding: [8, 10], textStyle: { color: css("--ink"), fontFamily: css("--font-mono"), fontSize: 12 }, extraCssText: "border-radius:0;box-shadow:none;" });
+const axis = () => ({ axisLine: { lineStyle: { color: css("--faint") } }, axisTick: { show: false }, axisLabel: baseText(), splitLine: { lineStyle: { color: css("--line") } } });
+const anim = { animationDuration: reduced ? 0 : 500, animationEasing: "cubicOut" };
+
+function slice(points) {
+  const n = points.length, k = { "1M": 31, "3M": 92, "1Y": 366, ALL: n }[range] || n;
+  return points.slice(-k);
+}
+
+function draw() {
+  if (!D) return;
+  const ink = css("--ink"), muted = css("--muted"), faint = css("--faint"), line = css("--line"), bg = css("--bg");
+  /* NAV */
+  const pts = slice(D.nav.points), ys = pts.map((p) => p.nav), min = Math.min(...ys), max = Math.max(...ys), pad = (max - min) * 0.12 || 0.001;
+  chart("cNav").setOption({
+    ...anim, grid: { left: 52, right: 64, top: 12, bottom: 28 }, tooltip: { ...tip(), trigger: "axis", axisPointer: { type: "line", lineStyle: { color: ink, type: "dashed" } },
+      formatter: (a) => { const p = pts[a[0].dataIndex]; return `${fmt.date(p.d)}<br><b>${fmt.nav(p.nav)}</b>`; } },
+    xAxis: { type: "category", data: pts.map((p) => p.d), boundaryGap: false, ...axis(), splitLine: { show: false }, axisLabel: { ...baseText(), hideOverlap: true, formatter: (v) => new Date(v).toLocaleDateString("en-GB", { month: "short", year: "2-digit", timeZone: "UTC" }) } },
+    yAxis: { type: "value", min: min - pad, max: max + pad, ...axis(), axisLine: { show: false }, axisLabel: { ...baseText(), formatter: (v) => v.toFixed(3) } },
+    series: [{ type: "line", data: ys, showSymbol: false, smooth: false, lineStyle: { color: ink, width: 2 },
+      areaStyle: { color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{ offset: 0, color: ink + "26" }, { offset: 1, color: ink + "00" }]) },
+      markPoint: { symbol: "circle", symbolSize: 9, itemStyle: { color: ink, borderColor: bg, borderWidth: 2 }, label: { show: true, position: "right", offset: [6, 0], formatter: (p) => fmt.nav(p.value), color: ink, fontFamily: css("--font-mono"), fontWeight: 600, fontSize: 12 },
+        data: [{ coord: [pts.length - 1, ys[ys.length - 1]], value: ys[ys.length - 1] }] } }],
+  }, true);
+  /* premium */
+  const mp = D.market.points, top = Math.max(2, ...mp.map((p) => p.bps)) + 1, bot = Math.min(-2, ...mp.map((p) => p.bps)) - 1;
+  chart("cPrem").setOption({
+    ...anim, grid: { left: 56, right: 12, top: 10, bottom: 28 }, tooltip: { ...tip(), trigger: "axis", axisPointer: { type: "shadow", shadowStyle: { color: ink + "10" } },
+      formatter: (a) => { const p = mp[a[0].dataIndex]; return `${new Date(p.t).toISOString().slice(11, 16)} UTC<br><b>${fmt.bps(p.bps)}</b><br>price ${p.price.toFixed(4)} · NAV ${p.nav.toFixed(4)}`; } },
+    xAxis: { type: "category", data: mp.map((p) => p.t), ...axis(), splitLine: { show: false }, axisLabel: { ...baseText(), hideOverlap: true, formatter: (v) => new Date(v).toISOString().slice(11, 16) } },
+    yAxis: { type: "value", min: bot, max: top, ...axis(), axisLine: { show: false }, axisLabel: { ...baseText(), formatter: (v) => `${v > 0 ? "+" : v < 0 ? "−" : ""}${Math.abs(v)}` } },
+    series: [{ type: "bar", data: mp.map((p) => ({ value: p.bps, itemStyle: { color: p.bps >= 0 ? ink : muted } })), barCategoryGap: "18%",
+      markLine: { symbol: "none", silent: true, lineStyle: { color: ink, width: 1 }, label: { show: false }, data: [{ yAxis: 0 }] } }],
+  }, true);
+  /* waterfall */
+  let run = 0; const bl = D.flows.steps.map((s) => { const a = run, b = run + s.v; run = b; return { label: s.label, a, b, v: s.v }; }); bl.push({ label: "Change in AUM", a: 0, b: run, v: run, total: true });
+  const lo = Math.min(0, ...bl.flatMap((b) => [b.a, b.b])), hi = Math.max(0, ...bl.flatMap((b) => [b.a, b.b])), padw = (hi - lo) * 0.14;
+  chart("cFlow").setOption({
+    ...anim, grid: { left: 64, right: 12, top: 26, bottom: 34 }, tooltip: { ...tip(), trigger: "item", formatter: (p) => `${p.data.label}<br><b>${fmt.usd(p.data.v)}</b>` },
+    xAxis: { type: "category", data: bl.map((b) => b.label), ...axis(), splitLine: { show: false }, axisLabel: { ...baseText(), color: ink, interval: 0 } },
+    yAxis: { type: "value", min: Math.floor((lo - padw) / 5e6) * 5e6, max: Math.ceil((hi + padw) / 5e6) * 5e6, interval: 5e6, ...axis(), axisLine: { show: false }, axisLabel: { ...baseText(), formatter: (v) => fmt.usd(v) } },
+    series: [{ type: "custom", data: bl.map((b, i) => ({ value: [i, b.a, b.b], label: b.label, v: b.v, total: b.total })), encode: { x: 0, y: [1, 2] },
+      renderItem: (_p, api) => { const i = api.value(0), a = api.coord([i, api.value(1)]), b = api.coord([i, api.value(2)]), w = Math.min(54, api.size([1, 0])[0] * 0.5), d = bl[i], top = Math.min(a[1], b[1]), h = Math.max(2, Math.abs(a[1] - b[1]));
+        const fill = d.total ? ink : d.v >= 0 ? muted : faint, next = api.coord([i + 1, api.value(2)]);
+        return { type: "group", children: [
+          { type: "rect", shape: { x: a[0] - w / 2, y: top, width: w, height: h }, style: { fill } },
+          ...(i < bl.length - 1 ? [{ type: "line", shape: { x1: a[0] + w / 2, y1: b[1], x2: next[0] - w / 2, y2: b[1] }, style: { stroke: muted, lineWidth: 1, lineDash: [3, 3] } }] : []),
+          { type: "text", style: { x: a[0], y: top - 8, text: fmt.usd(d.v), textAlign: "center", textVerticalAlign: "bottom", fill: ink, font: `600 12px ${css("--font-mono")}` } } ] }; } }],
+  }, true);
+  /* protocols */
+  const rows = D.dist.rows.slice(0, 7).reverse();
+  chart("cDist").setOption({
+    ...anim, grid: { left: 84, right: 74, top: 6, bottom: 6 }, tooltip: { ...tip(), trigger: "item", formatter: (p) => `${p.name}<br><b>${fmt.usd(p.value)}</b> · ${fmt.pct(rows[p.dataIndex].share)}` },
+    xAxis: { type: "value", show: false, max: Math.max(...rows.map((r) => r.usd)) * 1.02 },
+    yAxis: { type: "category", data: rows.map((r) => r.name), ...axis(), splitLine: { show: false }, axisLine: { show: false }, axisLabel: { ...baseText(), color: ink, fontFamily: css("--font-ui"), fontSize: 13 } },
+    series: [{ type: "bar", data: rows.map((r, i) => ({ value: r.usd, itemStyle: { color: i === rows.length - 1 ? ink : muted } })), barWidth: 16, label: { show: true, position: "right", formatter: (p) => fmt.usd(p.value), color: ink, fontFamily: css("--font-mono"), fontSize: 12 }, showBackground: true, backgroundStyle: { color: css("--soft") } }],
+  }, true);
+  /* calendar */
+  const cp = D.nav.points.filter((p) => p.inc != null).slice(-371), srt = cp.map((p) => p.inc).sort((a, b) => a - b), q = (f) => srt[Math.floor(f * (srt.length - 1))];
+  chart("cCal").setOption({
+    ...anim, tooltip: { ...tip(), formatter: (p) => `${fmt.date(p.value[0])}<br><b>+${Math.round(p.value[1])} ppm</b>` },
+    visualMap: { type: "piecewise", show: false, dimension: 1, pieces: [{ max: q(0.2), color: css("--soft") }, { min: q(0.2), max: q(0.4), color: css("--line") }, { min: q(0.4), max: q(0.6), color: faint }, { min: q(0.6), max: q(0.85), color: muted }, { min: q(0.85), color: ink }] },
+    calendar: { left: 34, right: 8, top: 24, bottom: 8, range: [cp[0].d, cp[cp.length - 1].d], cellSize: ["auto", 20], itemStyle: { borderWidth: 3, borderColor: bg, color: "transparent" }, splitLine: { show: false }, yearLabel: { show: false },
+      monthLabel: { ...baseText(), nameMap: "en" }, dayLabel: { ...baseText(), firstDay: 1, nameMap: ["", "Mon", "", "Wed", "", "Fri", ""] } },
+    series: [{ type: "heatmap", coordinateSystem: "calendar", data: cp.map((p) => [p.d, p.inc]) }],
+  }, true);
+}
+
+loadAll().then((d) => {
+  D = d; const last = d.nav.last, first = d.nav.first, ret = (last.nav / first.nav - 1) * 100;
+  $("today").textContent = new Date().toLocaleDateString("en-GB", { weekday: "long", day: "numeric", month: "long", timeZone: "UTC" });
+  $("headline").textContent = `ONyc is up ${ret.toFixed(1)}% since launch`;
+  $("big").innerHTML = `${fmt.nav(last.nav)}<small>USDC</small>`;
+  $("chips").innerHTML = `<span class="chip solid">+${ret.toFixed(1)}% since ${fmt.date(first.d)}</span><span class="chip">${fmt.bps(d.market.bps)} to market</span>`;
+  $("navSrc").textContent = d.nav.src; $("navNote").textContent = `${d.nav.points.length} daily points`;
+  $("premSrc").textContent = d.market.src; $("flowSrc").textContent = d.flows.src; $("distSrc").textContent = d.dist.src; $("calSrc").textContent = d.nav.src;
+  const top = d.dist.rows[0];
+  $("reads").innerHTML = [
+    ["Assets under management", fmt.usd(d.dist.total), d.dist.src.replace("Source: ", "")],
+    ["Change in AUM, 30 days", fmt.usd(d.flows.delta), d.flows.src.replace("Source: ", "")],
+    ["Market premium", fmt.bps(d.market.bps), d.market.src.replace("Source: ", "")],
+    [`Largest protocol: ${top.name}`, fmt.pct(top.share), d.dist.src.replace("Source: ", "")],
+  ].map(([l, v, s]) => `<div class="read"><div class="eyebrow">${l}</div><div class="v">${v}</div><div class="s">${s}</div></div>`).join("");
+  $("range").innerHTML = ["1M", "3M", "1Y", "ALL"].map((r) => `<button type="button" data-r="${r}" aria-pressed="${r === range}">${r}</button>`).join("");
+  $("range").onclick = (e) => { const b = e.target.closest("button"); if (!b) return; range = b.dataset.r; [...$("range").children].forEach((x) => x.setAttribute("aria-pressed", x === b)); draw(); };
+  draw();
+  addEventListener("resize", () => Object.values(charts).forEach((c) => c.resize()));
+}).catch((e) => { $("headline").textContent = "The API could not be reached. Nothing here is invented while it is down."; console.error(e); });
+</script>
+</body>
+</html>

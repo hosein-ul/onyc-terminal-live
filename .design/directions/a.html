@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dot Matrix A: LED board</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Doto:wght@100..900&family=Geist+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #050506; --panel: #0b0c0e; --ink: #f3f4f6; --muted: #8b919c; --line: #2a2d33; --dim: .15;
+    --font-dot: "Doto", "Geist Mono", monospace; --font-mono: "Geist Mono", ui-monospace, monospace;
+  }
+  :root[data-theme="light"] { --bg: #eceef1; --panel: #ffffff; --ink: #08090b; --muted: #555b66; --line: #c8ccd3; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 14px/1.5 var(--font-mono); font-variant-numeric: tabular-nums;
+    background-image: radial-gradient(color-mix(in srgb, var(--ink) 16%, transparent) 1px, transparent 1.3px); background-size: 18px 18px; }
+  .wrap { max-width: 1240px; margin: 0 auto; padding: 28px 24px 56px; }
+  header { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px 24px; margin-bottom: 28px; }
+  .brand { font: 800 30px/1 var(--font-dot); letter-spacing: .04em; }
+  nav { display: flex; flex-wrap: wrap; gap: 0; border: 1px solid var(--ink); background: var(--panel); }
+  nav a { padding: 8px 14px; color: var(--ink); text-decoration: none; font-size: 13px; border-right: 1px solid var(--line); }
+  nav a:last-child { border-right: 0; }
+  nav a[aria-current] { background: var(--ink); color: var(--bg); }
+  nav a:hover:not([aria-current]) { background: color-mix(in srgb, var(--ink) 10%, transparent); }
+  button.theme { font: 600 12px var(--font-mono); letter-spacing: .08em; padding: 8px 12px; border: 1px solid var(--ink); background: var(--panel); color: var(--ink); cursor: pointer; }
+  button.theme:hover { background: var(--ink); color: var(--bg); }
+  :focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+  .eyebrow { color: var(--muted); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; }
+  h1 { font: 500 clamp(22px, 3vw, 34px)/1.15 var(--font-mono); margin: 6px 0 24px; max-width: 28ch; }
+  .screen { background: var(--panel); border: 1px solid var(--ink); padding: 28px 28px 20px; }
+  .readout { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 20px; }
+  .big { font: 700 clamp(96px, 17vw, 208px)/.9 var(--font-dot); letter-spacing: .01em; }
+  .unit { font: 700 28px var(--font-dot); color: var(--muted); }
+  .chg { font: 600 13px var(--font-mono); border: 1px solid var(--ink); padding: 2px 8px; }
+  .row { display: grid; grid-template-columns: repeat(12, 1fr); gap: 20px; margin-top: 20px; }
+  .c7 { grid-column: span 7; } .c5 { grid-column: span 5; } .c6 { grid-column: span 6; } .c12 { grid-column: span 12; }
+  .panel { background: var(--panel); border: 1px solid var(--ink); padding: 18px 20px 14px; min-width: 0; }
+  .panel h2 { font: 800 20px/1 var(--font-dot); letter-spacing: .06em; margin: 0 0 2px; text-transform: uppercase; }
+  .panel .sub { color: var(--muted); font-size: 12px; margin: 0 0 12px; }
+  canvas { display: block; width: 100%; }
+  .src { color: var(--muted); font-size: 11.5px; border-top: 1px dashed var(--line); margin-top: 10px; padding-top: 8px; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+  .hover { min-height: 20px; font-size: 12px; color: var(--ink); }
+  footer { margin-top: 36px; font-size: 12px; color: var(--muted); max-width: 70ch; }
+  footer strong { color: var(--ink); font-weight: 600; }
+  @media (max-width: 860px) { .c7, .c5, .c6 { grid-column: span 12; } .wrap { padding: 18px 14px 40px; } .screen { padding: 18px 14px; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand">ONYC.TERMINAL</div>
+    <nav aria-label="Pages" id="nav"></nav>
+    <button class="theme" id="theme" type="button" aria-label="Switch light or dark">DARK</button>
+  </header>
+
+  <div class="eyebrow" id="today"></div>
+  <h1 id="headline">Reading the live API…</h1>
+
+  <section class="screen" aria-label="NAV per ONyc">
+    <div class="eyebrow">NAV per ONyc · USDC</div>
+    <div class="readout"><div class="big" id="big">–.––––</div><span class="chg" id="chg" hidden></span></div>
+    <div class="hover" id="navHover" aria-live="polite">&nbsp;</div>
+    <canvas id="cNav" height="300" role="img" aria-label="NAV per ONyc since launch drawn as lit dots"></canvas>
+    <div class="src"><span id="navSrc"></span><span id="navNote"></span></div>
+  </section>
+
+  <div class="row">
+    <section class="panel c7"><h2>Market vs NAV</h2><p class="sub">Premium or discount in basis points, last session</p>
+      <canvas id="cPrem" height="240" role="img" aria-label="Premium and discount bars"></canvas><div class="src"><span id="premSrc"></span></div></section>
+    <section class="panel c5"><h2>What moved AUM</h2><p class="sub">Last month: NAV effect, net flows, residual</p>
+      <canvas id="cFlow" height="240" role="img" aria-label="AUM change split"></canvas><div class="src"><span id="flowSrc"></span></div></section>
+  </div>
+  <div class="row">
+    <section class="panel c12"><h2>Capital by protocol</h2><p class="sub">Where the capital sits today</p>
+      <canvas id="cDist" height="260" role="img" aria-label="Capital by protocol"></canvas><div class="src"><span id="distSrc"></span></div></section>
+  </div>
+  <div class="row">
+    <section class="panel c12"><h2>Daily NAV increment</h2><p class="sub">Dot size is the day's increment in parts per million</p>
+      <canvas id="cCal" height="150" role="img" aria-label="Calendar of daily increments"></canvas><div class="hover" id="calHover">&nbsp;</div><div class="src"><span id="calSrc"></span></div></section>
+  </div>
+
+  <footer><strong>Independent community tool. Not affiliated with OnRe. Not investment advice.</strong><br>Every number shows where it came from and how old it is. This site is read-only: it never asks you to sign or send anything.</footer>
+</div>
+<script src="data.js"></script>
+<script>
+const $ = (id) => document.getElementById(id);
+document.getElementById("nav").innerHTML = PAGES.map((p, i) => `<a href="#" ${i === 0 ? 'aria-current="page"' : ""}>${p}</a>`).join("");
+themeToggle($("theme"));
+const css = (n) => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+
+/* ---- LED dot grid ---------------------------------------------------------------------------------------------
+   A grid of cells; each holds 0 (unlit) to 1 (lit). Unlit cells stay faintly visible: the grid is the structure.
+   No glow: a lit cell is the same dot, fully inked. */
+class Led {
+  constructor(canvas, { cell = 8, padL = 0, padR = 0, padT = 0, padB = 0 } = {}) {
+    this.c = canvas; this.cell = cell; Object.assign(this, { padL, padR, padT, padB });
+    this.dpr = Math.min(2, devicePixelRatio || 1);
+    this.resize();
+  }
+  resize() {
+    const w = this.c.clientWidth, h = Number(this.c.getAttribute("height"));
+    this.W = w; this.H = h; this.c.width = w * this.dpr; this.c.height = h * this.dpr;
+    this.cols = Math.max(8, Math.floor((w - this.padL - this.padR) / this.cell));
+    this.rows = Math.max(6, Math.floor((h - this.padT - this.padB) / this.cell));
+    this.v = new Float32Array(this.cols * this.rows);
+    this.texts = [];
+  }
+  set(x, y, val = 1) { if (x >= 0 && x < this.cols && y >= 0 && y < this.rows) { const i = y * this.cols + x; if (val > this.v[i]) this.v[i] = val; } }
+  rect(x0, y0, x1, y1, val = 1) { for (let y = y0; y <= y1; y++) for (let x = x0; x <= x1; x++) this.set(x, y, val); }
+  vline(x, y0, y1, val = 1) { for (let y = Math.min(y0, y1); y <= Math.max(y0, y1); y++) this.set(x, y, val); }
+  text(s, x, y, o = {}) { this.texts.push({ s, x, y, ...o }); }
+  px(col, row) { return [this.padL + col * this.cell + this.cell / 2, this.padT + row * this.cell + this.cell / 2]; }
+  draw(reveal = this.cols) {
+    const ctx = this.c.getContext("2d"), d = this.dpr, ink = css("--ink"), dim = Number(css("--dim"));
+    ctx.setTransform(d, 0, 0, d, 0, 0); ctx.clearRect(0, 0, this.W, this.H);
+    const r = this.cell * 0.36;
+    for (let y = 0; y < this.rows; y++) for (let x = 0; x < this.cols; x++) {
+      const v = x < reveal ? this.v[y * this.cols + x] : 0;
+      const [cx, cy] = this.px(x, y);
+      ctx.globalAlpha = v > 0 ? 0.25 + 0.75 * v : dim; ctx.fillStyle = ink;
+      ctx.beginPath(); ctx.arc(cx, cy, v > 0 ? r * (0.9 + 0.1 * v) : r * 0.7, 0, 6.2832); ctx.fill();
+    }
+    ctx.globalAlpha = 1; ctx.fillStyle = css("--muted"); ctx.font = `12px ${css("--font-mono")}`;
+    for (const t of this.texts) { ctx.textAlign = t.align || "left"; ctx.textBaseline = t.base || "middle"; ctx.fillStyle = t.strong ? ink : css("--muted"); ctx.fillText(t.s, t.x, t.y); }
+  }
+  /** Stepped scan-in: a few columns per frame, like a display filling from the left. */
+  scan(ms = 900) {
+    if (reduced) return this.draw();
+    const t0 = performance.now(); const step = () => { const p = Math.min(1, (performance.now() - t0) / ms); this.draw(Math.ceil(p * this.cols / 2) * 2); if (p < 1) requestAnimationFrame(step); }; step();
+  }
+}
+const resample = (arr, n) => Array.from({ length: n }, (_, i) => arr[Math.round(i / Math.max(1, n - 1) * (arr.length - 1))]);
+
+const charts = [];
+function build(name, fn) { charts.push({ name, fn }); }
+
+loadAll().then((D) => {
+  const last = D.nav.last, first = D.nav.first;
+  $("today").textContent = new Date().toLocaleDateString("en-GB", { weekday: "long", day: "numeric", month: "long", timeZone: "UTC" });
+  $("headline").textContent = `ONyc is up ${((last.nav / first.nav - 1) * 100).toFixed(1)}% since launch`;
+  $("big").textContent = fmt.nav(last.nav);
+  $("navSrc").textContent = D.nav.src; $("navNote").textContent = `${D.nav.points.length} daily points · ${D.nav.events.length} events`;
+  $("premSrc").textContent = D.market.src; $("flowSrc").textContent = D.flows.src; $("distSrc").textContent = D.dist.src; $("calSrc").textContent = D.nav.src;
+
+  /* NAV line + area */
+  build("nav", () => {
+    const L = new Led($("cNav"), { cell: 7, padL: 54, padR: 74, padT: 6, padB: 24 });
+    const ys = D.nav.points.map((p) => p.nav), min = Math.min(...ys), max = Math.max(...ys), pad = (max - min) * 0.06;
+    const lo = min - pad, hi = max + pad, row = (v) => Math.round((hi - v) / (hi - lo) * (L.rows - 1));
+    const cols = resample(ys, L.cols); let prev = row(cols[0]);
+    cols.forEach((v, x) => { const r = row(v); L.vline(x, prev, r, 1); L.set(x, r, 1); for (let y = r + 1; y < L.rows; y++) L.set(x, y, 0.28); prev = r; });
+    [lo + pad, (min + max) / 2, hi - pad].forEach((t) => L.text(fmt.nav(t), 0, L.padT + row(t) * L.cell + L.cell / 2));
+    const dates = resample(D.nav.points.map((p) => p.d), 4);
+    dates.forEach((d, i) => L.text(fmt.date(d), L.padL + (i / 3) * (L.cols * L.cell), L.H - 8, { align: i === 0 ? "left" : i === 3 ? "right" : "center" }));
+    L.text(fmt.nav(last.nav), L.padL + L.cols * L.cell + 10, L.padT + row(cols[cols.length - 1]) * L.cell + L.cell / 2, { strong: true });
+    L.scan(); L.points = D.nav.points; return L;
+  });
+  /* premium bars */
+  build("prem", () => {
+    const L = new Led($("cPrem"), { cell: 6, padL: 62, padR: 6, padT: 4, padB: 20 });
+    const vs = resample(D.market.points.map((p) => p.bps), L.cols), top = Math.max(2, ...vs) + 1, bot = Math.min(-2, ...vs) - 1;
+    const row = (v) => Math.round(((top - v) / (top - bot)) * (L.rows - 1)), mid = row(0);
+    for (let x = 0; x < L.cols; x++) L.set(x, mid, 0.5);
+    vs.forEach((v, x) => L.vline(x, mid, row(v), x === L.cols - 1 ? 1 : 0.85));
+    [...(top >= 6 ? [[top, `+${top.toFixed(0)}`]] : []), [0, "0"], [bot, `−${Math.abs(bot).toFixed(0)}`]].forEach(([t, s]) => L.text(`${s} bps`, 0, L.padT + row(t) * L.cell + L.cell / 2));
+    L.text(fmt.bps(D.market.bps), L.W - 6, L.H - 8, { align: "right", strong: true }); L.text("last session", L.padL, L.H - 8);
+    L.scan(); return L;
+  });
+  /* waterfall as dot blocks */
+  build("flow", () => {
+    const L = new Led($("cFlow"), { cell: 6, padL: 6, padR: 6, padT: 16, padB: 34 });
+    let run = 0; const blocks = D.flows.steps.map((s) => { const a = run, b = run + s.v; run = b; return { ...s, a, b }; });
+    blocks.push({ label: "Change in AUM", v: run, a: 0, b: run, total: true });
+    const lo = Math.min(0, ...blocks.flatMap((b) => [b.a, b.b])), hi = Math.max(0, ...blocks.flatMap((b) => [b.a, b.b]));
+    const row = (v) => Math.round((hi - v) / (hi - lo) * (L.rows - 1)), bw = Math.floor(L.cols / 4) - 2;
+    blocks.forEach((b, i) => {
+      const x0 = i * (bw + 2) + 1, y0 = row(Math.max(b.a, b.b)), y1 = Math.max(y0, row(Math.min(b.a, b.b)));
+      for (let y = y0; y <= y1; y++) for (let x = x0; x < x0 + bw; x++) L.set(x, y, b.total ? 1 : b.v >= 0 ? 1 : (x + y) % 2 ? 0.9 : 0.4);
+      if (i < blocks.length - 1) for (let x = x0 + bw; x < x0 + bw + 2; x++) L.set(x, row(b.b), 0.5);
+      L.text(fmt.usd(b.v), L.padL + (x0 + bw / 2) * L.cell, L.padT + y0 * L.cell - 8, { align: "center", strong: true });
+      L.text(b.label, L.padL + (x0 + bw / 2) * L.cell, L.H - 14, { align: "center" });
+    });
+    L.scan(); return L;
+  });
+  /* protocol bars */
+  build("dist", () => {
+    const rows = D.dist.rows.slice(0, 7);
+    const L = new Led($("cDist"), { cell: 6, padL: 84, padR: 70, padT: 4, padB: 4 }), maxv = rows[0].usd;
+    rows.forEach((r, i) => {
+      const y0 = i * 5 + 1, w = Math.max(1, Math.round((r.usd / maxv) * (L.cols - 1)));
+      L.rect(0, y0, w - 1, y0 + 2, 1);
+      L.text(r.name, 0, L.padT + (y0 + 1.5) * L.cell, { strong: true });
+      L.text(fmt.usd(r.usd), L.padL + w * L.cell + 8, L.padT + (y0 + 1.5) * L.cell);
+    });
+    L.scan(); return L;
+  });
+  /* calendar: dot size = increment */
+  build("cal", () => {
+    const c = $("cCal"), d = Math.min(2, devicePixelRatio || 1), W = c.clientWidth; const cl = Math.min(20, Math.floor((W - 30) / 54)); c.setAttribute("height", 7 * cl + 12); const H = 7 * cl + 12;
+    c.width = W * d; c.height = H * d; const ctx = c.getContext("2d"); ctx.setTransform(d, 0, 0, d, 0, 0);
+    const pts = D.nav.points.filter((p) => p.inc != null).slice(-371), cell = cl, ink = css("--ink");
+    const sorted = pts.map((p) => p.inc).sort((a, b) => a - b), rank = (v) => sorted.indexOf(v) / (sorted.length - 1); const cells = [];
+    const day0 = new Date(pts[0].d + "T00:00:00Z").getUTCDay();
+    pts.forEach((p, i) => { const k = i + day0, x = 28 + Math.floor(k / 7) * cell + cell / 2, y = 6 + (k % 7) * cell + cell / 2;
+      ctx.globalAlpha = 1; ctx.fillStyle = ink; ctx.beginPath(); ctx.arc(x, y, cell * (0.12 + 0.36 * rank(p.inc)), 0, 6.2832); ctx.fill(); cells.push({ x, y, p }); });
+    ctx.globalAlpha = 1; ctx.fillStyle = css("--muted"); ctx.font = `11px ${css("--font-mono")}`; ctx.textBaseline = "middle";
+    ["Mon", "Wed", "Fri"].forEach((s, i) => ctx.fillText(s, 0, 6 + ([1, 3, 5][i]) * cell + cell / 2));
+    c.onmousemove = (e) => { const b = c.getBoundingClientRect(), mx = e.clientX - b.left, my = e.clientY - b.top; let best = null, bd = 1e9;
+      for (const k of cells) { const dd = (k.x - mx) ** 2 + (k.y - my) ** 2; if (dd < bd) { bd = dd; best = k; } }
+      $("calHover").textContent = best && bd < cell * cell ? `${fmt.date(best.p.d)} · +${Math.round(best.p.inc)} ppm` : " "; };
+    c.onmouseleave = () => { $("calHover").innerHTML = "&nbsp;"; };
+    return null;
+  });
+  let live = charts.map((c) => c.fn());
+  addEventListener("resize", () => { clearTimeout(window.__t); window.__t = setTimeout(() => { live = charts.map((c) => c.fn()); }, 150); });
+  document.addEventListener("themechange", () => { live.forEach((L) => L && L.draw()); charts.find((c) => c.name === "cal").fn(); });
+  const nav = live[0]; $("cNav").onmousemove = (e) => { const b = $("cNav").getBoundingClientRect(); const x = Math.round((e.clientX - b.left - nav.padL - nav.cell / 2) / nav.cell);
+    if (x < 0 || x >= nav.cols) return; const p = nav.points[Math.round(x / (nav.cols - 1) * (nav.points.length - 1))]; $("navHover").textContent = `${fmt.date(p.d)} · NAV ${fmt.nav(p.nav)}`; };
+  $("cNav").onmouseleave = () => { $("navHover").innerHTML = "&nbsp;"; };
+}).catch((e) => { $("headline").textContent = "The API could not be reached. Nothing here is invented while it is down."; console.error(e); });
+</script>
+</body>
+</html>
+
