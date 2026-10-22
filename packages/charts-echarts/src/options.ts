@@ -12,7 +12,7 @@ import {
 import { formatDate, formatPercent } from "@onyc/format";
 import type { EChartsCoreOption } from "echarts/core";
 import { barsOption, stackedOption, timeSeriesOption } from "./options-series.js";
-import { alpha, mix, onColor, type ChartTokens } from "./tokens.js";
+import { alpha, onColor, ramp, type ChartTokens } from "./tokens.js";
 
 export interface OptionContext {
   tokens: ChartTokens;
@@ -178,8 +178,7 @@ function calendarOption(spec: CalendarSpec, ctx: OptionContext): EChartsCoreOpti
       show: false,
       min: lowV,
       max: highV,
-      // Mono ramp: from the grid grey to ink, one cell shade per step.
-      inRange: { color: [0, 0.2, 0.4, 0.6, 0.8, 1].map((k) => mix(t.grid, t.ink, k)) },
+      inRange: { color: ramp(t, 6) },
       seriesIndex: 0,
     },
     calendar: {
@@ -189,7 +188,7 @@ function calendarOption(spec: CalendarSpec, ctx: OptionContext): EChartsCoreOpti
       right: 8,
       bottom: 8,
       cellSize: wide ? ["auto", 14] : [18, 18],
-      itemStyle: { color: t.grid, borderColor: t.surface, borderWidth: 3, borderRadius: 0 },
+      itemStyle: { color: t.grid, borderColor: t.surface, borderWidth: 2, borderRadius: cell },
       splitLine: { show: false },
       yearLabel: { show: false },
       monthLabel: { color: t.muted, fontFamily: t.fontMono, fontSize: 11, nameMap: "en" },
@@ -541,14 +540,9 @@ function waterfallOption(spec: WaterfallSpec, ctx: OptionContext): EChartsCoreOp
     const from = s.type === "total" ? 0 : running;
     const to = s.type === "total" ? s.value : running + s.value;
     if (s.type === "delta") running += s.value;
-    // Mono: increases are pale ink, decreases are outlined, the total is solid ink.
-    const itemStyle =
-      s.type === "total"
-        ? { color: t.ink }
-        : s.value >= 0
-          ? { color: alpha(t.ink, 0.22) }
-          : { color: t.surface, borderColor: t.ink, borderWidth: 1.5 };
-    return { value: [i, from, to] as [number, number, number], step: s, itemStyle };
+    // Deltas are tonal (soft good and bad); the total is the one accent-coloured bar.
+    const color = s.type === "total" ? t.accent : alpha(s.value >= 0 ? t.good : t.bad, 0.82);
+    return { value: [i, from, to] as [number, number, number], step: s, itemStyle: { color } };
   });
   const lo = Math.min(0, ...bars.flatMap((b) => [b.value[1], b.value[2]]));
   const hi = Math.max(0, ...bars.flatMap((b) => [b.value[1], b.value[2]]));

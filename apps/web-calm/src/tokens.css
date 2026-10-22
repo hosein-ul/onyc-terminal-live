@@ -45,25 +45,25 @@
   --chart-line: #e4e8ee;
   --chart-grid: #edf0f4;
   --chart-accent: #0b6bcb;
-  --chart-primary: #101828;
+  --chart-primary: #0b6bcb;
   --chart-good: #0b5c3e;
   --chart-bad: #9a1b3a;
-  --chart-s1: #101828;
-  --chart-s2: #344054;
-  --chart-s3: #475467;
-  --chart-s4: #667085;
-  --chart-s5: #98a2b3;
-  --chart-s6: #b6bdc9;
-  --chart-s7: #d0d5dd;
-  --chart-s8: #e4e7ec;
+  --chart-s1: #0b6bcb;
+  --chart-s2: #1b9aaa;
+  --chart-s3: #7fb2e5;
+  --chart-s4: #3e4c6b;
+  --chart-s5: #9aa7bd;
+  --chart-s6: #14866d;
+  --chart-s7: #c5d3e3;
+  --chart-s8: #5b8def;
   --chart-font-ui: "Figtree", ui-sans-serif, sans-serif;
   --chart-font-mono: "Figtree", ui-sans-serif, sans-serif;
-  --chart-stroke: 1.8;
-  --chart-radius: 0;
+  --chart-stroke: 3;
+  --chart-radius: 8;
   --chart-tooltip-bg: #ffffff;
   --chart-tooltip-ink: #101828;
-  --chart-marker: rect;
-  --chart-area-alpha: 0.06;
+  --chart-marker: circle;
+  --chart-area-alpha: 0.1;
 }
 
 *,

@@ -21,7 +21,7 @@ const isDate = (s: string): boolean => /^\d{4}-\d{2}(-\d{2})?/.test(s);
 const toneColor = (tone: string | undefined, value: number | null, diverging: boolean): string => {
   if (diverging) return (value ?? 0) >= 0 ? "var(--chart-good)" : "var(--chart-bad)";
   if (tone === "bad") return "var(--chart-bad)";
-  return "var(--chart-ink)";
+  return "var(--chart-accent)";
 };
 
 /** Vertical or horizontal bars, with rounded ends, sign colouring for diverging data and threshold lines. */

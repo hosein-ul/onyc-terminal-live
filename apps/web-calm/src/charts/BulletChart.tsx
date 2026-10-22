@@ -28,7 +28,7 @@ export function BulletChart({ spec }: { spec: BulletSpec }) {
             width={Math.max(4, scale(spec.value) - PAD)}
             height={16}
             rx={8}
-            fill="var(--chart-ink)"
+            fill="var(--chart-accent)"
           />
         )}
         {target !== null && (

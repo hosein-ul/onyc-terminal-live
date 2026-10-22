@@ -198,11 +198,12 @@
 .ch-tip {
   background: var(--chart-tooltip-bg);
   color: var(--chart-tooltip-ink);
-  border-radius: 0;
+  border-radius: 14px;
   padding: 10px 12px;
   min-width: 150px;
-  box-shadow: none;
-  border: 1px solid var(--chart-ink);
+  box-shadow:
+    0 0 0 1px var(--line),
+    0 8px 24px rgb(16 24 40 / 0.1);
   font-size: 13px;
 }
 
@@ -230,7 +231,7 @@
 .ch-dot {
   width: 8px;
   height: 8px;
-  border-radius: 0;
+  border-radius: 50%;
   flex-shrink: 0;
 }
 
@@ -330,9 +331,9 @@
 .chart-key i {
   width: 9px;
   height: 9px;
-  border: 0;
-  border-radius: 0;
-  background: currentColor;
+  border: 2px solid;
+  border-radius: 50%;
+  background: var(--chart-surface);
 }
 .chart-key span {
   font-variant-numeric: tabular-nums;
