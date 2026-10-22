@@ -182,13 +182,15 @@ describe.skipIf(baseUrl === undefined)("API over a database seeded from fixtures
     expect(c.multiplierNote).toContain("not reconciled");
   });
 
-  it("wallet: rank, percentile, breakdown and the Helius-less balance state", async () => {
+  it("wallet: rank, percentile, breakdown and a balance that degrades to unavailable when the RPC does not answer", async () => {
     const { body } = await call("wallet", `/v1/wallet/${WALLET}`);
     expect(body.data.found).toBe(true);
     expect(body.data.rank).toBe(1);
     expect(body.data.percentile).toBe(1);
     expect(body.data.referrals?.code).toBe("MOOSOLANA");
-    expect(body.data.onchain.status).toBe("not_configured");
+    // The test fetch only knows the rewards API, so the Solana RPC call fails and the balance says why.
+    expect(body.data.onchain.status).toBe("unavailable");
+    expect(body.data.onchain.onycBalance).toBeNull();
   });
 
   it("solvency and risk: Accountable's stale retrieval is flagged, with no blended score", async () => {

@@ -8,6 +8,13 @@ const schema = z.object({
   CORS_ORIGINS: z.string().default("*"),
   RATE_LIMIT_PER_MINUTE: z.coerce.number().int().min(1).default(120),
   API_PUBLIC_URL: z.string().default("http://localhost:4000"),
+  /** A private Solana RPC endpoint; without it and without a Helius key the public endpoint is used. */
+  SOLANA_RPC_URL: z
+    .string()
+    .optional()
+    .transform((v) => (v === undefined || v.trim() === "" ? undefined : v.trim())),
+  /** Alert and warn when the API AUM differs from on-chain supply times NAV by more than this fraction. */
+  CHAIN_AUM_GAP_ALERT: z.coerce.number().positive().default(0.02),
   HELIUS_API_KEY: z
     .string()
     .optional()

@@ -515,7 +515,7 @@ export const walletSchema = z.object({
     })
     .nullable(),
   onchain: z.object({
-    status: z.enum(["ok", "not_configured"]),
+    status: z.enum(["ok", "not_configured", "unavailable"]),
     onycBalance: nn,
     valueUsd: nn,
     note: z.string(),
@@ -595,4 +595,191 @@ export const streamTickSchema = z.object({
   tvl: nn,
   marketPrice: nn,
   premiumBps: nn,
+});
+
+// ---------------------------------------------------------------------------------------------
+// On-chain layer
+// ---------------------------------------------------------------------------------------------
+
+export const chainStateSchema = z.object({
+  /** Which RPC the worker reads from. "public" is rate limited; a Helius key makes it faster. */
+  provider: z.object({
+    name: z.enum(["helius", "custom", "public", "unknown"]),
+    heliusConfigured: z.boolean(),
+  }),
+  program: z.object({
+    id: z.string(),
+    mint: z.string(),
+    boss: z.string().nullable(),
+    isKilled: z.boolean().nullable(),
+    worker: z.string().nullable(),
+    admins: z.array(z.string()),
+    mainOffer: z.string().nullable(),
+  }),
+  supply: z
+    .object({
+      total: n,
+      circulating: n,
+      /** Total minus circulating: the ONyc held by the accounts the program excludes (the boss wallet). */
+      excludedHeld: n,
+      excludedOwners: z.array(z.string()),
+    })
+    .nullable(),
+  /** The program's own numbers (MarketStats) next to the API's. */
+  stats: z
+    .object({
+      nav: nn,
+      apy: nn,
+      tvlUsd: nn,
+      circulating: nn,
+      updatedAt: iso.nullable(),
+      apiNav: nn,
+      apiApy: nn,
+      apiTvl: nn,
+      navDifference: nn,
+    })
+    .nullable(),
+  /** Independent solvency: supply times NAV on chain against the AUM sources and the reserves. */
+  solvency: z.object({
+    impliedAumUsd: nn,
+    apiAumUsd: nn,
+    accountableReservesUsd: nn,
+    accountableSupplyUsd: nn,
+    gapApi: nn,
+    gapAccountable: nn,
+    threshold: n,
+    custodyVisibleUsd: nn,
+    note: z.string(),
+  }),
+  offers: z.array(
+    z.object({
+      address: z.string(),
+      tokenIn: z.string(),
+      tokenInSymbol: z.string().nullable(),
+      feeBps: n,
+      disabled: z.boolean(),
+      vectors: z.array(
+        z.object({ startTime: n, baseTime: n, basePrice: n, apr: n, priceFixDuration: n }),
+      ),
+    }),
+  ),
+  redemptions: z.object({
+    offers: z.array(
+      z.object({
+        address: z.string(),
+        tokenOut: z.string(),
+        tokenOutSymbol: z.string().nullable(),
+        executed: n,
+        requested: n,
+        feeBps: n,
+        propAmmFeeBps: n,
+        vaultTargetBps: n,
+        disabled: z.boolean(),
+      }),
+    ),
+    openRequests: z.array(
+      z.object({ offer: z.string(), redeemer: z.string(), amount: n, fulfilled: n }),
+    ),
+    requestAccounts: n,
+  }),
+  vaults: z.array(
+    z.object({
+      holder: z.string(),
+      mint: z.string(),
+      symbol: z.string().nullable(),
+      amount: n,
+      valueUsd: nn,
+    }),
+  ),
+  updatedAt: iso.nullable(),
+});
+
+export const chainEventKindSchema = z.enum([
+  "mint",
+  "redeem_request",
+  "redeem_cancelled",
+  "redeem_fulfilled",
+  "propamm_sell",
+  "propamm_buy",
+  "price_vector",
+  "admin_config",
+  "vault_move",
+  "market_stats",
+  "large_transfer",
+]);
+
+export const chainActivitySchema = z.object({
+  events: z.array(
+    z.object({
+      signature: z.string(),
+      kind: chainEventKindSchema,
+      instruction: z.string().nullable(),
+      ts: iso,
+      slot: n,
+      signer: z.string().nullable(),
+      /** Largest single ONyc balance change, whole tokens. */
+      onyc: nn,
+      /** Change in ONyc supply: mints positive, burns negative. */
+      supplyDelta: nn,
+    }),
+  ),
+  /** Counts by kind over the whole stored history. */
+  counts: z.record(z.string(), n),
+  since: iso.nullable(),
+  note: z.string(),
+});
+
+export const chainFlowsSchema = z.object({
+  range: rangeSchema,
+  /** Daily ONyc minted and burned, from program transactions. */
+  series: z.array(
+    z.object({
+      date: iso,
+      minted: n,
+      burned: n,
+      net: n,
+      nav: nn,
+      netUsd: nn,
+      transactions: n,
+    }),
+  ),
+  totals: z.object({ minted: n, burned: n, net: n, netUsd: nn }),
+  /** The API's own net flow for the same days, estimated from supply changes. */
+  apiNetFlowUsd: nn,
+  since: iso.nullable(),
+  note: z.string(),
+});
+
+export const chainHolderRowSchema = z.object({
+  rank: n,
+  owner: z.string(),
+  amount: n,
+  share: n,
+  tokenAccounts: n,
+  kind: z.enum(["wallet", "program", "unknown"]),
+  protocol: z.string().nullable(),
+  label: z.string().nullable(),
+  labelledBy: z.enum(["address", "owner-program", "activity"]).nullable(),
+});
+
+export const chainHoldersSchema = z.object({
+  scanTs: iso.nullable(),
+  holders: nn,
+  gini: nn,
+  top: z.array(z.object({ n, share: n })),
+  rows: z.array(chainHolderRowSchema),
+  byProtocol: z.array(z.object({ protocol: z.string(), onyc: n, usd: nn })),
+  /** ONyc held by labelled accounts against the capital-by-protocol the rewards API reports. */
+  crossCheck: z.array(
+    z.object({
+      protocol: z.string(),
+      onchainUsd: n,
+      apiUsd: nn,
+      differencePct: nn,
+    }),
+  ),
+  whales: z.array(
+    z.object({ ts: iso, kind: z.enum(["new", "exited"]), owner: z.string(), before: n, after: n }),
+  ),
+  note: z.string(),
 });

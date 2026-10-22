@@ -83,6 +83,10 @@ export const useConcentration = (a?: NoParams<"concentration">) => useEndpoint("
 export const useSolvency = (a?: NoParams<"solvency">) => useEndpoint("solvency", a);
 export const useRisk = (a?: NoParams<"risk">) => useEndpoint("risk", a);
 export const useSourceHealth = (a?: NoParams<"healthSources">) => useEndpoint("healthSources", a);
+export const useChainState = (a?: NoParams<"chainState">) => useEndpoint("chainState", a);
+export const useChainActivity = (a?: NoParams<"chainActivity">) => useEndpoint("chainActivity", a);
+export const useChainFlows = (a?: NoParams<"chainFlows">) => useEndpoint("chainFlows", a);
+export const useChainHolders = (a?: NoParams<"chainHolders">) => useEndpoint("chainHolders", a);
 export const useEvents = (a?: NoParams<"events">) => useEndpoint("events", a);
 
 /** Wallet Lab. Pass `address: undefined` until the user has entered one. */

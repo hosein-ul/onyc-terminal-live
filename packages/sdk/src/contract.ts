@@ -1,6 +1,10 @@
 import { z } from "zod";
 import {
   capitalStackResponseSchema,
+  chainActivitySchema,
+  chainFlowsSchema,
+  chainHoldersSchema,
+  chainStateSchema,
   concentrationSchema,
   distributionSchema,
   envelope,
@@ -242,6 +246,48 @@ export const endpoints = {
     }),
     response: envelope(eventsSchema),
     ttl: 15,
+  }),
+  chainState: def({
+    path: "/v1/chain/state",
+    summary:
+      "What the OnRe program says on chain, next to the API: supply, NAV, offers, redemptions, custody",
+    tag: "On-chain",
+    params: none,
+    query: none,
+    response: envelope(chainStateSchema),
+    ttl: 30,
+  }),
+  chainActivity: def({
+    path: "/v1/chain/activity",
+    summary:
+      "Program transactions classified from instruction data: mints, redemptions, price vectors, configuration",
+    tag: "On-chain",
+    params: none,
+    query: z.object({
+      kind: z.string().trim().max(32).optional(),
+      limit: z.coerce.number().int().min(1).max(200).default(50),
+    }),
+    response: envelope(chainActivitySchema),
+    ttl: 15,
+  }),
+  chainFlows: def({
+    path: "/v1/chain/flows",
+    summary: "Daily ONyc minted and burned, from transactions",
+    tag: "On-chain",
+    params: none,
+    query: range,
+    response: envelope(chainFlowsSchema),
+    ttl: 60,
+  }),
+  chainHolders: def({
+    path: "/v1/chain/holders",
+    summary:
+      "Top holders of ONyc with labels, concentration and a cross-check against capital by protocol",
+    tag: "On-chain",
+    params: none,
+    query: none,
+    response: envelope(chainHoldersSchema),
+    ttl: 300,
   }),
 } satisfies Record<string, EndpointDef>;
 

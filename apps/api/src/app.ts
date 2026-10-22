@@ -20,6 +20,12 @@ import {
   yieldService,
 } from "./services/book.js";
 import type { ServiceResult } from "./services/common.js";
+import {
+  chainActivityService,
+  chainFlowsService,
+  chainHoldersService,
+  chainStateService,
+} from "./services/chain.js";
 import { marketService, redemptionsService } from "./services/market.js";
 import { flowsService, navService, vectorsService } from "./services/nav.js";
 import { overviewService } from "./services/overview.js";
@@ -60,6 +66,10 @@ const handlers: { [K in EndpointName]: Handler<K> } = {
   risk: (d) => riskService(d),
   healthSources: (d) => healthService(d),
   events: (d, { query }) => eventsService(d, query),
+  chainState: (d) => chainStateService(d),
+  chainActivity: (d, { query }) => chainActivityService(d, query),
+  chainFlows: (d, { query }) => chainFlowsService(d, query.range),
+  chainHolders: (d) => chainHoldersService(d),
 };
 
 const honoPath = (openApiPath: string): string => openApiPath.replace(/\{(\w+)\}/g, ":$1");

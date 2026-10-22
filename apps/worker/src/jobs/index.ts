@@ -1,6 +1,7 @@
 import type { Job } from "../context.js";
 import { liveJob, navHistoryJob, offersJob, redemptionJob, settingsJob } from "./core.js";
-import { geckoJob, heliusJob, llamaJob, solvencyJob } from "./market.js";
+import { chainActivityJob, chainHoldersJob, chainStateJob } from "./chain.js";
+import { geckoJob, llamaJob, solvencyJob } from "./market.js";
 import {
   leaderboardCrawlJob,
   leaderboardTopJob,
@@ -26,7 +27,9 @@ export const jobs: readonly Job[] = [
   solvencyJob,
   geckoJob,
   llamaJob,
-  heliusJob,
+  chainStateJob,
+  chainActivityJob,
+  chainHoldersJob,
   evaluatorJob,
   retentionJob,
 ];

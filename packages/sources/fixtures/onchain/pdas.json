@@ -1,0 +1,26 @@
+{
+  "state": {
+    "address": "EL5qwcpKyc2FuQxjWmVLEwpcb4LXXwwWWjMYjf1yi3to",
+    "bump": 255
+  },
+  "offerVaultAuthority": {
+    "address": "Ce3R5ZxvW3cnsGS63ikR8KCdA22nkoXW3PnY83yaLJ78",
+    "bump": 255
+  },
+  "redemptionVaultAuthority": {
+    "address": "Df2s8BbohRw8rF8PSGGiaCNXPMgeiCU4thzarELbV8oF",
+    "bump": 252
+  },
+  "reserveVaultAuthority": {
+    "address": "5gqmV6px2a6bYW9iKkVJ3cJq9S2UAS85wFHf1Edj886d",
+    "bump": 255
+  },
+  "marketStats": {
+    "address": "BuPMet2URHuTVKSHpj32AjsXxHgdsqeA1i82dr1b4Mi5",
+    "bump": 255
+  },
+  "mintAuthority": {
+    "address": "AbpE5YLpdpxj2jRczG9P341Jicf67NvZsaZYrATbMnNX",
+    "bump": 255
+  }
+}

@@ -107,6 +107,21 @@ export const DATASETS = {
     refs: [["defillama", "GET /protocol/onre"]],
     staleAfterMs: 3 * HOUR,
   },
+  chain: {
+    label: "Solana RPC (OnRe program accounts)",
+    refs: [["solana-rpc", "program state"]],
+    staleAfterMs: 20 * MIN,
+  },
+  chainActivity: {
+    label: "Solana RPC (program transactions)",
+    refs: [["solana-rpc", "getTransaction"]],
+    staleAfterMs: 15 * MIN,
+  },
+  chainHolders: {
+    label: "Solana RPC (token accounts of the ONyc mint)",
+    refs: [["solana-rpc", "getProgramAccounts(token, mint)"]],
+    staleAfterMs: 3 * HOUR,
+  },
   derived: {
     label: "Computed from stored data",
     refs: [],

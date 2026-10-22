@@ -1,3 +1,4 @@
+import { latestSnap } from "./chain.js";
 import { desc, eq, schema } from "@onyc/db";
 import {
   aumDivergence,
@@ -433,6 +434,75 @@ export async function conflictsService(deps: Deps) {
       observedAt: null,
     },
   ];
+
+  // On-chain cross-checks, from the worker's chain snapshots (none when the chain jobs have not run yet).
+  const chainStats = await latestSnap<{
+    nav: number;
+    apy: number;
+    tvlUsd: number;
+    updatedAt: string;
+  }>(deps, "market_stats");
+  const chainSupply = await latestSnap<{
+    totalSupply: number;
+    circulatingSupply: number;
+    excludedHeld: number;
+    impliedAumUsd: number;
+  }>(deps, "supply");
+  const liveNav = (await latestTickValue(deps, "nav"))?.value ?? null;
+  if (chainStats !== null) {
+    const diff = liveNav === null ? null : chainStats.data.nav - liveNav;
+    list.push({
+      id: 12,
+      title: "NAV: program account vs API",
+      kind: "computed",
+      state: diff === null ? "unavailable" : Math.abs(diff) > 1e-6 ? "conflict" : "consistent",
+      detail:
+        "MarketStats, the NAV the OnRe program itself stores on chain, against /data/live-nav. The program refreshes it only when someone calls refresh_market_stats, so a gap of one day's step is a timing difference, not an error.",
+      values: { onchainNav: chainStats.data.nav, apiNav: liveNav, difference: diff },
+      observedAt: chainStats.data.updatedAt,
+    });
+  }
+  if (chainSupply !== null) {
+    list.push({
+      id: 13,
+      title: "ONyc supply: on-chain mint vs circulating supply",
+      kind: "computed",
+      state: "note",
+      detail:
+        "The mint's total supply is larger than the circulating supply the program reports because the program subtracts the ONyc held by an excluded account (the boss wallet). This explains conflict 2 as a difference of definition: both numbers are right.",
+      values: {
+        totalSupply: chainSupply.data.totalSupply,
+        circulatingSupply: chainSupply.data.circulatingSupply,
+        excludedHeld: chainSupply.data.excludedHeld,
+      },
+      observedAt: chainSupply.ts.toISOString(),
+    });
+    const apiAum = (await latestTickValue(deps, "tvl"))?.value ?? null;
+    const gap =
+      apiAum === null
+        ? null
+        : (apiAum - chainSupply.data.impliedAumUsd) / chainSupply.data.impliedAumUsd;
+    list.push({
+      id: 14,
+      title: "AUM: API vs on-chain supply times NAV",
+      kind: "computed",
+      state:
+        gap === null
+          ? "unavailable"
+          : Math.abs(gap) > deps.config.CHAIN_AUM_GAP_ALERT
+            ? "conflict"
+            : "consistent",
+      detail:
+        "Total ONyc supply on chain times the program's NAV is what holders are owed at NAV. The API's AUM is live TVL from OnRe. They measure different things (the first includes the boss wallet's ONyc), so a gap is expected; it is shown, and an alert fires above the configured threshold.",
+      values: {
+        impliedAumUsd: chainSupply.data.impliedAumUsd,
+        apiAumUsd: apiAum,
+        gap,
+        threshold: deps.config.CHAIN_AUM_GAP_ALERT,
+      },
+      observedAt: chainSupply.ts.toISOString(),
+    });
+  }
   return list;
 }
 

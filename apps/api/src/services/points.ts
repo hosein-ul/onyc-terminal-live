@@ -1,11 +1,12 @@
 import { and, asc, desc, eq, ilike, inArray, schema, sql } from "@onyc/db";
 import { gini, lorenz, rankMovement, rankPercentile, topNShare, walletsAbove } from "@onyc/metrics";
-import { onreRewards } from "@onyc/sources";
+import { CONSTANTS, onreRewards } from "@onyc/sources";
 import type { z } from "zod";
 import type { endpoints } from "@onyc/sdk";
+import { apiRpc } from "./chain.js";
 import { TtlCache } from "../cache.js";
 import type { Deps } from "../deps.js";
-import { addDays, latestLeaderboardDate } from "../loaders.js";
+import { addDays, latestLeaderboardDate, latestTickValue } from "../loaders.js";
 import { result, type ServiceResult } from "./common.js";
 
 type Out<K extends keyof typeof endpoints> = z.output<(typeof endpoints)[K]["response"]>["data"];
@@ -272,12 +273,7 @@ export async function walletService(
         totalReferralBonus: stats.data.totalReferralBonus,
         eligible: eligibility.data.isEligible,
       },
-      onchain: {
-        status: "not_configured" as const,
-        onycBalance: null,
-        valueUsd: null,
-        note: "Onchain balances need a Helius key and are not enabled in this build. Points and rank come from OnRe's rewards API.",
-      },
+      onchain: await onchainBalance(deps, address),
     };
   });
   return result(value, {
@@ -293,4 +289,26 @@ export async function walletService(
     referrals: "leaderboard",
     onchain: "derived",
   });
+}
+
+/** ONyc held by the wallet, read from Solana. Falls back to "unavailable" with the reason when the RPC does not answer. */
+async function onchainBalance(deps: Deps, address: string): Promise<Out<"wallet">["onchain"]> {
+  try {
+    const raw = await apiRpc(deps).getTokenBalanceByOwner(address, CONSTANTS.onycMint);
+    const onyc = Number(raw) / 1e9;
+    const nav = (await latestTickValue(deps, "nav"))?.value ?? null;
+    return {
+      status: "ok" as const,
+      onycBalance: onyc,
+      valueUsd: nav === null ? null : onyc * nav,
+      note: "ONyc across all of the wallet's token accounts, read from Solana now and valued at NAV. srONyc and jrONyc balances are not included: their mints are not published in a source this tool trusts yet.",
+    };
+  } catch (error) {
+    return {
+      status: "unavailable" as const,
+      onycBalance: null,
+      valueUsd: null,
+      note: `The Solana RPC did not answer (${error instanceof Error ? error.message.slice(0, 120) : "unknown error"}). Points and rank are unaffected.`,
+    };
+  }
 }

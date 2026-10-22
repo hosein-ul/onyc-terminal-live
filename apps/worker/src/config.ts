@@ -8,6 +8,12 @@ const optionalString = z
 const envSchema = z.object({
   DATABASE_URL: z.string().min(1, "DATABASE_URL is required"),
   HELIUS_API_KEY: optionalString,
+  /** A private Solana RPC endpoint. Without it and without a Helius key the public endpoint is used, slowly. */
+  SOLANA_RPC_URL: optionalString,
+  /** An ONyc transfer or program event moving at least this many tokens is recorded as large. */
+  CHAIN_LARGE_TRANSFER_ONYC: z.coerce.number().positive().default(100_000),
+  /** Alert when the AUM the API reports differs from on-chain supply times NAV by more than this fraction. */
+  CHAIN_AUM_GAP_ALERT: z.coerce.number().positive().default(0.02),
   LOG_LEVEL: z.enum(["trace", "debug", "info", "warn", "error", "fatal"]).default("info"),
   /** Comma-separated job names to run; empty means all. */
   WORKER_JOBS: optionalString,

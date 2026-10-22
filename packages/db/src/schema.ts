@@ -510,3 +510,70 @@ export const chainSnap = pgTable("chain_snap", {
   topHolders: jsonb("top_holders"),
   custodyBalances: jsonb("custody_balances"),
 });
+
+// ---------------------------------------------------------------------------------------------
+// On-chain layer (read-only; see packages/sources/src/onchain)
+// ---------------------------------------------------------------------------------------------
+
+/** One row per program transaction (and per large ONyc transfer), classified from the instruction discriminators. */
+export const chainEvents = pgTable(
+  "chain_events",
+  {
+    id: bigserial("id", { mode: "number" }).primaryKey(),
+    signature: text("signature").notNull(),
+    kind: text("kind").notNull(),
+    /** The instruction name for program events, null for a plain transfer. */
+    instruction: text("instruction"),
+    ts: ts("ts").notNull(),
+    slot: bigint("slot", { mode: "number" }).notNull(),
+    signer: text("signer"),
+    /** Change in ONyc supply caused by the transaction: mints positive, burns negative. Whole tokens. */
+    onycSupplyDelta: num("onyc_supply_delta"),
+    /** Largest single ONyc balance change in the transaction. Whole tokens. */
+    onycLargestMove: num("onyc_largest_move"),
+    data: jsonb("data"),
+    seenAt: ts("seen_at").notNull(),
+  },
+  (t) => [
+    uniqueIndex("chain_events_sig_kind_idx").on(t.signature, t.kind),
+    index("chain_events_ts_idx").on(t.ts),
+    index("chain_events_kind_ts_idx").on(t.kind, t.ts),
+  ],
+);
+
+/** The top holders of the ONyc mint at each scan, labelled. A scan is the set of rows that share `scan_ts`. */
+export const chainHolders = pgTable(
+  "chain_holders",
+  {
+    scanTs: ts("scan_ts").notNull(),
+    rank: integer("rank").notNull(),
+    owner: text("owner").notNull(),
+    /** Whole ONyc. */
+    amount: num("amount").notNull(),
+    tokenAccounts: integer("token_accounts").notNull(),
+    kind: text("kind").notNull(),
+    protocol: text("protocol"),
+    label: text("label"),
+    labelledBy: text("labelled_by"),
+  },
+  (t) => [
+    primaryKey({ columns: [t.scanTs, t.rank] }),
+    index("chain_holders_owner_idx").on(t.owner),
+  ],
+);
+
+/**
+ * Named JSON snapshots of chain state: `holder_stats`, `market_stats`, `program_state`, `redemptions`, `vault_balances`,
+ * `supply`. One row per snapshot, so history can be charted later.
+ */
+export const chainSnapshots = pgTable(
+  "chain_snapshots",
+  {
+    id: bigserial("id", { mode: "number" }).primaryKey(),
+    kind: text("kind").notNull(),
+    ts: ts("ts").notNull(),
+    slot: bigint("slot", { mode: "number" }),
+    data: jsonb("data").notNull(),
+  },
+  (t) => [index("chain_snapshots_kind_ts_idx").on(t.kind, t.ts)],
+);
