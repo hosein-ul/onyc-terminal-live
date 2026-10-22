@@ -304,9 +304,8 @@ a:hover {
 }
 .term-btn:hover,
 .term-btn[aria-expanded="true"] {
-  background: var(--ink);
-  border-color: var(--ink);
-  color: var(--ground);
+  opacity: 1;
+  color: var(--ink);
 }
 .term-extra {
   border-left-color: var(--fill-strong);

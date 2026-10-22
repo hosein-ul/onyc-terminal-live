@@ -38,14 +38,14 @@ export function TermHint({ id, label }: { id: string; label?: string }) {
     const el = button.current;
     if (el === null) return;
     const r = el.getBoundingClientRect();
-    const width = Math.min(240, window.innerWidth - 16);
+    const width = Math.min(200, window.innerWidth - 16);
     const left = Math.min(
       Math.max(8, r.left + r.width / 2 - width / 2),
       window.innerWidth - width - 8,
     );
     const below = r.bottom + 8;
     // Open upwards when there is no room underneath.
-    const top = below + 90 > window.innerHeight && r.top > 100 ? r.top - 8 - 76 : below;
+    const top = below + 70 > window.innerHeight && r.top > 80 ? r.top - 6 - 62 : below + -2;
     setPos({ left, top });
   };
 
