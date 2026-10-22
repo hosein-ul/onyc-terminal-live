@@ -420,7 +420,9 @@ export async function chainHoldersService(deps: Deps): Promise<ServiceResult<Out
     onyc: p.onyc,
     usd: nav === null ? null : p.onyc * nav,
   }));
+  // Wallets are left out: the rewards API's "wallet" bucket counts only the wallets it attributes, not every holder.
   const crossCheck = byProtocol
+    .filter((p) => p.protocol !== "Wallets")
     .filter((p) =>
       api.has((PROTOCOL_ALIASES[p.protocol.toLowerCase()] ?? p.protocol).toLowerCase()),
     )

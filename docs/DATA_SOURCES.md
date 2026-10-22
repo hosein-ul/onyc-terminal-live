@@ -149,3 +149,32 @@ sections above, reality wins; the differences are:
 - **"Liquidity layer (15%)" is a policy share, not a balance.** 15% of AUM equals the Transparency page's liquidity layer exactly (42,424,107 on 282,827,380). The collateral sheet rows flagged as the liquidity layer sum to a different, measured figure (about 67.2M, 23.8% of AUM). The API shows both: the capital stack uses the policy share, coverage and the risk signal use the measured balance against the 15% target.
 - **Conflict 7 reproduces from our data**: bound capital divided by 0.85 is 179,673,794, the figure the official page showed.
 - **The capacity curve for redemptions is not in the program source either.** Only the parameters are shown.
+
+## 10. On-chain layer (Phase 8, verified 22 October 2026)
+
+Read-only, from Solana mainnet through `HELIUS_API_KEY` when set and otherwise the public RPC (`https://api.mainnet-beta.solana.com`, rate limited, used by the worker at a polite pace). The program source is `github.com/onre-finance/onre-sol` (`programs/onreapp/src`); account layouts were read from it and checked against live accounts.
+
+| What | Address / method | Verified |
+| --- | --- | --- |
+| Program | `onreuGhHHgVzMWSkj2oQDLDtvvGvoepBPkqyaubFcwe`, upgradeable loader | executable |
+| ONyc mint | `5Y8NV33Vv7WbnLfq3zBcKSdYPrk7g2KoiQoe7M2tcxp5`, Token program, 9 decimals | supply 254,834,855.17 |
+| State | `EL5qwcpKyc2FuQxjWmVLEwpcb4LXXwwWWjMYjf1yi3to` (PDA `["state"]`) | matches the discovered account |
+| MarketStats | `BuPMet2URHuTVKSHpj32AjsXxHgdsqeA1i82dr1b4Mi5` (PDA `["market_stats"]`) | matches |
+| Offers (608 bytes) | USDG `8w1BAUUn6RbAtU3BuCUNXzHR7cxNyNga9pJLQYgpXJU`, USDC `E88zkA9Pxb1i8EfSHrEW5ZUe6hiQbo8DHWQ3WhDFw7p6` (the main offer), USDT `AvAQ8PCsNigWk1qL5TxR7e5oYZ6gfgak99ytNJnp7mQe` (no vectors) | 3 accounts |
+| Redemption offers (256 bytes) | USDC `3pLK2vXD2uy9PPZuYZNZWkkP9CTEuGrhS2uYFRUWZrSu`, USDG `H1EHA35ZuZq5vPtSRjyE7XdHqXCbi15A9CBHdgqYo3Xc` | executed totals equal the API |
+| Redemption requests | `getProgramAccounts` filtered by the `RedemptionRequest` discriminator | 0 accounts: a request is closed once fulfilled |
+| Boss / worker | boss `45YnzauhsBM8CpUz96Djf8UG5vqq2Dua62wuW9H3jaJ5`, worker `authVN3SAsujqwYq66mMhnCYV1YQnvbZjJFFhPExkrT`, 2 admins | not killed |
+| Vault authorities | PDAs of `offer_vault_authority`, `redemption_offer_vault_authority`, `reserve_vault_authority` | derived locally, checked |
+
+Method notes: accounts are found by Anchor discriminator (first 8 bytes of sha256 of `account:<Name>`) with `getProgramAccounts` (worker only, filtered, cached), so no address is guessed; PDAs are derived locally (`packages/sources/src/onchain/pda.ts`); instructions are named from the first 8 bytes of sha256 of `global:<name>` for every `pub fn` in `lib.rs` (all 100 recent program signatures were classified, none unknown). Fixtures: `packages/sources/fixtures/onchain/`. Live check: `node scripts/chain-probe.mjs state|holders|activity`.
+
+Findings and mismatches between the API and the chain:
+
+1. **NAV agrees to the last digit.** The program's stored NAV (MarketStats, 1.158158753) equals `/data/live-nav`, and the price-vector formula in `packages/metrics/src/vector.ts` reproduces it exactly from the vectors decoded from the Offer account (test `packages/metrics/src/onchain-nav.test.ts`). The formula and its source lines (`offer_utils.rs` 246, 277, 378) were already cited in SPEC.md and are unchanged; the forward path is now verified against chain data and not only the API. MarketStats APY (11.02%) equals `/data/live-apy`.
+2. **Conflict 2 is explained.** Mint supply is 254.83M ONyc; the program's circulating supply is 244.83M because `calculate_circulating_supply` (`market_stats.rs`, line 217) subtracts the balance of the excluded account, the boss wallet, which holds 10.006M ONyc. The two supply figures differ by definition and both are right. The live TVL equals circulating supply x NAV ($283.5506M), so the API AUM is not an independent measure of assets.
+3. **The independent solvency figure is Accountable against total supply.** Total supply x NAV is $295.14M. Accountable reports reserves of $292.60M (-0.86%) and supply of $292.01M, retrieved 7 days ago. Custody visible on chain is only $13.6M (stablecoins and ONyc in the program vaults and the boss wallet): most reserves are off chain. The alert threshold is `CHAIN_AUM_GAP_ALERT` (default 2%).
+4. **Redemption offers match the API exactly** (USDC executed 5,293,625.68 ONyc, fee 25 bps, PropAMM 20 bps; USDG 14.9, 25, 30). The OnRe docs state a 30 bps service fee on another page, so conflict 3 stays open. No redemption request is open on chain, so the queue is empty; the public `/redemption/requests` log (a partial history) remains the only record of past requests besides transactions.
+5. **Holders.** 20,235 token accounts, 9,516 non-empty, 9,329 distinct owners; the top 10 hold 83.7% and the top 100 95.6% (Gini 0.9955). The points leaderboard has 24,773 wallets, a different population (anyone who earned points, not only holders).
+6. **Capital by protocol, chain against the rewards API.** Kamino: the lending-market account holds 134.08M ONyc = $155.28M against $154.95M (+0.2%). Exponent: 28.94M ONyc = $33.52M against $33.50M (+0.06%). Loopscale and Orca match only partly ($33.7M of $64.8M, $3.2M of $10.9M) because the rest sits in program-derived accounts this tool cannot yet label; that is shown as a difference, not hidden. A holder is labelled by a fixed OnRe address, by the program that owns its account, or, for the 40 largest unlabelled program-derived addresses, by the known program called in the account's latest transaction (an inference, marked as such).
+7. **srONyc and jrONyc.** Jupiter's token list has the PT-srONyc mints (`HSbdobdvfGAfqKWSWZ7s2XfFx1P1FJutTa96MHJtkm5`, `BKP9Rt3pwh96cCoCp3bkh1zxXZpZez17xA6w64LuMJQy`) but no srONyc or jrONyc mint, and Exponent's market accounts were not read, so Wallet Lab shows ONyc only. This stays open.
+8. **Activity.** Program transactions are polled about once a minute (plus ONyc transfers of 100,000 or more); each is stored in `chain_events`, classified (mint, redemption, PropAMM, price vector, configuration, vault move, stats refresh), and notable ones are also written to `events`, which feeds the existing alerts stream.

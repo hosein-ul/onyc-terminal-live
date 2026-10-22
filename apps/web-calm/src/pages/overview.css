@@ -722,3 +722,20 @@
   display: inline-flex;
   align-items: center;
 }
+
+/* Phones: card headers wrap, long instruction names break, segmented controls scroll */
+.chain-main {
+  min-width: 0;
+}
+.chain-ins {
+  overflow-wrap: anywhere;
+}
+@media (max-width: 700px) {
+  .card-head {
+    flex-wrap: wrap;
+  }
+  .card-head .seg {
+    max-width: 100%;
+    overflow-x: auto;
+  }
+}
