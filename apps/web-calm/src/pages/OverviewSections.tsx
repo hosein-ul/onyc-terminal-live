@@ -404,22 +404,22 @@ export function Capital({ m }: { m: OverviewModel }) {
   const yieldQ = useYieldComposition();
   return (
     <div className="grid">
-      <div className="span-5">
+      <div className="span-12">
         <ProtocolShares m={m} />
       </div>
       <Panel
         q={m.q.capitalDistribution}
         build={stackedPct}
         title="Share of capital by protocol"
-        span={7}
-        height={380}
+        span={12}
+        height={460}
       />
       <Panel
         q={m.q.capitalDistribution}
         build={stackedAbs}
         title="Where the capital sits"
         span={12}
-        height={380}
+        height={440}
       />
       <Panel
         q={yieldQ}
