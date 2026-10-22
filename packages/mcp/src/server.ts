@@ -27,7 +27,7 @@ export function createServer(
   const server = new Server(info, {
     capabilities: { tools: {} },
     instructions:
-      "ONyc Terminal is an unofficial, community-built, read-only analytics API for OnRe's ONyc. Tools return live data with its source and age. Not affiliated with OnRe; not investment advice.",
+      "ONyc Terminal is an independent, community-built, read-only analytics API for OnRe's ONyc. Tools return live data with its source and age. Not affiliated with OnRe; not investment advice.",
   });
 
   server.setRequestHandler(ListToolsRequestSchema, () => ({

@@ -8,7 +8,7 @@ import { topicFor } from "./topic";
 function Footer() {
   return (
     <footer className="site-foot">
-      <p>Unofficial community tool. Not affiliated with OnRe. Not investment advice.</p>
+      <p>Independent community tool. Not affiliated with OnRe. Not investment advice.</p>
       <p>
         Every number shows where it came from and how old it is. This site is read-only: it never
         asks you to sign or send anything.

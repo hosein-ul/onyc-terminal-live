@@ -20,7 +20,7 @@ Read these before every task. Full context lives in `docs/`.
 8. **Tests:** every function in `packages/metrics` and every parser in `packages/sources` has unit tests on fixtures. Run `pnpm typecheck && pnpm test` before saying a phase is done.
 9. **Secrets** only from env. Never commit keys. The app must run without optional keys (Helius, Telegram) and show "not configured".
 10. Be polite to upstreams: cache, back off, respect rate limits, identify with a User-Agent.
-11. Unofficial: footer disclaimer on every page; no OnRe logos or brand assets; name is "ONyc Terminal".
+11. Independent: footer disclaimer on every page; no OnRe logos or brand assets; name is "ONyc Terminal".
 
 ## Working style
 

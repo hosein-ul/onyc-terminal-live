@@ -22,7 +22,7 @@ const apps = {
     fonts: () =>
       fontFace("calm", "figtree", 500, "Figtree") + fontFace("calm", "figtree", 700, "Figtree"),
     page: (mark) =>
-      `body{background:#EEF2F6;font-family:Figtree;color:#101828;padding:0 96px}.card{background:#fff;border-radius:48px;padding:64px 72px;width:100%;display:flex;align-items:center;gap:48px}h1{font-size:76px;line-height:1.05;letter-spacing:-.03em;margin:0 0 16px;font-weight:700}p{font-size:30px;color:#475467;margin:0;font-weight:500}.mark svg{width:168px;height:168px}</style><div class="card"><div class="mark">${mark(168)}</div><div><h1>ONyc Terminal</h1><p>Unofficial, read-only analytics for ONyc. Every number shows its source and age.</p></div></div>`,
+      `body{background:#EEF2F6;font-family:Figtree;color:#101828;padding:0 96px}.card{background:#fff;border-radius:48px;padding:64px 72px;width:100%;display:flex;align-items:center;gap:48px}h1{font-size:76px;line-height:1.05;letter-spacing:-.03em;margin:0 0 16px;font-weight:700}p{font-size:30px;color:#475467;margin:0;font-weight:500}.mark svg{width:168px;height:168px}</style><div class="card"><div class="mark">${mark(168)}</div><div><h1>ONyc Terminal</h1><p>Independent, read-only analytics for ONyc. Every number shows its source and age.</p></div></div>`,
   },
   platinum: {
     mark: (s) =>
@@ -30,7 +30,7 @@ const apps = {
     fonts: () =>
       fontFace("platinum", "outfit", 300, "Outfit") + fontFace("platinum", "outfit", 400, "Outfit"),
     page: (mark) =>
-      `body{background:#12151B;font-family:Outfit;color:#F1F4F8;padding:0 96px}.card{background:#1A1F27;border:1px solid #232933;border-radius:44px;padding:64px 72px;width:100%;display:flex;align-items:center;gap:48px}h1{font-size:84px;line-height:1.05;letter-spacing:-.02em;margin:0 0 16px;font-weight:300;color:#C9D1DB}p{font-size:30px;color:#8C97A8;margin:0;font-weight:400}.mark svg{width:168px;height:168px}</style><div class="card"><div class="mark">${mark(168)}</div><div><h1>ONyc Terminal</h1><p>Unofficial, read-only analytics for ONyc. Every number shows its source and age.</p></div></div>`,
+      `body{background:#12151B;font-family:Outfit;color:#F1F4F8;padding:0 96px}.card{background:#1A1F27;border:1px solid #232933;border-radius:44px;padding:64px 72px;width:100%;display:flex;align-items:center;gap:48px}h1{font-size:84px;line-height:1.05;letter-spacing:-.02em;margin:0 0 16px;font-weight:300;color:#C9D1DB}p{font-size:30px;color:#8C97A8;margin:0;font-weight:400}.mark svg{width:168px;height:168px}</style><div class="card"><div class="mark">${mark(168)}</div><div><h1>ONyc Terminal</h1><p>Independent, read-only analytics for ONyc. Every number shows its source and age.</p></div></div>`,
   },
   cobalt: {
     mark: (s) =>
@@ -39,7 +39,7 @@ const apps = {
       fontFace("cobalt", "bricolage-grotesque", 600, "Bricolage Grotesque") +
       fontFace("cobalt", "bricolage-grotesque", 800, "Bricolage Grotesque"),
     page: (mark) =>
-      `body{background:#1535E8;font-family:"Bricolage Grotesque";color:#fff;padding:0 80px}.row{display:flex;align-items:center;gap:40px;width:100%}h1{font-size:132px;line-height:.9;letter-spacing:-.05em;margin:0 0 20px;font-weight:800}p{font-size:32px;color:#BFCBFF;margin:0;font-weight:600}.mark svg{width:150px;height:150px}</style><div class="row"><div class="mark">${mark(150)}</div><div><h1>onyc terminal</h1><p>Unofficial, read-only analytics for ONyc.</p></div></div>`,
+      `body{background:#1535E8;font-family:"Bricolage Grotesque";color:#fff;padding:0 80px}.row{display:flex;align-items:center;gap:40px;width:100%}h1{font-size:132px;line-height:.9;letter-spacing:-.05em;margin:0 0 20px;font-weight:800}p{font-size:32px;color:#BFCBFF;margin:0;font-weight:600}.mark svg{width:150px;height:150px}</style><div class="row"><div class="mark">${mark(150)}</div><div><h1>onyc terminal</h1><p>Independent, read-only analytics for ONyc.</p></div></div>`,
   },
   matrix: {
     mark: (s) =>
@@ -47,7 +47,7 @@ const apps = {
     fonts: () =>
       fontFace("matrix", "doto", 900, "Doto") + fontFace("matrix", "geist-mono", 400, "Geist Mono"),
     page: (mark) =>
-      `body{background:#E6E9EE;background-image:radial-gradient(#B9BFC9 1px,transparent 1.2px);background-size:16px 16px;font-family:"Geist Mono";color:#0C0D10;padding:0 80px}.screen{background:#0C0D10;width:100%;padding:56px 64px}h1{font-family:Doto;font-weight:900;font-size:120px;line-height:1;margin:0 0 18px;color:#3DDCC4;letter-spacing:.02em}p{font-size:26px;color:#9AA2AF;margin:0;text-transform:uppercase;letter-spacing:.06em}</style><div class="screen"><h1>ONYC.TERMINAL</h1><p>Unofficial, read-only analytics for ONyc</p></div>`,
+      `body{background:#E6E9EE;background-image:radial-gradient(#B9BFC9 1px,transparent 1.2px);background-size:16px 16px;font-family:"Geist Mono";color:#0C0D10;padding:0 80px}.screen{background:#0C0D10;width:100%;padding:56px 64px}h1{font-family:Doto;font-weight:900;font-size:120px;line-height:1;margin:0 0 18px;color:#3DDCC4;letter-spacing:.02em}p{font-size:26px;color:#9AA2AF;margin:0;text-transform:uppercase;letter-spacing:.06em}</style><div class="screen"><h1>ONYC.TERMINAL</h1><p>Independent, read-only analytics for ONyc</p></div>`,
   },
   pastel: {
     mark: (s) =>
@@ -55,7 +55,7 @@ const apps = {
     fonts: () =>
       fontFace("pastel", "onest", 700, "Onest") + fontFace("pastel", "onest", 800, "Onest"),
     page: () =>
-      `body{background:#fff;font-family:Onest;color:#101426;padding:0 88px}h1{font-size:88px;line-height:1.08;letter-spacing:-.035em;margin:0;font-weight:800}mark{background:#CFE3FF;padding:0 14px;border-radius:22px}mark.m{background:#CDEFE0}p{font-size:30px;color:#44506B;margin:28px 0 0;font-weight:700}</style><div><h1>onyc terminal: <mark>read-only</mark> analytics, <mark class="m">sourced</mark> and dated.</h1><p>Unofficial. Not affiliated with OnRe.</p></div>`,
+      `body{background:#fff;font-family:Onest;color:#101426;padding:0 88px}h1{font-size:88px;line-height:1.08;letter-spacing:-.035em;margin:0;font-weight:800}mark{background:#CFE3FF;padding:0 14px;border-radius:22px}mark.m{background:#CDEFE0}p{font-size:30px;color:#44506B;margin:28px 0 0;font-weight:700}</style><div><h1>onyc terminal: <mark>read-only</mark> analytics, <mark class="m">sourced</mark> and dated.</h1><p>Independent. Not affiliated with OnRe.</p></div>`,
   },
 };
 

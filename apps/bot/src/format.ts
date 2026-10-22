@@ -11,6 +11,6 @@ export function formatAlert(
   if (event.body !== "") lines.push(event.body);
   lines.push(event.ts.toISOString().replace("T", " ").slice(0, 16) + " UTC");
   if (webUrl !== undefined) lines.push(webUrl);
-  lines.push("Unofficial community tool, not affiliated with OnRe. Not investment advice.");
+  lines.push("Independent community tool, not affiliated with OnRe. Not investment advice.");
   return lines.join("\n");
 }

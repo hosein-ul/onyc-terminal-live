@@ -193,7 +193,7 @@ describe("formatAlert", () => {
       "Market 1.1485 vs NAV 1.1578.",
       "2026-10-21 15:28 UTC",
       "https://example.com/risk",
-      "Unofficial community tool, not affiliated with OnRe. Not investment advice.",
+      "Independent community tool, not affiliated with OnRe. Not investment advice.",
     ]);
     expect(text).not.toMatch(/[*_`<>]/);
   });

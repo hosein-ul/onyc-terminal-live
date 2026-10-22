@@ -88,7 +88,7 @@ export function buildOpenApi(publicUrl: string): Json {
       title: "ONyc Terminal API",
       version: "1.0.0",
       description:
-        "Unofficial, community-built, read-only analytics for OnRe's ONyc. Not affiliated with OnRe. Not investment advice. Every response is `{ data, meta }`; `meta` says where each field came from, when it was fetched and whether it is stale.",
+        "Independent, community-built, read-only analytics for OnRe's ONyc. Not affiliated with OnRe. Not investment advice. Every response is `{ data, meta }`; `meta` says where each field came from, when it was fetched and whether it is stale.",
     },
     servers: [{ url: publicUrl }],
     tags: [...new Set(Object.values(endpoints).map((e) => e.tag))].map((name) => ({ name })),

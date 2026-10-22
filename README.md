@@ -1,6 +1,6 @@
 # ONyc Terminal
 
-An unofficial, community-built, read-only analytics terminal for OnRe's ONyc (tokenized reinsurance on Solana). Not affiliated with
+An independent, community-built, read-only analytics terminal for OnRe's ONyc (tokenized reinsurance on Solana). Not affiliated with
 OnRe; not investment advice. It reads public data, shows where every number came from and how old it is, and never asks you to sign or
 send anything.
 

@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "type": "module",
-  "description": "Unofficial, community-built, read-only analytics terminal for OnRe's ONyc.",
+  "description": "Independent, community-built, read-only analytics terminal for OnRe's ONyc.",
   "packageManager": "pnpm@12.8.1",
   "engines": {
     "node": ">=22.12"

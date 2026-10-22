@@ -1,7 +1,7 @@
 import type { ZodType } from "zod";
 import { SourceError } from "./errors.js";
 
-export const USER_AGENT = "onyc-terminal/0.1 (unofficial community analytics; read-only)";
+export const USER_AGENT = "onyc-terminal/0.1 (independent community analytics; read-only)";
 
 export interface FetchOptions {
   /** Per-attempt timeout. Default 30 s. */

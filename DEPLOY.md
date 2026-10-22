@@ -1,6 +1,6 @@
 # Deploying ONyc Terminal
 
-ONyc Terminal is unofficial and read-only. It has three long-running services, five static web apps and one local tool:
+ONyc Terminal is independent and read-only. It has three long-running services, five static web apps and one local tool:
 
 | Piece          | What it is                                          | Where it runs                     |
 | -------------- | --------------------------------------------------- | --------------------------------- |

@@ -1,13 +1,13 @@
 # Product spec — ONyc Terminal
 
-An unofficial, community-built, read-only analytics terminal for OnRe's ONyc (tokenized reinsurance on Solana).
+An independent, community-built, read-only analytics terminal for OnRe's ONyc (tokenized reinsurance on Solana).
 Audience: ONyc holders, DeFi users looping/lending ONyc, researchers, risk teams.
 Job: show what ONyc is worth, where its yield comes from, where the capital sits, what could go wrong — with every number traceable to its source.
 
 Hard rules
 
 - Read-only. No transactions, no wallet signing. "Deposit" buttons link out to app.onre.finance or the partner protocol.
-- Footer on every page: "Unofficial community tool. Not affiliated with OnRe. Not investment advice."
+- Footer on every page: "Independent community tool. Not affiliated with OnRe. Not investment advice."
 - Every number shows its source and age on hover or in a footnote. Stale data is visibly stale.
 - Wallet features work from a pasted address. Wallet connect is optional (read the address only).
 

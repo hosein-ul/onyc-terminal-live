@@ -73,7 +73,7 @@ function ShareCard({
           fillOpacity="0.85"
           fontFamily="var(--font-ui)"
         >
-          {shortAddress(address)} · unofficial, not affiliated with OnRe
+          {shortAddress(address)} · independent, not affiliated with OnRe
         </text>
       </svg>
       <p>

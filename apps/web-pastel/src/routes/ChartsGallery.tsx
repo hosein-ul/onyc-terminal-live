@@ -189,7 +189,7 @@ export function ChartsGallery(): ReactNode {
         />
       </div>
       <p className="disclaimer">
-        ONyc Terminal is an unofficial, community-built, read-only analytics tool. It is not
+        ONyc Terminal is an independent, community-built, read-only analytics tool. It is not
         affiliated with or endorsed by OnRe. Nothing here is financial advice.
       </p>
     </main>

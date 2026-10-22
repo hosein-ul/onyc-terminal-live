@@ -123,7 +123,7 @@ export function parseCommand(text: string): Command {
 
 export function helpText(): string {
   return [
-    "ONyc Terminal alerts (unofficial, read-only; not affiliated with OnRe).",
+    "ONyc Terminal alerts (independent, read-only; not affiliated with OnRe).",
     "",
     "Subscribe with:",
     ...ALERT_RULES.map((r) => `/subscribe ${r.usage}\n  ${r.description}`),
