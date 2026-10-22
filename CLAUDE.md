@@ -1,5 +1,4 @@
-# ONyc Terminal — project rules for Claude Code
-
+# ONyc Terminal — project rules for agents
 Read these before every task. Full context lives in `docs/`.
 
 - `docs/SPEC.md` — what we build, page by page, and every metric formula
