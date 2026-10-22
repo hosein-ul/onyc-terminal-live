@@ -7,9 +7,6 @@ import {
   estimatePointsPerUsdPerDay,
   pickStrategies,
   riskKind,
-  sectionOrder,
-  SECTIONS,
-  type Persona,
 } from "./index.js";
 
 const fixture = <T>(name: string): T =>
@@ -109,20 +106,5 @@ describe("points estimates", () => {
       pulse.venues[1]?.multiplier ?? 0,
     );
     expect(pulse.formula).toContain("NAV");
-  });
-});
-
-describe("personas", () => {
-  const personas: Persona[] = ["default", "holder", "hunter", "analyst"];
-  it("always lists every section exactly once and starts with the Now section", () => {
-    for (const p of personas) {
-      const order = sectionOrder(p);
-      expect([...order].sort()).toEqual(SECTIONS.map((s) => s.id).sort());
-      expect(order[0]).toBe("now");
-    }
-  });
-  it("puts safety first for holders and best places first for hunters", () => {
-    expect(sectionOrder("holder")[1]).toBe("safety");
-    expect(sectionOrder("hunter")[1]).toBe("best");
   });
 });

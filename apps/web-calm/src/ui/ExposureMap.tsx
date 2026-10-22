@@ -141,13 +141,7 @@ export function ExposureMap({ layers }: { layers: Layer[] }) {
                 stroke="var(--ink)"
                 strokeWidth={1}
               />
-              <text
-                textAnchor="middle"
-                y={4}
-                fontSize={11}
-                fontWeight={700}
-                fill="var(--ink)"
-              >
+              <text textAnchor="middle" y={4} fontSize={11} fontWeight={700} fill="var(--ink)">
                 {code} {formatPercent(share, 0)}
               </text>
             </g>

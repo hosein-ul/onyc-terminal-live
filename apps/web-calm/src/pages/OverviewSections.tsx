@@ -18,13 +18,11 @@ import {
   FILTER_RULE,
   MIN_TVL_USD,
   pickStrategies,
-  PERSONAS,
   RISK_KIND_LABEL,
   RISK_KIND_NOTE,
   SECTIONS,
   estimatePointsPerUsdPerDay,
   type Light,
-  type Persona,
   type PointsPulse,
   type SectionId,
   type Strategy,
@@ -59,15 +57,7 @@ const protocolBuild = (d: EndpointResponse<"capitalDistribution">): ChartSpec =>
 // Sticky section nav and persona switch
 // ---------------------------------------------------------------------------------------------
 
-export function SectionNav({
-  order,
-  persona,
-  onPersona,
-}: {
-  order: SectionId[];
-  persona: Persona;
-  onPersona: (p: Persona) => void;
-}) {
+export function SectionNav({ order }: { order: SectionId[] }) {
   const [active, setActive] = useState<SectionId>("now");
 
   useEffect(() => {
@@ -116,15 +106,6 @@ export function SectionNav({
           );
         })}
       </nav>
-      <div className="sectionbar-persona">
-        <span id="persona-label">View as</span>
-        <Segmented
-          label="View as"
-          value={persona}
-          onChange={onPersona}
-          options={PERSONAS.map((p) => ({ value: p.id, label: p.label }))}
-        />
-      </div>
     </div>
   );
 }
@@ -147,8 +128,8 @@ export function Headline({ m }: { m: OverviewModel }) {
       <h1 className="headline-text">Overview</h1>
       {spread !== null && (
         <div className="headline-meta">
-          <Link className="badge-link" to="/risk#sources">
-            Sources differ by {formatPercent(Math.abs(spread), 1)} · see Risk &amp; Reinsurance
+          <Link className="badge-link" to="/health">
+            Sources differ by {formatPercent(Math.abs(spread), 1)} · see Data Health
           </Link>
         </div>
       )}
@@ -378,7 +359,7 @@ export function SafetyBoard({ m }: { m: OverviewModel }) {
         </ul>
       )}
       <p className="card-foot">
-        <Link to="/risk">All twelve signals and the reasoning on Risk &amp; Reinsurance</Link>
+        <Link to="/risk">All twelve signals and the reasoning on Risk Signals</Link>
       </p>
     </Card>
   );
@@ -428,7 +409,9 @@ function StrategyRow({
         <div>
           <b>{formatPercent(s.apy, 1)}</b>
           <span className="place-bar" aria-hidden="true">
-            <i style={{ width: `${maxApy > 0 ? Math.max(4, ((s.apy ?? 0) / maxApy) * 100) : 0}%` }} />
+            <i
+              style={{ width: `${maxApy > 0 ? Math.max(4, ((s.apy ?? 0) / maxApy) * 100) : 0}%` }}
+            />
           </span>
           <small>APY</small>
         </div>

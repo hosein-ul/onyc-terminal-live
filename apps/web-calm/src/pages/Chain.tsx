@@ -11,7 +11,6 @@ import {
 } from "@onyc/format";
 import type { EndpointResponse } from "@onyc/sdk";
 import { useChainFlows, useChainHolders, useChainState } from "@onyc/sdk/react";
-import { useState } from "react";
 import { Panel } from "../charts";
 import { shortAddress, signedPct, signedUsd } from "../lib/format";
 import { DataTable, type Column } from "../ui/DataTable";
@@ -23,7 +22,6 @@ import {
   Notice,
   PageHeader,
   Pill,
-  Segmented,
   Skeleton,
   Stat,
 } from "../ui/kit";
@@ -510,48 +508,3 @@ const holderColumns: Column<HolderRow>[] = [
             : "owner program",
   },
 ];
-
-type Group = "all" | "mint" | "redeem" | "config" | "large";
-const GROUPS: { value: Group; label: string; kinds?: Parameters<typeof ChainFeed>[0]["kinds"] }[] =
-  [
-    { value: "all", label: "All" },
-    { value: "mint", label: "Mints", kinds: ["mint"] },
-    {
-      value: "redeem",
-      label: "Redemptions",
-      kinds: [
-        "redeem_request",
-        "redeem_fulfilled",
-        "redeem_cancelled",
-        "propamm_sell",
-        "propamm_buy",
-      ],
-    },
-    { value: "config", label: "Price and config", kinds: ["price_vector", "admin_config"] },
-    { value: "large", label: "Large transfers", kinds: ["large_transfer"] },
-  ];
-
-/** The on-chain activity feed with filters, for the Alerts page. */
-export function OnchainActivity() {
-  const [group, setGroup] = useState<Group>("all");
-  const g = GROUPS.find((x) => x.value === group);
-  return (
-    <>
-      <PageHeader eyebrow="On chain" title="Live program activity" />
-      <Card
-        title="Transactions"
-        subtitle="Mints, redemptions, price changes and configuration of the OnRe program, and ONyc transfers of 100,000 or more"
-        actions={
-          <Segmented
-            label="Show"
-            value={group}
-            onChange={setGroup}
-            options={GROUPS.map((x) => ({ value: x.value, label: x.label }))}
-          />
-        }
-      >
-        <ChainFeed limit={50} {...(g?.kinds === undefined ? {} : { kinds: g.kinds })} />
-      </Card>
-    </>
-  );
-}

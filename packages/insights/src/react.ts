@@ -11,8 +11,7 @@ import {
   useRisk,
   useSolvency,
 } from "@onyc/sdk/react";
-import { useMemo, useState } from "react";
-import { loadPersona, savePersona, type Persona } from "./personas.js";
+import { useMemo } from "react";
 import { buildPointsPulse, type PointsPulse } from "./points.js";
 import { buildSafetyBoard, type Light } from "./safety.js";
 import { buildVitals, type Vital } from "./vitals.js";
@@ -96,16 +95,4 @@ export function useOverviewModel(): OverviewModel {
       capitalDistribution,
     },
   };
-}
-
-/** The persona choice, remembered in the browser. */
-export function usePersona(): [Persona, (p: Persona) => void] {
-  const [persona, setPersona] = useState<Persona>(() => loadPersona());
-  return [
-    persona,
-    (p) => {
-      savePersona(p);
-      setPersona(p);
-    },
-  ];
 }

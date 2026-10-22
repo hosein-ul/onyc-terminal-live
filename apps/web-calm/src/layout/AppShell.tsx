@@ -11,7 +11,7 @@ function NavList({ onNavigate }: { onNavigate?: () => void }) {
     <nav aria-label="Pages" className="nav">
       {NAV.map(({ to, label, icon: Icon, hint, group }, i) => (
         <Fragment key={to}>
-          {NAV[i - 1]?.group !== group && (
+          {group !== "" && NAV[i - 1]?.group !== group && (
             <div className="nav-group" aria-hidden="true">
               {group}
             </div>

@@ -20,13 +20,13 @@
   gap: 0;
 }
 .sidebar-head {
-  padding: 2px 10px 24px;
+  padding: 2px 10px 16px;
 }
 .logo {
   color: var(--ink);
 }
 .nav-group {
-  margin: 18px 0 6px;
+  margin: 14px 0 4px;
   padding: 0 14px;
   font-size: 11px;
   font-weight: 700;
@@ -38,8 +38,8 @@
   margin-top: 0;
 }
 .nav-item {
-  padding: 10px 14px;
-  border-radius: 16px;
+  padding: 8px 14px;
+  border-radius: 14px;
   color: var(--muted);
   font-weight: 500;
 }
@@ -54,6 +54,7 @@
 }
 .sidebar-foot {
   margin-top: auto;
+  flex: none;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -151,13 +152,19 @@
   border-left: 0;
 }
 .signal-ok {
-  box-shadow: inset 4px 0 0 var(--good), var(--shadow-soft);
+  box-shadow:
+    inset 4px 0 0 var(--good),
+    var(--shadow-soft);
 }
 .signal-watch {
-  box-shadow: inset 4px 0 0 var(--watch), var(--shadow-soft);
+  box-shadow:
+    inset 4px 0 0 var(--watch),
+    var(--shadow-soft);
 }
 .signal-alert {
-  box-shadow: inset 4px 0 0 var(--bad), var(--shadow-soft);
+  box-shadow:
+    inset 4px 0 0 var(--bad),
+    var(--shadow-soft);
 }
 .walletbox,
 .rule {

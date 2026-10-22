@@ -1,6 +1,6 @@
 import { navSpec } from "@onyc/chart-specs";
-import { sectionOrder, SECTIONS, type SectionId } from "@onyc/insights";
-import { useOverviewModel, usePersona } from "@onyc/insights/react";
+import { SECTIONS, type SectionId } from "@onyc/insights";
+import { useOverviewModel } from "@onyc/insights/react";
 import { useNav } from "@onyc/sdk/react";
 import { useMemo, type ReactNode } from "react";
 import { Chart, ChartFrame } from "../charts";
@@ -20,12 +20,11 @@ import {
   Vitals,
 } from "./OverviewSections";
 
-/** The Overview is one long page; the sticky bar jumps between its sections and the persona switch reorders them. */
+/** The Overview is one long page; the sticky bar jumps between its sections. */
 export function OverviewPage() {
   const m = useOverviewModel();
-  const [persona, setPersona] = usePersona();
   const [range, setRange] = useRange("all");
-  const order = sectionOrder(persona);
+  const order = SECTIONS.map((s) => s.id);
 
   // The hero chart has its own range selector, so it loads its own history.
   const heroQ = useNav({ query: { range } });
@@ -38,19 +37,19 @@ export function OverviewPage() {
         <div className="bento">
           <div className="tile-nav">
             <NavHero m={m}>
-            <ChartFrame
-              spec={hero}
-              status={heroQ.isError ? "error" : heroQ.isLoading ? "loading" : "ready"}
-              loadingTitle="NAV per ONyc"
-              error="NAV history could not be loaded."
-              range={range}
-              onRange={setRange}
-              height={300}
-              plain
-              hideTitle
-            >
-              {hero !== null && <Chart spec={hero} height={300} />}
-            </ChartFrame>
+              <ChartFrame
+                spec={hero}
+                status={heroQ.isError ? "error" : heroQ.isLoading ? "loading" : "ready"}
+                loadingTitle="NAV per ONyc"
+                error="NAV history could not be loaded."
+                range={range}
+                onRange={setRange}
+                height={300}
+                plain
+                hideTitle
+              >
+                {hero !== null && <Chart spec={hero} height={300} />}
+              </ChartFrame>
             </NavHero>
           </div>
           <div className="tile-safety">
@@ -70,7 +69,7 @@ export function OverviewPage() {
 
   return (
     <>
-      <SectionNav order={order} persona={persona} onPersona={setPersona} />
+      <SectionNav order={order} />
       {m.q.overview.isError && (
         <Notice tone="bad" title="The overview could not be loaded">
           {m.q.overview.error instanceof Error

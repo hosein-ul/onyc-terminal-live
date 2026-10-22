@@ -28,10 +28,7 @@ export function ActivityPage() {
 
   return (
     <>
-      <PageHeader
-        eyebrow="Activity & Alerts"
-        title="Events and alerts"
-      />
+      <PageHeader eyebrow="Activity & Alerts" title="Events and alerts" />
 
       <Card
         title="Events"
