@@ -85,7 +85,7 @@ export function StackedChart({ spec, height = 320 }: { spec: StackedSpec; height
         <AreaChart
           data={rows}
           stackOffset={spec.mode === "percent" ? "expand" : "none"}
-          margin={{ top: 12, right: 120, left: 0, bottom: 0 }}
+          margin={{ top: 12, right: 132, left: 0, bottom: 0 }}
           onMouseMove={(s) =>
             setCrosshair(typeof s.activeLabel === "string" ? s.activeLabel : null)
           }
@@ -111,7 +111,7 @@ export function StackedChart({ spec, height = 320 }: { spec: StackedSpec; height
             }
           />
           <Tooltip
-            content={<ChartTooltip unit={spec.unit} />}
+            content={<ChartTooltip unit={spec.unit} asShare={spec.mode === "percent"} />}
             cursor={{ stroke: "var(--chart-muted)", strokeDasharray: "3 3" }}
           />
           {order.map((k, i) => (
