@@ -26,6 +26,7 @@ export const TOOL_NAMES = {
   events: "get_events",
   chainState: "get_chain_state",
   chainActivity: "get_chain_activity",
+  chainTx: "get_chain_tx",
   chainFlows: "get_chain_flows",
   chainHolders: "get_chain_holders",
 } as const satisfies Record<EndpointName, string>;
