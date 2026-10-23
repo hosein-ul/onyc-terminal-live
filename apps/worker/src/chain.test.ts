@@ -1,6 +1,6 @@
 import { CONSTANTS, instructionDiscriminator, type ParsedTransaction } from "@onyc/sources";
 import { describe, expect, it } from "vitest";
-import { classify, onycMoves } from "./jobs/chain.js";
+import { classify, onycMoves, venueMove } from "./jobs/chain.js";
 
 const ONYC = CONSTANTS.onycMint;
 const P = CONSTANTS.onreProgram;
@@ -112,5 +112,52 @@ describe("classify", () => {
       ],
     };
     expect(classify(tx, 100_000)).toBeNull();
+  });
+});
+
+describe("moves into and out of protocols", () => {
+  const owned = (accountIndex: number, amount: bigint, owner: string) => ({
+    ...bal(accountIndex, amount),
+    owner,
+  });
+  const venues = new Map([
+    ["kamino-owner", { label: "Kamino Lend", protocol: "Kamino", kind: "lending" as const }],
+  ]);
+
+  it("a deposit raises the protocol's balance and is a venue_in of that size", () => {
+    const tx = {
+      ...base,
+      preTokenBalances: [owned(1, 5_000n * T, "user"), owned(2, 100n * T, "kamino-owner")],
+      postTokenBalances: [owned(1, 0n, "user"), owned(2, 5_100n * T, "kamino-owner")],
+    };
+    expect(venueMove(tx, venues)?.net).toBe(5_000);
+    const c = classify(tx, 100_000, venues, 1_000);
+    expect(c?.kind).toBe("venue_in");
+    expect(c?.venue?.label).toBe("Kamino Lend");
+    expect(c?.largestMove).toBe(5_000);
+  });
+
+  it("a withdrawal is a venue_out and a move below the minimum is ignored", () => {
+    const out = {
+      ...base,
+      preTokenBalances: [owned(2, 9_000n * T, "kamino-owner")],
+      postTokenBalances: [owned(2, 6_000n * T, "kamino-owner"), owned(1, 3_000n * T, "user")],
+    };
+    expect(classify(out, 100_000, venues, 1_000)?.kind).toBe("venue_out");
+    const small = {
+      ...base,
+      preTokenBalances: [owned(2, 9n * T, "kamino-owner")],
+      postTokenBalances: [owned(2, 8n * T, "kamino-owner"), owned(1, 1n * T, "user")],
+    };
+    expect(classify(small, 100_000, venues, 1_000)).toBeNull();
+  });
+
+  it("program instructions still win over a venue move", () => {
+    const tx = {
+      ...base,
+      instructions: [ins("take_offer")],
+      postTokenBalances: [owned(2, 5_000n * T, "kamino-owner")],
+    };
+    expect(classify(tx, 100_000, venues, 1_000)?.kind).toBe("mint");
   });
 });

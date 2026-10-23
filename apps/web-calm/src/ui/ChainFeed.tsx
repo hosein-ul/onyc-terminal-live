@@ -2,7 +2,9 @@ import { formatRelativeAge } from "@onyc/format";
 import { useChainActivity } from "@onyc/sdk/react";
 import type { EndpointResponse } from "@onyc/sdk";
 import {
+  ArrowDownToLine,
   ArrowLeftRight,
+  ArrowUpFromLine,
   Coins,
   Gauge,
   Landmark,
@@ -32,6 +34,8 @@ export const KIND_LABEL: Record<Kind, string> = {
   vault_move: "Vault move",
   market_stats: "Stats refresh",
   large_transfer: "Large transfer",
+  venue_in: "Moved into a protocol",
+  venue_out: "Moved out of a protocol",
 };
 
 const KIND_ICON: Record<Kind, LucideIcon> = {
@@ -46,6 +50,8 @@ const KIND_ICON: Record<Kind, LucideIcon> = {
   vault_move: Landmark,
   market_stats: RefreshCw,
   large_transfer: ArrowLeftRight,
+  venue_in: ArrowDownToLine,
+  venue_out: ArrowUpFromLine,
 };
 
 const KIND_TONE: Partial<Record<Kind, "accent" | "watch" | "neutral">> = {
@@ -63,6 +69,8 @@ export const PEOPLE_KINDS: Kind[] = [
   "propamm_sell",
   "propamm_buy",
   "large_transfer",
+  "venue_in",
+  "venue_out",
 ];
 
 export const solscanTx = (signature: string): string => `https://solscan.io/tx/${signature}`;
@@ -75,6 +83,15 @@ const amount = (n: number | null): string =>
         Math.abs(n),
       );
 
+/** The words for one event: a move into a protocol reads as a deposit, or as a sale when the protocol is an exchange pool. */
+export function eventLabel(e: Event): string {
+  if (e.venue === null || (e.kind !== "venue_in" && e.kind !== "venue_out"))
+    return KIND_LABEL[e.kind];
+  const dex = e.venueKind === "dex";
+  if (e.kind === "venue_in") return dex ? `Sold on ${e.venue}` : `Deposit to ${e.venue}`;
+  return dex ? `Bought on ${e.venue}` : `Withdrawal from ${e.venue}`;
+}
+
 /** One transaction as a line: what it was, how much ONyc moved, the transaction and signer addresses, and when. */
 function Row({ e }: { e: Event }) {
   const Icon = KIND_ICON[e.kind];
@@ -86,7 +103,7 @@ function Row({ e }: { e: Event }) {
       </span>
       <div className="chain-main">
         <div className="chain-what">
-          <Pill tone={KIND_TONE[e.kind] ?? "neutral"}>{KIND_LABEL[e.kind]}</Pill>
+          <Pill tone={KIND_TONE[e.kind] ?? "neutral"}>{eventLabel(e)}</Pill>
           {moved !== "" && <b>{moved}</b>}
           {e.instruction !== null && <span className="chain-ins">{e.instruction}</span>}
         </div>

@@ -1,8 +1,9 @@
-import { desc, eq, schema } from "@onyc/db";
+import { and, desc, eq, schema } from "@onyc/db";
 import { formatUsdCompact } from "@onyc/format";
 import {
   CONSTANTS,
   KIND_PRIORITY,
+  KNOWN_PROGRAMS,
   SolanaRpc,
   TOKEN_PROGRAM,
   byProtocol,
@@ -87,6 +88,50 @@ export interface ClassifiedTx {
   supplyDelta: number;
   /** Largest single ONyc balance change, whole tokens (absolute). */
   largestMove: number;
+  /** The protocol an ONyc move went into or out of, for venue_in and venue_out. */
+  venue: { label: string; kind: string } | null;
+}
+
+/** Owners of ONyc token accounts that are accounts of a known protocol, by owner address. */
+export type VenueMap = ReadonlyMap<string, Venue>;
+
+/** The ONyc a transaction moved into (positive) or out of (negative) the protocol that moved most. */
+export function venueMove(
+  tx: ParsedTransaction,
+  venues: VenueMap,
+): { venue: Venue; net: number } | null {
+  const pre = new Map<number, bigint>();
+  for (const b of tx.preTokenBalances)
+    if (b.mint === ONYC) pre.set(b.accountIndex, BigInt(b.uiTokenAmount.amount));
+  const net = new Map<string, bigint>();
+  const add = (owner: string | undefined, d: bigint): void => {
+    if (owner === undefined || !venues.has(owner)) return;
+    net.set(owner, (net.get(owner) ?? 0n) + d);
+  };
+  const seen = new Set<number>();
+  for (const b of tx.postTokenBalances) {
+    if (b.mint !== ONYC) continue;
+    seen.add(b.accountIndex);
+    add(b.owner, BigInt(b.uiTokenAmount.amount) - (pre.get(b.accountIndex) ?? 0n));
+  }
+  for (const b of tx.preTokenBalances)
+    if (b.mint === ONYC && !seen.has(b.accountIndex)) add(b.owner, -BigInt(b.uiTokenAmount.amount));
+  // Moves between two accounts of the same protocol cancel out, so sum per protocol before comparing.
+  const byProtocol = new Map<string, { venue: Venue; net: bigint }>();
+  for (const [owner, d] of net) {
+    const venue = venues.get(owner);
+    if (venue === undefined) continue;
+    const hit = byProtocol.get(venue.protocol);
+    if (hit === undefined) byProtocol.set(venue.protocol, { venue, net: d });
+    else hit.net += d;
+  }
+  let best: { venue: Venue; net: bigint } | null = null;
+  for (const v of byProtocol.values()) {
+    const abs = v.net < 0n ? -v.net : v.net;
+    const bestAbs = best === null ? 0n : best.net < 0n ? -best.net : best.net;
+    if (abs > bestAbs) best = v;
+  }
+  return best === null ? null : { venue: best.venue, net: Number(best.net) / DECIMALS };
 }
 
 /** ONyc balance changes of one transaction: the sum is the supply change, the largest is the biggest mover. */
@@ -117,7 +162,12 @@ export function onycMoves(tx: ParsedTransaction): { supplyDelta: number; largest
  * What a transaction was. Program instructions win; a transaction that only moves ONyc between wallets is a large transfer
  * when the biggest single move reaches `largeTransfer`.
  */
-export function classify(tx: ParsedTransaction, largeTransfer: number): ClassifiedTx | null {
+export function classify(
+  tx: ParsedTransaction,
+  largeTransfer: number,
+  venues: VenueMap = new Map(),
+  venueMin = Number.POSITIVE_INFINITY,
+): ClassifiedTx | null {
   const names: { name: string; kind: ChainEventKind }[] = [];
   for (const ins of tx.instructions) {
     if (ins.programId !== P) continue;
@@ -134,6 +184,18 @@ export function classify(tx: ParsedTransaction, largeTransfer: number): Classifi
       instructions: names.map((n) => n.name),
       supplyDelta,
       largestMove,
+      venue: null,
+    };
+  }
+  const move = venues.size === 0 ? null : venueMove(tx, venues);
+  if (move !== null && Math.abs(move.net) >= venueMin) {
+    return {
+      kind: move.net > 0 ? "venue_in" : "venue_out",
+      instruction: null,
+      instructions: [],
+      supplyDelta,
+      largestMove: Math.abs(move.net),
+      venue: { label: move.venue.label, kind: move.venue.kind },
     };
   }
   if (largestMove >= largeTransfer) {
@@ -143,9 +205,79 @@ export function classify(tx: ParsedTransaction, largeTransfer: number): Classifi
       instructions: [],
       supplyDelta,
       largestMove,
+      venue: null,
     };
   }
   return null;
+}
+
+const venueCache = new Map<string, Venue | null>();
+
+/** Holders of the latest hourly scan that were labelled with a protocol, by owner address. */
+async function holderVenues(ctx: Ctx): Promise<VenueMap> {
+  const t = schema.chainHolders;
+  const last = (
+    await ctx.handle.db.select({ scanTs: t.scanTs }).from(t).orderBy(desc(t.scanTs)).limit(1)
+  )[0];
+  if (last === undefined) return new Map();
+  const rows = await ctx.handle.db.select().from(t).where(eq(t.scanTs, last.scanTs));
+  const kinds = new Map(Object.values(KNOWN_PROGRAMS).map((v) => [v.label, v.kind]));
+  const out = new Map<string, Venue>();
+  for (const r of rows) {
+    if (r.protocol === null || r.label === null || r.protocol === "OnRe") continue;
+    out.set(r.owner, {
+      label: r.label,
+      protocol: r.protocol,
+      kind: kinds.get(r.label) ?? "lending",
+    });
+  }
+  return out;
+}
+
+/**
+ * The protocols behind the owners of ONyc token accounts in one transaction. An owner is a protocol account when the account
+ * itself belongs to a known program (see labels.ts); the answer is remembered, so each address is read from the chain once.
+ */
+export async function resolveVenues(
+  rpc: SolanaRpc,
+  tx: ParsedTransaction,
+  minOnyc: number,
+  labelled: VenueMap = new Map(),
+): Promise<VenueMap> {
+  const found = new Map<string, Venue>();
+  const pre = new Map<number, bigint>();
+  for (const b of tx.preTokenBalances)
+    if (b.mint === ONYC) pre.set(b.accountIndex, BigInt(b.uiTokenAmount.amount));
+  const owners = new Set<string>();
+  for (const b of tx.postTokenBalances) {
+    if (b.mint !== ONYC || b.owner === undefined) continue;
+    const d = BigInt(b.uiTokenAmount.amount) - (pre.get(b.accountIndex) ?? 0n);
+    if (Math.abs(Number(d)) / DECIMALS >= minOnyc) owners.add(b.owner);
+  }
+  for (const b of tx.preTokenBalances) {
+    if (b.mint !== ONYC || b.owner === undefined) continue;
+    if (Number(b.uiTokenAmount.amount) / DECIMALS >= minOnyc) owners.add(b.owner);
+  }
+  for (const owner of owners) {
+    const known = labelled.get(owner);
+    if (known !== undefined) {
+      found.set(owner, known);
+      continue;
+    }
+    let v = venueCache.get(owner);
+    if (v === undefined) {
+      try {
+        const acc = await rpc.getAccount(owner);
+        const hit = acc === null ? null : (KNOWN_PROGRAMS[acc.owner] ?? null);
+        v = hit !== null && hit.kind === "onre" ? null : hit;
+        venueCache.set(owner, v);
+      } catch {
+        continue; // not remembered, so the next transaction asks again
+      }
+    }
+    if (v !== null) found.set(owner, v);
+  }
+  return found;
 }
 
 const NOTIFY: Partial<
@@ -190,7 +322,7 @@ export const chainActivityJob: Job = {
   startDelayMs: 8_000,
   async run(ctx) {
     const rpc = chainRpc(ctx);
-    const cursorRow = await latestSnapshot(ctx, "cursor-v2");
+    const cursorRow = await latestSnapshot(ctx, "cursor-v3");
     const cursors = (cursorRow?.data ?? {}) as {
       program?: string;
       mint?: string;
@@ -217,6 +349,7 @@ export const chainActivityJob: Job = {
       if (s.err === null) wanted.set(s.signature, { slot: s.slot, blockTime: s.blockTime });
     }
     const batch = [...wanted.entries()].sort((a, b) => a[1].slot - b[1].slot).slice(0, 40);
+    const labelled = batch.length === 0 ? new Map<string, Venue>() : await holderVenues(ctx);
     let stored = 0;
     let failed = 0;
     for (const [signature, meta] of batch) {
@@ -225,7 +358,13 @@ export const chainActivityJob: Job = {
         failed += 1;
         continue;
       }
-      const c = classify(tx, ctx.config.CHAIN_LARGE_TRANSFER_ONYC);
+      const venues = await resolveVenues(rpc, tx, ctx.config.CHAIN_VENUE_MOVE_ONYC, labelled);
+      const c = classify(
+        tx,
+        ctx.config.CHAIN_LARGE_TRANSFER_ONYC,
+        venues,
+        ctx.config.CHAIN_VENUE_MOVE_ONYC,
+      );
       if (c === null) continue;
       const ts = new Date(
         (tx.blockTime ?? meta.blockTime ?? Math.floor(ctx.now().getTime() / 1000)) * 1000,
@@ -241,13 +380,26 @@ export const chainActivityJob: Job = {
           signer: tx.signer,
           onycSupplyDelta: c.supplyDelta,
           onycLargestMove: c.largestMove,
-          data: { instructions: c.instructions },
+          data: {
+            instructions: c.instructions,
+            ...(c.venue === null ? {} : { venue: c.venue.label, venueKind: c.venue.kind }),
+          },
           seenAt: ctx.now(),
         })
         .onConflictDoNothing()
         .returning({ id: schema.chainEvents.id });
       if (rows.length === 0) continue;
       stored += 1;
+      // A move now recognised as one into a protocol replaces the plain large transfer stored for it earlier.
+      if (c.venue !== null)
+        await ctx.handle.db
+          .delete(schema.chainEvents)
+          .where(
+            and(
+              eq(schema.chainEvents.signature, signature),
+              eq(schema.chainEvents.kind, "large_transfer"),
+            ),
+          );
       const notify = NOTIFY[c.kind];
       if (notify !== undefined && Date.now() - ts.getTime() < 6 * 3_600_000) {
         await emitEvent(ctx, {
@@ -267,7 +419,7 @@ export const chainActivityJob: Job = {
     // A transaction that could not be fetched is tried again on the next runs; after five tries it is given up.
     const retries = failed > 0 ? (cursors.retries ?? 0) + 1 : 0;
     const processedAll = wanted.size <= batch.length && (failed === 0 || retries > 5);
-    await snapshot(ctx, "cursor-v2", {
+    await snapshot(ctx, "cursor-v3", {
       retries: processedAll ? 0 : retries,
       program: processedAll
         ? (newest(programSigs) ?? cursors.program)

@@ -156,3 +156,10 @@ The workspace, turbo pipeline and CI are generic, so they now build one app. Cal
 - **API & MCP page removed** from the app. There is no separate MCP service on Render; the API service is what the site itself reads, so it stays.
 - **Hints**: a few words each (`tip` in the glossary), shown after a short hover delay; the long text stays on the Glossary page.
 - **Sidebar** collapses to an icon rail; status shown with icons (check, triangle, octagon) instead of drawn shapes; the treemap borders follow the theme.
+
+## Phase 11 (Activity across protocols)
+
+- The Activity feed now leads with what people do with ONyc: deposits, withdrawals, PropAMM trades and large transfers. The program's own upkeep (prices, stats, configuration, vault moves) moved to the Protocol operations filter.
+- New event kinds `venue_in` and `venue_out`: an ONyc move of 1,000 or more (`CHAIN_VENUE_MOVE_ONYC`) into or out of the accounts of a known protocol (Kamino, Exponent, Loopscale, Orca, Raydium). The protocol comes from the hourly holder labels, then from the owning program of the account. Checked on live transactions: Exponent deposits, Loopscale withdrawals and Orca swaps were recognised.
+- Limit: only transactions that name the ONyc mint are read, and history starts when collection started. Chain cursor key is now `cursor-v3`, so the newest 40 signatures are read again.
+- Collateral on the Overview uses the Sankey chart; the sidebar has no group markers; the Data check note is quiet text.

@@ -16,7 +16,9 @@ export type ChainEventKind =
   | "admin_config"
   | "vault_move"
   | "market_stats"
-  | "large_transfer";
+  | "large_transfer"
+  | "venue_in"
+  | "venue_out";
 
 const NAMES: Record<ChainEventKind, string[]> = {
   mint: [
@@ -87,6 +89,8 @@ const NAMES: Record<ChainEventKind, string[]> = {
     "close_state",
   ],
   large_transfer: [],
+  venue_in: [],
+  venue_out: [],
 };
 
 const key = (d: Uint8Array): string => Buffer.from(d).toString("hex");

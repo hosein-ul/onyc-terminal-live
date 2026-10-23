@@ -243,7 +243,17 @@ const ACTIVITY_KINDS = new Set([
   "vault_move",
   "market_stats",
   "large_transfer",
+  "venue_in",
+  "venue_out",
 ]);
+
+function venueOf(data: unknown): { venue: string | null; venueKind: string | null } {
+  const d = (data ?? {}) as { venue?: unknown; venueKind?: unknown };
+  return {
+    venue: typeof d.venue === "string" ? d.venue : null,
+    venueKind: typeof d.venueKind === "string" ? d.venueKind : null,
+  };
+}
 
 export async function chainActivityService(
   deps: Deps,
@@ -276,6 +286,8 @@ export async function chainActivityService(
         signer: r.signer,
         onyc: num(r.onycLargestMove),
         supplyDelta: num(r.onycSupplyDelta),
+        venue: venueOf(r.data).venue,
+        venueKind: venueOf(r.data).venueKind,
       })),
       counts,
       since: since?.toISOString() ?? null,

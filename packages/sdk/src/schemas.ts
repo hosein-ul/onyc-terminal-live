@@ -709,6 +709,8 @@ export const chainEventKindSchema = z.enum([
   "vault_move",
   "market_stats",
   "large_transfer",
+  "venue_in",
+  "venue_out",
 ]);
 
 export const chainActivitySchema = z.object({
@@ -724,6 +726,9 @@ export const chainActivitySchema = z.object({
       onyc: nn,
       /** Change in ONyc supply: mints positive, burns negative. */
       supplyDelta: nn,
+      /** The protocol an ONyc move went into or out of, when the move was recognised as one. */
+      venue: z.string().nullable(),
+      venueKind: z.string().nullable(),
     }),
   ),
   /** Counts by kind over the whole stored history. */
