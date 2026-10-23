@@ -64,6 +64,8 @@ export interface ParsedTransaction {
   instructions: ParsedInstruction[];
   preTokenBalances: TokenBalance[];
   postTokenBalances: TokenBalance[];
+  /** Network fee in lamports. */
+  fee?: number;
 }
 
 const defaultSleep = (ms: number): Promise<void> => new Promise((r) => setTimeout(r, ms));
@@ -89,6 +91,7 @@ interface RawTransaction {
   };
   meta: {
     err: unknown;
+    fee?: number;
     preTokenBalances?: TokenBalance[];
     postTokenBalances?: TokenBalance[];
     loadedAddresses?: { writable: string[]; readonly: string[] };
@@ -137,6 +140,7 @@ export function parseTransaction(signature: string, t: RawTransaction): ParsedTr
     instructions: [...top, ...inner],
     preTokenBalances: t.meta?.preTokenBalances ?? [],
     postTokenBalances: t.meta?.postTokenBalances ?? [],
+    fee: t.meta?.fee ?? 0,
   };
 }
 

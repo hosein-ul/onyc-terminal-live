@@ -4,6 +4,7 @@ import { Link, NavLink, useLocation } from "react-router-dom";
 import { FallbackBanner } from "../lib/offline";
 import { setTheme, useTheme } from "../lib/theme";
 import { GlossProvider } from "../ui/Term";
+import { TxDialog } from "../ui/TxDialog";
 import { WalletDialog, WalletSearch } from "../ui/WalletDialog";
 import { Logo } from "./Logo";
 import { NAV } from "./nav";
@@ -204,6 +205,7 @@ export function AppShell({ children }: { children: ReactNode }) {
         <Footer />
       </div>
       <WalletDialog />
+      <TxDialog />
     </div>
   );
 }

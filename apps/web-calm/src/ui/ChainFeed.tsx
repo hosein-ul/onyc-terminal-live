@@ -14,7 +14,9 @@ import {
   Undo2,
   type LucideIcon,
 } from "lucide-react";
+import { Link, useLocation } from "react-router-dom";
 import { shortAddress } from "../lib/format";
+import { WalletLink } from "../lib/wallet";
 import { Pill } from "./kit";
 import { Provenance } from "./Provenance";
 import { Skeleton } from "./kit";
@@ -84,7 +86,7 @@ const amount = (n: number | null): string =>
       );
 
 /** The words for one event: a move into a protocol reads as a deposit, or as a sale when the protocol is an exchange pool. */
-export function eventLabel(e: Event): string {
+export function eventLabel(e: Pick<Event, "kind" | "venue" | "venueKind">): string {
   if (e.venue === null || (e.kind !== "venue_in" && e.kind !== "venue_out"))
     return KIND_LABEL[e.kind];
   const dex = e.venueKind === "dex";
@@ -94,6 +96,8 @@ export function eventLabel(e: Event): string {
 
 /** One transaction as a line: what it was, how much ONyc moved, the transaction and signer addresses, and when. */
 function Row({ e }: { e: Event }) {
+  const { pathname } = useLocation();
+  const txHref = (signature: string): string => `${pathname}?tx=${signature}`;
   const Icon = KIND_ICON[e.kind];
   const moved = e.onyc !== null && e.onyc > 0 ? `${amount(e.onyc)} ONyc` : "";
   return (
@@ -108,40 +112,21 @@ function Row({ e }: { e: Event }) {
           {e.instruction !== null && <span className="chain-ins">{e.instruction}</span>}
         </div>
         <div className="chain-sub">
-          <a
-            className="mono"
-            href={solscanTx(e.signature)}
-            target="_blank"
-            rel="noopener noreferrer"
-            title={e.signature}
-          >
+          <Link className="mono" to={txHref(e.signature)} title={e.signature}>
             {shortAddress(e.signature)}
-          </a>
+          </Link>
           {e.signer !== null && (
             <>
               {" · signer "}
-              <a
-                className="mono"
-                href={solscanAccount(e.signer)}
-                target="_blank"
-                rel="noopener noreferrer"
-                title={e.signer}
-              >
-                {shortAddress(e.signer)}
-              </a>
+              <WalletLink address={e.signer} />
             </>
           )}
         </div>
       </div>
       <span className="chain-age">{formatRelativeAge(e.ts)}</span>
-      <a
-        className="chain-link"
-        href={solscanTx(e.signature)}
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        View<span className="sr-only"> transaction {shortAddress(e.signature)} on Solscan</span>
-      </a>
+      <Link className="chain-link" to={txHref(e.signature)}>
+        View<span className="sr-only"> transaction {shortAddress(e.signature)}</span>
+      </Link>
     </li>
   );
 }

@@ -1,6 +1,6 @@
 import { and, asc, desc, eq, gte, inArray, schema } from "@onyc/db";
 import type { Range, endpoints } from "@onyc/sdk";
-import { CONSTANTS, SolanaRpc } from "@onyc/sources";
+import { CONSTANTS, KNOWN_PROGRAMS, SolanaRpc, identifyInstruction } from "@onyc/sources";
 import type { z } from "zod";
 import type { Deps } from "../deps.js";
 import {
@@ -518,4 +518,122 @@ export function apiRpc(deps: Deps): SolanaRpc {
     retries: 1,
   });
   return rpcCache;
+}
+
+type TxOut = NonNullable<Out<"chainTx">["tx"]>;
+
+const TOKENS: Record<string, string> = {
+  [CONSTANTS.onycMint]: "ONyc",
+  [CONSTANTS.usdcMint]: "USDC",
+  [CONSTANTS.usdgMint]: "USDG",
+  [CONSTANTS.usdtMint]: "USDT",
+};
+
+const txCache = new Map<string, { at: number; value: Out<"chainTx"> }>();
+
+/** One transaction read from Solana when someone opens it, with names for the owners and programs we know. */
+export async function chainTxService(
+  deps: Deps,
+  signature: string,
+): Promise<ServiceResult<Out<"chainTx">>> {
+  const fields = { found: "derived", tx: "chainActivity" } as const;
+  const hit = txCache.get(signature);
+  if (hit !== undefined && Date.now() - hit.at < 600_000) return result(hit.value, fields);
+
+  const tx = await apiRpc(deps).getTransaction(signature);
+  if (tx === null) return result({ found: false, tx: null }, fields);
+
+  const ev = (
+    await deps.handle.db
+      .select()
+      .from(schema.chainEvents)
+      .where(eq(schema.chainEvents.signature, signature))
+      .limit(1)
+  )[0];
+  const t = schema.chainHolders;
+  const last = (
+    await deps.handle.db.select({ scanTs: t.scanTs }).from(t).orderBy(desc(t.scanTs)).limit(1)
+  )[0];
+  const labels = new Map<string, string>();
+  if (last !== undefined) {
+    for (const r of await deps.handle.db.select().from(t).where(eq(t.scanTs, last.scanTs)))
+      if (r.label !== null) labels.set(r.owner, r.label);
+  }
+  const label = (a: string | null | undefined): string | null =>
+    a === null || a === undefined ? null : (labels.get(a) ?? KNOWN_PROGRAMS[a]?.label ?? null);
+
+  const programs = new Map<string, string[]>();
+  for (const i of tx.instructions) {
+    const names = programs.get(i.programId) ?? [];
+    if (i.programId === CONSTANTS.onreProgram) {
+      const id = identifyInstruction(i.discriminator);
+      if (id !== null && !names.includes(id.name)) names.push(id.name);
+    }
+    programs.set(i.programId, names);
+  }
+
+  const amount = (b: { uiTokenAmount: { amount: string; decimals: number } }): number =>
+    Number(b.uiTokenAmount.amount) / 10 ** b.uiTokenAmount.decimals;
+  const before = new Map(tx.preTokenBalances.map((b) => [b.accountIndex, b]));
+  const transfers: TxOut["transfers"] = [];
+  const seen = new Set<number>();
+  for (const b of tx.postTokenBalances) {
+    seen.add(b.accountIndex);
+    const prev = before.get(b.accountIndex);
+    const change = amount(b) - (prev === undefined ? 0 : amount(prev));
+    if (change === 0) continue;
+    transfers.push({
+      mint: b.mint,
+      token: TOKENS[b.mint] ?? null,
+      owner: b.owner ?? null,
+      label: label(b.owner),
+      change,
+      after: amount(b),
+    });
+  }
+  for (const b of tx.preTokenBalances) {
+    if (seen.has(b.accountIndex) || amount(b) === 0) continue;
+    transfers.push({
+      mint: b.mint,
+      token: TOKENS[b.mint] ?? null,
+      owner: b.owner ?? null,
+      label: label(b.owner),
+      change: -amount(b),
+      after: 0,
+    });
+  }
+  transfers.sort((a, b) => Math.abs(b.change) - Math.abs(a.change));
+
+  const d = (ev?.data ?? {}) as { venue?: unknown; venueKind?: unknown };
+  const event: TxOut["event"] =
+    ev === undefined
+      ? null
+      : {
+          kind: ev.kind as NonNullable<TxOut["event"]>["kind"],
+          instruction: ev.instruction,
+          venue: typeof d.venue === "string" ? d.venue : null,
+          venueKind: typeof d.venueKind === "string" ? d.venueKind : null,
+        };
+  const value: Out<"chainTx"> = {
+    found: true,
+    tx: {
+      signature,
+      ts: tx.blockTime === null ? null : new Date(tx.blockTime * 1000).toISOString(),
+      slot: tx.slot,
+      ok: tx.err === null,
+      feeSol: (tx.fee ?? 0) / 1e9,
+      signer: tx.signer,
+      signerLabel: label(tx.signer),
+      event,
+      programs: [...programs.entries()].map(([address, instructions]) => ({
+        address,
+        label: label(address),
+        instructions,
+      })),
+      transfers: transfers.slice(0, 40),
+    },
+  };
+  txCache.set(signature, { at: Date.now(), value });
+  if (txCache.size > 200) txCache.delete(txCache.keys().next().value as string);
+  return result(value, fields);
 }

@@ -3,6 +3,7 @@ import {
   capitalStackResponseSchema,
   chainActivitySchema,
   chainFlowsSchema,
+  chainTxSchema,
   chainHoldersSchema,
   chainStateSchema,
   concentrationSchema,
@@ -269,6 +270,16 @@ export const endpoints = {
     }),
     response: envelope(chainActivitySchema),
     ttl: 15,
+  }),
+  chainTx: def({
+    path: "/v1/chain/tx/{signature}",
+    summary:
+      "One transaction read from Solana: who moved which tokens, and which programs were called",
+    tag: "On-chain",
+    params: z.object({ signature: z.string().regex(/^[1-9A-HJ-NP-Za-km-z]{64,100}$/) }),
+    query: none,
+    response: envelope(chainTxSchema),
+    ttl: 300,
   }),
   chainFlows: def({
     path: "/v1/chain/flows",

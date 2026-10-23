@@ -737,6 +737,51 @@ export const chainActivitySchema = z.object({
   note: z.string(),
 });
 
+export const chainTxSchema = z.object({
+  /** False when the chain has no such finalized transaction. */
+  found: z.boolean(),
+  tx: z
+    .object({
+      signature: z.string(),
+      ts: iso.nullable(),
+      slot: n,
+      ok: z.boolean(),
+      /** Network fee in SOL. */
+      feeSol: n,
+      signer: z.string().nullable(),
+      signerLabel: z.string().nullable(),
+      /** How the activity feed classified it, when it is in the feed. */
+      event: z
+        .object({
+          kind: chainEventKindSchema,
+          instruction: z.string().nullable(),
+          venue: z.string().nullable(),
+          venueKind: z.string().nullable(),
+        })
+        .nullable(),
+      programs: z.array(
+        z.object({
+          address: z.string(),
+          label: z.string().nullable(),
+          /** Instruction names the OnRe program was called with; empty for other programs. */
+          instructions: z.array(z.string()),
+        }),
+      ),
+      /** Token balance changes: one row per token account that changed. */
+      transfers: z.array(
+        z.object({
+          mint: z.string(),
+          token: z.string().nullable(),
+          owner: z.string().nullable(),
+          label: z.string().nullable(),
+          change: n,
+          after: n,
+        }),
+      ),
+    })
+    .nullable(),
+});
+
 export const chainFlowsSchema = z.object({
   range: rangeSchema,
   /** Daily ONyc minted and burned, from program transactions. */

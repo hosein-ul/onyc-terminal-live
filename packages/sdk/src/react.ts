@@ -85,6 +85,12 @@ export const useRisk = (a?: NoParams<"risk">) => useEndpoint("risk", a);
 export const useSourceHealth = (a?: NoParams<"healthSources">) => useEndpoint("healthSources", a);
 export const useChainState = (a?: NoParams<"chainState">) => useEndpoint("chainState", a);
 export const useChainActivity = (a?: NoParams<"chainActivity">) => useEndpoint("chainActivity", a);
+export const useChainTx = (signature: string | undefined, a?: NoParams<"chainTx">) =>
+  useEndpoint("chainTx", {
+    ...a,
+    params: { signature: signature ?? "" },
+    enabled: signature !== undefined && signature !== "" && (a?.enabled ?? true),
+  });
 export const useChainFlows = (a?: NoParams<"chainFlows">) => useEndpoint("chainFlows", a);
 export const useChainHolders = (a?: NoParams<"chainHolders">) => useEndpoint("chainHolders", a);
 export const useEvents = (a?: NoParams<"events">) => useEndpoint("events", a);

@@ -22,6 +22,7 @@ import {
 import type { ServiceResult } from "./services/common.js";
 import {
   chainActivityService,
+  chainTxService,
   chainFlowsService,
   chainHoldersService,
   chainStateService,
@@ -68,6 +69,7 @@ const handlers: { [K in EndpointName]: Handler<K> } = {
   events: (d, { query }) => eventsService(d, query),
   chainState: (d) => chainStateService(d),
   chainActivity: (d, { query }) => chainActivityService(d, query),
+  chainTx: (d, { params }) => chainTxService(d, params.signature),
   chainFlows: (d, { query }) => chainFlowsService(d, query.range),
   chainHolders: (d) => chainHoldersService(d),
 };
