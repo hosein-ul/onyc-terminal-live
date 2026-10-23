@@ -1,7 +1,7 @@
 import { Named } from "../ui/Badge";
 import {
   capitalStackedSpec,
-  collateralBarsSpec,
+  collateralSankeySpec,
   sparklineSpec,
   waterfallSpec,
   type ChartSpec,
@@ -28,7 +28,7 @@ import {
 import type { OverviewModel } from "@onyc/insights/react";
 import type { EndpointResponse, Meta } from "@onyc/sdk";
 import { useChainActivity, useLeaderboard, useYieldComposition } from "@onyc/sdk/react";
-import { TriangleAlert } from "lucide-react";
+import { Info } from "lucide-react";
 import { useEffect, useMemo, useState, type ReactNode } from "react";
 import { Link } from "react-router-dom";
 import { Chart, Panel } from "../charts";
@@ -114,7 +114,7 @@ export function Headline({ m }: { m: OverviewModel }) {
   return (
     <div className="headline">
       <Link className="badge-link" to="/health">
-        <TriangleAlert size={14} strokeWidth={2} aria-hidden="true" />
+        <Info size={14} strokeWidth={2} aria-hidden="true" />
         Sources differ by {formatPercent(Math.abs(spread), 1)} · see Data Health
       </Link>
     </div>
@@ -351,7 +351,7 @@ const stackedAbs = (d: EndpointResponse<"capitalDistribution">): ChartSpec =>
 const stackedPct = (d: EndpointResponse<"capitalDistribution">): ChartSpec =>
   capitalStackedSpec(d, "percent");
 const collateralBuild = (d: EndpointResponse<"yieldComposition">): ChartSpec =>
-  collateralBarsSpec(d);
+  collateralSankeySpec(d);
 
 /** Capital by protocol today as a ranked list with each logo, so the name and the number sit together. */
 function ProtocolShares({ m }: { m: OverviewModel }) {

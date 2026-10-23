@@ -4,7 +4,7 @@ import type { EndpointResponse } from "@onyc/sdk";
 import { useOverview, useYieldComposition } from "@onyc/sdk/react";
 import { Panel } from "../charts";
 import { signedPct } from "../lib/format";
-import { Card, Notice, Skeleton } from "../ui/kit";
+import { Card, Skeleton } from "../ui/kit";
 import { Provenance } from "../ui/Provenance";
 import { HealthPage } from "./Health";
 
@@ -43,10 +43,10 @@ function SourcesDetail() {
           </div>
         )}
         {spread !== null && Math.abs(spread) > 0.02 && (
-          <Notice tone="watch">
-            A spread of {signedPct(spread, 1)} between sources is normal when they measure different
-            things; the checks below explain each one.
-          </Notice>
+          <p className="quiet-note">
+            The sources differ by {signedPct(spread, 1)} because they measure slightly different
+            things. The checks below explain each one.
+          </p>
         )}
         {o !== undefined && <Provenance meta={o.meta["sourceCheck"]} />}
       </Card>

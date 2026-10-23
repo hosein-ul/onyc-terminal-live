@@ -1285,3 +1285,16 @@
 .mini .num {
   text-align: right;
 }
+
+.quiet-note {
+  margin: 14px 0 0;
+  font-size: 13px;
+  color: var(--muted);
+}
+.headline .badge-link {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--muted);
+  box-shadow: none;
+  background: var(--fill);
+}

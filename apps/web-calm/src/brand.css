@@ -422,11 +422,7 @@ a:hover {
   padding: 11px 0;
 }
 .shell-collapsed .nav-group {
-  height: 1px;
-  margin: 12px 14px;
-  padding: 0;
-  font-size: 0;
-  background: var(--line);
+  margin: 8px 0 0;
 }
 .shell-collapsed .sidebar-foot {
   justify-content: center;
@@ -491,11 +487,11 @@ a:hover {
   font-size: 14px;
 }
 .nav-group {
-  height: 1px;
-  margin: 10px 14px;
+  height: 0;
+  margin: 8px 0 0;
   padding: 0;
   font-size: 0;
-  background: var(--line);
+  background: none;
 }
 .nav-item.active {
   background: var(--fill-strong);

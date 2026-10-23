@@ -21,13 +21,13 @@ type Event = EndpointResponse<"chainActivity">["data"]["events"][number];
 type Kind = Event["kind"];
 
 export const KIND_LABEL: Record<Kind, string> = {
-  mint: "Mint",
-  redeem_request: "Redemption requested",
-  redeem_cancelled: "Redemption cancelled",
-  redeem_fulfilled: "Redemption fulfilled",
+  mint: "Deposit",
+  redeem_request: "Withdrawal requested",
+  redeem_cancelled: "Withdrawal cancelled",
+  redeem_fulfilled: "Withdrawal paid",
   propamm_sell: "Sold to OnRe (PropAMM)",
   propamm_buy: "Bought from OnRe (PropAMM)",
-  price_vector: "Price vector",
+  price_vector: "Price update",
   admin_config: "Configuration",
   vault_move: "Vault move",
   market_stats: "Stats refresh",
@@ -53,6 +53,17 @@ const KIND_TONE: Partial<Record<Kind, "accent" | "watch" | "neutral">> = {
   admin_config: "watch",
   large_transfer: "accent",
 };
+
+/** What people do with ONyc; the program's own upkeep (prices, stats, configuration, vault moves) is a separate view. */
+export const PEOPLE_KINDS: Kind[] = [
+  "mint",
+  "redeem_request",
+  "redeem_fulfilled",
+  "redeem_cancelled",
+  "propamm_sell",
+  "propamm_buy",
+  "large_transfer",
+];
 
 export const solscanTx = (signature: string): string => `https://solscan.io/tx/${signature}`;
 export const solscanAccount = (address: string): string => `https://solscan.io/account/${address}`;
@@ -118,11 +129,15 @@ function Row({ e }: { e: Event }) {
   );
 }
 
-/** The newest program events as a list. `kinds` limits it, for example to redemptions only. */
-export function ChainFeed({ limit = 10, kinds }: { limit?: number; kinds?: Kind[] }) {
-  const q = useChainActivity({
-    query: { limit, ...(kinds === undefined ? {} : { kind: kinds.join(",") }) },
-  });
+/** The newest ONyc events as a list: deposits, withdrawals and large transfers unless `kinds` says otherwise. */
+export function ChainFeed({
+  limit = 10,
+  kinds = PEOPLE_KINDS,
+}: {
+  limit?: number;
+  kinds?: Kind[];
+}) {
+  const q = useChainActivity({ query: { limit, kind: kinds.join(",") } });
   if (q.isLoading) return <Skeleton height={140} />;
   if (q.isError) return <p className="tone-bad">The on-chain activity could not be loaded.</p>;
   const events = q.data?.data.events ?? [];

@@ -5,18 +5,18 @@ import { useChainActivity, useChainFlows } from "@onyc/sdk/react";
 import { useMemo, useState } from "react";
 import { Panel } from "../charts";
 import { useNow } from "../lib/useNow";
-import { ChainFeed, KIND_LABEL } from "../ui/ChainFeed";
+import { ChainFeed, KIND_LABEL, PEOPLE_KINDS } from "../ui/ChainFeed";
 import { Card, PageHeader, Segmented, Stat } from "../ui/kit";
 import { Provenance } from "../ui/Provenance";
 
 type Kind = EndpointResponse<"chainActivity">["data"]["events"][number]["kind"];
 
-const GROUPS: { value: string; label: string; kinds?: Kind[] }[] = [
-  { value: "all", label: "All" },
-  { value: "mint", label: "Mints", kinds: ["mint"] },
+const GROUPS: { value: string; label: string; kinds: Kind[] }[] = [
+  { value: "people", label: "All activity", kinds: PEOPLE_KINDS },
+  { value: "deposit", label: "Deposits", kinds: ["mint"] },
   {
-    value: "redeem",
-    label: "Redemptions",
+    value: "withdraw",
+    label: "Withdrawals",
     kinds: [
       "redeem_request",
       "redeem_fulfilled",
@@ -25,9 +25,12 @@ const GROUPS: { value: string; label: string; kinds?: Kind[] }[] = [
       "propamm_buy",
     ],
   },
-  { value: "price", label: "Price", kinds: ["price_vector", "market_stats"] },
-  { value: "config", label: "Configuration", kinds: ["admin_config", "vault_move"] },
   { value: "large", label: "Large transfers", kinds: ["large_transfer"] },
+  {
+    value: "ops",
+    label: "Protocol operations",
+    kinds: ["price_vector", "market_stats", "admin_config", "vault_move"],
+  },
 ];
 
 const flowsBuild = (d: EndpointResponse<"chainFlows">): ChartSpec => chainFlowsSpec(d);
@@ -38,7 +41,7 @@ const compact = (n: number): string =>
 
 /** Every transaction the OnRe program sees, newest first, refreshed every 15 seconds. */
 export function ActivityPage() {
-  const [group, setGroup] = useState("all");
+  const [group, setGroup] = useState("people");
   const g = GROUPS.find((x) => x.value === group);
   const now = useNow(15_000);
   // A wide window feeds the tiles above the list; the list below asks for its own filter.
@@ -47,7 +50,9 @@ export function ActivityPage() {
 
   const stats = useMemo(() => {
     const events = all.data?.data.events ?? [];
-    const day = events.filter((e) => now.getTime() - new Date(e.ts).getTime() < DAY_MS);
+    const day = events.filter(
+      (e) => PEOPLE_KINDS.includes(e.kind) && now.getTime() - new Date(e.ts).getTime() < DAY_MS,
+    );
     return {
       latest: events[0]?.ts ?? null,
       day: day.length,
@@ -61,7 +66,7 @@ export function ActivityPage() {
 
   return (
     <>
-      <PageHeader eyebrow="Live" title="Every transaction of the OnRe program, as it happens" />
+      <PageHeader eyebrow="Live" title="Deposits, withdrawals and large transfers of ONyc" />
       <div className="bento act-stats">
         <Card as="article">
           <Stat
@@ -71,7 +76,11 @@ export function ActivityPage() {
           />
         </Card>
         <Card as="article">
-          <Stat label="Last 24 hours" value={String(stats.day)} note="transactions recorded" />
+          <Stat
+            label="Last 24 hours"
+            value={String(stats.day)}
+            note="deposits, withdrawals, transfers"
+          />
         </Card>
         <Card as="article">
           <Stat
@@ -82,9 +91,9 @@ export function ActivityPage() {
         </Card>
         <Card as="article">
           <Stat
-            label="Redemptions recorded"
+            label="Withdrawals recorded"
             value={String(count("redeem_request", "redeem_fulfilled", "redeem_cancelled"))}
-            note={`${count("mint")} mints, ${count("price_vector")} price updates`}
+            note={`${count("mint")} deposits recorded`}
           />
         </Card>
       </div>
@@ -93,7 +102,7 @@ export function ActivityPage() {
         <div className="span-8">
           <Card
             title="Transactions"
-            subtitle="Mints, redemptions, price changes and configuration of the program, and ONyc transfers of 100,000 or more"
+            subtitle="People putting ONyc in and taking it out through the OnRe program, and ONyc transfers of 100,000 or more"
             actions={
               <Segmented
                 label="Show"
@@ -103,7 +112,7 @@ export function ActivityPage() {
               />
             }
           >
-            <ChainFeed limit={100} {...(g?.kinds === undefined ? {} : { kinds: g.kinds })} />
+            <ChainFeed limit={100} {...(g === undefined ? {} : { kinds: g.kinds })} />
           </Card>
         </div>
         <div className="span-4 stack">
@@ -116,9 +125,10 @@ export function ActivityPage() {
           />
           <Card title="What is counted" as="article">
             <p className="tone-neutral">
-              Every transaction that calls the OnRe program, classified from its instruction data,
-              plus transfers of 100,000 ONyc or more. Each row links to Solscan. Kinds:{" "}
-              {Object.values(KIND_LABEL).join(", ")}.
+              Transactions that call the OnRe program, classified from their instruction data, plus
+              transfers of 100,000 ONyc or more. Trades inside other protocols, such as Kamino or
+              Orca, are not read yet. The program's own upkeep sits under Protocol operations. Each
+              row links to Solscan. Kinds: {Object.values(KIND_LABEL).join(", ")}.
             </p>
             <Provenance meta={all.data?.meta["events"]} />
           </Card>
