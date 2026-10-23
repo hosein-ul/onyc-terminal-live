@@ -14,9 +14,7 @@ function NavList({ onNavigate }: { onNavigate?: () => void }) {
       {NAV.map(({ to, label, icon: Icon, hint, group }, i) => (
         <Fragment key={to}>
           {group !== "" && NAV[i - 1]?.group !== group && (
-            <div className="nav-group" aria-hidden="true">
-              {group}
-            </div>
+            <div className="nav-group" aria-hidden="true" />
           )}
           <NavLink to={to} end={to === "/"} className="nav-item" title={label} onClick={onNavigate}>
             <Icon size={18} strokeWidth={1.75} aria-hidden="true" />
