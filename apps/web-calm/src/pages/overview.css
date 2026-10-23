@@ -230,6 +230,146 @@
 .navhero .term-btn {
   color: var(--muted);
 }
+.navhero .ch-range {
+  background: #2a2a27;
+}
+.navhero .ch-range button[aria-pressed="true"] {
+  background: var(--brand);
+  color: #151514;
+}
+.navhero .ch-icon:hover {
+  background: #2a2a27;
+}
+.navhero .ch-legend,
+.navhero .ch-foot {
+  color: var(--muted);
+}
+
+/* Vitals tiles: 3 + 6 + 3, then 3 + 3 + 6 */
+.vitals {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--gap);
+}
+.vitals > * {
+  grid-column: span 3;
+  min-width: 0;
+}
+.vitals > :nth-child(2) {
+  grid-column: span 6;
+}
+.vitals > :nth-child(6) {
+  grid-column: span 6;
+}
+.vital {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.vital-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--muted);
+  font-weight: 700;
+}
+.vital-value {
+  font-size: 34px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  margin-top: 6px;
+}
+.vital-unit {
+  font-size: var(--fs-label);
+  color: var(--muted);
+}
+.vital-detail {
+  font-size: 13px;
+  color: var(--ink);
+  line-height: 1.35;
+}
+.vital-spark {
+  margin: 10px 0 0;
+}
+.vital .prov {
+  margin-top: auto;
+  padding-top: 10px;
+  font-size: 11px;
+  line-height: 1.35;
+}
+
+/* The live tile: the newest transactions of the program */
+.live-tile h3 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin: 0 0 10px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--muted);
+}
+.live-tile h3 a {
+  font-weight: 600;
+  color: var(--ink);
+}
+.live-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  margin-right: 8px;
+  border-radius: 50%;
+  background: var(--good);
+  box-shadow: 0 0 0 4px var(--good-soft);
+}
+.live-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.live-list li {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 9px 0;
+  border-top: 1px solid var(--line-soft);
+  font-size: 14px;
+}
+.live-list li:first-child {
+  border-top: 0;
+}
+.live-list a {
+  text-decoration: none;
+  font-weight: 600;
+}
+.live-list a:hover {
+  text-decoration: underline;
+}
+.live-list small {
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+@media (max-width: 1180px) {
+  .vitals > *,
+  .vitals > :nth-child(2),
+  .vitals > :nth-child(6) {
+    grid-column: span 6;
+  }
+}
+@media (max-width: 640px) {
+  .vitals > *,
+  .vitals > :nth-child(2),
+  .vitals > :nth-child(6) {
+    grid-column: span 12;
+  }
+  .navhero {
+    padding: 22px 18px 14px;
+  }
+}
 .term-pop {
   position: fixed;
   z-index: 200;
@@ -1032,4 +1172,116 @@
 
 .wd-venues .named {
   text-transform: capitalize;
+}
+
+/* Restored: ranked list base, small tables, card footer */
+.card-foot {
+  margin: 16px 0 0;
+  font-size: var(--fs-small);
+}
+.rule {
+  margin: 0 0 16px;
+  font-size: var(--fs-small);
+  color: var(--muted);
+  max-width: 78ch;
+  background: transparent;
+  padding: 0;
+}
+
+/* Best places */
+.places {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.place {
+  display: grid;
+  grid-template-columns: 40px minmax(0, 1.5fr) minmax(0, 2fr) 28px;
+  gap: 20px;
+  align-items: center;
+  padding: 16px 0;
+  border-top: 1px solid var(--line-soft);
+}
+.place-rank {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
+  background: var(--fill);
+  font-size: 13px;
+  font-weight: 800;
+}
+.place-name {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+}
+.place-sub {
+  font-size: var(--fs-small);
+  color: var(--muted);
+}
+.place-kind {
+  border-bottom: 1px dotted var(--muted);
+  cursor: help;
+}
+.place-nums {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+.place-nums b {
+  display: block;
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+.place-nums small {
+  color: var(--muted);
+  font-size: var(--fs-label);
+}
+.place-bar {
+  display: block;
+  height: 6px;
+  margin-top: 6px;
+  border-radius: 3px;
+  background: var(--fill);
+  overflow: hidden;
+}
+.place-bar i {
+  display: block;
+  height: 100%;
+  background: var(--chart-primary);
+  border-radius: 3px;
+}
+@media (max-width: 760px) {
+  .place {
+    grid-template-columns: 36px minmax(0, 1fr) 28px;
+    gap: 12px;
+  }
+  .place-nums {
+    grid-column: 1 / -1;
+  }
+}
+
+.mini {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+.mini th,
+.mini td {
+  text-align: left;
+  padding: 10px 6px;
+  border-bottom: 1px solid var(--line-soft);
+}
+.mini th {
+  color: var(--muted);
+  font-size: var(--fs-label);
+  font-weight: 600;
+}
+.mini .num {
+  text-align: right;
 }
