@@ -10,6 +10,14 @@ import { Skeleton } from "./kit";
 
 const SIGNATURE = /^[1-9A-HJ-NP-Za-km-z]{64,100}$/;
 
+/** Core Solana programs that appear in nearly every transaction. */
+const CORE_PROGRAMS: Record<string, string> = {
+  "11111111111111111111111111111111": "System program",
+  TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA: "Token program",
+  ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL: "Associated token account program",
+  ComputeBudget111111111111111111111111111111: "Compute budget",
+};
+
 const amount = (n: number): string =>
   new Intl.NumberFormat("en-US", { maximumFractionDigits: Math.abs(n) < 10 ? 4 : 2 }).format(n);
 
@@ -67,7 +75,9 @@ function Body({ signature }: { signature: string }) {
         </div>
         <div>
           <dt>Fee</dt>
-          <dd>{amount(tx.feeSol)} SOL</dd>
+          <dd>
+            {new Intl.NumberFormat("en-US", { maximumFractionDigits: 6 }).format(tx.feeSol)} SOL
+          </dd>
         </div>
         <div>
           <dt>Slot</dt>
@@ -114,8 +124,10 @@ function Body({ signature }: { signature: string }) {
         <ul className="txd-programs">
           {tx.programs.map((p) => (
             <li key={p.address}>
-              <b>{p.label ?? shortAddress(p.address)}</b>
-              {p.label !== null && <small className="mono">{shortAddress(p.address)}</small>}
+              <b>{p.label ?? CORE_PROGRAMS[p.address] ?? shortAddress(p.address)}</b>
+              {(p.label !== null || CORE_PROGRAMS[p.address] !== undefined) && (
+                <small className="mono">{shortAddress(p.address)}</small>
+              )}
               {p.instructions.length > 0 && (
                 <span className="mono">{p.instructions.join(", ")}</span>
               )}
