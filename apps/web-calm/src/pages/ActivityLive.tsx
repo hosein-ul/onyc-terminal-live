@@ -125,8 +125,8 @@ export function ActivityPage() {
           />
           <Card title="What is counted" as="article">
             <p className="tone-neutral">
-              Transactions that call the OnRe program, ONyc moves of 1,000 or more into or out of
-              the accounts of a known protocol (Kamino, Exponent, Loopscale, Orca, Raydium), and
+              Transactions that call the OnRe program, ONyc moves of 100 or more into or out of the
+              accounts of a known protocol (Kamino, Exponent, Loopscale, Orca, Raydium), and
               transfers of 100,000 ONyc or more. Only transactions that name the ONyc mint are seen,
               and history starts when collection started. The program's own upkeep sits under
               Protocol operations. Each row links to Solscan.
