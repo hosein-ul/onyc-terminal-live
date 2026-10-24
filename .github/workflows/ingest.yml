@@ -1,0 +1,56 @@
+name: Ingest
+
+# Runs the data jobs that are due. GitHub starts scheduled runs a few minutes late at times, so each run looks back ten minutes.
+# The schedule is off until the repository is public: a private repository has a monthly minute quota that a five-minute
+# schedule would use up, and CI would stop with it. To turn it on, add under `on:` the lines
+#   schedule:
+#     - cron: "*/5 * * * *"
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: ingest
+  cancel-in-progress: false
+
+jobs:
+  due:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    env:
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      HELIUS_API_KEY: ${{ secrets.HELIUS_API_KEY }}
+      NODE_ENV: production
+    steps:
+      - name: Check the database secret
+        id: gate
+        run: |
+          if [ -z "$DATABASE_URL" ]; then
+            echo "DATABASE_URL is not set as a repository secret, so there is nothing to do."
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - uses: actions/checkout@v4
+        if: steps.gate.outputs.ready == 'true'
+
+      - uses: pnpm/action-setup@v4
+        if: steps.gate.outputs.ready == 'true'
+
+      - uses: actions/setup-node@v4
+        if: steps.gate.outputs.ready == 'true'
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+        if: steps.gate.outputs.ready == 'true'
+
+      - name: Build the worker and what it needs
+        if: steps.gate.outputs.ready == 'true'
+        run: pnpm turbo run build --filter=@onyc/worker...
+
+      - name: Run the jobs that are due
+        if: steps.gate.outputs.ready == 'true'
+        working-directory: apps/worker
+        run: node dist/main.js due 600

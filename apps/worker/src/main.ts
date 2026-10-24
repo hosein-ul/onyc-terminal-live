@@ -1,4 +1,5 @@
 import { connect, migrationsFolder, runMigrations } from "@onyc/db";
+import { Cron } from "croner";
 import pino from "pino";
 import { loadConfig } from "./config.js";
 import type { Ctx } from "./context.js";
@@ -10,6 +11,7 @@ import { runJob, startScheduler } from "./scheduler.js";
  * Usage:
  *   node dist/main.js                 run every job on its schedule
  *   node dist/main.js run <job>...    run the named jobs once and exit
+ *   node dist/main.js due [seconds]   run the jobs whose schedule fired in the last N seconds (default 300) and exit
  *   node dist/main.js crawl [--force] run the leaderboard crawl once and exit
  *   node dist/main.js list            list job names
  */
@@ -33,6 +35,21 @@ async function main(): Promise<void> {
     const unknown = [...wanted].filter((name) => !jobs.some((job) => job.name === name));
     if (unknown.length > 0) throw new Error(`Unknown job(s): ${unknown.join(", ")}`);
     for (const job of selected) await runJob(ctx, job);
+    await handle.close();
+    return;
+  }
+
+  if (command === "due") {
+    const windowSeconds = Number(rest[0] ?? 300);
+    const now = ctx.now();
+    const since = new Date(now.getTime() - windowSeconds * 1000);
+    const selected = jobs.filter((job) => {
+      const next = new Cron(job.schedule, { timezone: "UTC" }).nextRun(since);
+      return next !== null && next.getTime() <= now.getTime();
+    });
+    log.info({ jobs: selected.map((j) => j.name), windowSeconds }, "jobs due");
+    // The jobs are independent, so they run side by side; the RPC lanes keep the chain jobs from queuing behind each other.
+    await Promise.all(selected.map((job) => runJob(ctx, job)));
     await handle.close();
     return;
   }

@@ -35,17 +35,26 @@ const P = CONSTANTS.onreProgram;
 const ONYC = CONSTANTS.onycMint;
 const DECIMALS = 1e9;
 
-const rpcs = new WeakMap<object, SolanaRpc>();
+const rpcs = new WeakMap<object, Map<string, SolanaRpc>>();
 
-/** One client per worker, so the rate limit is shared by every chain job. */
-export function chainRpc(ctx: Ctx): SolanaRpc {
-  const hit = rpcs.get(ctx.config);
+/**
+ * One RPC client per lane. A client sends one request at a time, so a long scan (every token account of the mint) would hold up
+ * the live activity feed if both shared one; each lane has its own queue. On the public endpoint the pace stays under its
+ * per-method limit (about one request a second), because a refused request costs far more time than a slow one.
+ */
+export function chainRpc(ctx: Ctx, lane: "activity" | "scan" = "scan"): SolanaRpc {
+  const lanes = rpcs.get(ctx.config) ?? new Map<string, SolanaRpc>();
+  rpcs.set(ctx.config, lanes);
+  const hit = lanes.get(lane);
   if (hit !== undefined) return hit;
+  const ownEndpoint =
+    ctx.config.HELIUS_API_KEY !== undefined || ctx.config.SOLANA_RPC_URL !== undefined;
   const rpc = new SolanaRpc({
     heliusKey: ctx.config.HELIUS_API_KEY,
     url: ctx.config.SOLANA_RPC_URL,
+    ...(ownEndpoint ? {} : { minIntervalMs: lane === "activity" ? 1_100 : 1_500 }),
   });
-  rpcs.set(ctx.config, rpc);
+  lanes.set(lane, rpc);
   return rpc;
 }
 
@@ -321,7 +330,7 @@ export const chainActivityJob: Job = {
   schedule: "15 * * * * *",
   startDelayMs: 8_000,
   async run(ctx) {
-    const rpc = chainRpc(ctx);
+    const rpc = chainRpc(ctx, "activity");
     const cursorRow = await latestSnapshot(ctx, "cursor-v3");
     const cursors = (cursorRow?.data ?? {}) as {
       program?: string;
