@@ -65,6 +65,16 @@ async function main(): Promise<void> {
     config.enabledJobs === null
       ? jobs
       : jobs.filter((job) => config.enabledJobs?.has(job.name) === true);
+  // A dropped connection must cost one job run, not the whole worker.
+  process.on("unhandledRejection", (reason) => {
+    log.error(
+      { err: reason instanceof Error ? reason.message : String(reason) },
+      "unhandled rejection",
+    );
+  });
+  process.on("uncaughtException", (error) => {
+    log.error({ err: error.message }, "uncaught exception");
+  });
   log.info({ jobs: enabled.map((j) => j.name) }, "worker starting");
   const scheduler = startScheduler(ctx, enabled);
 

@@ -15,6 +15,10 @@ export interface DbHandle {
 export function connect(databaseUrl: string, options: { max?: number } = {}): DbHandle {
   const sql = postgres(databaseUrl, {
     max: options.max ?? 10,
+    // A hosted database drops idle connections; recycling them early avoids a reset in the middle of a query.
+    idle_timeout: 20,
+    max_lifetime: 60 * 10,
+    connect_timeout: 30,
     // postgres.js reads numeric as strings by default; columns here are double precision or bigint(number).
     onnotice: () => {},
   });
