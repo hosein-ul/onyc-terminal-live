@@ -15,6 +15,8 @@ import { RateLimiter } from "./ratelimit.js";
 
 const baseUrl = process.env["DATABASE_URL"];
 const WALLET = "DTjNdfYmKpwGjnX6UPGvxwXQ7PZEGM7M43BQLtyASnvh";
+/** A well-formed signature (base58, 88 characters) that no transaction has. */
+const SIGNATURE = "1".repeat(88);
 const NOW = new Date("2026-10-21T16:00:00Z");
 
 describe.skipIf(baseUrl === undefined)("API over a database seeded from fixtures", () => {
@@ -74,7 +76,7 @@ describe.skipIf(baseUrl === undefined)("API over a database seeded from fixtures
       EndpointName,
       (typeof endpoints)[EndpointName],
     ][]) {
-      const path = def.path.replace("{address}", WALLET);
+      const path = def.path.replace("{address}", WALLET).replace("{signature}", SIGNATURE);
       const res = await api.app.request(path);
       expect(res.status, path).toBe(200);
       const body = def.response.parse(await res.json()) as {
