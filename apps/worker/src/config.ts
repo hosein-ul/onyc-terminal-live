@@ -13,7 +13,9 @@ const envSchema = z.object({
   /** An ONyc transfer or program event moving at least this many tokens is recorded as large. */
   CHAIN_LARGE_TRANSFER_ONYC: z.coerce.number().positive().default(100_000),
   /** An ONyc move into or out of a known protocol is recorded from this size up. */
-  CHAIN_VENUE_MOVE_ONYC: z.coerce.number().positive().default(100),
+  CHAIN_VENUE_MOVE_ONYC: z.coerce.number().positive().default(10),
+  /** Any other ONyc transfer is recorded from this size up; an alert needs CHAIN_LARGE_TRANSFER_ONYC. */
+  CHAIN_TRANSFER_MIN_ONYC: z.coerce.number().positive().default(10),
   /** Alert when the AUM the API reports differs from on-chain supply times NAV by more than this fraction. */
   CHAIN_AUM_GAP_ALERT: z.coerce.number().positive().default(0.02),
   LOG_LEVEL: z.enum(["trace", "debug", "info", "warn", "error", "fatal"]).default("info"),

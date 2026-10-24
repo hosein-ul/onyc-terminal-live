@@ -25,7 +25,7 @@ const GROUPS: { value: string; label: string; kinds: Kind[] }[] = [
       "propamm_buy",
     ],
   },
-  { value: "large", label: "Large transfers", kinds: ["large_transfer"] },
+  { value: "large", label: "Transfers", kinds: ["large_transfer"] },
   {
     value: "ops",
     label: "Protocol operations",
@@ -102,7 +102,7 @@ export function ActivityPage() {
         <div className="span-8">
           <Card
             title="Transactions"
-            subtitle="ONyc going in and out of OnRe and of other protocols such as Kamino, Exponent and Orca, and transfers of 100,000 or more"
+            subtitle="ONyc going in and out of OnRe and of other protocols such as Kamino, Exponent and Orca, and other ONyc transfers"
             actions={
               <Segmented
                 label="Show"
@@ -125,11 +125,11 @@ export function ActivityPage() {
           />
           <Card title="What is counted" as="article">
             <p className="tone-neutral">
-              Transactions that call the OnRe program, ONyc moves of 100 or more into or out of the
-              accounts of a known protocol (Kamino, Exponent, Loopscale, Orca, Raydium), and
-              transfers of 100,000 ONyc or more. Only transactions that name the ONyc mint are seen,
-              and history starts when collection started. The program's own upkeep sits under
-              Protocol operations. Each row links to Solscan.
+              Transactions that call the OnRe program, ONyc moves of 10 or more into or out of the
+              accounts of a known protocol (Kamino, Exponent, Loopscale, Orca, Raydium), and other
+              ONyc transfers of 10 or more. Only transactions that name the ONyc mint are seen, and
+              history starts when collection started. The program's own upkeep sits under Protocol
+              operations. Each row links to Solscan.
             </p>
             <Provenance meta={all.data?.meta["events"]} />
           </Card>

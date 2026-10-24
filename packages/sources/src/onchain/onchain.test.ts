@@ -253,3 +253,39 @@ describe("holders", () => {
     );
   });
 });
+
+describe("browser-safe helpers", () => {
+  it("sha256 matches node's for short, block-sized and long input", async () => {
+    const { createHash } = await import("node:crypto");
+    const { sha256 } = await import("./sha256.js");
+    for (const text of [
+      "",
+      "abc",
+      "global:take_offer_permissionless_v2",
+      "x".repeat(55),
+      "y".repeat(56),
+      "z".repeat(200),
+    ]) {
+      const mine = Buffer.from(sha256(new TextEncoder().encode(text))).toString("hex");
+      expect(mine).toBe(createHash("sha256").update(text).digest("hex"));
+    }
+  });
+
+  it("the instruction table is the same one the node code computes", async () => {
+    const { identifyInstruction } = await import("./instructions.js");
+    const { instructionDiscriminator } = await import("./layouts.js");
+    expect(
+      identifyInstruction(instructionDiscriminator("take_offer_permissionless_v2"))?.kind,
+    ).toBe("mint");
+    expect(identifyInstruction(instructionDiscriminator("create_redemption_request"))?.kind).toBe(
+      "redeem_request",
+    );
+  });
+
+  it("ids equal the published constants", async () => {
+    const { ONYC_MINT, ONRE_PROGRAM } = await import("./ids.js");
+    const { CONSTANTS } = await import("../clients.js");
+    expect(ONYC_MINT).toBe(CONSTANTS.onycMint);
+    expect(ONRE_PROGRAM).toBe(CONSTANTS.onreProgram);
+  });
+});

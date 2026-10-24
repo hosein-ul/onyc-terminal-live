@@ -1350,3 +1350,20 @@
     grid-template-columns: minmax(0, 1fr);
   }
 }
+
+.live-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 10px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted);
+}
+.live-status .ticker-dot {
+  background: var(--good);
+}
+.live-connecting .ticker-dot,
+.live-reconnecting .ticker-dot {
+  background: var(--watch);
+}

@@ -300,6 +300,9 @@ importers:
       '@onyc/sdk':
         specifier: workspace:*
         version: link:../../packages/sdk
+      '@onyc/sources':
+        specifier: workspace:*
+        version: link:../../packages/sources
       '@tanstack/query-sync-storage-persister':
         specifier: ^5.104.5
         version: 5.104.5

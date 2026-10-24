@@ -1,6 +1,12 @@
-import { CONSTANTS, instructionDiscriminator, type ParsedTransaction } from "@onyc/sources";
+import {
+  CONSTANTS,
+  classify,
+  instructionDiscriminator,
+  onycMoves,
+  venueMove,
+  type ParsedTransaction,
+} from "@onyc/sources";
 import { describe, expect, it } from "vitest";
-import { classify, onycMoves, venueMove } from "./jobs/chain.js";
 
 const ONYC = CONSTANTS.onycMint;
 const P = CONSTANTS.onreProgram;

@@ -1,4 +1,8 @@
-import { instructionDiscriminator } from "./layouts.js";
+import { sha256 } from "./sha256.js";
+
+/** Anchor identifies an instruction by the first 8 bytes of sha256("global:<name>"). */
+const instructionDiscriminator = (name: string): Uint8Array =>
+  sha256(new TextEncoder().encode(`global:${name}`)).subarray(0, 8);
 
 /**
  * What a program transaction did, in the words of the activity feed. The instruction names are the `pub fn` list of
@@ -93,7 +97,8 @@ const NAMES: Record<ChainEventKind, string[]> = {
   venue_out: [],
 };
 
-const key = (d: Uint8Array): string => Buffer.from(d).toString("hex");
+const key = (d: Uint8Array): string =>
+  Array.from(d, (b) => b.toString(16).padStart(2, "0")).join("");
 
 const BY_DISCRIMINATOR = new Map<string, { name: string; kind: ChainEventKind }>();
 for (const [kind, names] of Object.entries(NAMES) as [ChainEventKind, string[]][]) {

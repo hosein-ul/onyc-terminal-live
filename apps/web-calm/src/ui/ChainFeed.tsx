@@ -1,5 +1,5 @@
 import { formatRelativeAge } from "@onyc/format";
-import { useChainActivity } from "@onyc/sdk/react";
+import { useChainActivity, useChainHolders } from "@onyc/sdk/react";
 import type { EndpointResponse } from "@onyc/sdk";
 import {
   ArrowDownToLine,
@@ -15,7 +15,10 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
+import { useEffect } from "react";
 import { shortAddress } from "../lib/format";
+import { LIVE_MODE, setLiveVenues, useLiveChain } from "../lib/liveChain";
+import { useNow } from "../lib/useNow";
 import { WalletLink } from "../lib/wallet";
 import { Pill } from "./kit";
 import { Provenance } from "./Provenance";
@@ -35,7 +38,7 @@ export const KIND_LABEL: Record<Kind, string> = {
   admin_config: "Configuration",
   vault_move: "Vault move",
   market_stats: "Stats refresh",
-  large_transfer: "Large transfer",
+  large_transfer: "Transfer",
   venue_in: "Moved into a protocol",
   venue_out: "Moved out of a protocol",
 };
@@ -140,11 +143,33 @@ export function ChainFeed({
   kinds?: Kind[];
 }) {
   const q = useChainActivity({ query: { limit, kind: kinds.join(",") } });
+  const holders = useChainHolders();
+  const live = useLiveChain();
+  useNow(10_000);
+  useEffect(() => {
+    if (holders.data !== undefined) setLiveVenues(holders.data.data.rows);
+  }, [holders.data]);
   if (q.isLoading) return <Skeleton height={140} />;
   if (q.isError) return <p className="tone-bad">The on-chain activity could not be loaded.</p>;
-  const events = q.data?.data.events ?? [];
+  // Transactions seen on the chain a moment ago come first; the stored list fills in the rest and wins on a tie.
+  const stored = q.data?.data.events ?? [];
+  const known = new Set(stored.map((e) => e.signature));
+  const fresh = live.events.filter((e) => kinds.includes(e.kind) && !known.has(e.signature));
+  const events = [...fresh, ...stored]
+    .sort((a, b) => new Date(b.ts).getTime() - new Date(a.ts).getTime())
+    .slice(0, limit);
   return (
     <>
+      <p className={`live-status live-${live.status}`}>
+        <span className="ticker-dot" aria-hidden="true" />
+        {live.status === "live"
+          ? LIVE_MODE === "stream"
+            ? "Live from Solana"
+            : "Live from Solana, checked every few seconds"
+          : live.status === "connecting"
+            ? "Connecting to Solana…"
+            : "Reconnecting to Solana…"}
+      </p>
       {events.length === 0 ? (
         <p className="tone-neutral">
           No program transactions recorded yet. The worker reads Solana about once a minute, and
