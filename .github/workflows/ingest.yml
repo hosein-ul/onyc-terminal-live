@@ -1,11 +1,9 @@
 name: Ingest
 
 # Runs the data jobs that are due. GitHub starts scheduled runs a few minutes late at times, so each run looks back ten minutes.
-# The schedule is off until the repository is public: a private repository has a monthly minute quota that a five-minute
-# schedule would use up, and CI would stop with it. To turn it on, add under `on:` the lines
-#   schedule:
-#     - cron: "*/5 * * * *"
 on:
+  schedule:
+    - cron: "*/5 * * * *"
   workflow_dispatch:
 
 concurrency:
