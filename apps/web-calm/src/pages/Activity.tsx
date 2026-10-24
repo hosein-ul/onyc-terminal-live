@@ -8,14 +8,24 @@ import { Provenance } from "../ui/Provenance";
 const SEVERITY: Record<string, Tone> = { info: "neutral", watch: "watch", alert: "bad" };
 type Filter = "all" | "market" | "book" | "data";
 
+/** The worker's own checks of the chain against the API; everything else it records from the chain belongs to the market group. */
+const CHAIN_CHECKS = ["chain_aum_gap", "chain_reserves_gap"];
+
 const GROUP: Record<Filter, (kind: string) => boolean> = {
   all: () => true,
   market: (k) =>
-    ["discount_breach", "premium_breach", "nav_", "opportunity_", "collateral_"].some((p) =>
-      k.startsWith(p),
-    ),
+    !CHAIN_CHECKS.includes(k) &&
+    [
+      "discount_breach",
+      "premium_breach",
+      "nav_",
+      "opportunity_",
+      "collateral_",
+      "chain_",
+      "whale_",
+    ].some((p) => k.startsWith(p)),
   book: (k) => k.startsWith("layer_"),
-  data: (k) => k.startsWith("source_") || k.startsWith("solvency_"),
+  data: (k) => k.startsWith("source_") || k.startsWith("solvency_") || CHAIN_CHECKS.includes(k),
 };
 
 export function ActivityPage() {

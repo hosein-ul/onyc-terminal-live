@@ -692,7 +692,7 @@ export function chainFlowsSpec(res: EndpointResponse<"chainFlows">): BarsSpec {
   return {
     kind: "bars",
     id: "chain-flows",
-    title: "Net flow from transactions",
+    title: "Net supply change from transactions",
     subtitle: "ONyc minted minus burned each day, at NAV",
     provenance: provenanceFrom(res.meta, "series"),
     summary:

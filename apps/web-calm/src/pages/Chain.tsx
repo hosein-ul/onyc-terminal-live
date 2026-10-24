@@ -336,7 +336,7 @@ export function ChainPage() {
         <Panel
           q={flows}
           build={flowsBuild}
-          title="Net flow from transactions"
+          title="Net supply change from transactions"
           span={7}
           height={260}
         />
