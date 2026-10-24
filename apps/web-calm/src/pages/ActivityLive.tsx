@@ -23,6 +23,7 @@ const GROUPS: { value: string; label: string; kinds: Kind[] }[] = [
       "redeem_cancelled",
       "propamm_sell",
       "propamm_buy",
+      "venue_out",
     ],
   },
   { value: "large", label: "Transfers", kinds: ["large_transfer"] },
@@ -35,6 +36,8 @@ const GROUPS: { value: string; label: string; kinds: Kind[] }[] = [
 
 const flowsBuild = (d: EndpointResponse<"chainFlows">): ChartSpec => chainFlowsSpec(d);
 const DAY_MS = 24 * 3_600_000;
+/** The most events the API returns in one answer. */
+const WINDOW = 200;
 
 const compact = (n: number): string =>
   new Intl.NumberFormat("en-US", { notation: "compact", maximumFractionDigits: 2 }).format(n);
@@ -44,23 +47,27 @@ export function ActivityPage() {
   const [group, setGroup] = useState("people");
   const g = GROUPS.find((x) => x.value === group);
   const now = useNow(15_000);
-  // A wide window feeds the tiles above the list; the list below asks for its own filter.
-  const all = useChainActivity({ query: { limit: 200 } });
+  // The tiles read the newest events of the kinds people produce, not upkeep, so a busy day of price updates cannot push them out.
+  const all = useChainActivity({ query: { limit: 1 } });
+  const people = useChainActivity({
+    query: { limit: WINDOW, kind: PEOPLE_KINDS.join(",") },
+  });
   const flows = useChainFlows({ query: { range: "1m" } });
 
   const stats = useMemo(() => {
-    const events = all.data?.data.events ?? [];
-    const day = events.filter(
-      (e) => PEOPLE_KINDS.includes(e.kind) && now.getTime() - new Date(e.ts).getTime() < DAY_MS,
-    );
+    const events = people.data?.data.events ?? [];
+    const day = events.filter((e) => now.getTime() - new Date(e.ts).getTime() < DAY_MS);
+    // When every returned event is still inside the 24 hours, older ones may exist: the numbers are then a floor.
+    const partial = events.length >= WINDOW && day.length === events.length;
     return {
-      latest: events[0]?.ts ?? null,
+      latest: all.data?.data.events[0]?.ts ?? null,
       day: day.length,
+      partial,
       minted: day.reduce((a, e) => a + Math.max(0, e.supplyDelta ?? 0), 0),
       burned: day.reduce((a, e) => a + Math.max(0, -(e.supplyDelta ?? 0)), 0),
       counts: all.data?.data.counts ?? {},
     };
-  }, [all.data, now]);
+  }, [all.data, people.data, now]);
 
   const count = (...kinds: Kind[]): number => kinds.reduce((a, k) => a + (stats.counts[k] ?? 0), 0);
 
@@ -78,15 +85,15 @@ export function ActivityPage() {
         <Card as="article">
           <Stat
             label="Last 24 hours"
-            value={String(stats.day)}
+            value={`${stats.day}${stats.partial ? "+" : ""}`}
             note="deposits, withdrawals, transfers"
           />
         </Card>
         <Card as="article">
           <Stat
             label="ONyc minted, 24 h"
-            value={compact(stats.minted)}
-            note={`${compact(stats.burned)} burned`}
+            value={`${compact(stats.minted)}${stats.partial ? "+" : ""}`}
+            note={`${compact(stats.burned)}${stats.partial ? "+" : ""} burned`}
           />
         </Card>
         <Card as="article">
@@ -119,7 +126,7 @@ export function ActivityPage() {
           <Panel
             q={flows}
             build={flowsBuild}
-            title="Net flow from transactions"
+            title="Net supply change from transactions"
             span={12}
             height={240}
           />

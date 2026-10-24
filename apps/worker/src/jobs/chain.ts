@@ -29,6 +29,14 @@ import {
 } from "@onyc/sources";
 import type { Ctx, Job } from "../context.js";
 import { emitEvent } from "../events.js";
+import {
+  advanceCursors,
+  collectSignatures,
+  planBatch,
+  type Cursors,
+  type Lane,
+  type LaneSig,
+} from "./cursor.js";
 import { recordFailure, recordSuccess } from "../health.js";
 
 const SOURCE_ID = "solana-rpc";
@@ -193,6 +201,78 @@ const NOTIFY: Partial<
 const fmt = (n: number): string =>
   new Intl.NumberFormat("en-US", { maximumFractionDigits: 0 }).format(n);
 
+/** Transactions read per run; the rest of a backlog waits for the next minute. */
+const BATCH_MAX = 40;
+
+/** Classify one transaction and store it; returns true when a new row was written. */
+async function ingestTransaction(
+  ctx: Ctx,
+  rpc: SolanaRpc,
+  signature: string,
+  fallbackTime: number | null,
+  tx: ParsedTransaction,
+  labelled: VenueMap,
+): Promise<boolean> {
+  const venues = await resolveVenues(rpc, tx, ctx.config.CHAIN_VENUE_MOVE_ONYC, labelled);
+  const c = classify(
+    tx,
+    ctx.config.CHAIN_TRANSFER_MIN_ONYC,
+    venues,
+    ctx.config.CHAIN_VENUE_MOVE_ONYC,
+  );
+  if (c === null) return false;
+  const ts = new Date(
+    (tx.blockTime ?? fallbackTime ?? Math.floor(ctx.now().getTime() / 1000)) * 1000,
+  );
+  const rows = await ctx.handle.db
+    .insert(schema.chainEvents)
+    .values({
+      signature,
+      kind: c.kind,
+      instruction: c.instruction,
+      ts,
+      slot: tx.slot,
+      signer: tx.signer,
+      onycSupplyDelta: c.supplyDelta,
+      onycLargestMove: c.largestMove,
+      data: {
+        instructions: c.instructions,
+        ...(c.venue === null ? {} : { venue: c.venue.label, venueKind: c.venue.kind }),
+      },
+      seenAt: ctx.now(),
+    })
+    .onConflictDoNothing()
+    .returning({ id: schema.chainEvents.id });
+  if (rows.length === 0) return false;
+  // A move now recognised as one into a protocol replaces the plain large transfer stored for it earlier.
+  if (c.venue !== null)
+    await ctx.handle.db
+      .delete(schema.chainEvents)
+      .where(
+        and(
+          eq(schema.chainEvents.signature, signature),
+          eq(schema.chainEvents.kind, "large_transfer"),
+        ),
+      );
+  const notify = NOTIFY[c.kind];
+  if (
+    notify !== undefined &&
+    Date.now() - ts.getTime() < 6 * 3_600_000 &&
+    (c.kind !== "large_transfer" || c.largestMove >= ctx.config.CHAIN_LARGE_TRANSFER_ONYC)
+  ) {
+    await emitEvent(ctx, {
+      kind: `chain_${c.kind}`,
+      severity: notify.severity,
+      title: notify.title(c),
+      body: `Transaction ${signature}`,
+      data: { signature, onyc: c.largestMove, instruction: c.instruction },
+      dedupKey: `chain:${signature}:${c.kind}`,
+      ts,
+    });
+  }
+  return true;
+}
+
 /** Every minute: new transactions of the OnRe program and of the ONyc mint, classified and stored. */
 export const chainActivityJob: Job = {
   name: "chain-activity",
@@ -201,114 +281,65 @@ export const chainActivityJob: Job = {
   async run(ctx) {
     const rpc = chainRpc(ctx, "activity");
     const cursorRow = await latestSnapshot(ctx, "cursor-v3");
-    const cursors = (cursorRow?.data ?? {}) as {
-      program?: string;
-      mint?: string;
-      retries?: number;
+    const saved = (cursorRow?.data ?? {}) as Cursors & { retries?: number };
+    const cursors: Cursors = {
+      ...(saved.program === undefined ? {} : { program: saved.program }),
+      ...(saved.mint === undefined ? {} : { mint: saved.mint }),
     };
     const first = cursors.program === undefined;
 
-    const programSigs = await timed(ctx, "getSignaturesForAddress(program)", () =>
-      rpc.getSignatures(P, {
-        limit: first ? 40 : 100,
-        ...(cursors.program ? { until: cursors.program } : {}),
-      }),
-    );
-    const mintSigs = await timed(ctx, "getSignaturesForAddress(mint)", () =>
-      rpc.getSignatures(ONYC, {
-        limit: first ? 40 : 100,
-        ...(cursors.mint ? { until: cursors.mint } : {}),
-      }),
-    );
-    if (programSigs === null && mintSigs === null) return;
+    // Everything newer than each lane's cursor, page by page. A lane that could not be read keeps its cursor and is tried again.
+    const lists: Partial<Record<Lane, LaneSig[]>> = {};
+    for (const [lane, address] of [
+      ["program", P],
+      ["mint", ONYC],
+    ] as const) {
+      const found = await timed(ctx, `getSignaturesForAddress(${lane})`, () =>
+        first
+          ? rpc.getSignatures(address, { limit: 40 }).then((sigs) => ({ sigs, truncated: false }))
+          : collectSignatures((o) => rpc.getSignatures(address, o), cursors[lane]),
+      );
+      if (found === null) continue;
+      lists[lane] = found.sigs;
+      if (found.truncated)
+        ctx.log.warn(
+          { lane },
+          "more new signatures than one run reads; the oldest are left behind",
+        );
+    }
+    if (lists.program === undefined && lists.mint === undefined) return;
 
-    const wanted = new Map<string, { slot: number; blockTime: number | null }>();
-    for (const s of [...(programSigs ?? []), ...(mintSigs ?? [])]) {
-      if (s.err === null) wanted.set(s.signature, { slot: s.slot, blockTime: s.blockTime });
-    }
-    const batch = [...wanted.entries()].sort((a, b) => a[1].slot - b[1].slot).slice(0, 40);
-    const labelled = batch.length === 0 ? new Map<string, Venue>() : await holderVenues(ctx);
+    const plan = planBatch(lists, BATCH_MAX);
+    const labelled = plan.some((e) => !e.skip) ? await holderVenues(ctx) : new Map<string, Venue>();
+    let retries = saved.retries ?? 0;
     let stored = 0;
-    let failed = 0;
-    for (const [signature, meta] of batch) {
-      const tx = await timed(ctx, "getTransaction", () => rpc.getTransaction(signature));
-      if (tx === null) {
-        failed += 1;
-        continue;
+    let handled = 0;
+    for (const entry of plan) {
+      if (!entry.skip) {
+        const tx = await timed(ctx, "getTransaction", () => rpc.getTransaction(entry.signature));
+        if (tx === null) {
+          // The cursor stays in front of a transaction that could not be fetched, so nothing after it is skipped. After five
+          // tries it is given up.
+          if (retries < 5) {
+            retries += 1;
+            break;
+          }
+        } else if (
+          await ingestTransaction(ctx, rpc, entry.signature, entry.blockTime, tx, labelled)
+        )
+          stored += 1;
       }
-      const venues = await resolveVenues(rpc, tx, ctx.config.CHAIN_VENUE_MOVE_ONYC, labelled);
-      const c = classify(
-        tx,
-        ctx.config.CHAIN_TRANSFER_MIN_ONYC,
-        venues,
-        ctx.config.CHAIN_VENUE_MOVE_ONYC,
-      );
-      if (c === null) continue;
-      const ts = new Date(
-        (tx.blockTime ?? meta.blockTime ?? Math.floor(ctx.now().getTime() / 1000)) * 1000,
-      );
-      const rows = await ctx.handle.db
-        .insert(schema.chainEvents)
-        .values({
-          signature,
-          kind: c.kind,
-          instruction: c.instruction,
-          ts,
-          slot: tx.slot,
-          signer: tx.signer,
-          onycSupplyDelta: c.supplyDelta,
-          onycLargestMove: c.largestMove,
-          data: {
-            instructions: c.instructions,
-            ...(c.venue === null ? {} : { venue: c.venue.label, venueKind: c.venue.kind }),
-          },
-          seenAt: ctx.now(),
-        })
-        .onConflictDoNothing()
-        .returning({ id: schema.chainEvents.id });
-      if (rows.length === 0) continue;
-      stored += 1;
-      // A move now recognised as one into a protocol replaces the plain large transfer stored for it earlier.
-      if (c.venue !== null)
-        await ctx.handle.db
-          .delete(schema.chainEvents)
-          .where(
-            and(
-              eq(schema.chainEvents.signature, signature),
-              eq(schema.chainEvents.kind, "large_transfer"),
-            ),
-          );
-      const notify = NOTIFY[c.kind];
-      if (
-        notify !== undefined &&
-        Date.now() - ts.getTime() < 6 * 3_600_000 &&
-        (c.kind !== "large_transfer" || c.largestMove >= ctx.config.CHAIN_LARGE_TRANSFER_ONYC)
-      ) {
-        await emitEvent(ctx, {
-          kind: `chain_${c.kind}`,
-          severity: notify.severity,
-          title: notify.title(c),
-          body: `Transaction ${signature}`,
-          data: { signature, onyc: c.largestMove, instruction: c.instruction },
-          dedupKey: `chain:${signature}:${c.kind}`,
-          ts,
-        });
-      }
+      retries = 0;
+      handled += 1;
     }
-    // The next run starts after the newest signature we looked at, so nothing is read twice and nothing is skipped.
-    const newest = (list: { signature: string }[] | null): string | undefined =>
-      list?.[0]?.signature;
-    // A transaction that could not be fetched is tried again on the next runs; after five tries it is given up.
-    const retries = failed > 0 ? (cursors.retries ?? 0) + 1 : 0;
-    const processedAll = wanted.size <= batch.length && (failed === 0 || retries > 5);
     await snapshot(ctx, "cursor-v3", {
-      retries: processedAll ? 0 : retries,
-      program: processedAll
-        ? (newest(programSigs) ?? cursors.program)
-        : (cursors.program ?? newest(programSigs)),
-      mint: processedAll ? (newest(mintSigs) ?? cursors.mint) : (cursors.mint ?? newest(mintSigs)),
+      ...advanceCursors(cursors, plan.slice(0, handled)),
+      retries,
     });
-    ctx.log.info({ looked: batch.length, stored, failed }, "chain activity");
+    ctx.log.info(
+      { planned: plan.length, handled, stored, waiting: plan.length - handled },
+      "chain activity",
+    );
   },
 };
 
