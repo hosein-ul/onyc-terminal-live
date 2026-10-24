@@ -69,6 +69,11 @@ export function fixtureFetch(): typeof fetch {
     ["/tokens/", () => new Response(fixture("geckoterminal_pools.json"))],
     ["/protocol/onre", () => new Response(fixture("defillama_protocol_onre.json"))],
     ["yields.llama.fi/pools", () => new Response(fixture("defillama_yields_onyc.json"))],
+    // Solana JSON-RPC: every call answers "nothing there", so an on-demand read (one transaction) finds no transaction.
+    [
+      "api.mainnet-beta.solana.com",
+      () => new Response(JSON.stringify({ jsonrpc: "2.0", id: 1, result: null })),
+    ],
   ];
 
   return (input) => {
