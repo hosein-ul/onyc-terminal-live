@@ -65,6 +65,9 @@ const KIND_TONE: Partial<Record<Kind, "accent" | "watch" | "neutral">> = {
   large_transfer: "accent",
 };
 
+/** Every kind of event the feed knows, the program's own upkeep included. */
+export const ALL_KINDS = Object.keys(KIND_LABEL) as Kind[];
+
 /** What people do with ONyc; the program's own upkeep (prices, stats, configuration, vault moves) is a separate view. */
 export const PEOPLE_KINDS: Kind[] = [
   "mint",

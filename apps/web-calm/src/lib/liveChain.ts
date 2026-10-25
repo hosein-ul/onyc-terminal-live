@@ -33,8 +33,9 @@ const POLL_MS = 3_000;
 const WATCHED = [ONRE_PROGRAM, ONYC_MINT];
 
 /** Same sizes the worker uses, so a live row and the stored row of the same transaction agree. */
-const TRANSFER_MIN_ONYC = 10;
-const VENUE_MOVE_ONYC = 10;
+// No size filter: any transaction that moves ONyc is shown.
+const TRANSFER_MIN_ONYC = 1e-9;
+const VENUE_MOVE_ONYC = 1e-9;
 const KEEP = 200;
 
 let snapshot: Snapshot = { events: [], status: "connecting" };

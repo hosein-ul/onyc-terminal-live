@@ -5,14 +5,15 @@ import { useChainActivity, useChainFlows } from "@onyc/sdk/react";
 import { useMemo, useState } from "react";
 import { Panel } from "../charts";
 import { useNow } from "../lib/useNow";
-import { ChainFeed, PEOPLE_KINDS } from "../ui/ChainFeed";
+import { ALL_KINDS, ChainFeed, PEOPLE_KINDS } from "../ui/ChainFeed";
 import { Card, PageHeader, Segmented, Stat } from "../ui/kit";
 import { Provenance } from "../ui/Provenance";
 
 type Kind = EndpointResponse<"chainActivity">["data"]["events"][number]["kind"];
 
 const GROUPS: { value: string; label: string; kinds: Kind[] }[] = [
-  { value: "people", label: "All activity", kinds: PEOPLE_KINDS },
+  { value: "all", label: "All activity", kinds: ALL_KINDS },
+  { value: "people", label: "People only", kinds: PEOPLE_KINDS },
   { value: "deposit", label: "Deposits", kinds: ["mint", "venue_in"] },
   {
     value: "withdraw",
@@ -44,7 +45,7 @@ const compact = (n: number): string =>
 
 /** Every transaction the OnRe program sees, newest first, refreshed every 15 seconds. */
 export function ActivityPage() {
-  const [group, setGroup] = useState("people");
+  const [group, setGroup] = useState("all");
   const g = GROUPS.find((x) => x.value === group);
   const now = useNow(15_000);
   // The tiles read the newest events of the kinds people produce, not upkeep, so a busy day of price updates cannot push them out.
@@ -132,11 +133,12 @@ export function ActivityPage() {
           />
           <Card title="What is counted" as="article">
             <p className="tone-neutral">
-              Transactions that call the OnRe program, ONyc moves of 10 or more into or out of the
-              accounts of a known protocol (Kamino, Exponent, Loopscale, Orca, Raydium), and other
-              ONyc transfers of 10 or more. Only transactions that name the ONyc mint are seen, and
-              history starts when collection started. The program's own upkeep sits under Protocol
-              operations. Each row links to Solscan.
+              Every transaction that calls the OnRe program and every transaction that moves ONyc,
+              of any size: deposits, withdrawals, moves into and out of Kamino, Exponent, Loopscale,
+              Orca and Raydium, and plain transfers. Only transactions that name the ONyc mint are
+              seen, and history starts when collection started. The program's own upkeep is included
+              under All activity and can be shown alone under Protocol operations. Each row opens
+              its details here.
             </p>
             <Provenance meta={all.data?.meta["events"]} />
           </Card>

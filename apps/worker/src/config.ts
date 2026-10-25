@@ -13,9 +13,9 @@ const envSchema = z.object({
   /** An ONyc transfer or program event moving at least this many tokens is recorded as large. */
   CHAIN_LARGE_TRANSFER_ONYC: z.coerce.number().positive().default(100_000),
   /** An ONyc move into or out of a known protocol is recorded from this size up. */
-  CHAIN_VENUE_MOVE_ONYC: z.coerce.number().positive().default(10),
+  CHAIN_VENUE_MOVE_ONYC: z.coerce.number().positive().default(1e-9),
   /** Any other ONyc transfer is recorded from this size up; an alert needs CHAIN_LARGE_TRANSFER_ONYC. */
-  CHAIN_TRANSFER_MIN_ONYC: z.coerce.number().positive().default(10),
+  CHAIN_TRANSFER_MIN_ONYC: z.coerce.number().positive().default(1e-9),
   /** Transactions the activity job reads per run. A scheduler that wakes up every few minutes needs far more than a loop that runs every minute. */
   CHAIN_ACTIVITY_BATCH: z.coerce.number().int().positive().default(40),
   /** Alert when the AUM the API reports differs from on-chain supply times NAV by more than this fraction. */

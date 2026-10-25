@@ -18,7 +18,7 @@ jobs:
       DATABASE_URL: ${{ secrets.DATABASE_URL }}
       HELIUS_API_KEY: ${{ secrets.HELIUS_API_KEY }}
       NODE_ENV: production
-      CHAIN_ACTIVITY_BATCH: "260"
+      CHAIN_ACTIVITY_BATCH: "1000"
     steps:
       - name: Check the database secret
         id: gate
