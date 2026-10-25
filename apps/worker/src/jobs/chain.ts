@@ -201,9 +201,6 @@ const NOTIFY: Partial<
 const fmt = (n: number): string =>
   new Intl.NumberFormat("en-US", { maximumFractionDigits: 0 }).format(n);
 
-/** Transactions read per run; the rest of a backlog waits for the next minute. */
-const BATCH_MAX = 40;
-
 /** Classify one transaction and store it; returns true when a new row was written. */
 async function ingestTransaction(
   ctx: Ctx,
@@ -309,7 +306,7 @@ export const chainActivityJob: Job = {
     }
     if (lists.program === undefined && lists.mint === undefined) return;
 
-    const plan = planBatch(lists, BATCH_MAX);
+    const plan = planBatch(lists, ctx.config.CHAIN_ACTIVITY_BATCH);
     const labelled = plan.some((e) => !e.skip) ? await holderVenues(ctx) : new Map<string, Venue>();
     let retries = saved.retries ?? 0;
     let stored = 0;
