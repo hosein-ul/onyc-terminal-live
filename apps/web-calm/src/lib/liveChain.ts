@@ -173,6 +173,42 @@ function onMessage(data: unknown): void {
 }
 
 const cursors = new Map<string, string>();
+let storedUntil = 0;
+let backfilled = false;
+const BACKFILL_MAX = 150;
+
+/** Tell the live feed how far the stored list reaches, so it can read what happened after that. */
+export function setLiveSince(iso: string | undefined): void {
+  const t = iso === undefined ? 0 : new Date(iso).getTime();
+  if (t > storedUntil) storedUntil = t;
+  if (!backfilled && storedUntil > 0 && listeners.size > 0) void backfill();
+}
+
+/** Once per page: transactions newer than the stored list, oldest first, at most BACKFILL_MAX of them. */
+async function backfill(): Promise<void> {
+  if (backfilled || storedUntil === 0) return;
+  backfilled = true;
+  try {
+    const fresh: { signature: string; blockTime: number }[] = [];
+    for (const address of WATCHED) {
+      const list = await rpc<{ signature: string; err: unknown; blockTime: number | null }[]>(
+        "getSignaturesForAddress",
+        [address, { limit: 300, commitment: "confirmed" }],
+      );
+      for (const item of list) {
+        if (item.err !== null || item.blockTime === null || seen.has(item.signature)) continue;
+        if (item.blockTime * 1000 <= storedUntil) continue;
+        seen.add(item.signature);
+        fresh.push({ signature: item.signature, blockTime: item.blockTime });
+      }
+    }
+    fresh.sort((a, b) => b.blockTime - a.blockTime);
+    for (const f of fresh.slice(0, BACKFILL_MAX).reverse()) queue.push(f.signature);
+    void drain();
+  } catch {
+    backfilled = false;
+  }
+}
 let pollTimer: ReturnType<typeof setTimeout> | undefined;
 
 async function rpc<T>(method: string, params: unknown[]): Promise<T> {
@@ -243,7 +279,7 @@ function connect(): void {
     pingTimer = setInterval(() => {
       if (ws.readyState === WebSocket.OPEN)
         ws.send(JSON.stringify({ jsonrpc: "2.0", id: 99, method: "getSlot" }));
-    }, 30_000);
+    }, 240_000);
   };
   ws.onmessage = (e) => {
     onMessage(e.data);
@@ -263,20 +299,41 @@ function connect(): void {
   };
 }
 
+/** Close the connection and every timer; what was already read stays on the page. */
+function halt(): void {
+  clearTimeout(retryTimer);
+  clearTimeout(pollTimer);
+  pollTimer = undefined;
+  cursors.clear();
+  clearInterval(pingTimer);
+  const ws = socket;
+  socket = null;
+  ws?.close();
+}
+
+/** A background tab does not listen: every transaction read costs the RPC provider a request. */
+function onVisibility(): void {
+  if (document.visibilityState === "hidden") halt();
+  else if (listeners.size > 0 && socket === null && pollTimer === undefined) {
+    retry = 0;
+    connect();
+    backfilled = false;
+    void backfill();
+  }
+}
+
 function subscribe(listener: () => void): () => void {
   listeners.add(listener);
-  if (listeners.size === 1 && socket === null && pollTimer === undefined) connect();
+  if (listeners.size === 1) {
+    document.addEventListener("visibilitychange", onVisibility);
+    if (document.visibilityState === "visible" && socket === null && pollTimer === undefined)
+      connect();
+  }
   return () => {
     listeners.delete(listener);
     if (listeners.size === 0) {
-      clearTimeout(retryTimer);
-      clearTimeout(pollTimer);
-      pollTimer = undefined;
-      cursors.clear();
-      clearInterval(pingTimer);
-      const ws = socket;
-      socket = null;
-      ws?.close();
+      document.removeEventListener("visibilitychange", onVisibility);
+      halt();
     }
   };
 }

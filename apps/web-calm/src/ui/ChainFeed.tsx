@@ -17,7 +17,7 @@ import {
 import { Link, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import { shortAddress } from "../lib/format";
-import { LIVE_MODE, setLiveVenues, useLiveChain } from "../lib/liveChain";
+import { LIVE_MODE, setLiveSince, setLiveVenues, useLiveChain } from "../lib/liveChain";
 import { useNow } from "../lib/useNow";
 import { WalletLink } from "../lib/wallet";
 import { Pill } from "./kit";
@@ -152,6 +152,9 @@ export function ChainFeed({
   useEffect(() => {
     if (holders.data !== undefined) setLiveVenues(holders.data.data.rows);
   }, [holders.data]);
+  useEffect(() => {
+    setLiveSince(q.data?.data.events[0]?.ts);
+  }, [q.data]);
   if (q.isLoading) return <Skeleton height={140} />;
   if (q.isError) return <p className="tone-bad">The on-chain activity could not be loaded.</p>;
   // Transactions seen on the chain a moment ago come first; the stored list fills in the rest and wins on a tie.
