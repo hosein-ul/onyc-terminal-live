@@ -1,6 +1,15 @@
 import { Cron } from "croner";
 import type { Ctx, Job } from "./context.js";
 
+/**
+ * Whether a job's schedule fired after `since` and not later than `now`. A scheduler that wakes up at irregular times passes the
+ * moment it last ran each job, so a job that fired while nobody was looking still runs once, and only once.
+ */
+export function isDue(schedule: string, since: Date, now: Date): boolean {
+  const next = new Cron(schedule, { timezone: "UTC" }).nextRun(since);
+  return next !== null && next.getTime() <= now.getTime();
+}
+
 export interface RunningScheduler {
   stop: () => void;
 }

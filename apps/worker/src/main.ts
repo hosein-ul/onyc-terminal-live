@@ -1,17 +1,16 @@
-import { connect, migrationsFolder, runMigrations } from "@onyc/db";
-import { Cron } from "croner";
+import { connect, desc, eq, migrationsFolder, runMigrations, schema } from "@onyc/db";
 import pino from "pino";
 import { loadConfig } from "./config.js";
 import type { Ctx } from "./context.js";
 import { jobs } from "./jobs/index.js";
 import { crawlLeaderboard } from "./jobs/rewards.js";
-import { runJob, startScheduler } from "./scheduler.js";
+import { isDue, runJob, startScheduler } from "./scheduler.js";
 
 /**
  * Usage:
  *   node dist/main.js                 run every job on its schedule
  *   node dist/main.js run <job>...    run the named jobs once and exit
- *   node dist/main.js due [seconds]   run the jobs whose schedule fired in the last N seconds (default 300) and exit
+ *   node dist/main.js due [seconds]   run every job whose schedule fired since it last ran (first time: the last N seconds, default 600) and exit
  *   node dist/main.js crawl [--force] run the leaderboard crawl once and exit
  *   node dist/main.js list            list job names
  */
@@ -40,16 +39,34 @@ async function main(): Promise<void> {
   }
 
   if (command === "due") {
-    const windowSeconds = Number(rest[0] ?? 300);
+    // Each job is run when its schedule has fired since the last time it ran. The first time, a job looks back `window` seconds.
+    const windowSeconds = Number(rest[0] ?? 600);
     const now = ctx.now();
-    const since = new Date(now.getTime() - windowSeconds * 1000);
+    const t = schema.chainSnapshots;
+    const row = (
+      await handle.db
+        .select()
+        .from(t)
+        .where(eq(t.kind, "due-last-run"))
+        .orderBy(desc(t.ts))
+        .limit(1)
+    )[0];
+    const last = (row?.data ?? {}) as Record<string, string>;
+    const fallback = new Date(now.getTime() - windowSeconds * 1000);
     const selected = jobs.filter((job) => {
-      const next = new Cron(job.schedule, { timezone: "UTC" }).nextRun(since);
-      return next !== null && next.getTime() <= now.getTime();
+      const ran = last[job.name] === undefined ? fallback : new Date(last[job.name] ?? "");
+      return isDue(job.schedule, Number.isNaN(ran.getTime()) ? fallback : ran, now);
     });
-    log.info({ jobs: selected.map((j) => j.name), windowSeconds }, "jobs due");
+    log.info({ jobs: selected.map((j) => j.name) }, "jobs due");
     // The jobs are independent, so they run side by side; the RPC lanes keep the chain jobs from queuing behind each other.
-    await Promise.all(selected.map((job) => runJob(ctx, job)));
+    const finished: Record<string, string> = { ...last };
+    await Promise.all(
+      selected.map(async (job) => {
+        await runJob(ctx, job);
+        finished[job.name] = now.toISOString();
+      }),
+    );
+    await handle.db.insert(t).values({ kind: "due-last-run", ts: now, slot: null, data: finished });
     await handle.close();
     return;
   }
