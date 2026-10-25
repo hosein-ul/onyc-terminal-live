@@ -4,6 +4,7 @@ import type { EndpointResponse } from "@onyc/sdk";
 import { useChainActivity, useChainFlows } from "@onyc/sdk/react";
 import { useMemo, useState } from "react";
 import { Panel } from "../charts";
+import { useLiveChain } from "../lib/liveChain";
 import { useNow } from "../lib/useNow";
 import { ALL_KINDS, ChainFeed, PEOPLE_KINDS } from "../ui/ChainFeed";
 import { Card, PageHeader, Segmented, Stat } from "../ui/kit";
@@ -35,6 +36,10 @@ const GROUPS: { value: string; label: string; kinds: Kind[] }[] = [
   },
 ];
 
+/** The later of two ISO times, either of which may be missing. */
+const newest = (a: string | undefined, b: string | undefined): string | null =>
+  a === undefined ? (b ?? null) : b === undefined || a > b ? a : b;
+
 const flowsBuild = (d: EndpointResponse<"chainFlows">): ChartSpec => chainFlowsSpec(d);
 const DAY_MS = 24 * 3_600_000;
 /** The most events the API returns in one answer. */
@@ -54,6 +59,7 @@ export function ActivityPage() {
     query: { limit: WINDOW, kind: PEOPLE_KINDS.join(",") },
   });
   const flows = useChainFlows({ query: { range: "1m" } });
+  const live = useLiveChain();
 
   const stats = useMemo(() => {
     const events = people.data?.data.events ?? [];
@@ -61,14 +67,14 @@ export function ActivityPage() {
     // When every returned event is still inside the 24 hours, older ones may exist: the numbers are then a floor.
     const partial = events.length >= WINDOW && day.length === events.length;
     return {
-      latest: all.data?.data.events[0]?.ts ?? null,
+      latest: newest(all.data?.data.events[0]?.ts, live.events[0]?.ts),
       day: day.length,
       partial,
       minted: day.reduce((a, e) => a + Math.max(0, e.supplyDelta ?? 0), 0),
       burned: day.reduce((a, e) => a + Math.max(0, -(e.supplyDelta ?? 0)), 0),
       counts: all.data?.data.counts ?? {},
     };
-  }, [all.data, people.data, now]);
+  }, [all.data, people.data, live.events, now]);
 
   const count = (...kinds: Kind[]): number => kinds.reduce((a, k) => a + (stats.counts[k] ?? 0), 0);
 

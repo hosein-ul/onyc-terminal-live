@@ -170,7 +170,11 @@ export function ChainFeed({
         <span className="ticker-dot" aria-hidden="true" />
         {live.status === "live"
           ? LIVE_MODE === "stream"
-            ? "Live from Solana"
+            ? live.heardAt === 0
+              ? "Connected to Solana, waiting for the next transaction"
+              : `Live from Solana · last heard ${formatRelativeAge(new Date(live.heardAt).toISOString())}${
+                  live.unread > 0 ? ` · ${live.unread} could not be read` : ""
+                }`
             : "Live from Solana, checked every few seconds"
           : live.status === "connecting"
             ? "Connecting to Solana…"

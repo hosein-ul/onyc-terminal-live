@@ -15,6 +15,11 @@ export type LiveStatus = "connecting" | "live" | "reconnecting";
 interface Snapshot {
   events: readonly LiveEvent[];
   status: LiveStatus;
+  /** When the last message came from the chain, in ms; 0 before the first. */
+  heardAt: number;
+  /** Transactions announced and transactions whose details could not be read. */
+  heard: number;
+  unread: number;
 }
 
 /**
@@ -38,16 +43,22 @@ const TRANSFER_MIN_ONYC = 1e-9;
 const VENUE_MOVE_ONYC = 1e-9;
 const KEEP = 200;
 
-let snapshot: Snapshot = { events: [], status: "connecting" };
+let snapshot: Snapshot = { events: [], status: "connecting", heardAt: 0, heard: 0, unread: 0 };
 const listeners = new Set<() => void>();
 let venues: ReadonlyMap<string, Venue> = new Map();
 const seen = new Set<string>();
+/** What just happened is read before the backlog, and the backlog newest first, so the top of the list fills at once. */
 const queue: string[] = [];
+const backlog: string[] = [];
+/** Reads in flight at once; the public fallback endpoint gets one at a time. */
+const PARALLEL = STREAM ? 4 : 1;
 let draining = false;
 let socket: WebSocket | null = null;
 let retry = 0;
 let retryTimer: ReturnType<typeof setTimeout> | undefined;
 let pingTimer: ReturnType<typeof setInterval> | undefined;
+let watchTimer: ReturnType<typeof setInterval> | undefined;
+let openedAt = 0;
 
 const publish = (next: Partial<Snapshot>): void => {
   snapshot = { ...snapshot, ...next };
@@ -109,7 +120,10 @@ const response429Delay = (attempt: number): number => 350 + attempt * 350;
 
 async function handle(signature: string): Promise<void> {
   const tx = await fetchTransaction(signature);
-  if (tx === null) return;
+  if (tx === null) {
+    publish({ unread: snapshot.unread + 1 });
+    return;
+  }
   const c = classify(tx, TRANSFER_MIN_ONYC, resolve(tx), VENUE_MOVE_ONYC);
   if (c === null) return;
   const event: LiveEvent = {
@@ -143,10 +157,14 @@ async function drain(): Promise<void> {
   if (draining) return;
   draining = true;
   try {
-    for (let s = queue.shift(); s !== undefined; s = queue.shift()) {
-      await handle(s);
-      await sleep(150);
-    }
+    const next = (): string | undefined => queue.shift() ?? backlog.shift();
+    const worker = async (): Promise<void> => {
+      for (let sig = next(); sig !== undefined; sig = next()) {
+        await handle(sig);
+        if (!STREAM) await sleep(150);
+      }
+    };
+    await Promise.all(Array.from({ length: PARALLEL }, worker));
   } finally {
     draining = false;
   }
@@ -163,6 +181,7 @@ function onMessage(data: unknown): void {
     return;
   }
   if (msg.method !== "logsNotification") return;
+  publish({ heardAt: Date.now(), heard: snapshot.heard + 1 });
   const v = msg.params?.result?.value;
   if (v?.signature === undefined || (v.err !== null && v.err !== undefined)) return;
   if (seen.has(v.signature)) return;
@@ -203,7 +222,7 @@ async function backfill(): Promise<void> {
       }
     }
     fresh.sort((a, b) => b.blockTime - a.blockTime);
-    for (const f of fresh.slice(0, BACKFILL_MAX).reverse()) queue.push(f.signature);
+    for (const f of fresh.slice(0, BACKFILL_MAX)) backlog.push(f.signature);
     void drain();
   } catch {
     backfilled = false;
@@ -264,6 +283,7 @@ function connect(): void {
   socket = ws;
   ws.onopen = () => {
     retry = 0;
+    openedAt = Date.now();
     publish({ status: "live" });
     // Two subscriptions: the OnRe program (deposits, withdrawals) and the ONyc mint (moves to and from other protocols).
     [ONRE_PROGRAM, ONYC_MINT].forEach((address, i) => {
@@ -276,6 +296,10 @@ function connect(): void {
         }),
       );
     });
+    watchTimer = setInterval(() => {
+      const quiet = Date.now() - Math.max(snapshot.heardAt, openedAt);
+      if (quiet > 120_000 && ws.readyState === WebSocket.OPEN) ws.close();
+    }, 30_000);
     pingTimer = setInterval(() => {
       if (ws.readyState === WebSocket.OPEN)
         ws.send(JSON.stringify({ jsonrpc: "2.0", id: 99, method: "getSlot" }));
@@ -286,6 +310,7 @@ function connect(): void {
   };
   const lost = (): void => {
     clearInterval(pingTimer);
+    clearInterval(watchTimer);
     if (socket !== ws) return;
     socket = null;
     if (listeners.size === 0) return;
@@ -306,6 +331,7 @@ function halt(): void {
   pollTimer = undefined;
   cursors.clear();
   clearInterval(pingTimer);
+  clearInterval(watchTimer);
   const ws = socket;
   socket = null;
   ws?.close();
